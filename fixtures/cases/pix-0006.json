@@ -1,0 +1,37 @@
+{
+ "case_id": "pix-0006",
+ "store": "store-default",
+ "exception": "refund_request",
+ "environment": "sandbox",
+ "currency": "BRL",
+ "order": {
+  "id": "ord_1006",
+  "amount_minor": "34900",
+  "currency": "BRL",
+  "status": "delivered",
+  "created_at": "2026-10-15T16:00:00.000Z",
+  "expires_at": "2026-10-15T17:00:00.000Z",
+  "shipped": true,
+  "items": 1
+ },
+ "order_amount_minor": "34900",
+ "payments": [
+  {
+   "payment_ref": "pix:E90400888202610151601H2",
+   "amount_minor": "34900",
+   "payer": "test:payer_b1n6",
+   "received_at": "2026-10-15T16:01:00.000Z"
+  }
+ ],
+ "recipient_ref": "test:payer_b1n6",
+ "payer_history": {
+  "orders_90d": 1,
+  "disputes_90d": 1,
+  "chargebacks": 0
+ },
+ "evidence": {
+  "delivery_proof": "carrier_scan_2026-10-18",
+  "customer_message": "Product never arrived, I want my money back.",
+  "refund_requested_at": "2026-10-23T09:00:00.000Z"
+ }
+}

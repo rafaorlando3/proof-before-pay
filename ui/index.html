@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof Before Pay</title>
+<style>
+:root{--bg:#0f1420;--panel:#171e2e;--panel2:#1e2740;--text:#e8edf7;--muted:#9aa7c2;--line:#2a3550;--ok:#2ecc71;--bad:#ff5a5f;--warn:#f5b041;--info:#4ea1ff;--chip:#263150}
+@media (prefers-color-scheme: light){:root{--bg:#f4f6fb;--panel:#ffffff;--panel2:#eef2fa;--text:#111827;--muted:#5b6478;--line:#d9e0ee;--chip:#e6ebf7}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{display:flex;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:2}
+header h1{min-width:165px;font-size:18px;margin:0;letter-spacing:.2px}header .tag{font-size:12px;color:var(--muted)}
+.mode{margin-left:auto;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--chip)}
+main{display:grid;grid-template-columns:360px 1fr;gap:16px;padding:16px 20px;max-width:1500px;margin:0 auto}
+@media (max-width:980px){main{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:0 0 10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px;grid-column:1/-1}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}
+#cases{max-height:70vh;overflow:auto}@media(max-width:980px){#cases{max-height:260px}}@media(max-width:700px){header .tag{display:none}header{gap:8px}header h1{min-width:140px}}
+.case{padding:10px;border-radius:10px;border:1px solid transparent;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.case:hover{background:var(--panel2)}.case.active{border-color:var(--info);background:var(--panel2)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;word-break:break-all}
+.chip{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--chip);color:var(--text)}
+.chip.ok{background:rgba(46,204,113,.18);color:var(--ok)}.chip.bad{background:rgba(255,90,95,.18);color:var(--bad)}.chip.warn{background:rgba(245,176,65,.2);color:var(--warn)}.chip.info{background:rgba(78,161,255,.18);color:var(--info)}
+.muted{color:var(--muted)}.small{font-size:12px}
+.seal{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px}
+.seal.intact{border-color:var(--ok)}.seal.tampered{border-color:var(--bad)}.seal.sealed_after_money_moved{border-color:var(--bad)}.seal.unverifiable{border-color:var(--warn)}
+.state{font-weight:700}.intact .state{color:var(--ok)}.tampered .state,.sealed_after_money_moved .state{color:var(--bad)}.unverifiable .state{color:var(--warn)}
+textarea{width:100%;min-height:220px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+button{background:var(--info);color:#fff;border:0;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}button.secondary{background:var(--chip);color:var(--text)}button.danger{background:var(--bad)}button:disabled{opacity:.5;cursor:default}
+input[type=text]{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;width:100%}
+.timeline{list-style:none;padding:0;margin:0}.timeline li{padding:6px 0;border-bottom:1px dashed var(--line);display:grid;grid-template-columns:190px 1fr;gap:10px}.timeline .mono{word-break:normal}
+details{margin:6px 0}summary{cursor:pointer;color:var(--info)}pre{background:var(--panel2);padding:10px;border-radius:8px;overflow:auto;font-size:12px;max-height:320px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media (max-width:1200px){.grid2{grid-template-columns:1fr}}
+.verdict{padding:10px;border-radius:8px;margin-top:8px;font-weight:700}.verdict.ok{background:rgba(46,204,113,.18);color:var(--ok)}.verdict.bad{background:rgba(255,90,95,.18);color:var(--bad)}.verdict.warn{background:rgba(245,176,65,.2);color:var(--warn)}
+.empty{color:var(--muted);padding:20px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>Proof Before Pay</h1>
+  <span class="tag">Every AI decision about money is sealed before anything moves. Change it afterwards and the seal turns red.</span>
+  <span class="mode" id="mode">connecting…</span>
+</header>
+<main>
+  <div class="stats" id="stats"></div>
+  <section class="panel">
+    <h2>Cases <span class="muted small" id="count"></span></h2>
+    <div id="cases" class="empty">loading…</div>
+  </section>
+  <section id="detail" class="panel"><div class="empty">Select a case. Cases waiting for a reviewer are marked <span class="chip warn">awaiting_human</span>.</div></section>
+</main>
+<script>
+const API = '/pbp/api';
+let current = null, currentCommitment = '', me = {user:'', can_review:false};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function api(path, opts){
+  try {
+    const r = await fetch(API+path, Object.assign({headers:{'Content-Type':'application/json','X-PBP-Request':'1'},signal:AbortSignal.timeout(15000)}, opts||{}));
+    let j={}; try{j=await r.json();}catch(e){return {ok:false,reason:'invalid_server_response'};}
+    if(!r.ok && !j.reason) j.reason='http_'+r.status;
+    return j;
+  } catch(e){return {ok:false,reason:'connection_unavailable'};}
+}
+
+const chipFor = st => ({closed:'ok',effected:'ok',closed_no_effect:'info',awaiting_human:'warn',blocked:'bad',rejected:'bad',sealed:'info',permitted:'info'})[st] || '';
+function money(min, cur){ if(!min) return ''; const n = Number(min); return (n/100).toLocaleString('en-US',{minimumFractionDigits:2})+' '+(cur||''); }
+async function loadHealth(){ const h = await api('/health'); if(!h.ok){$('#mode').textContent='status unavailable · '+h.reason;return;} const w = await api('/whoami'); me = {user:w.user, can_review:!!w.can_review};
+  const live = h.mode==='live' ? `live configured (${h.provider} / ${h.model})${h.last_live_call_ok ? ', last call ok' : ', no live call verified yet'}` : 'recorded decisions (no key): not live inference';
+  $('#mode').textContent = `${h.production_running?'production running':'production STOPPED'} · ${live} · you: ${me.user}${me.can_review?' (reviewer)':''}`; }
+async function loadStats(){ const s = await api('/stats'); if(!s.ok){$('#stats').innerHTML=`<div class="stat">Statistics unavailable: ${esc(s.reason)}</div>`;return;} const bs = s.cases_by_status||{}, src = s.decisions_by_source||{};
+  const rules = src.rules||{}, model = src.model||{}; const cost = (model.cost_micro_usd==null || model.cost_micro_usd < 0) ? null : model.cost_micro_usd/1e6;
+  $('#stats').innerHTML = [
+    ['Cases', Object.values(bs).reduce((a,b)=>a+b,0)], ['Awaiting reviewer', bs.awaiting_human||0], ['Seals', s.seals||0], ['Test effects', s.effects||0],
+    ['Duplicate effects prevented', s.duplicate_effects_prevented||0], ['Closed by rules', rules.decisions||0], ['Agent path decisions', model.decisions||0],
+    ['Model tokens', (model.prompt_tokens||0)+(model.completion_tokens||0)], ['Model cost (USD)', cost==null ? 'unknown' : cost.toFixed(4)]
+  ].map(([k,v])=>`<div class="stat"><b>${esc(v)}</b><span>${esc(k)}</span></div>`).join(''); }
+async function loadCases(){ const r = await api('/cases?limit=200'); if(!r.ok){$('#count').textContent='unavailable';$('#cases').innerHTML=`<div class="empty">Could not load cases: ${esc(r.reason)}</div>`;return;} const list = r.cases||[]; $('#count').textContent = list.length;
+  const scrollTop=$('#cases').scrollTop;
+  $('#cases').innerHTML = list.length ? list.map(c => `<div class="case ${current===c.case_id?'active':''}" data-id="${esc(c.case_id)}">
+     <div class="row"><b>${esc(c.case_id)}</b><span class="chip ${chipFor(c.status)}">${esc(c.status)}</span></div>
+     <div class="row small muted"><span>${esc(c.exception)}</span><span>·</span><span>${esc(c.reason||'')}</span></div></div>`).join('') : '<div class="empty">No cases yet. Feed the synthetic cases from the terminal: Do ##class(pbp.Setup).FeedCases()</div>';
+  $('#cases').scrollTop=scrollTop;
+  document.querySelectorAll('.case').forEach(el => el.onclick = () => open(el.dataset.id)); }
+function sealCard(s, i){ const st = s.verification?.state || 'unverifiable';
+  return `<div class="seal ${st}"><div class="row"><span class="chip info">${esc(s.kind)}</span><span class="state">${esc(st.replace(/_/g,' '))}</span>
+   <span class="muted small">${esc(s.sealed_at)}</span>${s.money_moved_before_seal?'<span class="chip bad">money moved before this seal</span>':''}</div>
+   <div class="mono small">commitment ${esc(s.commitment)}</div>
+   <div class="mono small muted">prev ${esc(s.prev||'none (first record of the case)')} · bridge ${esc(s.verification?.bridge_state)} (${esc(s.verification?.reason)}) · anchored: ${s.verification?.on_chain_verified?'yes':'no (local chain of hashes)'}</div>
+   <div class="row" style="margin-top:6px"><button class="secondary" onclick="tamper('${esc(s.commitment)}')">Try to tamper</button><button class="secondary" onclick="showRecord('${esc(s.commitment)}')">Show sealed record</button></div>
+   <div id="tamper-${esc(s.commitment)}"></div></div>`; }
+async function open(id){ current = id; await loadCases(); const d = await api('/cases/'+encodeURIComponent(id)); if(!d.ok){ $('#detail').innerHTML = `<div class="empty">${esc(d.reason)}</div>`; return; }
+  const c = d.case, dec = d.decision, p = d.permit, rc = d.receipt;
+  currentCommitment = c.commitment || '';
+  const missing = dec && dec.missing ? Object.keys(dec.missing) : [];
+  $('#detail').innerHTML = `
+   <div class="row"><h2 style="margin:0">${esc(c.case_id)}</h2><span class="chip ${chipFor(c.status)}">${esc(c.status)}</span><span class="muted small">${esc(c.reason||'')}</span></div>
+   <div class="row small muted" style="margin:6px 0 12px"><span>${esc(c.exception)}</span><span>· store ${esc(c.store)}</span><span>· policy ${esc(c.policy?.id)} v${esc(c.policy?.version)}</span><span>· trace session ${esc(c.session_id||'')}</span></div>
+   <div class="grid2">
+    <div>
+     <div class="panel" style="margin-bottom:12px"><h2>Decision</h2>${dec ? `
+      <div class="row"><b>${esc(dec.action)}</b><span class="chip ${dec.source==='rules'?'info':'warn'}">${esc(dec.source)}${dec.model?.mode?' · '+esc(dec.model.mode):''}</span>${dec.moves_money?`<span class="chip bad">moves money ${esc(money(dec.amount_minor, c.input?.currency))}</span>`:'<span class="chip ok">no money</span>'}${dec.requires_human?'<span class="chip warn">requires human</span>':''}</div>
+      <p>${esc(dec.rationale)}</p>
+      <div class="small"><b>Saw:</b> ${esc((dec.evidence_refs||[]).join(', '))}</div>
+      <div class="small"><b>Did not see (sealed as missing):</b> ${missing.length ? esc(missing.join(', ')) : 'nothing missing'}</div>
+      <div class="small muted" style="margin-top:6px">${dec.model?.provider ? `model ${esc(dec.model.provider)} / ${esc(dec.model.id)} · ` : ''}${esc(dec.usage?.tool_calls||0)} tool calls · ${esc(dec.usage?.prompt_tokens||0)}+${esc(dec.usage?.completion_tokens||0)} tokens · ${(dec.usage?.cost_micro_usd==null || dec.usage?.cost_micro_usd<0) ? 'cost unknown' : esc((dec.usage.cost_micro_usd/1e6).toFixed(5))+' USD'} · ${esc(dec.usage?.duration_ms||0)} ms · confidence ${esc(dec.confidence)}</div>` : '<div class="muted">no decision yet</div>'}
+     </div>
+     <div class="panel" style="margin-bottom:12px"><h2>Permit and test effect</h2>
+      ${p ? `<div class="small">permit <span class="mono">${esc(p.permit_id)}</span> · <span class="chip ${p.status==='consumed'?'ok':'info'}">${esc(p.status)}</span> · ${esc(money(p.amount_minor,p.currency))} to ${esc(p.recipient)} · authorized by <b>${esc(p.authorized_by)}</b> · valid until ${esc(p.expires_at)}</div>` : '<div class="muted small">no permit: nothing can move</div>'}
+      ${rc ? `<div class="small" style="margin-top:6px">receipt <span class="mono">${esc(rc.receipt_id)}</span> · ${esc(rc.status)} · receipt verification: ${esc(rc.verification||"unverifiable")} · ${esc(rc.ledger_ref)} · ${esc(rc.effect_at)}</div>` : ''}
+     </div>
+     ${c.status==='awaiting_human' ? `<div class="panel" style="margin-bottom:12px"><h2>Review (as ${esc(me.user)})</h2>
+      <div class="small">You are approving exactly this sealed decision: <span class="mono">${esc(c.commitment)}</span></div>
+      ${me.can_review ? `<input type="text" id="note" placeholder="note for the sealed approval (optional)"><div class="row" style="margin-top:8px"><button onclick="review('Approve')">Approve</button><button class="danger" onclick="review('Reject')">Reject</button></div>
+      <div class="small muted" style="margin-top:6px">The request carries the commitment shown above; if the case changed since you opened it, the server refuses. Approving records your IRIS login in the test ledger, completes the native Workflow task, seals the approval, issues a single-use permit bound to this seal and executes the TEST effect once.</div>` : '<div class="muted small">Your user lacks PBPReview:U. Use this console to record authenticated ledger authorization.</div>'}
+      <div id="review-result"></div></div>` : ''}
+     <div class="panel"><h2>Timeline</h2><ul class="timeline">${(d.events||[]).map(e=>`<li><span class="mono muted">${esc(e.at)}</span><span><b>${esc(e.kind)}</b> ${esc(e.detail||'')}${e.ref?` <span class="mono muted">${esc(e.ref)}</span>`:''}</span></li>`).join('')}</ul></div>
+    </div>
+    <div>
+     <div class="panel" style="margin-bottom:12px"><h2>Seals (chain)</h2>${(d.seals||[]).length ? d.seals.map(sealCard).join('') : '<div class="muted small">not sealed yet</div>'}</div>
+     <div class="panel"><h2>Time machine</h2><div id="replay" class="muted small">loading what the agent saw…</div></div>
+    </div>
+   </div>`;
+  const r = await api('/cases/'+encodeURIComponent(id)+'/replay');
+  if(!r.ok){$('#replay').textContent='Replay unavailable: '+r.reason;return;}
+  $('#replay').innerHTML = `<details open><summary>Inputs the case arrived with</summary><pre>${esc(JSON.stringify(c.input, null, 1))}</pre></details>
+   ${(r.tool_calls||[]).map(t=>`<details><summary>${esc(t.seq)}. ${esc(t.name)} (${esc(t.duration_ms)} ms) ${esc(t.at)}</summary><pre>${esc(JSON.stringify(t.output, null, 1))}</pre></details>`).join('') || '<div class="muted">no tool calls (decided by rules)</div>'}`;
+}
+async function review(action){ const note = $('#note')?.value || ''; if(!currentCommitment){ $('#review-result').innerHTML = '<div class="verdict warn">no sealed decision shown; reload the case</div>'; return; }
+  const r = await api('/review/'+encodeURIComponent(current), {method:'POST', body: JSON.stringify({action, note, commitment: currentCommitment})});
+  $('#review-result').innerHTML = `<div class="verdict ${r.ok?'ok':'bad'}">${r.ok ? (action==='Approve'?'Approved':'Rejected')+' by '+esc(r.user)+(r.ledger_state?' · ledger '+esc(r.ledger_state):'') : 'refused: '+esc(r.reason)}</div>`;
+  setTimeout(()=>{ open(current); loadStats(); }, 2500); }
+async function showRecord(c){ const s = await api('/seals/'+c); const box = $('#tamper-'+c); box.innerHTML = `<pre>${esc(JSON.stringify(s.record, null, 1))}</pre>`; }
+async function tamper(c){ const s = await api('/seals/'+c); const box = $('#tamper-'+c);
+  box.innerHTML = `<div class="small muted" style="margin:6px 0">Edit anything in this COPY of the sealed record (amount, rationale, a missing field, a tool output) and verify it against the stored commitment. The stored record is never touched.</div>
+   <textarea id="ta-${c}">${esc(JSON.stringify(s.record, null, 1))}</textarea><div class="row" style="margin-top:6px"><button onclick="verify('${c}')">Verify this copy</button></div><div id="v-${c}"></div>`; }
+async function verify(c){ let rec; try{ rec = JSON.parse($('#ta-'+c).value); }catch(e){ $('#v-'+c).innerHTML = '<div class="verdict warn">not valid JSON</div>'; return; }
+  const r = await api('/seals/'+c+'/verify', {method:'POST', body: JSON.stringify({record: rec})});
+  $('#v-'+c).innerHTML = `<div class="verdict ${r.state==='intact'?'ok':r.state==='tampered'?'bad':'warn'}">${esc(r.state||r.reason)}${r.state==='tampered'?' · this copy differs from what was sealed':r.state==='intact'?' · identical to the sealed record':''}</div>`; }
+async function refresh(){ await Promise.all([loadHealth(), loadStats(), loadCases()]); }
+refresh(); setInterval(()=>{ loadStats(); loadCases(); }, 5000);
+</script>
+</body>
+</html>

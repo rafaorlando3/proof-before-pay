@@ -13,12 +13,12 @@ Seal an AI agent's decision evidence before action, surface missing information,
 and let a reviewer detect changed evidence and decisions.
 
 Current implementation description:
-The foundation supplies a reproducible isolated IRIS AI Hub EAP build154 lab, an
-ObjectScript Witness class with real embedded-Python tests, and matching Python /
-TypeScript canonical sealing vectors. It detects changes to a sealed decision and
-keeps local-only evidence in the pending state. Inputs and fixtures are synthetic.
-No payment, wallet, model credential or on-chain verification is enabled by default.
-The native AI Hub / Interoperability application workflow is still to be integrated.
+The application provides a native Interoperability Production: intake, deterministic policy, a scoped
+AI Hub agent interface with recorded fallback, authenticated Workflow review, a sealed approval,
+a single-use permit, one journaled sandbox effect and independently checked readback. The authenticated
+console exposes the sealed chain, missing evidence, forensic tool outputs and a copied-record tamper test.
+The full path has run with explicitly recorded decisions; live inference and the model comparison remain
+separate, unverified requirements. Inputs are synthetic; no real payment or external anchor is claimed.
 
 ## Acceptance gates before requesting Rafael's final OK
 
@@ -30,7 +30,8 @@ The native AI Hub / Interoperability application workflow is still to be integra
 - [ ] GitHub workflow confirmed green for the published commit.
 - [ ] Claude review received for the corrected bridge and intended workflow.
 - [ ] Native AI Hub agent participates in a working Interoperability production.
-- [ ] Current app demo, reviewer UI and end-to-end workflow evidence.
+- [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
+- [ ] Public authenticated demo with qualified model inference.
 - [ ] Model/provider and any inference cost explicitly resolved before a live call.
 - [ ] Three-minute video demonstrating the final app and required links.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.

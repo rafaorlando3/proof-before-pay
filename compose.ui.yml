@@ -1,0 +1,11 @@
+# Private UI only. Keep the default no-network compose for offline tests.
+# docker compose -f compose.yml -f compose.ui.yml up -d --build
+services:
+  iris:
+    network_mode: !reset null
+    networks: [review]
+    ports:
+      - "127.0.0.1:${PBP_UI_PORT:-52773}:52773"
+networks:
+  review:
+    internal: false

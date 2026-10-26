@@ -1,0 +1,20 @@
+{
+  "id": "store-default",
+  "version": "1",
+  "description": "Default policy for the synthetic demo store. Amounts in minor units (BRL centavos).",
+  "limits": {"autonomous_minor": "5000", "currency": "BRL"},
+  "allowed_actions": [
+    "refund_duplicate",
+    "refund_full",
+    "refund_partial",
+    "accept_order",
+    "accept_order_keep_credit",
+    "release_order",
+    "hold_for_evidence",
+    "request_top_up",
+    "retry_withdrawal",
+    "escalate_to_human"
+  ],
+  "forbidden": ["change_policy", "delete_evidence", "pay_external_account", "waive_dispute_defense"],
+  "rules": {"small_diff_minor": "200", "late_grace_hours": "48"}
+}

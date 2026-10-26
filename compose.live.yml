@@ -1,0 +1,13 @@
+# Explicit paid-inference opt-in; never use on public CI or with real customer data.
+# Populate private/providers.env locally; the file is ignored by Git and Docker build.
+services:
+  iris:
+    network_mode: !reset null
+    networks: [llm]
+    env_file:
+      - path: ./private/providers.env
+        required: true
+    environment:
+      PBP_LLM_MODE: live
+networks:
+  llm: {}

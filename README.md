@@ -1,15 +1,16 @@
 # Proof Before Pay
 
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
-The current foundation runs on InterSystems IRIS AI Hub EAP build 154, with a native
-ObjectScript `ProofBeforePay.Witness` bridge to a bounded Python sealing adapter.
-The TypeScript reference checks the same `pbp.seal/1` canonicalization vectors.
+The application runs on InterSystems IRIS AI Hub EAP build154: native Interoperability
+intake/process/operations, deterministic policy, scoped read-only tools, authenticated
+Workflow review, a sealed approval, a single-use permit and one confirmed sandbox effect.
+The review console detects edits to decision copies and shows the sealed evidence chain.
 
-**Status:** the isolated IRIS runtime, compiler and sealing bridge are implemented.
-The contest application still needs its AI Hub agent / Interoperability workflow,
-end-to-end evidence, UI/demo and final review. This repository is not yet a completed
-contest submission. Local verification returns `pending`, never an on-chain claim
-or permission to pay. All included records are synthetic; no wallet or API key is needed.
+**Status:** the full workflow is tested with explicitly labelled recorded decisions.
+Actual model inference, the multi-provider comparison and a public demo remain separate,
+unverified gates. The application is not a submitted contest entry. No bank settlement or
+independent external anchor is claimed. See [application design](docs/README-APP.md),
+[validation](docs/VALIDATION.md), and [provider experiment](docs/PROVIDERS.md).
 
 Maintainer: [Rafael Orlando Mendes](https://community.intersystems.com/user/rafaelorlando-mendes).
 Code developed with AI assistants under Rafael's direction. License: [MIT](LICENSE).
@@ -44,23 +45,55 @@ The tested lab had at least 2.5 GB free **after** the base image had already bee
    ```sh
    docker compose up --build --detach --wait
    python3 scripts/test_iris.py
+   python3 scripts/test_ledger.py
+   python3 scripts/test_workflow.py
    ```
 
-   Startup imports and compiles `Witness.cls`. The test then calls both ObjectScript
-   methods through the actual embedded Python bridge, including failure and tamper cases.
-   It exits nonzero if compilation fails, a result marker is missing, or an assertion fails.
-4. Stop the lab with `docker compose stop`. `docker compose down` removes the lab
-   container and its disposable state. Recreating it imports the source again.
+   Startup compiles the application recursively, loads synthetic policies/replay fixtures,
+   installs reviewer permissions and starts the native Production. The health gate waits
+   for installation as well as IRIS. Tests cover the real embedded-Python bridge, journaled
+   ledger and concurrent sessions, native unit suites and the complete recorded workflow.
+   A missing marker or failed assertion is a failure even if the IRIS terminal exits zero.
+4. Stop with `docker compose stop`. `docker compose down` removes the container but
+   preserves the named `iris-state` volume. Restart and recreation retain cases, approvals
+   and receipts. `docker compose down --volumes` deliberately erases this lab data.
 
 The service has no network, published port, wallet, model credential or paid inference.
 Its working directory and IRIS databases must be writable. It uses the vendor's
-normal startup capabilities, dropping NET_RAW and MKNOD. It does not change default
-accounts or authentication. Keep this isolated configuration until a separately
-reviewed authenticated application is ready. Do not publish this lab's ports.
+normal startup capabilities, dropping NET_RAW and MKNOD. The installer creates the `PBPReview` resource and `PBPReviewer` role and grants it
+to existing users listed in `PBP_REVIEWERS` (default: the installing OS identity,
+`_SYSTEM,SuperUser,Admin`). It creates no password or default public reviewer login.
+Only explicitly trusted reviewers should be listed. Do not expose this lab publicly.
 
 Apple Silicon is not validated. An ARM64 EAP kit is available from the vendor;
 using it requires the matching local image and `IRIS_PLATFORM=linux/arm64`.
 Do not compare that image with the x64 hash above.
+
+## Private review console
+
+The default lab has no network. To opt into an authenticated console with a loopback-only
+published port and normal bridge networking:
+
+```sh
+docker compose -f compose.yml -f compose.ui.yml up --build --detach --wait
+```
+
+Open `http://127.0.0.1:52773/pbp/ui/` with an existing IRIS login that has the reviewer role
+and normal application/database access. No model key is loaded by this profile. Password
+setup belongs to your private IRIS instance; do not publish vendor default credentials.
+The reviewer role includes SELECT on the synthetic projections and native Workflow task
+lookup. The authenticated session, rather than a JSON operator field, supplies identity.
+
+Feed the ten synthetic cases using the native runtime tests or `pbp.Setup.FeedCases()`.
+For an HTTP gate on this loopback URL set `PBP_TEST_BASE_URL`, `PBP_TEST_USER` and
+`PBP_TEST_PASSWORD` privately, then run `python3 tests/http_workflow.py`. These tests
+perform only synthetic sandbox effects. They require recorded mode and reject a public URL.
+
+For explicitly authorized real inference, populate ignored `private/providers.env` and
+add `-f compose.live.yml`. That profile enables outbound networking and loads credentials;
+it is an intentional cost-bearing opt-in. Always specify the provider and model. See
+[provider scope and comparison](docs/PROVIDERS.md). Never put keys in a Compose argument,
+a command line, Git, a screenshot or a public image.
 
 ## Test the language components
 

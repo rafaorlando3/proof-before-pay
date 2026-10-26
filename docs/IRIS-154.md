@@ -28,7 +28,7 @@ adding a 4 MiB writable directory alone is not a complete server configuration.
 An initial custom CPF failed for a separate reason: `SystemMode` exceeds its length
 limit above 32 characters. It is now `Proof Before Pay EAP`. The final configuration
 successfully starts a fresh container, compiles Witness and passes bridge tests.
-The lab is disposable; restart retains its writable layer, recreation reloads source.
+The application now persists instance/security/case/receipt data in a named durable volume; recreation reloads source and retains that volume. Removing the volume deliberately erases laboratory data.
 
 An EAP startup log also contains `<METHOD DOES NOT EXIST>Sharding+2^STU *Sharding,SYS.ICM`.
 IRIS health, compilation and tested bridge calls still pass. This message is retained

@@ -1,0 +1,64 @@
+{
+ "pix-0005": {
+  "action": "escalate_to_human",
+  "moves_money": false,
+  "requires_human": true,
+  "confidence": 0.9,
+  "rationale": "The payer sent 12900 for an 8900 order and asked for the difference back. The difference is above the small-difference threshold and this flow does not refund partial amounts on its own, so a person decides the refund of 4000.",
+  "evidence_refs": [
+   "order",
+   "pix:E90400888202610221004G8",
+   "evidence.customer_message",
+   "payer_history"
+  ],
+  "missing": {}
+ },
+ "pix-0006": {
+  "action": "hold_for_evidence",
+  "moves_money": false,
+  "requires_human": true,
+  "confidence": 0.71,
+  "rationale": "The customer says the product never arrived but a carrier scan shows delivery; the two contradict each other and the payer already has one dispute, so a person should compare the proof with the customer before any refund.",
+  "evidence_refs": [
+   "order",
+   "pix:E90400888202610151601H2",
+   "evidence.delivery_proof",
+   "evidence.customer_message",
+   "payer_history"
+  ],
+  "missing": {
+   "evidence.carrier_signature": null
+  }
+ },
+ "pix-0007": {
+  "action": "escalate_to_human",
+  "moves_money": false,
+  "requires_human": true,
+  "confidence": 0.55,
+  "rationale": "A MED dispute is open and there is no delivery proof and no customer message; the payer has a prior chargeback. The store's defense depends on evidence that is not here, so a person must gather it.",
+  "evidence_refs": [
+   "order",
+   "pix:E90400888202610101201J5",
+   "payer_history",
+   "evidence.dispute_opened_at"
+  ],
+  "missing": {
+   "evidence.delivery_proof": null,
+   "evidence.customer_message": null
+  }
+ },
+ "pix-0008": {
+  "action": "retry_withdrawal",
+  "moves_money": false,
+  "requires_human": true,
+  "confidence": 0.8,
+  "rationale": "The payout failed because the destination account is closed; retrying to the same account will fail again, so a person must confirm a new destination before any retry.",
+  "evidence_refs": [
+   "order",
+   "evidence.provider_error"
+  ],
+  "missing": {
+   "evidence.new_destination": null
+  }
+ }
+}

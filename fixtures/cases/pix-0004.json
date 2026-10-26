@@ -1,0 +1,35 @@
+{
+ "case_id": "pix-0004",
+ "store": "store-default",
+ "exception": "late_payment",
+ "environment": "sandbox",
+ "currency": "BRL",
+ "order": {
+  "id": "ord_1004",
+  "amount_minor": "25900",
+  "currency": "BRL",
+  "status": "awaiting_payment",
+  "created_at": "2026-10-22T08:00:00.000Z",
+  "expires_at": "2026-10-22T09:00:00.000Z",
+  "shipped": false,
+  "items": 3
+ },
+ "order_amount_minor": "25900",
+ "payments": [
+  {
+   "payment_ref": "pix:E90400888202610222030F3",
+   "amount_minor": "25900",
+   "payer": "test:payer_r4t5",
+   "received_at": "2026-10-22T20:30:00.000Z"
+  }
+ ],
+ "recipient_ref": "test:payer_r4t5",
+ "payer_history": {
+  "orders_90d": 2,
+  "disputes_90d": 0,
+  "chargebacks": 0
+ },
+ "evidence": {
+  "customer_message": "Sorry, paid late, is the order still valid?"
+ }
+}

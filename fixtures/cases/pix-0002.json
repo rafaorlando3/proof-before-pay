@@ -1,0 +1,42 @@
+{
+ "case_id": "pix-0002",
+ "store": "store-default",
+ "exception": "duplicate_payment",
+ "environment": "sandbox",
+ "currency": "BRL",
+ "order": {
+  "id": "ord_1002",
+  "amount_minor": "129900",
+  "currency": "BRL",
+  "status": "paid",
+  "created_at": "2026-10-21T09:00:00.000Z",
+  "expires_at": "2026-10-21T10:00:00.000Z",
+  "shipped": true,
+  "items": 1
+ },
+ "order_amount_minor": "129900",
+ "payments": [
+  {
+   "payment_ref": "pix:E90400888202610210901C2",
+   "amount_minor": "129900",
+   "payer": "test:payer_k2d8",
+   "received_at": "2026-10-21T09:01:00.000Z"
+  },
+  {
+   "payment_ref": "pix:E90400888202610210905D4",
+   "amount_minor": "129900",
+   "payer": "test:payer_k2d8",
+   "received_at": "2026-10-21T09:05:00.000Z"
+  }
+ ],
+ "recipient_ref": "test:payer_k2d8",
+ "payer_history": {
+  "orders_90d": 1,
+  "disputes_90d": 0,
+  "chargebacks": 0
+ },
+ "evidence": {
+  "delivery_proof": "carrier_scan_2026-10-22",
+  "customer_message": null
+ }
+}

@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "native_unit_methods": 20,
+  "methods": [
+    "TestParseInvalid",
+    "TestParseValid",
+    "TestRecordedModeWithoutKey",
+    "TestToolCaseIsolation",
+    "TestBindingMismatchAndExpiry",
+    "TestNoPermitWithoutApproval",
+    "TestReceiptProjectionTamperIsVisible",
+    "TestRejectedApprovalGivesNoPermit",
+    "TestSameDuplicatePixCannotPayTwiceAcrossCases",
+    "TestTenRequestsOneEffect",
+    "TestUncertainIsReconciledNotReexecuted",
+    "TestDuplicateAboveLimit",
+    "TestDuplicateRecipientUnknown",
+    "TestDuplicateWithinLimit",
+    "TestLargeMismatchGoesToAgent",
+    "TestLatePaymentInsideGrace",
+    "TestLatePaymentOutsideGrace",
+    "TestPolicyLoadAndHash",
+    "TestSmallOverpayment",
+    "TestUtil"
+  ],
+  "framework_summary": "All PASSED",
+  "live_inference_tested": false
+}

@@ -1,4 +1,11 @@
-set sc=$system.OBJ.LoadDir("/opt/pbp/cls/ProofBeforePay","ck",.errors)
-write "PBP_INIT=",sc," ERRORS=",+$get(errors),!
+set running=##class(Ens.Director).IsProductionRunning(.current)
+if running,current'="pbp.Production" write "PBP_INIT_REFUSED=another_production_running",! halt
+if running set sc=##class(Ens.Director).StopProduction(60,1)
+if running,$system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
+set sc=$system.OBJ.LoadDir("/opt/pbp/cls","ck",.errors,1)
+write "PBP_INIT=",$system.Status.IsOK(sc)," ERRORS=",+$get(errors),!
+if $system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
+set sc=##class(pbp.Setup).Install("/opt/pbp",1)
+write "PBP_INSTALL=",$system.Status.IsOK(sc),!
 if $system.Status.IsError(sc) do $system.Status.DisplayError(sc)
 halt
