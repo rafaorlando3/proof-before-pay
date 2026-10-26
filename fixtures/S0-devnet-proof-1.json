@@ -1,0 +1,138 @@
+{
+  "cluster": "https://api.devnet.solana.com",
+  "payer": "CG5eud8RdnK3coDD9aL8Pb9ur1kWE9ZPVcx2XTr277tW",
+  "steps": [
+    {
+      "step": "anchor",
+      "ok": true,
+      "signature": "38LsaKb82MWnxyPNCH5fpWAebWTMbXgxFRdJDXMg5j1WE1GLzMqW3QqJVxbtgKMF67QqV663rRhkFPYBXf47Dqao",
+      "slot": 510848536,
+      "block_time": 1791947858,
+      "memo": "pbp1:a90586d450c9e64ae30c789865e90f2a3673997f9f11671fd2773e037f9d4a5f",
+      "explorer": "https://explorer.solana.com/tx/38LsaKb82MWnxyPNCH5fpWAebWTMbXgxFRdJDXMg5j1WE1GLzMqW3QqJVxbtgKMF67QqV663rRhkFPYBXf47Dqao?cluster=devnet"
+    },
+    {
+      "step": "verify_original",
+      "state": "sealed",
+      "reason": "ok",
+      "commitment": "a90586d450c9e64ae30c789865e90f2a3673997f9f11671fd2773e037f9d4a5f",
+      "slot": 510848536,
+      "block_time": 1791947858
+    },
+    {
+      "step": "verify_tampered",
+      "state": "tampered",
+      "reason": "commitment_mismatch",
+      "commitment": "5d901677c722fab5f400ec97cf8fda0446be5ab9ade7e91c710e20e67443bd7f",
+      "on_chain": "a90586d450c9e64ae30c789865e90f2a3673997f9f11671fd2773e037f9d4a5f"
+    },
+    {
+      "step": "verify_dossier_completed_later",
+      "state": "tampered",
+      "reason": "commitment_mismatch",
+      "commitment": "20b69c06453719fe400ed03f8b711b36bbdd812580e7859432af9a09a1f3a637",
+      "on_chain": "a90586d450c9e64ae30c789865e90f2a3673997f9f11671fd2773e037f9d4a5f"
+    },
+    {
+      "step": "verify_money_moved_before_seal",
+      "state": "tampered",
+      "reason": "sealed_after_money_moved",
+      "commitment": "a90586d450c9e64ae30c789865e90f2a3673997f9f11671fd2773e037f9d4a5f",
+      "block_time": 1791947858
+    }
+  ],
+  "record": {
+    "v": "pbp.seal/1",
+    "kind": "decision",
+    "case": {
+      "id": "case:01JA7Q3M2Z0K8V5R",
+      "exception": "duplicate_payment",
+      "store": "store-2"
+    },
+    "at": "2026-10-14T03:17:37.000Z",
+    "saw": {
+      "inputs": {
+        "order_ref": "ord:7f3a",
+        "order_amount_minor": "15990",
+        "payments": [
+          {
+            "payment_ref": "pix:a1",
+            "amount_minor": "15990",
+            "payer": "payer:h9c2"
+          },
+          {
+            "payment_ref": "pix:a2",
+            "amount_minor": "15990",
+            "payer": "payer:h9c2"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "order.lookup",
+          "args": {
+            "order_ref": "ord:7f3a"
+          },
+          "output": {
+            "status": "paid",
+            "delivered": false
+          }
+        },
+        {
+          "name": "payer.history",
+          "args": {
+            "payer": "payer:h9c2"
+          },
+          "output": {
+            "orders_90d": 4,
+            "disputes_90d": 0
+          }
+        }
+      ]
+    },
+    "missing": {
+      "delivery_photo": null,
+      "payer_message": null
+    },
+    "policy": {
+      "id": "refunds",
+      "version": "2026-10-01",
+      "sha256": "3f1c2a9b0d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8"
+    },
+    "rules": {
+      "engine": "iris-business-rules",
+      "version": "r12",
+      "result": null
+    },
+    "model": {
+      "provider": "ai-hub",
+      "id": "recorded-demo",
+      "temperature": 0,
+      "mode": "recorded"
+    },
+    "decision": {
+      "action": "refund_duplicate",
+      "moves_money": true,
+      "amount_minor": "15990",
+      "requires_human": true,
+      "confidence": 0.92,
+      "rationale": "Two identical Pix for one order from the same payer within 40 s.",
+      "evidence_refs": [
+        "pix:a1",
+        "pix:a2"
+      ]
+    },
+    "forbidden": [
+      "accept_as_paid",
+      "credit_customer"
+    ],
+    "limits": {
+      "autonomous_minor": "0",
+      "currency": "BRL"
+    },
+    "prev": null
+  },
+  "salt": "9d7198968f6b8248f2f4783d3583864ed637387c02fe71adc86140a221578b3a",
+  "commitment": "a90586d450c9e64ae30c789865e90f2a3673997f9f11671fd2773e037f9d4a5f",
+  "ok": true
+}

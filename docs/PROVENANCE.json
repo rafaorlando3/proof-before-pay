@@ -1,0 +1,23 @@
+{
+  "origin_branch": "proof-before-pay-s0",
+  "origin_commit": "53016990bde9c16d370a006c277963beaa7c590c",
+  "extraction": "Only seal/ from full-file S0 patch, no PixSettle history or main changes",
+  "patch_sha256": "b9d9835056519590e7f9b6f01cab0c4a00e4e7da91bc616f55e70969a9ac22a9",
+  "seal_files": {
+    "seal/README.md": "e32b6ae74ddeb7bed59377d34c780fff141f99ecd74b6b00e0e8dcb84acb04f3",
+    "seal/package-lock.json": "a368f2d91b48b0421d2ec0f1f866924665782068fe5001767b94f31ad0e90643",
+    "seal/package.json": "0cb33ceaf32c0a04646c691340367f334020207db8ee043835dae84ff34f36d9",
+    "seal/tsconfig.json": "7243ead56f567f680added8f2a87579915bdb6159929715b948245ef5af62f1c",
+    "seal/test/vectors.test.ts": "35afbe8c8c637f62f03001436668bc9d6c1f0929fce68aeeb22b48e6afc30c76",
+    "seal/test/vectors.json": "4db680b42b8a133867fc90e5a91cee74f959fa23e78852cdb581a9a2d5d5583f",
+    "seal/src/pii.ts": "e8218c0089ac3c6ff239c4a36c242da5c6234a8db6a1ac20ee24318ce865b513",
+    "seal/src/seal.ts": "c0285d5ac60f8f160120b1d987c3ae3dfeaa77d2d10b02e5b67d5ffe2d1e2b2c"
+  },
+  "witness_origin": "Prepared 572 adapter and class, 2026-10-18; exact source imported before runtime fixes",
+  "python_core_note": "pbp_s0_core preserves the original offline-only imports for Witness; pbp_seal retains the full S0 reference.",
+  "witness_changes": [
+    "Quote Python method names containing underscores in ObjectScript.",
+    "Set PYTHONPATH in the isolated runtime so new IRIS sessions can import the adapter.",
+    "Add actual IRIS compiler/bridge and restart verification."
+  ]
+}

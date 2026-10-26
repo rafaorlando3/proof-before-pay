@@ -1,0 +1,5 @@
+[config]
+globals=0,0,128,0,0,0
+routines=32
+[Startup]
+SystemMode=Proof Before Pay EAP

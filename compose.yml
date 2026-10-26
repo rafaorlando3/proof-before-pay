@@ -1,0 +1,31 @@
+name: proof-before-pay
+services:
+  iris:
+    image: proof-before-pay:local
+    build:
+      context: .
+      args:
+        IRIS_IMAGE: ${IRIS_IMAGE:-proof-before-pay/iris-eap:2026.3.0AI.154.0}
+    platform: ${IRIS_PLATFORM:-linux/amd64}
+    network_mode: none
+    user: "51773:51773"
+    working_dir: /home/irisowner
+    cap_drop: [NET_RAW, MKNOD]
+    mem_limit: 1200m
+    memswap_limit: 1200m
+    cpus: 0.75
+    pids_limit: 256
+    shm_size: 256m
+    restart: "no"
+    stop_grace_period: 60s
+    healthcheck:
+      test: [CMD, /irisHealth.sh]
+      start_period: 60s
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "2"

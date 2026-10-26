@@ -1,0 +1,13 @@
+.git
+.venv
+node_modules
+**/node_modules
+**/__pycache__
+**/*.pyc
+.env*
+*.key
+*.pem
+*.tar*
+*.whl
+runtime
+private

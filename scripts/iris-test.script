@@ -1,0 +1,8 @@
+set sc=$system.OBJ.LoadDir("/opt/pbp/cls/ProofBeforePay","ck",.errors)
+write "PBP_COMPILE=",sc," ERRORS=",+$get(errors),!
+if $system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
+set sys=##class(%SYS.Python).Import("sys")
+do sys.path.insert(0,"/opt/pbp/tests/iris")
+set smoke=##class(%SYS.Python).Import("smoke")
+write "PBP_SMOKE=",smoke.run(),!
+halt
