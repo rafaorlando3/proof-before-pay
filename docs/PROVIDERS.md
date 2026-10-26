@@ -1,13 +1,47 @@
 # Provider validation and cost
 
 The live model must be configured explicitly. The default compose has no network and no LLM key.
-Gemini, OpenAI and Anthropic provider constructors and native agent session initialization have been
-exercised on build154 with dummy credentials and **no inference**. This does not prove account access,
-API compatibility during generation, model quality or live tool execution.
 
-Initial comparison candidates: gemini-3.8-flash, gpt-5.4-mini, claude-haiku-4-5.
-These are candidates, not a quality ranking. A real-call result is required before choosing the demo model.
-Use only synthetic fixtures. Do not put API credentials in commands, URLs, output, Git, or the channel.
+On 2026-10-26, the native AI Hub agent completed one synthetic duplicate-payment scenario with each
+of `google/gemini-3.8-flash`, `openai/gpt-5.4-mini` and `anthropic/claude-haiku-4.5` through OpenRouter.
+The native protocol provider was `openai` for all three. The routed inference providers reported
+Google AI Studio for Gemini and Azure for the other two; this does not prove direct vendor credentials.
+Each model actually called all five scoped native tools, proposed a duplicate refund, waited for
+an authenticated automated test review, and ended with one confirmed sandbox effect.
+
+| Model | API-reported cost for this case | Native LLM duration | Prompt / completion tokens |
+|---|---:|---:|---:|
+| Gemini 3.8 Flash | US$0.007833 | 12,121 ms | 2,534 / 1,582 |
+| GPT-5.4 Mini | US$0.00286875 | 18,138 ms | 2,109 / 286 |
+| Claude Haiku 4.5 | US$0.006290 | 5,534 ms | 3,925 / 473 |
+
+**One case per model is insufficient for quality ranking or latency percentiles.** The scenario uses
+fixture pix-0001 with unique references, an explicit trusted refund reference and the ledger-supported
+legacy exception `duplicate_charge`, which deliberately has no R1 deterministic match. It exercises
+the agent path; ordinary R1 `duplicate_payment` cases can correctly bypass inference.
+
+The bounded private gateway capped the whole trial at US$1 and 24 forwarded requests, with at most
+2,048 output tokens per generation. Seven requests were forwarded: six successful generations and
+one initial GPT routing failure. Provider-reported spend was US$0.01699175. The failed HTTP 404 request
+had no usage receipt; its US$0.114858 reservation remains held, rather than being called free.
+The trial gateway was stopped and its decrypted credential RAM mount removed; the accounting ledger
+and original synthetic receipts were retained.
+
+Compatibility and quality findings:
+
+- GPT-5.4 Mini rejected the native client's temperature parameter under strict routing. The private
+  gateway omitted that unsupported parameter for the successful retry. Its effective temperature is
+  unknown; the sealed native configuration records the client's requested zero. See the model's
+  [supported endpoint parameters](https://openrouter.ai/api/v1/models/openai/gpt-5.4-mini/endpoints)
+  and [strict parameter routing](https://openrouter.ai/docs/guides/routing/provider-selection).
+- Haiku described 18,990 minor units as 18,990 BRL in its rationale. The deterministic ledger executed
+  the correctly bound 18,990 minor units, but the explanation still has a quality error.
+- Approval notes were absent in the baseline trial because Workflow `%FormValues` is an array. The
+  application fix is tested in replay for both approval and rejection; old seals were not rewritten.
+
+See [original live evidence](validation/live-provider-smoke.json). All inputs are synthetic. No model
+may authorize money. No quality winner or three-agent architecture is established by this smoke test.
+Do not put API credentials in commands, URLs, output, Git, or the channel.
 
 Prices checked 2026-10-26, standard text USD per million tokens:
 

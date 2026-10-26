@@ -17,8 +17,11 @@ The application provides a native Interoperability Production: intake, determini
 AI Hub agent interface with recorded fallback, authenticated Workflow review, a sealed approval,
 a single-use permit, one journaled sandbox effect and independently checked readback. The authenticated
 console exposes the sealed chain, missing evidence, forensic tool outputs and a copied-record tamper test.
-The full path has run with explicitly recorded decisions; live inference and the model comparison remain
-separate, unverified requirements. Inputs are synthetic; no real payment or external anchor is claimed.
+The full path has run with explicitly recorded decisions and in a private one-scenario integration
+trial with real Gemini, OpenAI and Anthropic models through OpenRouter. This proves native tool and
+workflow integration, not model quality or ensemble benefit. The live trial exposed a reviewer-note
+bug and an amount-unit error in one model rationale; both are recorded in validation, and the note fix
+has regression coverage. Inputs are synthetic; no real payment or external anchor is claimed.
 
 ## Acceptance gates before requesting Rafael's final OK
 
@@ -27,12 +30,12 @@ separate, unverified requirements. Inputs are synthetic; no real payment or exte
 - [x] Dockerfile / Compose and English install instructions.
 - [x] Witness compiled and both methods tested in actual build154 IRIS.
 - [x] TypeScript/Python test workflow prepared.
-- [ ] GitHub workflow confirmed green for the published commit.
+- [x] GitHub workflow confirmed green for the published commit (see validation and repository Actions).
 - [ ] Claude review received for the corrected bridge and intended workflow.
-- [ ] Native AI Hub agent participates in a working Interoperability production.
+- [x] Native AI Hub agent participates in a working Interoperability production, with actual native tool calls.
 - [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
 - [ ] Public authenticated demo with qualified model inference.
-- [ ] Model/provider and any inference cost explicitly resolved before a live call.
+- [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
 - [ ] Three-minute video demonstrating the final app and required links.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.
 - [ ] Actual Open Exchange receipt/status captured after submission.
@@ -53,5 +56,5 @@ The [official contest page](https://openexchange.intersystems.com/contest/49) li
 2:15–2:45: demonstrate missing/unknown evidence and the human boundary.
 2:45–3:00: show reproducible startup, repository, validation and cost/observability facts.
 
-This is a recording plan. No video or native workflow result is claimed yet.
+This is a recording plan. No video has been produced; native workflow results are in validation.
 The EAP archive and derived images must never enter the source package or a public registry.

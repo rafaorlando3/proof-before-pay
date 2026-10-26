@@ -382,7 +382,7 @@ Method OnHuman(case As pbp.Data.Case, resp As EnsLib.Workflow.TaskResponse) As %
     Set ..Operator = ..SafeId(resp.%UserName)
     Set ..Outcome = $SELECT(action = "Approve": "approved", 1: "rejected")
     Set note = ""
-    Try { Set note = $GET(resp.%FormValues) } Catch ex { Set note = "" }
+    Try { Set note = resp.%FormValues.GetAt("pbp_note") } Catch ex { Set note = "" }
     Set dec = ##class(pbp.Util).ParseJSON(..DecisionJSON, .r)
     If (..Outcome = "approved") && dec."moves_money" && (..LedgerState '[ "blocked") {
         // The test ledger must have been authorized in the reviewer's own authenticated session (never by this process).

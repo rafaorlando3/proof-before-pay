@@ -81,7 +81,7 @@ ClassMethod Act(caseId As %String, action As %String, note As %String = "", expe
             Quit
         }
         Set task.%UserName = $USERNAME
-        If note '= "" Set task.%FormValues = $EXTRACT(note, 1, 400)
+        If note '= "" Do task.%FormValues.SetAt($EXTRACT(note, 1, 400), "pbp_note")
         Set sc=task.%Save()
         If $$$ISERR(sc) { Set failed="save_review_task_failed" Quit }
         Set sc = task.CompleteTask(action)

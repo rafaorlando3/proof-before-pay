@@ -6,11 +6,15 @@ intake/process/operations, deterministic policy, scoped read-only tools, authent
 Workflow review, a sealed approval, a single-use permit and one confirmed sandbox effect.
 The review console detects edits to decision copies and shows the sealed evidence chain.
 
-**Status:** the full workflow is tested with explicitly labelled recorded decisions.
-Actual model inference, the multi-provider comparison and a public demo remain separate,
-unverified gates. The application is not a submitted contest entry. No bank settlement or
-independent external anchor is claimed. See [application design](docs/README-APP.md),
-[validation](docs/VALIDATION.md), and [provider experiment](docs/PROVIDERS.md).
+**Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
+and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
+one scenario with five native tool calls, authenticated test review, sealed approval and
+one confirmed sandbox effect. This is an integration smoke test, not a model-quality ranking
+or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
+and covered by replay regression. Public demo, held-out benchmark, video and final submission
+remain pending. No bank settlement or independent external anchor is claimed. See
+[application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
+[provider experiment](docs/PROVIDERS.md).
 
 Maintainer: [Rafael Orlando Mendes](https://community.intersystems.com/user/rafaelorlando-mendes).
 Code developed with AI assistants under Rafael's direction. License: [MIT](LICENSE).

@@ -16,7 +16,7 @@ def run(root='/opt/pbp'):
         raise RuntimeError('recorded_lab_required_no_implicit_paid_inference')
     tag = uuid.uuid4().hex[:10]
     cid = lambda original: original + ':' + tag
-    out = {'schema': 'pbp.iris.production_smoke/3', 'run_tag': tag, 'checks': []}
+    out = {'schema': 'pbp.iris.production_smoke/4', 'run_tag': tag, 'checks': []}
     status_cls = iris.cls('%SYSTEM.Status')
 
     def check(name, cond, detail=''):
@@ -113,6 +113,10 @@ def run(root='/opt/pbp'):
     check('one_receipt_copy', len(rows) == 1 and rows[0][0] == 'effected', str(rows))
     kinds = [k for (k,) in iris.sql.exec("SELECT Kind FROM pbp_Data.Seal WHERE CaseId = ? ORDER BY ID",cid('pix-0001'))]
     check('decision_then_approval_sealed', kinds == ['decision', 'approval'], str(kinds))
+    approval_records = [json.loads(r[0]) for r in iris.sql.exec("SELECT RecordJSON FROM pbp_Data.Seal WHERE CaseId = ? AND Kind = 'approval'",cid('pix-0001'))]
+    check('review_note_sealed', len(approval_records) == 1 and approval_records[0]['human'].get('note') == 'smoke approval')
+    rejected_records = [json.loads(r[0]) for r in iris.sql.exec("SELECT RecordJSON FROM pbp_Data.Seal WHERE CaseId = ? AND Kind = 'approval'",cid('pix-0006'))]
+    check('rejection_note_sealed', len(rejected_records) == 1 and rejected_records[0]['human'].get('note') == 'smoke rejection')
 
     s = iris.cls('pbp.Data.Seal').Find(commit)
     rec = json.loads(s.RecordJSON)

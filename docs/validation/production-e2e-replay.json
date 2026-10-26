@@ -37,6 +37,8 @@
     "approved_by_reviewer_session",
     "one_receipt_copy",
     "decision_then_approval_sealed",
+    "review_note_sealed",
+    "rejection_note_sealed",
     "tamper_detected",
     "intact_verifies",
     "intake_service",
@@ -47,20 +49,20 @@
     "model_mode_labelled",
     "stale_review_version_denied"
   ],
-  "count": 46,
+  "count": 48,
   "ok": true,
-  "run_tag": "52f9e66b93",
-  "schema": "pbp.iris.production_smoke/3",
+  "run_tag": "ad8e471960",
+  "schema": "pbp.iris.production_smoke/4",
   "status": {
-    "pix-0001:52f9e66b93": "closed",
-    "pix-0002:52f9e66b93": "closed_no_effect",
-    "pix-0003:52f9e66b93": "closed",
-    "pix-0004:52f9e66b93": "closed",
-    "pix-0005:52f9e66b93": "awaiting_human",
-    "pix-0006:52f9e66b93": "rejected",
-    "pix-0007:52f9e66b93": "awaiting_human",
-    "pix-0008:52f9e66b93": "awaiting_human",
-    "pix-0009:52f9e66b93": "awaiting_human",
-    "pix-0010:52f9e66b93": "closed"
+    "pix-0001:ad8e471960": "closed",
+    "pix-0002:ad8e471960": "closed_no_effect",
+    "pix-0003:ad8e471960": "closed",
+    "pix-0004:ad8e471960": "closed",
+    "pix-0005:ad8e471960": "awaiting_human",
+    "pix-0006:ad8e471960": "rejected",
+    "pix-0007:ad8e471960": "awaiting_human",
+    "pix-0008:ad8e471960": "awaiting_human",
+    "pix-0009:ad8e471960": "awaiting_human",
+    "pix-0010:ad8e471960": "closed"
   }
 }

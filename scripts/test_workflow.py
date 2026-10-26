@@ -32,7 +32,8 @@ set result=m.run("/opt/pbp")
 write "E2E=",result,!
 '''
     result=session(source,'E2E',timeout=180)
-    assert result['ok'] is True and result['count']>=46,result
+    assert result['ok'] is True and result['count']>=48,result
+    assert {'review_note_sealed','rejection_note_sealed'} <= set(result['checks']),result
     print(json.dumps({'schema':'pbp.native.workflow-tests/1','ok':True,'native_unit_methods':len(passed),'unit_method_names':passed,'e2e':result,'live_inference_tested':False},sort_keys=True))
 
 if __name__=='__main__':main()

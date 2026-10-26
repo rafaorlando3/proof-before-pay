@@ -11,8 +11,9 @@ The public CI and private licensed-runtime gates are deliberately separate.
 | Native Witness bridge | 12 checks passed | Actual ObjectScript → embedded Python, no model |
 | Native ledger | 39 checks plus 12 independent IRIS execution sessions | One effect, identical receipts, authenticated review, TTL, tampering, loss/retry |
 | Native unit suites | 20 methods; framework reports All PASSED | Rules, output contract, scope isolation, permits, receipt projection tampering |
-| Native Production replay | 46 checks on ten fresh synthetic cases | Service → Process → recorded agent/tools → Workflow review → seal approval → permit → one effect → readback |
+| Native Production replay | 48 checks on ten fresh synthetic cases | Service → Process → recorded agent/tools → Workflow review → seal approval → permit → one effect → readback |
 | Actual HTTP workflow | 34 checks | Authenticated reviewer session, version binding, CSRF header, copied-record tamper, timeline/tool retrieval, refusal paths |
+| Real model integration | Gemini, GPT-5.4 Mini and Claude Haiku each completed one synthetic scenario | Five native tools, sealed decision/approval, authenticated test review, one sandbox effect; not a quality benchmark |
 | Actual browser | Approve closes synthetic case; modified amount returns tampered | IRIS-backed API, not a mock API |
 
 These counts are different kinds of evidence, not interchangeable test totals. Native unit tests are gated
@@ -20,14 +21,28 @@ on the framework's actual result: RunTest returning status1 alone does **not** m
 Missing JSON markers and missing expected methods fail the runtime runners.
 
 JSON evidence and a SHA-256 manifest of runtime source are in [validation/](validation/).
+The live-provider trial and clean-volume/lifecycle gates describe baseline commit
+`db7c75c7ec5cf32730bf1f13ba4e489a758db7bf`. The later reviewer-note fix was rebuilt into image
+`sha256:8debd0af12fc80ea0dbd491ce4a9aab6019a22bd3f435605ef321004a1832002`
+and passed 20 native unit methods plus all 48 replay E2E checks. Its source manifest hash is
+`9c03e9be300d888d49a6e432837b70b39678169b2ece93c81226256624df68fd`;
+[review-note-regression.json](validation/review-note-regression.json) binds those checks to that source.
+The unchanged ledger lifecycle was not rerun for this two-class note fix.
 The server's full logs remain private; they are not required to distribute vendor code or credentials.
 
 ## Boundaries and remaining gates
 
 - Replay is labelled recorded, and has zero LLM calls. It does not establish AI Hub live inference.
-- The three provider constructors and native agent initialization were probed with dummy credentials
-  without network calls. Real account access, live tool execution, model quality and measured billing
-  remain unverified until private credentials and a bounded comparison run are available.
+- Real inference was tested through OpenRouter using the native OpenAI-compatible provider, not three
+  direct vendor APIs. See [live-provider-smoke.json](validation/live-provider-smoke.json) for original
+  synthetic records, generation ids, usage and defects. Total provider-reported cost: US$0.01699175;
+  one failed HTTP 404 request has an unreconciled US$0.114858 reservation, retained conservatively.
+- The baseline live trial exposed missing reviewer notes in approval seals. `%FormValues` is a native
+  array; storing/reading its `pbp_note` entry fixes the defect. Subsequent replay assertions require
+  both approval and rejection notes to be sealed. Original live receipts were retained unchanged.
+- Anthropic's rationale confused minor units with BRL; the bound effect amount remained correct.
+  GPT-5.4 Mini initially failed parameter routing and safely escalated. Its successful trial omitted
+  unsupported temperature in the private gateway. No model-quality winner or ensemble benefit is claimed.
 - Root ledger data is journaled in a named IRIS durable volume. Restart and recreation retained original
   confirmed receipts in lifecycle testing. A fresh volume compiled all classes, installed and started the Production, then passed all native suites. Restart, container recreation and SIGKILL recovery retained the verified original receipt and one effect. This tests process termination, not a host power loss. The replay test also refused a live-key environment before setup or case feed.
 - Every refund in this application requires authenticated review. Test review sessions are synthetic
