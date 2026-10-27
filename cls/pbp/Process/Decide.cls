@@ -323,6 +323,7 @@ Method SaveDecisionRow(d As %DynamicObject, dec As %DynamicObject, resp As pbp.M
         Set row.EvidenceRefs = dec."evidence_refs".%ToJSON()
         Set row.MissingJSON = d.missing.%ToJSON()
         If $ISOBJECT(resp) {
+            Set row.ProposalJSON=resp.ProposalJSON,row.ProposalReason=resp.Reason,row.Temperature=resp.Temperature
             Set row.ModelProvider = resp.ModelProvider, row.ModelId = resp.ModelId, row.Mode = resp.Mode
             Set row.PromptTokens = resp.PromptTokens, row.CompletionTokens = resp.CompletionTokens
             Set row.DurationMs = resp.DurationMs, row.CostMicroUSD = resp.CostMicroUSD

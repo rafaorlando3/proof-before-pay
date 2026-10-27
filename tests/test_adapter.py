@@ -12,6 +12,14 @@ from pbp_s0_core.record import commitment
 from s0_fixtures import decision
 
 class AdapterTests(unittest.TestCase):
+    def test_unknown_temperature_sentinel_keeps_frozen_schema(self):
+        r = decision()
+        r['model']['temperature'] = -1
+        sealed = self.seal(r)
+        self.assertTrue(sealed['ok'])
+        env = {'record': r, 'salt': sealed['salt'], 'commitment': sealed['commitment']}
+        self.assertTrue(json.loads(adapter.verify_local_json(json.dumps(env)))['ok'])
+
     def seal(self, record=None):
         return json.loads(adapter.seal_json(json.dumps(decision() if record is None else record)))
 

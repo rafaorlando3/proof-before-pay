@@ -7,7 +7,7 @@ The public CI and private licensed-runtime gates are deliberately separate.
 |---|---|---|
 | TypeScript reference | 20 vectors and typecheck passed in foundation validation | S0 source unchanged |
 | Python reference | 24 vectors passed in foundation validation | S0 source unchanged |
-| Offline boundary suites | 46 methods passed; forbidden network/process attempts 0 | Witness adapter, ledger plan, intake guards |
+| Offline boundary suites | 47 methods passed; forbidden network/process attempts 0 | Witness adapter, ledger plan, intake guards |
 | Native Witness bridge | 12 checks passed | Actual ObjectScript → embedded Python, no model |
 | Native ledger | 39 checks plus 12 independent IRIS execution sessions | One effect, identical receipts, authenticated review, TTL, tampering, loss/retry |
 | Native unit suites | 21 methods; framework reports All PASSED | Rules, output contract, scope isolation, permits, receipt projection tampering |
@@ -66,8 +66,8 @@ review paths. Offline positive controls include complete nonfinancial cases, gen
 evidence and all three captured live-provider proposals, so a broken guard that rejects everything
 cannot satisfy the regression. Model explanations still need independent evaluation.
 
-These cases were authored by Codex during development. Claude's separate held-out set and peer review
-remain pending; no new live inference, calibrated quality ranking or three-agent advantage is claimed.
+These cases were authored by Codex during development. Claude's peer review has arrived; the held-out model benchmark
+remains pending; no new live inference, calibrated quality ranking or three-agent advantage is claimed.
 
 Final context-guard runtime: `sha256:644a631e1d7453f4d2bab9f921189e21b86d095efc0b36f1042f2a0e389869a1`. Source manifest SHA-256:
 `397c53c98b5e79393c4b2d2f652e9f90956eb2d18db292547906a9f2cf3c8a6d` (95 baked runtime files matched).
@@ -90,3 +90,32 @@ E2E checks and all three adversarial cases. The runner requires the new construc
 method by name as well as the framework's All PASSED result. Runtime image `sha256:1074da796e1a1eb3c3ec659255265b157a0fa91578475f6f6b1d623154d36f4e`
 matched 95 source files; manifest SHA-256 `49d4b34066a9a044d18f1cefd5151ef983458de47caa8d9e5969e781b7ed27c9`.
 See [provider configuration regression](validation/native-provider-config-regression.json).
+
+## Claude review and UI v2.3 integration
+
+Claude independently reviewed a45e801 in C-1163. The integration exposes seal source and ledger state
+at sealing, distinguishes refund approval from nonfinancial/blocked acknowledgement, and shows the
+original validated proposal as an **unsealed, non-authoritative diagnostic**. Context guards and
+policy determine the separately sealed decision; neither the diagnostic nor its UI authorizes money.
+
+The original seven deterministic cases from the private 40-case matrix ran natively: four authenticated
+synthetic reviews produced one verified sandbox receipt each, and three blocked plans closed with no
+effect. All 40 intake/routing classifications were checked, with no LLM calls. The 33 model cases have
+not been run. Source cases, labels and detailed results remain private. The evaluator needs correction
+before its aggregate is meaningful: it currently calls a correctly blocked financial proposal dangerous
+and expects a different missing-destination reason than the ledger returns. These issues were found in
+the deterministic controls before any paid model benchmark; the answer key was not tuned to model results.
+
+Transport temperature metadata uses -1 for unknown/omitted values and Gemini 3.8's ignored parameter,
+without changing the frozen S0 schema or rewriting historical seals. Billing wrappers explicitly state
+billing_verified=false. Actual receipts, API-reported charges and list-price estimates remain distinct.
+
+The integrated runtime image `sha256:65a234e7631ad6be26e4c52b780fc22dc7d82a9e460b9adef09698a7b4b7ee69`
+passed 21 native unit methods, 48 E2E checks and all three adversarial refusals with original proposals
+preserved. Its 96 baked runtime files match source manifest SHA-256
+`935583d1fdbce937d643fa7f23a91053b069b5dce3c8f5f10cb262205518f532`.
+The authenticated HTTP suite passed all 34 checks against that runtime. See
+[native integration evidence](validation/native-ui23-regression.json) and
+[HTTP integration evidence](validation/http-ui23-regression.json). These are recorded-mode tests,
+with no new paid inference. The cold-start and durability tests above remain evidence for their
+explicitly identified baseline; they were not repeated for this UI/diagnostic change.

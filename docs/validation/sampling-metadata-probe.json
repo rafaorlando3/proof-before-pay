@@ -1,0 +1,1 @@
+{"schema": "pbp.sampling-metadata.native-probe/1", "ok": true, "model_calls": 0, "cases": [{"model": "gemini-3.8-flash", "parameter_sent": true, "recorded_temperature": -1}, {"model": "gpt-5.4-mini", "parameter_sent": false, "recorded_temperature": -1}, {"model": "test-transport", "parameter_sent": true, "recorded_temperature": 0}]}

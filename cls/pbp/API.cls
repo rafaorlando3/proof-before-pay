@@ -145,7 +145,7 @@ ClassMethod Events(caseId As %String) As %DynamicArray
 
 ClassMethod DecisionObj(caseId As %String) As %DynamicAbstractObject
 {
-    Set rs = ##class(%SQL.Statement).%ExecDirect(, "SELECT TOP 1 Source, Action, MovesMoney, AmountMinor, RequiresHuman, Confidence, Rationale, EvidenceRefs, MissingJSON, ModelProvider, ModelId, Mode, PromptTokens, CompletionTokens, DurationMs, CostMicroUSD, ToolCalls, Commitment, CreatedAt FROM pbp_Data.Decision WHERE CaseId = ? ORDER BY ID DESC", caseId)
+    Set rs = ##class(%SQL.Statement).%ExecDirect(, "SELECT TOP 1 Source, Action, MovesMoney, AmountMinor, RequiresHuman, Confidence, Rationale, EvidenceRefs, MissingJSON, ProposalJSON, ProposalReason, Temperature, ModelProvider, ModelId, Mode, PromptTokens, CompletionTokens, DurationMs, CostMicroUSD, ToolCalls, Commitment, CreatedAt FROM pbp_Data.Decision WHERE CaseId = ? ORDER BY ID DESC", caseId)
     If 'rs.%Next() Quit ""
     Set d = {}
     Set d.source = rs.%Get("Source"), d.action = rs.%Get("Action")
@@ -156,7 +156,16 @@ ClassMethod DecisionObj(caseId As %String) As %DynamicAbstractObject
     Set d.rationale = rs.%Get("Rationale")
     Set d."evidence_refs" = ##class(pbp.Util).ParseJSON(rs.%Get("EvidenceRefs"), .r)
     Set d.missing = ##class(pbp.Util).ParseJSON(rs.%Get("MissingJSON"), .r)
+    Set proposal=##class(pbp.Util).ParseJSON(rs.%Get("ProposalJSON"),.r)
+    If $ISOBJECT(proposal) { Do d.%Set("proposal",proposal) }
+    Else { Do d.%Set("proposal","","null") }
+    Set d."proposal_reason"=rs.%Get("ProposalReason"),d."proposal_integrity"="unsealed_diagnostic"
+    Do d.%Set("proposal_authoritative",0,"boolean")
+    Do d.%Set("proposal_refused",(rs.%Get("ProposalReason")'=""),"boolean")
     Set d.model = {"provider": (rs.%Get("ModelProvider")), "id": (rs.%Get("ModelId")), "mode": (rs.%Get("Mode"))}
+    Set temp=$SELECT(rs.%Get("Temperature")="":-1,1:+rs.%Get("Temperature"))
+    Set d.model.temperature=temp
+    Do d.model.%Set("temperature_known",(temp'=-1),"boolean")
     Set d.usage = {"prompt_tokens": (+rs.%Get("PromptTokens")), "completion_tokens": (+rs.%Get("CompletionTokens")), "duration_ms": (+rs.%Get("DurationMs")), "cost_micro_usd": (+rs.%Get("CostMicroUSD")), "tool_calls": (+rs.%Get("ToolCalls"))}
     Set d.commitment = rs.%Get("Commitment"), d."created_at" = rs.%Get("CreatedAt")
     Quit d
@@ -183,6 +192,7 @@ ClassMethod SealObj(seal As pbp.Data.Seal, withRecord As %Boolean) As %DynamicOb
     Do s.%Set("prev", $SELECT(seal.Prev = "": "", 1: seal.Prev), $SELECT(seal.Prev = "": "null", 1: "string"))
     Set s."sealed_at" = seal.SealedAt
     Set s."stored_state" = seal.State, s."anchor_ref" = seal.AnchorRef
+    Set s.source=seal.Source,s."ledger_state"=seal.LedgerState
     Set moved = seal.MoneyMovedBefore()
     Do s.%Set("money_moved_before_seal", moved, "boolean")
     Set state = $SELECT('v.ok && (v.state = "tampered"): "tampered", 'v.ok: "unverifiable", moved: "sealed_after_money_moved", 1: "intact")

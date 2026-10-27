@@ -25,6 +25,9 @@ Property EvidenceRefsJSON As %String(MAXLEN = 1024);
 /// JSON object, values null
 Property MissingJSON As %String(MAXLEN = 4000);
 
+/// Structurally validated proposal before context/policy changes. Diagnostic only, never authority.
+Property ProposalJSON As %String(MAXLEN = "");
+
 /// JSON array of {name,args,output}
 Property ToolsJSON As %String(MAXLEN = "");
 

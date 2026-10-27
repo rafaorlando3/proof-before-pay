@@ -33,7 +33,7 @@ has regression coverage. Inputs are synthetic; no real payment or external ancho
 - [x] Witness compiled and both methods tested in actual build154 IRIS.
 - [x] TypeScript/Python test workflow prepared.
 - [x] GitHub workflow confirmed green for the published commit (see validation and repository Actions).
-- [ ] Claude review received for the corrected bridge and intended workflow.
+- [x] Claude code review received (C-1163); reservations and follow-up validation recorded.
 - [x] Native AI Hub agent participates in a working Interoperability production, with actual native tool calls.
 - [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
 - [ ] Public authenticated demo with qualified model inference.
@@ -60,3 +60,11 @@ The [official contest page](https://openexchange.intersystems.com/contest/49) li
 
 This is a recording plan. No video has been produced; native workflow results are in validation.
 The EAP archive and derived images must never enter the source package or a public registry.
+
+## Source candidate
+
+From a clean committed checkout, run `python3 scripts/package_source.py /absolute/output/directory`
+to produce a deterministic source ZIP and per-file SHA-256 manifest. The output must be outside the
+checkout. The packaging gate excludes credentials, private evaluation data and the separately licensed
+vendor kit. This source archive is a candidate, not an Open Exchange submission or approval request.
+The private held-out model benchmark, final demo/video and Rafael's final review remain separate gates.

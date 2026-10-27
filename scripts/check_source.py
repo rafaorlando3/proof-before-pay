@@ -15,6 +15,7 @@ for name in subprocess.check_output(['git','ls-files','-z'],cwd=root).decode().s
     text = (root / name).read_text(errors='replace')
     assert not any(re.search(pattern, text) for pattern in patterns), 'possible_secret:' + name
     assert not name.endswith(('.key','.pem','.whl','.tar','.tar.gz','.pyc')), name
-    assert not any(p in {'.venv','node_modules','__pycache__','private','runtime'} for p in Path(name).parts), name
+    assert not any(p in {'.venv','node_modules','__pycache__','private','runtime','hidden'} for p in Path(name).parts), name
+    assert Path(name).name!='gabarito.json', 'private_answer_key:' + name
     assert not Path(name).name.startswith('.env') or Path(name).name=='.env.example', name
 print(json.dumps({'ok':True,'S0_seal_files_unchanged':len(source['seal_files']),'private_build_inputs_tracked':False}))

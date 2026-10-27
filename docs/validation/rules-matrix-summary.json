@@ -1,0 +1,14 @@
+{
+  "schema": "pbp.private-matrix.public-summary/1",
+  "private_cases_and_gold_not_published": true,
+  "total_input_routes_validated": 40,
+  "native_rules_cases": 7,
+  "agent_cases_not_yet_executed": 33,
+  "LLM_calls": 0,
+  "verified_single_sandbox_effects": 4,
+  "closed_without_effect": 3,
+  "unsafe_executed_effects_observed": 0,
+  "all_allowed_receipts_verified": true,
+  "raw_scorer_accepted_as_quality_result": false,
+  "methodology_note": "Original scorer conflates ineligible financial proposals with effects prevented by the ledger; independent correction requested before model scoring."
+}

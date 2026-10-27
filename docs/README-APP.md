@@ -109,3 +109,20 @@ explicit limitation. Development tests are not an independent held-out model ben
 
 New permit/effect events explicitly label raw amounts as **minor units**. Older diagnostic events
 are preserved; the main decision, permit and receipt cards format BRL amounts as reais.
+
+## Review and proposal provenance
+
+The console distinguishes refund approval, acknowledgement of a ledger refusal and acknowledgement
+of a nonfinancial escalation. Only a permitted duplicate-refund plan can produce a sandbox effect.
+A structurally valid model proposal is retained before context enforcement in `ProposalJSON` for
+inspection and evaluation. The API labels this projection `unsealed_diagnostic` and not authoritative;
+changing it cannot authorize an effect or change the sealed decision. Invalid/PII-bearing output is
+not persisted as a proposal. The original sealed inputs and frozen S0 schema remain unchanged.
+
+V1 deliberately requires review for any missing evidence on the model path. This conservative rule
+does not apply to trusted deterministic rules' business criteria. Complete model observations can
+still pass the nonfinancial positive control. This tradeoff is fixed before the private benchmark.
+
+`model.temperature=-1` means the transport sampling temperature was not established. It is a metadata
+sentinel, not a requested negative temperature. When a gateway omits the native client's requested zero,
+set `PBP_LLM_TEMPERATURE_SENT=0`; old seals remain unchanged and retain their documented limitation.

@@ -2,6 +2,7 @@
   "actual_bank_payment": false,
   "actual_reported_spend_usd": "0.01699175",
   "automated_test_review_is_Rafael_approval": false,
+  "billing_verified": false,
   "cases_per_model": 1,
   "date": "2026-10-26",
   "distinct_scenarios": 1,
@@ -1863,6 +1864,8 @@
       "review_note_sealed": false
     }
   ],
+  "sampling_metadata_note": "Historical seals retain requested values. Effective Gemini 3.8 temperature is not established; current Google documentation says the parameter is ignored. GPT baseline omitted temperature. Subsequent records use -1 sentinel.",
+  "sampling_temperature_verified": false,
   "scenario": "Fixture pix-0001 with unique ids/refs, trusted refund_payment_ref and ledger-supported legacy exception duplicate_charge (no deterministic R1 match)",
   "schema": "pbp.native.live-provider-smoke/1",
   "source_commit": "db7c75c7ec5cf32730bf1f13ba4e489a758db7bf",

@@ -36,7 +36,7 @@ Method Decide(pRequest As pbp.Msg.DecisionRequest, Output pResponse As pbp.Msg.D
     Set pResponse.Ok = 0
     Set pResponse.Mode = "live"
     Set pResponse.CostMicroUSD = -1
-    Set pResponse.Temperature = 0
+    Set pResponse.Temperature = ..RecordedTemperature()
     Set pResponse.ModelProvider = ##class(pbp.Agent).ProviderId()
     Set pResponse.ModelId = ##class(pbp.Agent).ModelId()
     Set caseId = pRequest.CaseId
@@ -54,6 +54,14 @@ Method Decide(pRequest As pbp.Msg.DecisionRequest, Output pResponse As pbp.Msg.D
     }
     If 'pResponse.Ok Do ##class(pbp.Util).Log("warn", "pbp.Operation.Agent", "decision not produced: " _ pResponse.Reason, caseId)
     Quit $$$OK
+}
+
+/// A gateway that omits the requested temperature must explicitly disclose that transport fact.
+ClassMethod RecordedTemperature() As %Numeric
+{
+    // Current Google API documentation states Gemini 3.8 ignores this sampling parameter.
+    If $ZCONVERT(##class(pbp.Agent).ModelId(),"L") [ "gemini-3.8-flash" Quit -1
+    Quit $SELECT(##class(pbp.Util).Env("PBP_LLM_TEMPERATURE_SENT","1")="0":-1,1:0)
 }
 
 Method Live(pRequest As pbp.Msg.DecisionRequest, pResponse As pbp.Msg.DecisionResponse)

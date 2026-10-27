@@ -103,3 +103,11 @@ the application rejects a custom base URL for provider=gemini and requires an ex
 transport selection. A native constructor regression covers both the rejection and valid standard
 Gemini/OpenAI configurations, without inference. Do not treat a successful constructor alone as
 proof that network routing works.
+
+## Sampling metadata correction
+
+Google's current [GenerationConfig documentation](https://ai.google.dev/api/generate-content#v1beta.GenerationConfig)
+states that Gemini 3.6 Flash and newer ignore temperature. Accordingly, subsequent Gemini 3.8 records
+use the numeric sentinel -1 for an unknown effective sampling temperature, even when zero was requested.
+Other transports that omit the parameter must set PBP_LLM_TEMPERATURE_SENT=0. No S0 schema change or
+historical seal rewrite is made. A requested zero and a known effective zero are different claims.

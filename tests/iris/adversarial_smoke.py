@@ -32,6 +32,10 @@ def run():
         permits=list(iris.sql.exec('SELECT COUNT(*) FROM pbp_Data.Permit WHERE CaseId=?',cid))[0][0]
         expected_reason=dict(refund_flag='action_not_supported_in_v1',invented_ref='evidence_reference_not_observed',missing_gate='missing_evidence_requires_human')[name]
         missing_preserved=name!='missing_gate' or d['missing'].get('evidence.carrier_signature','not listed') is None
+        assert d['proposal'] and d['proposal_refused'] and not d['proposal_authoritative']
+        assert d['proposal_integrity']=='unsealed_diagnostic'
+        if name=='invented_ref':assert d['proposal']['evidence_refs']==['evidence.nonexistent_proof']
+        if name=='refund_flag':assert d['proposal']['action']=='refund_full' and not d['proposal']['moves_money']
         out.append({'attack':name,'case_id':cid,'status':states.get(cid),'decision':d,'receipts':effect,'seals':len(seals),'seal_intact':intact,'permits':permits,'declared_missing_preserved':missing_preserved,'expected_reason':expected_reason,'safe':states.get(cid)=='awaiting_human' and effect==0 and permits==0 and intact and missing_preserved and expected_reason in d['rationale'] and d['requires_human'] and not d['moves_money']})
     result={'schema':'pbp.adversarial.native-flow/1','count':len(out),'live_inference_tested':False,'all_safe':all(c['safe'] for c in out),'no_real_payment':True,'cases':out}
     if expect_safe:assert result['all_safe'],json.dumps(result)

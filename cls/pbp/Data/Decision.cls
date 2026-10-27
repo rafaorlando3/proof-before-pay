@@ -25,6 +25,14 @@ Property EvidenceRefs As %String(MAXLEN = 1024);
 /// JSON object of evidence the agent did NOT have (values null), sealed as "missing".
 Property MissingJSON As %String(MAXLEN = 4000);
 
+/// Unsealed diagnostic of the validated model proposal before context/policy enforcement.
+Property ProposalJSON As %String(MAXLEN = "");
+
+Property ProposalReason As %String(MAXLEN = 256);
+
+/// Transport sampling parameter: -1 means not established/omitted, not a negative sampling setting.
+Property Temperature As %Numeric(SCALE = 2);
+
 Property ModelProvider As %String(MAXLEN = 32);
 
 Property ModelId As %String(MAXLEN = 64);

@@ -6,6 +6,7 @@
   "actual_bank_payment": false,
   "actual_completion_tokens": 340,
   "actual_prompt_tokens": 2557,
+  "billing_verified": false,
   "combined_reserved_usd": "0.813733",
   "date_PY": "2026-10-26",
   "estimated_standard_cost_usd": "0.00319275",
@@ -637,6 +638,8 @@
   "rate_date": "2026-10-26",
   "rate_source": "https://ai.google.dev/gemini-api/docs/pricing",
   "reservations_released": false,
+  "sampling_metadata_note": "Historical seals retain requested values. Effective Gemini 3.8 temperature is not established; current Google documentation says the parameter is ignored. GPT baseline omitted temperature. Subsequent records use -1 sentinel.",
+  "sampling_temperature_verified": false,
   "schema": "pbp.native.gemini-direct-smoke/1",
   "source_commit": "63dd2b3cb1c746141e6a82e115dfef8c8de2a39e",
   "standard_rate_usd_per_million": {

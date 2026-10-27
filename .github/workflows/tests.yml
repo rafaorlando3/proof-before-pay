@@ -30,3 +30,4 @@ jobs:
       - run: python -I -B tests/offline_runner.py
       - run: python -m pytest -q python/tests
       - run: python scripts/check_source.py
+      - run: python scripts/package_source.py

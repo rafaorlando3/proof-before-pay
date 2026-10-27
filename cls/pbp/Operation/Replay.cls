@@ -85,6 +85,7 @@ ClassMethod ValidateContext(response As pbp.Msg.DecisionResponse)
 /// Copy a validated decision object into the response.
 ClassMethod Fill(pResponse As pbp.Msg.DecisionResponse, d As %DynamicObject)
 {
+    Set pResponse.ProposalJSON=d.%ToJSON()
     Set pResponse.Action = d.action
     Set pResponse.MovesMoney = d."moves_money"
     Set pResponse.AmountMinor = $SELECT(d."amount_minor" = "": "", 1: d."amount_minor")

@@ -1,0 +1,14 @@
+{
+  "schema": "pbp.browser.ui-review/1",
+  "ok": true,
+  "case_id": "ui-refund:7bb06cb6d2",
+  "decision_commitment": "018f1dc930ddcfccdbbe02528652042f1aa799faf61a4029e729cb55b958ca37",
+  "reviewer": "PBPLabReviewer20261026",
+  "effect_count": 1,
+  "receipt_integrity_verified": true,
+  "permit_consumed": true,
+  "automated_note_sealed": true,
+  "recorded_mode": true,
+  "real_money_moved": false,
+  "not_Rafael_submission_approval": true
+}

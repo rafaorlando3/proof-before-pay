@@ -66,6 +66,21 @@ async function api(path, opts){
   } catch(e){return {ok:false,reason:'connection_unavailable'};}
 }
 
+const REASONS = {
+  decision_context_invalid:'the proposal cited evidence the tools did not return or its flags contradicted the policy; a person decides',
+  evidence_reference_not_observed:'cited evidence that no tool returned', refund_flags_inconsistent:'a refund must move money and go to a reviewer',
+  nonfinancial_action_moves_money:'a non-financial action cannot move money', action_not_supported_in_v1:'action outside the v1 contract',
+  review_action_requires_human:'this action requires a reviewer', missing_evidence_requires_human:'evidence was missing, so a person decides',
+  required_tool_not_observed:'the agent skipped a required tool', model_output_invalid:'the model did not return a valid decision',
+  llm_call_failed:'the model call failed', agent_adapter_not_initialized:'live agent not configured (no key or model)',
+  test_recipient_required:'a synthetic refund destination is missing or invalid', refund_cap_exceeded:'above the test-ledger cap', required_evidence_missing:'refund destination or order evidence missing',
+  currency_mismatch:'currency not supported by the test ledger', unsupported_exception:'exception type not refundable in v1',
+  payment_already_staged:'this Pix payment was already staged in another decision', human_required:'every refund needs a reviewer',
+  permit_expired:'the single-use permit expired', permit_binding_mismatch:'the request did not match the permit',
+  authenticated_review_required:'the test ledger has not been authorized in a reviewer session', reviewed_version_changed:'the case changed since you opened it; reload',
+  expected_commitment_required:'reload the case and approve again', review_forbidden:'your login lacks PBPReview:U'
+};
+function human(code){ if(!code) return ''; const c=String(code); for(const k of Object.keys(REASONS).sort((a,b)=>b.length-a.length)){ if(c.includes(k)) return REASONS[k]+' ('+esc(c)+')'; } return esc(c); }
 const chipFor = st => ({closed:'ok',effected:'ok',closed_no_effect:'info',awaiting_human:'warn',blocked:'bad',rejected:'bad',sealed:'info',permitted:'info'})[st] || '';
 function money(min, cur){ if(!min) return ''; const n = Number(min); return (n/100).toLocaleString('en-US',{minimumFractionDigits:2})+' '+(cur||''); }
 async function loadHealth(){ const h = await api('/health'); if(!h.ok){$('#mode').textContent='status unavailable · '+h.reason;return;} const w = await api('/whoami'); me = {user:w.user, can_review:!!w.can_review};
@@ -82,28 +97,35 @@ async function loadCases(){ const r = await api('/cases?limit=200'); if(!r.ok){$
   const scrollTop=$('#cases').scrollTop;
   $('#cases').innerHTML = list.length ? list.map(c => `<div class="case ${current===c.case_id?'active':''}" data-id="${esc(c.case_id)}">
      <div class="row"><b>${esc(c.case_id)}</b><span class="chip ${chipFor(c.status)}">${esc(c.status)}</span></div>
-     <div class="row small muted"><span>${esc(c.exception)}</span><span>·</span><span>${esc(c.reason||'')}</span></div></div>`).join('') : '<div class="empty">No cases yet. Feed the synthetic cases from the terminal: Do ##class(pbp.Setup).FeedCases()</div>';
+     <div class="row small muted"><span>${esc(c.exception)}</span><span>·</span><span>${c.status==='blocked'?human(c.reason):esc(c.reason||'')}</span></div></div>`).join('') : '<div class="empty">No cases yet. Feed the synthetic cases from the terminal: Do ##class(pbp.Setup).FeedCases()</div>';
   $('#cases').scrollTop=scrollTop;
   document.querySelectorAll('.case').forEach(el => el.onclick = () => open(el.dataset.id)); }
 function sealCard(s, i){ const st = s.verification?.state || 'unverifiable';
   return `<div class="seal ${st}"><div class="row"><span class="chip info">${esc(s.kind)}</span><span class="state">${esc(st.replace(/_/g,' '))}</span>
    <span class="muted small">${esc(s.sealed_at)}</span>${s.money_moved_before_seal?'<span class="chip bad">money moved before this seal</span>':''}</div>
    <div class="mono small">commitment ${esc(s.commitment)}</div>
-   <div class="mono small muted">prev ${esc(s.prev||'none (first record of the case)')} · bridge ${esc(s.verification?.bridge_state)} (${esc(s.verification?.reason)}) · anchored: ${s.verification?.on_chain_verified?'yes':'no (local chain of hashes)'}</div>
+   <div class="mono small muted">prev ${esc(s.prev||'none (first record of the case)')} · bridge ${esc(s.verification?.bridge_state)} (${esc(s.verification?.reason)}) · anchored: ${s.verification?.on_chain_verified?'yes':'no (local chain of hashes)'}${s.ledger_state?' · test ledger at sealing: '+human(s.ledger_state):''}</div>
    <div class="row" style="margin-top:6px"><button class="secondary" onclick="tamper('${esc(s.commitment)}')">Try to tamper</button><button class="secondary" onclick="showRecord('${esc(s.commitment)}')">Show sealed record</button></div>
    <div id="tamper-${esc(s.commitment)}"></div></div>`; }
 async function open(id){ current = id; await loadCases(); const d = await api('/cases/'+encodeURIComponent(id)); if(!d.ok){ $('#detail').innerHTML = `<div class="empty">${esc(d.reason)}</div>`; return; }
   const c = d.case, dec = d.decision, p = d.permit, rc = d.receipt;
   currentCommitment = c.commitment || '';
   const missing = dec && dec.missing ? Object.keys(dec.missing) : [];
+  const refusedMatch = dec && /did not return a valid decision \(([^)]*)\)/.exec(dec.rationale||'');
+  const refused = refusedMatch ? refusedMatch[1] : '';
+  const headSeal = (d.seals||[]).find(s0 => s0.commitment === c.commitment) || null;
+  const ledgerBlocked = headSeal && /^blocked:/.test(headSeal.ledger_state||'') ? headSeal.ledger_state.replace(/^blocked:/,'') : '';
+  const kind = !dec ? 'none' : (dec.moves_money && !ledgerBlocked) ? 'money' : (dec.moves_money && ledgerBlocked) ? 'blocked' : 'review';
   $('#detail').innerHTML = `
    <div class="row"><h2 style="margin:0">${esc(c.case_id)}</h2><span class="chip ${chipFor(c.status)}">${esc(c.status)}</span><span class="muted small">${esc(c.reason||'')}</span></div>
    <div class="row small muted" style="margin:6px 0 12px"><span>${esc(c.exception)}</span><span>· store ${esc(c.store)}</span><span>· policy ${esc(c.policy?.id)} v${esc(c.policy?.version)}</span><span>· trace session ${esc(c.session_id||'')}</span></div>
    <div class="grid2">
     <div>
      <div class="panel" style="margin-bottom:12px"><h2>Decision</h2>${dec ? `
-      <div class="row"><b>${esc(dec.action)}</b><span class="chip ${dec.source==='rules'?'info':'warn'}">${esc(dec.source)}${dec.model?.mode?' · '+esc(dec.model.mode):''}</span>${dec.moves_money?`<span class="chip bad">moves money ${esc(money(dec.amount_minor, c.input?.currency))}</span>`:'<span class="chip ok">no money</span>'}${dec.requires_human?'<span class="chip warn">requires human</span>':''}</div>
+      <div class="row"><b>${esc(dec.action)}</b><span class="chip ${dec.source==='rules'?'info':'warn'}">${esc(dec.source)}${dec.model?.mode?' · '+esc(dec.model.mode):''}</span>${dec.moves_money?`<span class="chip bad">moves money ${esc(money(dec.amount_minor, c.input?.currency))}</span>`:'<span class="chip ok">no money</span>'}${dec.requires_human?'<span class="chip warn">requires human</span>':''}${refused?'<span class="chip bad">proposal refused by the guard</span>':''}${ledgerBlocked?`<span class="chip bad">ledger refused: ${human(ledgerBlocked)}</span>`:''}</div>
       <p>${esc(dec.rationale)}</p>
+      ${refused?`<div class="small" style="margin:4px 0 8px"><b>Why the proposal was refused:</b> ${human(refused)}. The sealed decision is the escalation, with the evidence the agent did and did not see preserved; the original proposal is shown separately as an unsealed diagnostic.</div>`:''}
+      ${dec.proposal?`<details><summary>${dec.proposal_refused?"Refused proposal":"Model proposal"} (unsealed diagnostic, not authority)</summary><pre>${esc(JSON.stringify(dec.proposal,null,1))}</pre></details>`:''}
       <div class="small"><b>Saw:</b> ${esc((dec.evidence_refs||[]).join(', '))}</div>
       <div class="small"><b>Did not see (sealed as missing):</b> ${missing.length ? esc(missing.join(', ')) : 'nothing missing'}</div>
       <div class="small muted" style="margin-top:6px">${dec.model?.provider ? `model ${esc(dec.model.provider)} / ${esc(dec.model.id)} · ` : ''}${esc(dec.usage?.tool_calls||0)} tool calls · ${esc(dec.usage?.prompt_tokens||0)}+${esc(dec.usage?.completion_tokens||0)} tokens · ${(dec.usage?.cost_micro_usd==null || dec.usage?.cost_micro_usd<0) ? 'cost unknown' : esc((dec.usage.cost_micro_usd/1e6).toFixed(5))+' USD'} · ${esc(dec.usage?.duration_ms||0)} ms · confidence ${esc(dec.confidence)}</div>` : '<div class="muted">no decision yet</div>'}
@@ -114,8 +136,8 @@ async function open(id){ current = id; await loadCases(); const d = await api('/
      </div>
      ${c.status==='awaiting_human' ? `<div class="panel" style="margin-bottom:12px"><h2>Review (as ${esc(me.user)})</h2>
       <div class="small">You are approving exactly this sealed decision: <span class="mono">${esc(c.commitment)}</span></div>
-      ${me.can_review ? `<input type="text" id="note" placeholder="note for the sealed approval (optional)"><div class="row" style="margin-top:8px"><button onclick="review('Approve')">Approve</button><button class="danger" onclick="review('Reject')">Reject</button></div>
-      <div class="small muted" style="margin-top:6px">The request carries the commitment shown above; if the case changed since you opened it, the server refuses. Approving records your IRIS login in the test ledger, completes the native Workflow task, seals the approval, issues a single-use permit bound to this seal and executes the TEST effect once.</div>` : '<div class="muted small">Your user lacks PBPReview:U. Use this console to record authenticated ledger authorization.</div>'}
+      ${me.can_review ? `<input type="text" id="note" placeholder="note for the sealed approval (optional)"><div class="row" style="margin-top:8px"><button onclick="review('Approve')">${kind==='money'?'Approve refund':'Acknowledge'}</button><button class="danger" onclick="review('Reject')">Reject</button></div>
+      <div class="small muted" style="margin-top:6px">The request carries the commitment shown above; if the case changed since you opened it, the server refuses. ${kind==='money' ? 'Approving records your IRIS login in the test ledger, completes the native Workflow task, seals the approval, issues a single-use permit bound to this seal and executes the TEST effect once ('+esc(money(dec.amount_minor, c.input?.currency))+' to '+esc(c.input?.recipient_ref||'unknown')+').' : kind==='blocked' ? 'The test ledger refused this refund ('+human(ledgerBlocked)+'). Approving only acknowledges the sealed decision: no permit, no effect. Rejecting records a rejection.' : 'This decision moves no money. Approving acknowledges the escalation (sealed, no permit, no effect) so the case can be handled outside this flow; rejecting records a rejection.'}</div>` : '<div class="muted small">Your user lacks PBPReview:U. Use this console to record authenticated ledger authorization.</div>'}
       <div id="review-result"></div></div>` : ''}
      <div class="panel"><h2>Timeline</h2><ul class="timeline">${(d.events||[]).map(e=>`<li><span class="mono muted">${esc(e.at)}</span><span><b>${esc(e.kind)}</b> ${esc(e.detail||'')}${e.ref?` <span class="mono muted">${esc(e.ref)}</span>`:''}</span></li>`).join('')}</ul></div>
     </div>
@@ -131,7 +153,7 @@ async function open(id){ current = id; await loadCases(); const d = await api('/
 }
 async function review(action){ const note = $('#note')?.value || ''; if(!currentCommitment){ $('#review-result').innerHTML = '<div class="verdict warn">no sealed decision shown; reload the case</div>'; return; }
   const r = await api('/review/'+encodeURIComponent(current), {method:'POST', body: JSON.stringify({action, note, commitment: currentCommitment})});
-  $('#review-result').innerHTML = `<div class="verdict ${r.ok?'ok':'bad'}">${r.ok ? (action==='Approve'?'Approved':'Rejected')+' by '+esc(r.user)+(r.ledger_state?' · ledger '+esc(r.ledger_state):'') : 'refused: '+esc(r.reason)}</div>`;
+  $('#review-result').innerHTML = `<div class="verdict ${r.ok?'ok':'bad'}">${r.ok ? (action==='Approve'?'Approved':'Rejected')+' by '+esc(r.user)+(r.ledger_state?' · ledger '+esc(r.ledger_state):'') : 'refused: '+human(r.reason)}</div>`;
   setTimeout(()=>{ open(current); loadStats(); }, 2500); }
 async function showRecord(c){ const s = await api('/seals/'+c); const box = $('#tamper-'+c); box.innerHTML = `<pre>${esc(JSON.stringify(s.record, null, 1))}</pre>`; }
 async function tamper(c){ const s = await api('/seals/'+c); const box = $('#tamper-'+c);
