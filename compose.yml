@@ -2,6 +2,7 @@ name: proof-before-pay
 services:
   iris:
     image: proof-before-pay:local
+    hostname: ${PBP_IRIS_HOSTNAME:-pbp-iris}
     build:
       context: .
       args:

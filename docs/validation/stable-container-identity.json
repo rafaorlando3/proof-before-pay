@@ -1,0 +1,21 @@
+{
+  "schema": "pbp.native.stable-container-identity/1",
+  "source_sha": "27290347bcf053fe9a72e305343ce0ee72896065",
+  "ok": true,
+  "recreated_container": true,
+  "hostname_preserved": true,
+  "same_original_durable_volume": true,
+  "vendor_health_after_seconds": 46,
+  "vendor_health": "healthy",
+  "apparent_failover_alert_absent": true,
+  "old_receipt_same": true,
+  "receipt_integrity_verified": true,
+  "effect_count": 1,
+  "unrelated_running_container_ids_preserved": true,
+  "external_before_after_sets_saved_privately": true,
+  "paid_calls": 0,
+  "financial_effects_reexecuted": 0,
+  "no_alert_clear_or_health_bypass": true,
+  "deployment_under_test": "Direct Docker recreation of the existing instance with its observed hostname preserved; source272 runtime unchanged. Compose default and migration override separately parsed with docker compose config.",
+  "compose_default_and_override_validated": true
+}

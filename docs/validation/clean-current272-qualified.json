@@ -1,0 +1,33 @@
+{
+  "schema": "pbp.native.clean-qualified/1",
+  "source_sha": "27290347bcf053fe9a72e305343ce0ee72896065",
+  "overall_ok": false,
+  "functional_checks_passed": true,
+  "baked_runtime_files_matching_source": 106,
+  "source_manifest_sha256": "d549ef2b894b76a919b067988d1cf4fbe5a082fa405f9298442934cc69b1838c",
+  "bridge_checks": 12,
+  "ledger_checks": 39,
+  "ledger_concurrent_execution_sessions": 12,
+  "native_workflow_unit_methods": 29,
+  "workflow_E2E_checks": 48,
+  "checks": [
+    "fresh_volume_recursive_compile_install_and_production_ready",
+    "no_network_no_ports_no_provider_key",
+    "pinned_baked_source_matches_manifest",
+    "offline_test_refuses_live_configuration_before_setup_feed",
+    "bridge_on_fresh_volume",
+    "ledger_on_fresh_volume",
+    "workflow_on_fresh_volume",
+    "restart_preserves_same_verified_receipt_and_one_effect",
+    "recreate_preserves_same_verified_receipt_and_one_effect",
+    "process_kill_preserves_same_verified_receipt_and_one_effect",
+    "original_named_volumes_and_main_service_restored"
+  ],
+  "unrelated_running_container_ids_preserved": false,
+  "qualification": "The job returned false on the unrelated-container ID guard; the initial ID set was not persisted. Functional results do not establish a full release pass. No cause for that guard mismatch has been proved.",
+  "original_volumes_retained": true,
+  "scratch_evidence_volume_retained": true,
+  "paid_inference": false,
+  "vendor_image_distributed": false,
+  "final_operator_installation_pending": true
+}

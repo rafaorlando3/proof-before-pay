@@ -30,6 +30,35 @@ limit above 32 characters. It is now `Proof Before Pay EAP`. The final configura
 successfully starts a fresh container, compiles Witness and passes bridge tests.
 The application now persists instance/security/case/receipt data in a named durable volume; recreation reloads source and retains that volume. Removing the volume deliberately erases laboratory data.
 
+On 27 October, recreating a container with its existing durable volume but a new
+Docker-generated hostname produced `System appears to have failed over from node`
+in the IRIS alert log. The vendor health check subsequently failed even though the
+Production/API were available. A restart on the same node restored vendor health;
+the original receipt remained intact with one effect. No alert was cleared and no
+health check was overridden.
+
+A subsequent [native recreation check](validation/stable-container-identity.json)
+preserved the observed hostname and the original named volume. After 46 seconds,
+vendor health passed, the apparent-failover alert was absent and the same original
+receipt still verified with one effect. Complete before/after unrelated-container
+ID sets were saved privately and matched for this check. This narrower result does
+not repair the missing audit snapshot of the earlier clean-install job.
+
+Compose now sets a stable hostname, `pbp-iris`. When migrating an existing durable
+instance, preserve its current hostname instead of adopting the default:
+
+```sh
+docker inspect --format '{{.Config.Hostname}}' <existing-container>
+PBP_IRIS_HOSTNAME=<observed-hostname> docker compose up -d
+```
+
+Keep that override in subsequent invocations. Do not mount the same durable volume
+in two running instances. Check vendor health after the monitor has had time to
+run, inspect actual alerts, and verify an existing receipt after migration. HTTP200
+alone does not establish runtime health. This hostname finding does not establish
+the cause of every historical health alert or resolve the separate EAP Sharding
+message below.
+
 An EAP startup log also contains `<METHOD DOES NOT EXIST>Sharding+2^STU *Sharding,SYS.ICM`.
 IRIS health, compilation and tested bridge calls still pass. This message is retained
 as a vendor EAP observation; its wider impact has not been established.

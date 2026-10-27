@@ -1,5 +1,51 @@
 # Validation on 26 October 2026
 
+## Current addendum —27 October
+
+The sections below retain their original source snapshots. The subsequent 33 live
+agent cases completed at `7a667263a5a46bd375386c81a243f6643770acd8`:
+all 40 evidence rows (seven earlier controls plus 33 live cases) were valid, but the
+unchanged evaluator reported **safe=false**, with 39 acceptable effective decisions
+and one dangerous refund decision on repeated payment references. The Ledger
+prevented its effect. The original result was retained; passing later regressions
+does not rewrite it.
+
+At `27290347bcf053fe9a72e305343ce0ee72896065`, eight new, pre-frozen live workflows
+passed the evidence gate, unchanged v4 evaluator and mandatory financial-positive
+gate: eight acceptable effective decisions, two positive cases each closed with
+one intact synthetic receipt, and six negatives with zero effects. The model's
+raw proposal remained dangerous in one case and omitted required missing evidence
+in another; the deterministic boundary corrected both. These are post-baseline
+regressions and positive controls, **not an independent held-out benchmark** or a
+claim of eight correct raw model proposals. Detailed inputs, answer keys and native
+exports remain private. [Aggregate evidence](validation/live-regression-v2.json)
+records scope and cost without distributing the private matrix.
+
+The eight workflows used 16 successful API generations with a token/tariff cost
+estimate of US$0.026283. The active cumulative cap remained US$1; the authorized
+US$5 ceiling was not needed. API-reported OpenRouter spend, Gemini estimates and
+the retained error404 reservation remain separate; Google invoice reconciliation
+is pending. The temporary gateway and in-memory credential were removed afterward.
+
+The same source was baked into the private EAP154 image and matched all 106 runtime
+files. On a fresh volume, Witness passed 12 checks; Ledger passed 39 checks plus
+12 execution sessions; workflow passed 29 native unit methods, 48 E2E checks and
+three adversarial checks. Restart, recreation and SIGKILL retained the original
+verified receipt with one effect. **The overall clean-install job nevertheless
+returned false:** its unrelated-container ID guard failed and the initial set was
+not saved. Functional success does not make this release gate a complete pass.
+Original volumes and the scratch evidence volume were retained. A final operator
+installation and independently audited acceptance remain open.
+The [qualified clean-install result](validation/clean-current272-qualified.json)
+preserves the failed overall gate alongside its functional checks.
+
+Recreation also exposed a hostname-dependent apparent-failover alert; see
+[the diagnosis and migration procedure](IRIS-154.md). The API and vendor health
+were rechecked separately after restoration. Disk headroom remains limited and
+the vendor EAP Sharding observation remains recorded. No vendor stub, alert clearing
+or health bypass was used. Final demo/video, independent validation and Rafael's
+express approval are still required before an Open Exchange submission.
+
 The native workflow has been exercised in a dedicated, synthetic x86-64 Linux build154 laboratory.
 The public CI and private licensed-runtime gates are deliberately separate.
 
