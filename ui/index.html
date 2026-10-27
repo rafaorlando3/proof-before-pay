@@ -559,7 +559,7 @@ function financialBlock(x, cur, dest){
   const pays = (fin.payments||[]);
   const delta = fin.delta_minor;
   const deltaTxt = delta==null ? 'unknown' : (Number(delta)>0?'+':'')+money(delta, ccy);
-  
+
   const missingTarget = dec && dec.missing && Object.prototype.hasOwnProperty.call(dec.missing,'refund_target');
   return `<div class="facts" style="margin-top:12px">
     <div class="fact"><div class="k">Order</div><div class="v">${fin.order?.amount_minor!=null?money(fin.order.amount_minor, fin.order.currency||ccy):'unknown'}</div></div>
