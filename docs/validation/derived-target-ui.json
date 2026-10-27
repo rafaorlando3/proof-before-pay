@@ -1,0 +1,20 @@
+{
+  "amount_minor": "8400",
+  "approved_by": "PBPLabReviewer20261026",
+  "case_id": "derived-target:55af3f18",
+  "derived_target": "pix:derived:B:55af3f18",
+  "effect_count": 1,
+  "effect_count_before_UI_review": 0,
+  "heldout_benchmark": false,
+  "input_had_refund_target": false,
+  "mode": "recorded",
+  "no_paid_calls": true,
+  "no_real_money": true,
+  "note_sealed": true,
+  "ok": true,
+  "receipt_integrity_verified": true,
+  "review_submitted_via_UI": true,
+  "schema": "pbp.native.derived-target-ui/1",
+  "source": "model",
+  "target_derived_without_prose": true
+}

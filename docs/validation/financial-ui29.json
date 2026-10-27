@@ -1,0 +1,16 @@
+{
+  "schema": "pbp.native.financial-ui/1",
+  "mode": "recorded",
+  "case_id": "derived-target:55af3f18",
+  "actual_viewport": {
+    "height": 954,
+    "width": 332
+  },
+  "page_overflow": false,
+  "timers_advanced_without_case_change": true,
+  "draft_note_preserved": true,
+  "minor_units_exact_format_checks": 4,
+  "native_case_with_server_derived_target": true,
+  "mock": false,
+  "no_paid_calls": true
+}

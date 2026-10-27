@@ -163,3 +163,24 @@ decision's creation time. It includes tool name, reason code and timestamp, with
 explicit availability flag. It is unsealed and non-authoritative, does not claim complete
 coverage, and is never mixed with the tool outputs the agent actually observed. No raw
 diagnostic message or extra permission grant is exposed by this view.
+
+
+## Refund payment binding on the agent path
+
+A model refund proposal never chooses its target through prose. The server validates exactly
+two distinct payment references, matching order/payment minor units, payer, recipient when known
+and BRL currency. It preserves an explicitly observed input target. When no target was supplied,
+it derives the strictly later payment using timezone-aware timestamps; missing, invalid or tied
+times remain unknown and produce a sealed human escalation. A missing recipient stays missing.
+The ledger independently validates the resulting sealed binding and requires authenticated approval.
+
+The sealed input snapshot is normalized context, including server policy/refund bindings. It is
+not a verbatim copy of the intake or of an LLM prompt. Sealed tool outputs remain the actual outputs
+returned during the decision. The console labels these sources separately and uses only verified
+sealed financial facts, exact integer minor units, and server-derived stage/permit expiry windows.
+Consumed permits and completed reviews are displayed as completed, rather than as active windows.
+
+Native recorded regression evidence: [derived target and authenticated UI review](validation/derived-target-ui.json).
+That test supplied no refund target, verified the derived binding in the seal, observed zero effects
+before browser approval, and then verified one effect and an intact receipt. It is a development
+regression, not an independent live-model benchmark.

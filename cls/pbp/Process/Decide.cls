@@ -240,6 +240,11 @@ Method BuildDecisionRecord(input As %DynamicObject, pol As pbp.Data.Policy, d As
             Set enforced = enforced _ " Policy: action '" _ action _ "' is not allowed; escalated to a person."
             Set action = "escalate_to_human", moves = 0, human = 1, amount = ""
         }
+        // Keep an absent refund destination visible even if the model already escalated.
+        If $ISOBJECT(resp) && ((..ExceptionType="duplicate_charge") || (..ExceptionType="duplicate_payment")) && (input."recipient_ref"="") {
+            Do d.missing.%Set("refund_target","","null")
+            Set human=1
+        }
         If moves {
             If (amount = "") || '##class(pbp.Util).IsMinorAmount(amount) || (amount = "0") {
                 Set enforced = enforced _ " Policy: amount unknown or invalid; a person must confirm."
@@ -252,6 +257,17 @@ Method BuildDecisionRecord(input As %DynamicObject, pol As pbp.Data.Policy, d As
                 If 'human Set enforced = enforced _ " Policy: refund destination unknown; a person must choose it."
                 Set human = 1
                 Do d.missing.%Set("refund_target", "", "null")
+            }
+        }
+        If $ISOBJECT(resp) && moves && (action="refund_duplicate") {
+            // Validate existing targets too; a model guard is not the only defence.
+            Set target=##class(pbp.RefundTarget).Derive(input,.why)
+            If target="" {
+                Set enforced=enforced_" Policy: refund binding could not be established ("_why_"); a person decides."
+                Set action="escalate_to_human",moves=0,human=1,amount=""
+                Do d.missing.%Set("refund_target","","null")
+            } Else {
+                Set input."refund_payment_ref"=target
             }
         }
         If enforced '= "" Set rationale = $EXTRACT(rationale _ enforced, 1, 800)
@@ -299,6 +315,11 @@ Method BuildDecisionRecord(input As %DynamicObject, pol As pbp.Data.Policy, d As
         If $ISOBJECT(case) && (case.HeadCommitment '= "") { Set r.prev = case.HeadCommitment } Else { Do r.%Set("prev", "", "null") }
         Set ..DecisionJSON = dec.%ToJSON()
         Set ..MissingJSON = d.missing.%ToJSON()
+        If $ISOBJECT(resp) && $ISOBJECT(case) && (input."refund_payment_ref"'="") {
+            Set case.InputJSON=input.%ToJSON()
+            Set save=case.%Save()
+            If $$$ISERR(save) Throw ##class(%Exception.StatusException).CreateFromStatus(save)
+        }
         Do ..SaveDecisionRow(d, dec, resp, tools)
         Set json = r.%ToJSON()
     } Catch ex {

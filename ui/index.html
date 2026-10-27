@@ -210,6 +210,7 @@ input.note{width:100%;height:38px;background:var(--surface-2);color:var(--text);
 @media (max-width:980px){.toast{bottom:80px}}
 .env{gap:10px!important;align-items:center;overflow:visible!important}.system-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap}.env-context{font-size:11px;color:var(--text-2);white-space:nowrap}.environment-details{position:relative;margin:0;border:0;background:transparent}.environment-details>summary{font-size:11px;padding:4px;min-height:28px}.environment-details>.in{position:absolute;right:0;top:100%;width:300px;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);z-index:20}.environment-details .in p:last-child{margin-bottom:0}@media(max-width:980px){.env-context{font-size:10px}.environment-details{display:none}.env{max-width:none!important;flex-direction:column;align-items:flex-end!important;gap:2px!important}.system-status{font-size:11px}}
 @media(max-width:980px){.flow{grid-template-columns:repeat(5,minmax(0,1fr));overflow:visible;gap:4px}.step{padding:8px 5px 8px 8px}.step .n,.step .t{font-size:10px}.step .d{font-size:10px;white-space:normal;overflow-wrap:anywhere}.step::before{width:2px}}
+@media(max-width:600px){.flow{grid-template-columns:1fr;gap:5px}.step{display:grid;grid-template-columns:16px 82px minmax(0,1fr);align-items:center;gap:7px;padding:9px 10px 9px 12px}.step .n,.step .t,.step .d{font-size:11px;margin:0}.step .d{overflow-wrap:break-word}.step::before{top:7px;bottom:7px}}
 .case-hd h2{font-family:inherit;letter-spacing:-.4px}.item .business{font-family:inherit;font-size:13px;font-weight:650;line-height:1.35}
 </style>
 </head>
@@ -285,7 +286,7 @@ const REASONS = {
   review_action_requires_human:'this action requires a reviewer', missing_evidence_requires_human:'evidence was missing, so a person decides',
   required_tool_not_observed:'the agent skipped a required tool', model_output_invalid:'the model did not return a valid decision',
   llm_call_failed:'the model call failed', agent_adapter_not_initialized:'live agent not configured (no key or model)',
-  test_recipient_required:'a synthetic refund destination is missing or invalid', refund_cap_exceeded:'above the test-ledger cap', required_evidence_missing:'refund destination or order evidence missing',
+  test_recipient_required:'a synthetic refund destination is missing or invalid', refund_payment_required:'the refund target (which Pix payment to return) was not identified; a person decides', payment_reference_mismatch:'the two payment references are not distinct or do not match the target', duplicate_evidence_required:'exactly two Pix payments are required for a duplicate refund', refund_cap_exceeded:'above the test-ledger cap', required_evidence_missing:'refund destination or order evidence missing',
   currency_mismatch:'currency not supported by the test ledger', unsupported_exception:'exception type not refundable in v1',
   payment_already_staged:'this Pix payment was already staged in another decision', human_required:'every refund needs a reviewer',
   permit_expired:'the single-use permit expired', ledger_authorization_expired:'this sealed refund review window expired; prepare a new case before approving', permit_binding_mismatch:'the request did not match the permit',
@@ -301,7 +302,12 @@ const STATUS = {
 };
 const stLabel = st => (STATUS[st]||[String(st||'').replace(/_/g,' '),''])[0];
 const stTone  = st => (STATUS[st]||['', st&&st.startsWith('human_')?'ok':''])[1];
-function money(min, cur){ if(min==null || min==='') return ''; const n = Number(min); if(!isFinite(n)) return esc(min); return (n/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+(cur||''); }
+function money(min, cur){
+  if(min==null || min==='') return '';
+  const raw=String(min); if(!/^-?(0|[1-9][0-9]*)$/.test(raw)) return esc(raw);
+  const n=BigInt(raw), a=n<0n?-n:n;
+  return (n<0n?'-':'')+(a/100n).toLocaleString('en-US')+'.'+String(a%100n).padStart(2,'0')+' '+esc(cur||'');
+}
 function costLabel(micro, mode){
   // Honest labels: recorded replays cost nothing; live costs are estimated from tokens x price table (build 154 does not report cost); -1 = unknown.
   if(mode==='recorded') return 'none (recorded replay)';
@@ -396,7 +402,8 @@ function classify(d){
   const refusedMatch = dec && /did not return a valid decision \(([^)]*)\)/.exec(dec.rationale||'');
   const refused = dec && (dec.proposal_refused || refusedMatch) ? (dec.proposal_reason || (refusedMatch?refusedMatch[1]:'guard_refused')) : '';
   const kind = !dec ? 'none' : (dec.moves_money && !ledgerBlocked) ? 'money' : (dec.moves_money && ledgerBlocked) ? 'blocked' : 'review';
-  return {c,dec,p,rc,headSeal,ledgerBlocked,refused,kind};
+  const fin = d.review && typeof d.review==='object' ? d.review : null;
+  return {c,dec,p,rc,headSeal,ledgerBlocked,refused,kind,fin};
 }
 function flow(x, d){
   const {c,dec,p,rc,refused,ledgerBlocked,kind} = x; const st=c.status; const seals=(d.seals||[]).length;
@@ -450,7 +457,8 @@ async function openCase(id, userAction){
   const d = await api('/cases/'+encodeURIComponent(id));
   if(state.current!==id || request!==state.detailRequest) return;
   if(!d.ok){ state.detailSig=''; $('#detail').innerHTML = `<div class="empty">${human(d.reason)}</div>`; return; }
-  const s = sig(d); if(!changed && s===state.detailSig) return; state.detailSig = s;
+  rememberWindows(d);
+  const s = sig(d); if(!changed && s===state.detailSig){ refreshWindows(); return; } state.detailSig = s;
   const x = classify(d); const {c,dec,p,rc,refused,ledgerBlocked,kind} = x;
   state.commitment = c.commitment || '';
   const missing = dec && dec.missing ? Object.keys(dec.missing) : [];
@@ -488,6 +496,8 @@ async function openCase(id, userAction){
       ${refused?`<div class="callout bad"><b>Why the proposal was refused:</b> ${human(refused)}. The sealed decision is the escalation, with the evidence the agent did and did not see preserved. The original proposal is kept separately as an unsealed diagnostic and carries no authority.</div>`:''}
       ${ledgerBlocked?`<div class="callout warn"><b>Test ledger refused the refund:</b> ${human(ledgerBlocked)}. The refusal itself was sealed; no permit and no effect exist for this case.</div>`:''}
       ${dec.proposal?`<details><summary>${refused?'Refused proposal':'Model proposal'} (unsealed diagnostic, not authority)</summary><div class="in"><pre>${esc(JSON.stringify(dec.proposal,null,1))}</pre></div></details>`:''}
+      ${deniedBlock(dec)}
+      ${c.status!=='awaiting_human' && dec.moves_money ? financialBlock(x, cur, dest) : ''}
      ` : '<div class="muted">no decision yet</div>'}
     </div></section>
     <section class="card"><div class="hd"><h3>Permit and test effect</h3><span class="pill info">sandbox</span></div><div class="bd">
@@ -497,7 +507,7 @@ async function openCase(id, userAction){
         <div class="fact"><div class="k">Status</div><div class="v"><span class="pill ${p.status==='consumed'?'ok':'info'}">${esc(p.status)}</span></div></div>
         <div class="fact"><div class="k">Authorized by</div><div class="v">${esc(p.authorized_by)}</div></div>
         <div class="fact"><div class="k">Permit id</div><div class="v mono">${esc(p.permit_id)}</div></div>
-        <div class="fact"><div class="k">Valid until</div><div class="v">${fmtTime(p.expires_at)}</div></div></div>
+        <div class="fact"><div class="k">Valid until</div><div class="v">${fmtTime(p.expires_at)}</div><div class="small muted">${p.status==='consumed'?'consumed':clockSpan('permit:'+p.permit_id,p.remaining_seconds)+' (server-computed)'}</div></div></div>
         <div class="small muted" style="margin-top:8px">single use · bound to seal <span class="mono">${esc(p.commitment)}</span>${p.approval_commitment?` · approval <span class="mono">${esc(p.approval_commitment)}</span>`:''}</div>` : '<div class="muted small">no permit: nothing can move</div>'}
       ${rc ? `<div class="callout ${rc.verification==='intact'?'ok':rc.verification==='tampered'?'bad':'info'}"><b>Receipt</b> <span class="mono">${esc(rc.receipt_id)}</span> · ${esc(rc.status)} · ${money(rc.amount_minor,rc.currency)} to <span class="mono">${esc(rc.recipient)}</span> · ledger ref <span class="mono">${esc(rc.ledger_ref)}</span> · ${fmtTime(rc.effect_at)} · receipt verification: <b>${esc(rc.verification||'unverifiable')}</b></div>` : ''}
     </div></section>
@@ -505,7 +515,7 @@ async function openCase(id, userAction){
    </div>
    <div class="stack">
     <section class="card"><div class="hd"><h3>Seals (chain)</h3><span class="muted small">${(d.seals||[]).length} record${(d.seals||[]).length===1?'':'s'}</span></div><div class="bd">${(d.seals||[]).length ? d.seals.map(sealCard).join('') : '<div class="muted small">not sealed yet</div>'}</div></section>
-    <section class="card"><div class="hd"><h3>Time machine</h3><span class="muted small">what the agent saw</span></div><div class="bd" id="replay"><div class="muted small">loading…</div></div></section>
+    <section class="card"><div class="hd"><h3>Time machine</h3><span class="muted small">sealed context and actual tool outputs</span></div><div class="bd" id="replay"><div class="muted small">loading…</div></div></section>
    </div>
   </div>`;
   bindActions($('#detail'));
@@ -519,14 +529,59 @@ async function openCase(id, userAction){
   if(state.current!==id || request!==state.detailRequest) return;
   const box = $('#replay'); if(!box) return;
   if(!r.ok){ state.detailSig=''; box.innerHTML = `<div class="muted small">Replay unavailable: ${human(r.reason)}</div>`; return; }
-  box.innerHTML = `<details open><summary>Inputs the case arrived with</summary><div class="in"><pre>${esc(JSON.stringify(c.input, null, 1))}</pre></div></details>
+  box.innerHTML = `<details open><summary>Normalized inputs sealed by the server</summary><div class="in"><pre>${esc(JSON.stringify(c.input, null, 1))}</pre></div></details>
    ${(r.tool_calls||[]).map(t=>`<details><summary><span class="tool"><span class="seq">${esc(t.seq)}</span><span class="name">${esc(t.name)}</span><span class="ms">${esc(t.duration_ms)} ms · ${fmtTime(t.at)}</span></span></summary><div class="in">${t.args?`<div class="small muted" style="margin:6px 0 4px">arguments</div><pre>${esc(JSON.stringify(t.args,null,1))}</pre>`:''}<div class="small muted" style="margin:6px 0 4px">output</div><pre>${esc(JSON.stringify(t.output, null, 1))}</pre></div></details>`).join('') || '<div class="muted small" style="margin-top:8px">no tool calls (decided by rules)</div>'}`;
   restoreDisclosures(openDetails);
+}
+
+/* ---------- financial read model (verified seal inputs; never an authorization) ---------- */
+state.windows = state.windows || Object.create(null);
+function rememberWindows(d){
+  const fin=d.review, permit=d.permit, at=performance.now();
+  if(fin) state.windows['stage:'+(fin.source_commitment||d.case.commitment)]={seconds:fin.stage_remaining_seconds,at};
+  if(permit) state.windows['permit:'+permit.permit_id]={seconds:permit.remaining_seconds,at};
+}
+function windowLeft(key, seconds){
+  const w=state.windows[key];
+  if(!w || w.seconds==null) return seconds==null?null:Math.max(0,seconds);
+  return Math.max(0,w.seconds-Math.floor((performance.now()-w.at)/1000));
+}
+function clockSpan(key, seconds){ return `<span data-window-key="${esc(key)}">${esc(fmtLeft(windowLeft(key,seconds)))}</span>`; }
+function refreshWindows(){
+  document.querySelectorAll('[data-window-key]').forEach(el=>{el.textContent=fmtLeft(windowLeft(el.dataset.windowKey,null));});
+}
+function fmtLeft(sec){ if(sec==null) return 'not staged'; if(sec<=0) return 'expired'; const m=Math.floor(sec/60), r=sec%60; return (m?m+' min ':'')+r+' s left'; }
+function financialBlock(x, cur, dest){
+  const {c,dec,fin,p} = x;
+  if(!fin) return '';
+  if(fin.verified!==true) return `<div class="callout warn" style="margin-top:12px"><b>Financial facts unavailable:</b> ${esc(human(fin.reason||'review_snapshot_unavailable'))}. Nothing here is taken from the editable case input.</div>`;
+  const ccy = fin.currency || cur;
+  const pays = (fin.payments||[]);
+  const delta = fin.delta_minor;
+  const deltaTxt = delta==null ? 'unknown' : (Number(delta)>0?'+':'')+money(delta, ccy);
+  
+  const missingTarget = dec && dec.missing && Object.prototype.hasOwnProperty.call(dec.missing,'refund_target');
+  return `<div class="facts" style="margin-top:12px">
+    <div class="fact"><div class="k">Order</div><div class="v">${fin.order?.amount_minor!=null?money(fin.order.amount_minor, fin.order.currency||ccy):'unknown'}</div></div>
+    <div class="fact"><div class="k">Pix received (${pays.length})</div><div class="v">${pays.length?pays.map(q=>`<div>${q.amount_minor!=null?money(q.amount_minor, ccy):'unknown'} <span class="mono muted">${esc(q.payment_ref||'ref unknown')}</span></div>`).join(''):'none'}</div></div>
+    <div class="fact"><div class="k">Delta (payments minus order)</div><div class="v">${esc(deltaTxt)}</div><div class="small muted">observation only, not an authorization${(fin.comparison_issues||[]).length?' · '+esc(fin.comparison_issues.join(', ')):''}</div></div>
+    <div class="fact"><div class="k">Destination</div><div class="v mono">${esc(fin.recipient_ref||'unknown')}</div></div>
+    <div class="fact"><div class="k">Refund target</div><div class="v mono">${fin.refund_payment_ref?esc(fin.refund_payment_ref):(missingTarget?'<span class="pill bad">not derivable (sealed as missing)</span>':'none')}</div></div>
+    <div class="fact"><div class="k">Review window</div><div class="v">${c.status==='awaiting_human'?clockSpan('stage:'+(fin.source_commitment||c.commitment),fin.stage_remaining_seconds):'review completed'}</div><div class="small muted">stage TTL ${esc(fin.stage_ttl_seconds||600)} s, computed by the server${p?' · permit: '+(p.status==='consumed'?'consumed':clockSpan('permit:'+p.permit_id,p.remaining_seconds))+' (separate)':''}</div></div>
+  </div>
+  <div class="small muted" style="margin-top:6px">Source: ${esc(fin.source||'verified decision seal')} · commitment <span class="mono">${esc(fin.source_commitment||'')}</span> · verified = local seal check only.</div>`;
+}
+function deniedBlock(dec){
+  if(!dec || dec.denied_tool_calls_available!==true) return '';
+  const list = dec.denied_tool_calls||[];
+  if(!list.length) return '';
+  return `<details><summary>Tool calls denied by policy (${list.length}) · unsealed log excerpt, not authoritative</summary><div class="in"><ul class="tl">${list.map(t=>`<li><span class="at">${fmtTime(t.at)}</span><span><b class="mono">${esc(t.tool)}</b> ${esc(human(t.reason_code))}</span></li>`).join('')}</ul><div class="small muted" style="margin-top:6px">These are denials recorded by the authorization policy before the decision; they are kept apart from the tool outputs the agent actually saw and are not part of the seal.</div></div></details>`;
 }
 function reviewCard(x, cur, dest){
   const {c,dec,kind,ledgerBlocked} = x;
   const can = state.me.can_review;
-  const amount = kind==='money' ? `<div class="amount"><span class="big">${money(dec.amount_minor, cur)}</span><span class="to">to <span class="mono">${esc(dest||'unknown')}</span></span><span class="pill info">TEST ledger</span></div>` :
+  const noTarget = dec && dec.missing && Object.prototype.hasOwnProperty.call(dec.missing,'refund_target');
+  const amount = kind==='money' ? `<div class="amount"><span class="big">${money(dec.amount_minor, cur)}</span><span class="to">to <span class="mono">${esc(x.fin?.verified===true?(x.fin.recipient_ref||'unknown'):'unknown')}</span></span><span class="pill info">TEST ledger</span>${noTarget?'<span class="pill bad">refund binding incomplete (sealed as missing)</span>':''}</div>` :
     kind==='blocked' ? `<div class="amount"><span class="big" style="text-decoration:line-through;opacity:.6">${money(dec.amount_minor, cur)}</span><span class="to">refund refused by the test ledger</span></div>` :
     `<div class="amount"><span class="big">No money</span><span class="to">escalation only</span></div>`;
   const explain = kind==='money' ? `Approving records your IRIS login in the test ledger, completes the native Workflow task, seals the approval, issues a single-use permit bound to this seal and executes the TEST effect once.` :
@@ -535,6 +590,7 @@ function reviewCard(x, cur, dest){
   return `<section class="card review" id="review"><div class="hd"><h3>Review</h3><span class="muted small">as ${esc(state.me.user||'anonymous')}</span></div><div class="bd">
     ${amount}
     <div class="commit small muted">You are approving exactly this sealed decision: <span class="mono">${esc(c.commitment)}</span></div>
+    ${financialBlock(x, cur, dest)}
     ${can ? `<input class="note" id="note" type="text" placeholder="note for the sealed approval (optional)" style="margin-top:12px">
       <div class="actions"><button class="btn primary" data-review-action="Approve">${kind==='money'?'Approve refund':'Acknowledge'}</button><button class="btn danger" data-review-action="Reject">Reject</button></div>
       <div class="small muted" style="margin-top:8px">${explain} The request carries the commitment shown above; if the case changed since you opened it, the server refuses.</div>`
@@ -567,6 +623,7 @@ let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList
 async function refresh(){ await Promise.all([loadHealth(), loadStats(), loadCases()]); }
 bindActions();
 refresh();
+setInterval(refreshWindows,1000);
 setInterval(()=>{ if(document.hidden) return; loadStats(); loadCases(); if(state.current) openCase(state.current,false); }, 5000);
 </script>
 </body>
