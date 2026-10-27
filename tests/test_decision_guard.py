@@ -99,6 +99,42 @@ class TestDecisionContext(unittest.TestCase):
         d = {**self.decision, 'action': 'accept_order', 'moves_money': False, 'requires_human': False}
         self.assertEqual('', self.check(d, tools))
 
+    def test_same_payment_observed_twice_cannot_be_a_refund_proposal(self):
+        # Repeated events are not two independent payments, regardless of order.
+        import itertools
+        for refs in [('pix:A', 'pix:A'), ('pix:B', 'pix:B')]:
+            for order in itertools.permutations(refs):
+                tools = copy.deepcopy(self.tools)
+                tools[1]['output'] = [dict(payment_ref=ref) for ref in order]
+                d = {**self.decision, 'evidence_refs': ['order', refs[0]]}
+                self.assertEqual('refund_payment_references_not_distinct', self.check(d, tools))
+
+    def test_refund_needs_two_observed_payments_not_an_event_count(self):
+        for output in [[], [dict(payment_ref='pix:A')],
+                       [dict(payment_ref='pix:A'), dict(payment_ref='pix:B'), dict(payment_ref='pix:C')],
+                       dict(error='case_not_in_session'), None]:
+            tools = copy.deepcopy(self.tools)
+            tools[1]['output'] = output
+            self.assertEqual('refund_requires_two_observed_payments', self.check(tools=tools))
+
+    def test_refund_requires_a_reference_for_each_observed_payment(self):
+        for payment in [{}, None, dict(payment_ref=None), dict(payment_ref=12), dict(payment_ref='  ')]:
+            tools = copy.deepcopy(self.tools)
+            tools[1]['output'] = [dict(payment_ref='pix:A'), payment]
+            self.assertEqual('refund_payment_reference_missing', self.check(tools=tools))
+
+    def test_repeated_observation_can_be_escalated_without_proposing_money(self):
+        tools = copy.deepcopy(self.tools)
+        tools[1]['output'] = [dict(payment_ref='pix:A'), dict(payment_ref='pix:A')]
+        d = {**self.decision, 'action': 'escalate_to_human', 'moves_money': False,
+             'evidence_refs': ['order', 'pix:A']}
+        self.assertEqual('', self.check(d, tools))
+
+    def test_unique_payment_order_does_not_change_guard_result(self):
+        tools = copy.deepcopy(self.tools)
+        tools[1]['output'].reverse()
+        self.assertEqual('', self.check(tools=tools))
+
     def test_captured_live_proposals_pass_new_guard(self):
         # Re-evaluate actual recorded provider outputs without making a new inference call.
         evidence = Path(__file__).parents[1] / 'docs/validation/live-provider-smoke.json'

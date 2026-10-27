@@ -95,6 +95,9 @@ I/O-free context guard after collecting tool outputs. The guard accepts only the
 semantics: `refund_duplicate` must request money and human review; other executable proposals
 must not move money. Full/partial refunds and withdrawal retries are outside v1 execution and
 become a human escalation. The ledger remains the sole authority for any sandbox financial effect.
+A duplicate-refund proposal also requires exactly two observed payment entries with distinct,
+nonempty payment references. Repeated observations of one reference cannot establish a second
+payment. The ledger separately checks the explicit refund target, amount, payer and currency.
 
 Every cited reference must identify a non-null output actually returned by the scoped tools.
 A tool's absence/error wrapper does not count as evidence. Null evidence observed by tools is

@@ -1,0 +1,15 @@
+{
+  "amount_minor": "4200",
+  "benchmark_reexecution": false,
+  "case_id": "distinct-observations:3fab12d9",
+  "effect_count": 1,
+  "guard_passed": true,
+  "mode": "recorded",
+  "no_paid_calls": true,
+  "no_real_money": true,
+  "ok": true,
+  "receipt_integrity_verified": true,
+  "schema": "pbp.native.distinct-reference-positive/1",
+  "source": "model",
+  "synthetic_review": true
+}

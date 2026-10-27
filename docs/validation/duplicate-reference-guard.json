@@ -1,0 +1,17 @@
+{
+  "approval_seal_intact": true,
+  "case_id": "repeat-observation:df22d556",
+  "decision_seal_intact": true,
+  "effective_action": "escalate_to_human",
+  "mode": "recorded",
+  "no_paid_calls": true,
+  "no_real_money": true,
+  "ok": true,
+  "proposal_reason": "decision_context_invalid:refund_payment_references_not_distinct",
+  "raw_proposal_preserved_unsealed": true,
+  "receipt_count": 0,
+  "requires_human": true,
+  "schema": "pbp.native.duplicate-reference-regression/1",
+  "status_after_review": "closed",
+  "synthetic_review_note_sealed": true
+}

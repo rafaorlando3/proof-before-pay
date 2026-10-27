@@ -89,6 +89,19 @@ def check_context(decision_json: str, tools_json: str) -> str:
                 refs.update({'policy', 'store_policy'})
         if seen != TOOLS:
             return 'required_tool_not_observed'
+        if action == 'refund_duplicate':
+            for tool in tools:
+                if tool['name'] != 'GetPixEvents':
+                    continue
+                payments = tool.get('output')
+                if not isinstance(payments, list) or len(payments) != 2:
+                    return 'refund_requires_two_observed_payments'
+                payment_refs = [p.get('payment_ref') if isinstance(p, dict) else None
+                                for p in payments]
+                if any(not isinstance(ref, str) or not ref.strip() for ref in payment_refs):
+                    return 'refund_payment_reference_missing'
+                if len(set(payment_refs)) != 2:
+                    return 'refund_payment_references_not_distinct'
         cited = decision.get('evidence_refs')
         if not isinstance(cited, list) or not cited or any(not isinstance(ref, str) for ref in cited):
             return 'evidence_refs_invalid'
