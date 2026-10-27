@@ -9,6 +9,13 @@ Model proposals are also checked against actual tool observations: invented/null
 inconsistent money flags and missing evidence cannot silently close a case. Unsupported financial
 actions go to a person; only duplicate refunds are executable in v1.
 
+Simple cases use deterministic rules without a model call. When no rule matches, the
+AI Hub agent reads the five scoped tools and proposes a decision; policy and the context
+guard constrain it before sealing. The live integration evidence includes a legacy
+`duplicate_charge` case where the agent proposed a refund and authenticated test review
+produced one verified sandbox receipt. This establishes integration, not an advantage
+over a deterministic solution. The held-out agent benchmark is still pending.
+
 **Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
 and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
 one scenario with five native tool calls, authenticated test review, sealed approval and
@@ -23,9 +30,15 @@ Maintainer: [Rafael Orlando Mendes](https://community.intersystems.com/user/rafa
 Code developed with AI assistants under Rafael's direction. License: [MIT](LICENSE).
 The vendor EAP image is separately licensed and is not distributed here.
 
-![Authenticated native IRIS reviewer console in recorded mode](docs/screens/native-ui25.png)
+![Real IRIS console: deterministic duplicate refund with authenticated test review](docs/screens/native-refund-completed.png)
 
-Recorded-mode private lab, with synthetic data. This is a real IRIS-backed console, not a public demo.
+Private synthetic lab: this case was decided by deterministic rule R1, followed by
+authenticated test review. It shows 18990 minor units as 189.90 BRL; it is not a live
+model decision or real settlement. The [receipt view](docs/screens/native-refund-receipt.png)
+shows the consumed permit and intact historical receipt. A separate
+[guard-refusal screen](docs/screens/native-ui25.png) illustrates nonfinancial escalation.
+The [live agent-to-refund evidence](docs/validation/gemini-direct-smoke.json) is a different,
+one-scenario integration test. None of these is a public demo or the held-out benchmark.
 
 ## Start the isolated IRIS lab
 
@@ -136,6 +149,16 @@ decision or a dossier completed after sealing changes the commitment. The adapte
 rejects personal data and bounded-input errors without returning offending values.
 `Witness.Seal` creates a local commitment; `Witness.VerifyLocal` detects edits.
 An intact local envelope stays `pending` until independent anchoring is verified.
+This is an application-level integrity check against the stored commitment. A privileged
+administrator who can replace the record, salt and commitment can rewrite local history;
+protection from a compromised host or database administrator is not claimed. A rejected
+model proposal remains a separately labelled, unsealed diagnostic; the effective escalation
+and its input/tool evidence are sealed.
+
+The validated agent operation uses one worker. Its current-case binding is held in a
+process-private global, enforced by both the authorization policy and the tools, and cleared
+after each run. Increasing parallelism requires separate validation; one-worker results are
+not a scalability claim.
 
 The original `pbp_seal` reference also contains chain and Solana helpers. Those are
 not invoked by the runtime or tests, which do not sign or broadcast transactions.
@@ -143,3 +166,6 @@ The historical S0 fixture is public synthetic test evidence, not a new S1 anchor
 
 See [provenance](docs/PROVENANCE.json), [runtime diagnosis](docs/IRIS-154.md),
 [validation](docs/VALIDATION.md), and the [submission draft](docs/OPEN-EXCHANGE.md).
+The [contest bonus tracker](docs/BONUS-TRACKER.json) now maps the official contest49
+table to implementation evidence and pending deliverables. Published point values are not
+points awarded to this application.

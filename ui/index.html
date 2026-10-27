@@ -114,7 +114,7 @@ a{color:var(--accent)}
 .step .t{font-size:13px;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .step .d{font-size:12px;color:var(--text-2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .step.done::before{background:var(--ok)}.step.now::before{background:var(--accent)}.step.now{border-color:var(--accent)}.step.bad::before{background:var(--bad)}.step.skip{opacity:.6}
-@media (max-width:1100px){.flow{grid-template-columns:repeat(5,minmax(120px,1fr));overflow-x:auto}}
+@media (max-width:1100px){.flow{grid-template-columns:repeat(5,minmax(0,1fr))}.step .d{white-space:normal;overflow-wrap:anywhere}}
 
 .cols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--s4)}
 @media (max-width:1250px){.cols{grid-template-columns:minmax(0,1fr)}}
@@ -266,7 +266,7 @@ input.note{width:100%;height:38px;background:var(--surface-2);color:var(--text);
 const API = '/pbp/api';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state = { current:null, commitment:'', me:{user:'',can_review:false}, filter:'all', q:'', cases:[], detailSig:'', detailRequest:0, health:null };
+const state = { current:null, commitment:'', me:{user:'',can_review:false}, filter:'all', q:'', cases:[], detailSig:'', detailRequest:0, health:null, notes:Object.create(null) };
 
 async function api(path, opts){
   try{
@@ -440,6 +440,8 @@ function bindActions(root=document){
 function restoreDisclosures(keys){ document.querySelectorAll('#detail details').forEach(el=>{if(keys.includes(el.querySelector('summary')?.textContent.trim())) el.open=true;}); }
 
 async function openCase(id, userAction){
+  const previousNote = $('#note');
+  if(state.current && previousNote) state.notes[state.current] = previousNote.value;
   const changed = state.current !== id;
   state.current = id;
   document.querySelectorAll('.item').forEach(el=> el.setAttribute('aria-selected', el.dataset.id===id));
@@ -447,7 +449,7 @@ async function openCase(id, userAction){
   const request=++state.detailRequest;
   const d = await api('/cases/'+encodeURIComponent(id));
   if(state.current!==id || request!==state.detailRequest) return;
-  if(!d.ok){ $('#detail').innerHTML = `<div class="empty">${human(d.reason)}</div>`; return; }
+  if(!d.ok){ state.detailSig=''; $('#detail').innerHTML = `<div class="empty">${human(d.reason)}</div>`; return; }
   const s = sig(d); if(!changed && s===state.detailSig) return; state.detailSig = s;
   const x = classify(d); const {c,dec,p,rc,refused,ledgerBlocked,kind} = x;
   state.commitment = c.commitment || '';
@@ -455,7 +457,7 @@ async function openCase(id, userAction){
   const cur = c.input?.currency || p?.currency || rc?.currency || '';
   const dest = c.input?.recipient_ref || p?.recipient || rc?.recipient || '';
   const scrollY = window.scrollY;
-  const pendingNote = (!changed && $('#note')) ? $('#note').value : '';
+  const pendingNote = state.notes[id] || '';
   const openDetails=!changed ? Array.from(document.querySelectorAll('#detail details[open]')).map(el=>el.querySelector('summary')?.textContent.trim()) : [];
   const noteFocused=!changed && document.activeElement?.id==='note';
 
@@ -516,7 +518,7 @@ async function openCase(id, userAction){
   const r = await api('/cases/'+encodeURIComponent(id)+'/replay');
   if(state.current!==id || request!==state.detailRequest) return;
   const box = $('#replay'); if(!box) return;
-  if(!r.ok){ box.innerHTML = `<div class="muted small">Replay unavailable: ${human(r.reason)}</div>`; return; }
+  if(!r.ok){ state.detailSig=''; box.innerHTML = `<div class="muted small">Replay unavailable: ${human(r.reason)}</div>`; return; }
   box.innerHTML = `<details open><summary>Inputs the case arrived with</summary><div class="in"><pre>${esc(JSON.stringify(c.input, null, 1))}</pre></div></details>
    ${(r.tool_calls||[]).map(t=>`<details><summary><span class="tool"><span class="seq">${esc(t.seq)}</span><span class="name">${esc(t.name)}</span><span class="ms">${esc(t.duration_ms)} ms · ${fmtTime(t.at)}</span></span></summary><div class="in">${t.args?`<div class="small muted" style="margin:6px 0 4px">arguments</div><pre>${esc(JSON.stringify(t.args,null,1))}</pre>`:''}<div class="small muted" style="margin:6px 0 4px">output</div><pre>${esc(JSON.stringify(t.output, null, 1))}</pre></div></details>`).join('') || '<div class="muted small" style="margin-top:8px">no tool calls (decided by rules)</div>'}`;
   restoreDisclosures(openDetails);

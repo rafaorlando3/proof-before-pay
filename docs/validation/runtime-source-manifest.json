@@ -101,7 +101,7 @@
     "tests/test_ledger_contract.py": "fcf3fd2ec2ccf14822ef454f8cb067b78f7928085c314712b6aa4e35532db3d7",
     "ui/brand/mark.svg": "91a96c82dcacaaf3d1c6498c7895ca04d6f4516f56b83df91ace420e4ffb6026",
     "ui/brand/wordmark.svg": "1b534650564921c97664fafc94b2a91a1537d170c555e6537025d0434d0b1b2b",
-    "ui/index.html": "598dc890f6bc4e7ba31bc5040dd49c78df2fe4a1b9a6f82aa543d16d6df21727"
+    "ui/index.html": "2c54b1aeba1b7be4e705914149114b1b18c0cf5d102da410a67b87d63d796ba4"
   },
   "schema": "pbp.runtime.source-manifest/1"
 }

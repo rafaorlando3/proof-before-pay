@@ -1,0 +1,48 @@
+{
+  "schema": "pbp.native-ui-recovery/1",
+  "observed_at_utc": "2026-10-27T06:14:45.266909+00:00",
+  "base_runtime_image": "sha256:b4102d83092728112a68a937fb28c76dc0f6f95deaafe0c0347c2c9b661d2f37",
+  "deployment": "UI overlay only; no image rebuild or new clean-volume gate",
+  "ui_sha256": "2c54b1aeba1b7be4e705914149114b1b18c0cf5d102da410a67b87d63d796ba4",
+  "connection_recovery_tested_ui_sha256": "0ac6fbac55416a45585ad49ab61b99dc8529b7edb61ac74db35f9ac28a077eb4",
+  "final_delta_after_recovery_test": "CSS only: mid-width flow stepper no longer scrolls horizontally",
+  "observations": {
+    "initial_issue": "case fetch failure replaced panel; stale detailSig prevented unchanged successful response from restoring it",
+    "controlled_outage": "only own localhost SSH tunnel interrupted; IRIS and server-side authenticated proxy stayed healthy",
+    "recovered_without_reload_or_case_change": true,
+    "local_unsent_note_preserved": true,
+    "temporary_test_note_cleared": true,
+    "read_only_case": "adversarial:9b007988:missing_gate",
+    "viewport_css_width": 1016,
+    "page_horizontal_overflow": false,
+    "flow_client_width": 611,
+    "flow_scroll_width": 611,
+    "all_five_steps_inside_flow": true,
+    "note_storage_strategy": "case-keyed page-memory cache; connection restoration exercised in one existing case"
+  },
+  "existing_financial_case_inspected": {
+    "case_id": "ui-refund:3df6751647",
+    "decision_source": "rules",
+    "rule": "R1",
+    "amount_minor": "18990",
+    "displayed_amount": "189.90 BRL",
+    "status": "closed",
+    "permit_status": "consumed",
+    "receipt_id": "test-refund:305",
+    "receipt_verification": "intact",
+    "new_approval_or_effect": false,
+    "screenshots": [
+      "docs/screens/native-refund-completed.png",
+      "docs/screens/native-refund-receipt.png"
+    ]
+  },
+  "no_paid_calls": true,
+  "no_case_intake": true,
+  "no_review_submit": true,
+  "no_new_financial_effects": true,
+  "no_bank_or_chain_transaction": true,
+  "AI_model_quality_not_measured": true,
+  "frozen_agent33_baseline_source": "7a667263a5a46bd375386c81a243f6643770acd8; kept separate from this documentation/UI successor",
+  "model_inputs_and_evaluator_unchanged": true,
+  "runtime_manifest_updated_for_UI_overlay": true
+}
