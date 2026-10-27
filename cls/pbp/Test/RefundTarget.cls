@@ -54,4 +54,33 @@ Method TestCardinality()
     Do $$$AssertEquals(reason, "payments_not_two", "no payments")
 }
 
+Method TestEqualInstantsAreAmbiguous()
+{
+    Set i=..Input("pix:A","pix:B","18990","18990","test:p","test:p","test:p","2026-10-22T14:02:00+02:00","2026-10-22T12:02:00Z")
+    Set ref=##class(pbp.RefundTarget).Derive(i,.reason)
+    Do $$$AssertEquals(ref,"","two equal instants cannot identify the duplicate")
+    Do $$$AssertEquals(reason,"received_at_ambiguous","offset-normalized tie is explicit")
+}
+
+Method TestOffsetOrdering()
+{
+    Set i=..Input("pix:A","pix:B","18990","18990","test:p","test:p","test:p","2026-10-22T13:00:00+02:00","2026-10-22T12:00:00Z")
+    Set ref=##class(pbp.RefundTarget).Derive(i,.reason)
+    Do $$$AssertEquals(ref,"pix:B","timestamps are instants rather than lexically ordered strings")
+    Do $$$AssertEquals(reason,"","known distinct instants")
+}
+
+Method TestExplicitTargetStillNeedsDistinctEvidence()
+{
+    Set i=..Input("pix:A","pix:B","18990","18990","test:p","test:p","test:p")
+    Set i."refund_payment_ref"="pix:A"
+    Set ref=##class(pbp.RefundTarget).Derive(i,.reason)
+    Do $$$AssertEquals(ref,"pix:A","explicit observed target is preserved")
+    Set second=i.payments.%Get(1)
+    Set second."payment_ref"="pix:A"
+    Set ref=##class(pbp.RefundTarget).Derive(i,.reason)
+    Do $$$AssertEquals(ref,"","an explicit target cannot bypass repeated evidence")
+    Do $$$AssertEquals(reason,"payment_refs_not_distinct","independent target defence")
+}
+
 }

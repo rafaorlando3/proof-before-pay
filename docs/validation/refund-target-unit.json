@@ -1,0 +1,16 @@
+{
+  "schema": "pbp.native.refund-target-unit/1",
+  "ok": true,
+  "native_methods": [
+    "TestAmountPayerRecipientMismatch",
+    "TestCardinality",
+    "TestEqualInstantsAreAmbiguous",
+    "TestExplicitTargetStillNeedsDistinctEvidence",
+    "TestLaterDistinctPayment",
+    "TestOffsetOrdering",
+    "TestRecipientAbsentStillDerives",
+    "TestRepeatedReferenceRefused"
+  ],
+  "count": 8,
+  "no_inference": true
+}
