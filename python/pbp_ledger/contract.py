@@ -73,7 +73,10 @@ def plan(record):
              'evidence_reference_mismatch')
     _require(not ({'order_lookup', 'refund_target', 'payment_status'} & record['missing'].keys()),
              'required_evidence_missing')
-    return dict(effect_key=payment_ref, case_id=record['case']['id'], amount_minor=amount,
+    # Deduplicate both observed payments, including targets reserved by older plans.
+    # Choosing the opposite member must not turn one duplicate into two refunds.
+    return dict(effect_key=payment_ref, payment_refs=sorted(refs),
+                case_id=record['case']['id'], amount_minor=amount,
                 recipient_ref=recipient, currency='BRL', requires_human=True,
                 state='awaiting_approval', reason='review_required')
 

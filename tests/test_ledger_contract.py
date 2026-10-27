@@ -44,6 +44,16 @@ class EffectBindingTests(unittest.TestCase):
             with self.subTest(path=path,value=value):
                 r=refund();at(r,path,value);self.assertFalse(self.response(r)['ok'])
 
+    def test_opposite_target_and_reordered_events_keep_the_same_pair(self):
+        r=refund();original=self.response(r)
+        r['saw']['inputs']['refund_payment_ref']='test:payment-a-base'
+        r['saw']['inputs']['payments'].reverse()
+        opposite=self.response(r)
+        self.assertTrue(opposite['ok'])
+        self.assertNotEqual(original['effect_key'],opposite['effect_key'])
+        self.assertEqual(original['payment_refs'],opposite['payment_refs'])
+        self.assertEqual(['test:payment-a-base','test:payment-b-base'],opposite['payment_refs'])
+
     def test_model_cannot_waive_human_by_raising_its_own_limit(self):
         r=refund();r['limits']['autonomous_minor']='999999';r['decision']['requires_human']=False
         p=self.response(r);self.assertFalse(p['ok']);self.assertEqual(p['reason'],'human_required')

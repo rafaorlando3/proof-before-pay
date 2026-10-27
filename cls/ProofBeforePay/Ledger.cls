@@ -57,10 +57,21 @@ ClassMethod Stage(recordJSON As %String) As %String
     Lock +^PBP49Ledger("lock"):5
     If '$TEST Quit ..Error("ledger_busy")
     Try {
-        Set prior=""
-        If plan."effect_key"'="" Set prior=$Get(^PBP49Ledger("effectIndex",plan."effect_key"))
+        Set prior="",conflicting=0
+        If plan."effect_key"'="" {
+            // A duplicate refund consumes one extra payment from this pair. Checking
+            // both references under the same lock prevents opposite-target plans,
+            // including plans whose original target-only index predates this check.
+            Set refs=plan."payment_refs"
+            For n=0:1:(refs.%Size()-1) {
+                Set existing=$Get(^PBP49Ledger("effectIndex",refs.%Get(n)))
+                If existing'="" {
+                    If prior="" { Set prior=existing } ElseIf prior'=existing { Set conflicting=1 }
+                }
+            }
+        }
         If (plan."effect_key"'="")&(prior'="") {
-            If $Get(^PBP49Ledger("decision",prior,"record"))=recordJSON {
+            If ('conflicting)&($Get(^PBP49Ledger("decision",prior,"record"))=recordJSON) {
                 Set out=..Read(prior,1)
             } Else {
                 Set out=..Error("payment_already_staged")
@@ -177,8 +188,19 @@ ClassMethod Execute(id As %String) As %String
         } Else {
             Set plan=..Plan(^PBP49Ledger("decision",id,"record"))
             Set effectKey=plan."effect_key"
+            Set relatedEffect=0
+            If plan.ok,(effectKey'="") {
+                Set refs=plan."payment_refs"
+                For n=0:1:(refs.%Size()-1) {
+                    Set ref=refs.%Get(n)
+                    If (ref'=effectKey),$Data(^PBP49Ledger("effect",ref)) Set relatedEffect=1
+                }
+            }
             If ('plan.ok)!(effectKey="") {
                 Set out=..Error("invalid_effect")
+            } ElseIf relatedEffect {
+                // Also protect plans authorized before the pair check was installed.
+                Set out=..Error("related_payment_already_refunded")
             } ElseIf $Data(^PBP49Ledger("effect",effectKey)) {
                 Set out=..Error("effect_already_exists")
             } Else {

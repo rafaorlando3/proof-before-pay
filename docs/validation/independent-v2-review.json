@@ -10,9 +10,12 @@
   "effective_quality_ok": 8,
   "raw_proposals_with_problems": 2,
   "positive_gate_independently_reported_accepted": true,
-  "independent_positive_JSON_supplied": false,
-  "positive_JSON_requested_with_integration_delivery": true,
+  "independent_positive_JSON_supplied": true,
+  "positive_JSON_requested_with_integration_delivery": false,
   "classification": "post-baseline regression and mandatory positive controls; not heldout",
   "previous_baseline_failed_result_preserved": true,
-  "new_paid_calls": 0
+  "new_paid_calls": 0,
+  "positive_confirmation_message": "C-1184",
+  "positive_confirmation_bundle_sha256": "baa80485692f0b1a571b1fe9d5debb2022123c5848adc6c7d2fddc9d98cadd93",
+  "independent_positive_JSON_equal": true
 }

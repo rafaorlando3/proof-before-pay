@@ -33,6 +33,33 @@ Method TestDuplicateAboveLimit()
     Do $$$AssertTrue(r.decided && r."requires_human", "above limit requires human")
 }
 
+Method TestDuplicateOffsetsSelectTheSameInstantRegardlessOfArrayOrder()
+{
+    Set c=..Dup("8400")
+    Set a=c.payments.%Get(0),b=c.payments.%Get(1)
+    Set a."received_at"="2026-10-20T13:00:00+02:00"
+    Set b."received_at"="2026-10-20T12:00:00Z"
+    Set r=##class(pbp.Rules).Evaluate(c,..Policy())
+    Do $$$AssertEquals(r."refund_payment_ref","pix:E2","UTC later payment, not lexical timestamp")
+    Set c.payments=[(b),(a)]
+    Set r=##class(pbp.Rules).Evaluate(c,..Policy())
+    Do $$$AssertEquals(r."refund_payment_ref","pix:E2","array permutation preserves target")
+}
+
+Method TestDuplicateAmbiguousTimeDoesNotInventATarget()
+{
+    Set c=..Dup("8400")
+    Set a=c.payments.%Get(0),b=c.payments.%Get(1)
+    Set b."received_at"=a."received_at"
+    Set r=##class(pbp.Rules).Evaluate(c,..Policy())
+    Do $$$AssertEquals(r.action,"escalate_to_human","tie requires resolution")
+    Do $$$AssertTrue('r."moves_money" && r."requires_human","no financial proposal for ambiguous time")
+    Do $$$AssertEquals(r.missing.%GetTypeOf("refund_target"),"null","ambiguous target stays missing")
+    Set b."received_at"="not-a-time"
+    Set r=##class(pbp.Rules).Evaluate(c,..Policy())
+    Do $$$AssertEquals(r.action,"escalate_to_human","malformed time fails closed")
+}
+
 Method TestDuplicateRecipientUnknown()
 {
     Set r = ##class(pbp.Rules).Evaluate(..Dup("1890", ""), ..Policy())

@@ -9,7 +9,7 @@ Class pbp.Rules Extends %RegisteredObject
 
 Parameter ENGINE = "pbp.Rules";
 
-Parameter VERSION = "2";
+Parameter VERSION = "3";
 
 /// Evaluate a normalized case input against a policy object.
 ClassMethod Evaluate(input As %DynamicObject, policy As %DynamicObject) As %DynamicObject
@@ -32,16 +32,20 @@ ClassMethod Evaluate(input As %DynamicObject, policy As %DynamicObject) As %Dyna
     If (type = "duplicate_payment") && $ISOBJECT(pays) && (pays.%Size() = 2) {
         Set a = pays.%Get(0), b = pays.%Get(1)
         If $ISOBJECT(a) && $ISOBJECT(b) && (a."amount_minor" = b."amount_minor") && (a."amount_minor" = orderAmount) && (a.payer = b.payer) && (a.payer '= "") && (a."payment_ref" '= b."payment_ref") {
-            Set later = $SELECT(b."received_at" ]] a."received_at": b, 1: a)
             Set refs = ["order"]
             Do refs.%Push(a."payment_ref")
             Do refs.%Push(b."payment_ref")
+            Set target=##class(pbp.RefundTarget).Derive(input,.targetReason)
+            If target="" {
+                Do out.missing.%Set("refund_target","","null")
+                Quit ..Decide(out,"R1","escalate_to_human",0,"",1,0.99,"The payment to return cannot be selected from the observed evidence; a person must resolve it: "_targetReason,refs)
+            }
             If input."recipient_ref" = "" {
                 Do out.missing.%Set("refund_target", "", "null")
-                Set out."refund_payment_ref" = later."payment_ref"
+                Set out."refund_payment_ref" = target
                 Quit ..Decide(out, "R1", "refund_duplicate", 1, orderAmount, 1, 0.99, "Two Pix payments with the same amount from the same payer for one order; the later one is a duplicate. The refund destination is unknown, so a person must choose it.", refs)
             }
-            Set out."refund_payment_ref" = later."payment_ref"
+            Set out."refund_payment_ref" = target
             Quit ..Decide(out, "R1", "refund_duplicate", 1, orderAmount, 1, 0.99, "Two Pix payments with the same amount from the same payer for one order: the later one is a duplicate and is refunded in full to the payer after a reviewer approves.", refs)
         }
     }

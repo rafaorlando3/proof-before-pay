@@ -46,12 +46,39 @@ the vendor EAP Sharding observation remains recorded. No vendor stub, alert clea
 or health bypass was used. Final demo/video, independent validation and Rafael's
 express approval are still required before an Open Exchange submission.
 
+### Cross-route duplicate-refund regression
+
+An independent source audit of `7e8c75701d84c75c8768f1a5475c9fab1e077ed5`
+reproduced two intact synthetic refunds for the **same two payments**. Rule R1
+compared timestamp strings while the agent path compared UTC instants; each chose
+a different member. The target-only Stage check allowed both. This was an actual
+business-idempotency failure in the synthetic lab. The original two receipts and
+failed reproduction remain intact; they are not counted as passing results.
+
+R1 now uses the shared timestamp-aware target derivation and escalates ambiguous
+times. Under the existing global lock, Stage checks the stored target indexes of
+both observed payment references. It still writes only the selected target index:
+existing data needs no migration, and an unrefunded keeper can participate in a
+legitimate new pair with a new extra payment. Execute also checks the other
+member's recorded effect, protecting already-authorized plans from the old code.
+No administrator changed historical receipts or renewed the old plans' expiry.
+
+The native regression exercises rules first, recorded agent first, explicitly
+opposite targets, two concurrent Stage sessions, replay of the same record and a
+positive new pair sharing the unrefunded keeper. Each original pair produces one
+intact receipt; the new extra payment is still refundable. Two plans genuinely
+authorized before the fix also produced only one effect afterward. These are
+**development regressions with zero model calls**, not held-out model outcomes.
+[The evidence summary](validation/crossroute-pairguard.json) preserves the failed
+baseline and the distinct after-fix checks. A new paid benchmark and final audited
+clean installation remain release gates.
+
 ### Independent v2 review and Agent E / closed-case UI
 
 Claude subsequently recomputed the eight-case evidence gate and unchanged v4 scorer;
 both parsed JSON results match ours exactly. C-1183 also reports
-the mandatory positive gate accepted; its separate JSON artifact was not included
-and has been requested. [Review provenance](validation/independent-v2-review.json)
+the mandatory positive gate accepted. C-1184 supplies its separate JSON artifact;
+it matches our parsed positive-gate result exactly. [Review provenance](validation/independent-v2-review.json)
 keeps that distinction visible. The result remains post-baseline regression evidence;
 the original failed baseline has not been rescored or replaced.
 

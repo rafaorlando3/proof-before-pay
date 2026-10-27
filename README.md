@@ -71,12 +71,15 @@ The tested lab had at least 2.5 GB free **after** the base image had already bee
    python3 scripts/test_iris.py
    python3 scripts/test_ledger.py
    python3 scripts/test_workflow.py
+   python3 scripts/test_pairguard.py
    ```
 
    Startup compiles the application recursively, loads synthetic policies/replay fixtures,
    installs reviewer permissions and starts the native Production. The health gate waits
    for installation as well as IRIS. Tests cover the real embedded-Python bridge, journaled
    ledger and concurrent sessions, native unit suites and the complete recorded workflow.
+   The pairguard gate also races opposite refund targets and verifies that the rule and
+   recorded-agent routes cannot refund both members of the same observed payment pair.
    A missing marker or failed assertion is a failure even if the IRIS terminal exits zero.
 4. Stop with `docker compose stop`. `docker compose down` removes the container but
    preserves the named `iris-state` volume. Restart and recreation retain cases, approvals
