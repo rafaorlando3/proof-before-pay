@@ -65,6 +65,7 @@ The EAP archive and derived images must never enter the source package or a publ
 
 From a clean committed checkout, run `python3 scripts/package_source.py /absolute/output/directory`
 to produce a deterministic source ZIP and per-file SHA-256 manifest. The output must be outside the
-checkout. The packaging gate excludes credentials, private evaluation data and the separately licensed
+checkout. Committed files are written with fixed ZIP timestamps, ordering and Unix permissions,
+without platform-dependent compression. The packaging gate excludes credentials, private evaluation data and the separately licensed
 vendor kit. This source archive is a candidate, not an Open Exchange submission or approval request.
 The private held-out model benchmark, final demo/video and Rafael's final review remain separate gates.

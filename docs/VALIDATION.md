@@ -119,3 +119,13 @@ The authenticated HTTP suite passed all 34 checks against that runtime. See
 [HTTP integration evidence](validation/http-ui23-regression.json). These are recorded-mode tests,
 with no new paid inference. The cold-start and durability tests above remain evidence for their
 explicitly identified baseline; they were not repeated for this UI/diagnostic change.
+
+## Portable source archive
+
+The initial source packaging gate repeated successfully within each host, but its Git-generated ZIP
+bytes differed between macOS and Linux CI for the same 649a952 commit. This is a packaging defect,
+not a native workflow result. Packaging now reads committed Git files and writes an uncompressed ZIP
+with sorted entries, fixed timestamps and explicit Unix permissions, avoiding Git/zlib ZIP variation.
+Runtime evidence above still describes the tested runtime snapshot; packaging-only changes do not
+claim a rerun of the native workflow. Cross-host archive hashes must match before a source candidate
+is treated as portable.
