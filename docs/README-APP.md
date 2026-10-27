@@ -135,3 +135,28 @@ decision count and total cost (`-1` if any cost is unknown). Recorded values are
 not paid inference. A live bucket counts decisions/attempts, not successful generations.
 `billing_verified` remains false and `usage_cost_basis` is `stored_decision_metadata_not_billing`.
 Legacy source totals remain for compatibility; a dashboard must not label those mixed values as a bill.
+
+
+## Financial review read model
+
+`GET /cases/:id` includes a read-only `review` view derived from the verified decision
+seal's `saw.inputs`, bound by `review.source_commitment`. It does not use the mutable
+case input projection. The view includes order/payment amounts, payment references,
+destination and `delta_minor` (sum of sealed payments minus sealed order amount).
+That delta is an observation comparison, never an authorized refund amount.
+`decision_amount_minor` is the sealed decision's amount; approval is still a separate step.
+Unknown or conflicting amounts/currencies keep the delta null. Integer arithmetic
+preserves minor units without floating-point rounding. `verified` describes the local
+seal check, not factual correctness, external settlement or protection from an administrator.
+
+`review.stage_remaining_seconds` is calculated on the server using the ledger's clock,
+with `stage_ttl_seconds=600`. Null means unavailable/not staged; zero means a known
+window has expired. `permit.remaining_seconds` is separate from that stage window
+and from `permit.expires_at`. Clients must also respect consumed/rejected/closed status.
+The browser never interprets the ledger's internal Horolog epoch as Unix time.
+
+`decision.denied_tool_calls` is a sanitized, bounded application-log excerpt before the
+decision's creation time. It includes tool name, reason code and timestamp, with an
+explicit availability flag. It is unsealed and non-authoritative, does not claim complete
+coverage, and is never mixed with the tool outputs the agent actually observed. No raw
+diagnostic message or extra permission grant is exposed by this view.

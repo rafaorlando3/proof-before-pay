@@ -118,10 +118,79 @@ ClassMethod CaseDetail(id As %String) As %Status
     Set out.case = ..CaseObj(case)
     Set out.events = ..Events(id)
     Set out.decision = ..DecisionObj(id)
+    If $ISOBJECT(out.decision) {
+        Set out.decision."denied_tool_calls"=..DeniedToolCalls(id,out.decision."created_at",.denialsAvailable)
+        Set out.decision."denied_tool_calls_source"="unsealed_application_log_excerpt"
+        Do out.decision.%Set("denied_tool_calls_authoritative",0,"boolean")
+        Do out.decision.%Set("denied_tool_calls_available",denialsAvailable,"boolean")
+    }
+    Set out.review=..ReviewSnapshot(out.decision)
     Set out.seals = ..Seals(id)
     Set out.permit = ..PermitObj(id)
     Set out.receipt = ..ReceiptObj(id)
     Quit ..Out(out)
+}
+
+/// Display facts come from the verified decision seal, never the mutable case projection.
+/// Stage timestamps use IRIS UTC/Horolog seconds; only a server-computed duration is exposed.
+ClassMethod ReviewSnapshot(decision As %DynamicAbstractObject) As %DynamicObject
+{
+    Set out={"verified":false,"stage_remaining_seconds":null,"stage_ttl_seconds":600}
+    If '$ISOBJECT(decision) Quit out
+    Try {
+        Set seal=##class(pbp.Data.Seal).Find(decision.commitment)
+        If $ISOBJECT(seal) {
+            Set v=seal.Verify()
+            If v.ok {
+                Set rec=##class(pbp.Util).ParseJSON(seal.RecordJSON,.reason)
+                If $ISOBJECT(rec) && (rec.kind="decision") {
+                    Set helper=##class(%SYS.Python).Import("pbp_review.projection")
+                    Set out=##class(%DynamicObject).%FromJSON(helper."financial_json"(seal.RecordJSON))
+                    Do out.%Set("verified",1,"boolean")
+                    Set out."source_commitment"=decision.commitment,out.source="verified_decision_seal.saw.inputs"
+                    Set out."stage_ttl_seconds"=##class(ProofBeforePay.Ledger).#VALIDITYSECONDS
+                    Do out.%Set("stage_remaining_seconds","","null")
+                    Set audit=##class(pbp.Util).ParseJSON(##class(ProofBeforePay.Ledger).Audit(decision.commitment),.reason)
+                    If $ISOBJECT(audit) && audit.ok && (audit.%GetTypeOf("expires_utc_seconds")="number") && (audit."expires_utc_seconds">0) {
+                        Set out."stage_remaining_seconds"=..RemainingWindow(audit."expires_utc_seconds")
+                    }
+                }
+            }
+        }
+    } Catch ex {
+        Set out={"verified":false,"stage_remaining_seconds":null,"stage_ttl_seconds":600,"reason":"review_snapshot_unavailable"}
+        Do ##class(pbp.Util).LogEx("pbp.API.ReviewSnapshot",ex)
+    }
+    Quit out
+}
+
+/// Compare two timestamps in the same server-side UTC/Horolog epoch.
+ClassMethod RemainingWindow(expires As %Numeric) As %Integer
+{
+    If expires<=0 Quit -1
+    Set remaining=expires-##class(ProofBeforePay.Ledger).NowSeconds()
+    Quit $SELECT(remaining>0:remaining\1,1:0)
+}
+
+/// Sanitized, non-authoritative diagnostic excerpt; never counted as observed tool output.
+ClassMethod DeniedToolCalls(caseId As %String, cutoff As %String, Output available As %Boolean) As %DynamicArray
+{
+    Set out=[],available=0
+    If cutoff="" Quit out
+    Try {
+        Set helper=##class(%SYS.Python).Import("pbp_review.projection")
+        Set rs=##class(%SQL.Statement).%ExecDirect(,"SELECT TOP 50 ""At"", Message FROM pbp_Data.Log WHERE CaseId=? AND ""Where""='pbp.AuthPolicy' AND ""At""<=? AND Message LIKE '%denied: case id outside the session' ORDER BY ""At"", ID",caseId,cutoff)
+        If rs.%SQLCODE>=0 {
+            Set available=1
+            While rs.%Next() {
+                Set name=helper."denied_tool_name"(rs.%Get("Message"))
+                Do out.%Push({"tool":(name),"reason_code":"case_not_in_session","at":(rs.%Get("At"))})
+            }
+        }
+    } Catch ex {
+        Set available=0
+    }
+    Quit out
 }
 
 ClassMethod CaseObj(case As pbp.Data.Case) As %DynamicObject
@@ -211,7 +280,13 @@ ClassMethod PermitObj(caseId As %String) As %DynamicAbstractObject
     If 'rs.%Next() Quit ""
     Set p = ##class(pbp.Data.Permit).Find(rs.%Get("PermitId"))
     If '$ISOBJECT(p) Quit ""
-    Quit {"permit_id": (p.PermitId), "commitment": (p.Commitment), "amount_minor": (p.AmountMinor), "currency": (p.Currency), "recipient": (p.Recipient), "status": (p.Status), "issued_at": (p.IssuedAt), "expires_at": (p.ExpiresAt), "consumed_at": (p.ConsumedAt), "authorized_by": (p.AuthorizedBy), "approval_commitment": (p.ApprovalCommitment), "receipt_id": (p.ReceiptId)}
+    Set out={"permit_id": (p.PermitId), "commitment": (p.Commitment), "amount_minor": (p.AmountMinor), "currency": (p.Currency), "recipient": (p.Recipient), "status": (p.Status), "issued_at": (p.IssuedAt), "expires_at": (p.ExpiresAt), "consumed_at": (p.ConsumedAt), "authorized_by": (p.AuthorizedBy), "approval_commitment": (p.ApprovalCommitment), "receipt_id": (p.ReceiptId)}
+    Do out.%Set("remaining_seconds","","null")
+    Set expires=##class(pbp.Util).ISOToSeconds(p.ExpiresAt)
+    If expires>0 {
+        Set out."remaining_seconds"=..RemainingWindow(expires)
+    }
+    Quit out
 }
 
 ClassMethod ReceiptObj(caseId As %String) As %DynamicAbstractObject

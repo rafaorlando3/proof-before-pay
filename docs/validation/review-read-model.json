@@ -1,0 +1,56 @@
+{
+  "schema": "pbp.review-read-model-validation/1",
+  "observed_at_utc": "2026-10-27T07:16:35.419786+00:00",
+  "runtime": "private build154; overlay only, no new image/clean-volume claim",
+  "API_sha256": "2ce42bd29db6e5320fc3e29971f2228eaa1a18606afb467ea52498275731b2f0",
+  "read_model_module_sha256": "f26f463be75197aa0644261965d0b24496b6b33fa20714b12d487646a269aa6d",
+  "offline_tests": {
+    "passed": 56,
+    "new_financial_projection_tests": 9,
+    "forbidden_IO_attempts": 0
+  },
+  "native_API_compiled": true,
+  "native_clock_boundaries_passed": true,
+  "authenticated_HTTP_cases_verified": 3,
+  "verified_cases": [
+    {
+      "case_id": "ui-refund:3df6751647",
+      "source": "verified_decision_seal.saw.inputs",
+      "verified": true,
+      "stage_remaining_seconds": 0,
+      "stage_ttl_seconds": 600,
+      "delta_minor": "18990",
+      "denials_available": true,
+      "denials_authoritative": false
+    },
+    {
+      "case_id": "adversarial:9b007988:missing_gate",
+      "source": "verified_decision_seal.saw.inputs",
+      "verified": true,
+      "stage_remaining_seconds": null,
+      "stage_ttl_seconds": 600,
+      "delta_minor": "4000",
+      "denials_available": true,
+      "denials_authoritative": false
+    },
+    {
+      "case_id": "pix-0009:1679ba5596",
+      "source": "verified_decision_seal.saw.inputs",
+      "verified": true,
+      "stage_remaining_seconds": null,
+      "stage_ttl_seconds": 600,
+      "delta_minor": "2990",
+      "denials_available": true,
+      "denials_authoritative": false
+    }
+  ],
+  "facts_source": "verified decision seal inputs, not mutable case projection",
+  "unknown_duration_is_null_not_zero": true,
+  "delta_is_not_an_effect_authorization": true,
+  "denials_are_unsealed_diagnostic_excerpt": true,
+  "model_prompt_guard_and_gold_unchanged": true,
+  "no_case_intake": true,
+  "no_review_submit": true,
+  "no_new_effect": true,
+  "no_paid_calls": true
+}
