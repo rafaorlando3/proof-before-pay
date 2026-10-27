@@ -1,0 +1,66 @@
+{
+  "schema": "pbp.contest-bonus-tracker/1",
+  "checked_at_utc": "2026-10-27T03:20:51.007867+00:00",
+  "contest": 49,
+  "no_points_awarded_to_project_verified": true,
+  "current_full_bonus_table_located": false,
+  "maximum_total_not_assumed": true,
+  "submission_and_voting_updates_allowed": true,
+  "official_sources": [
+    "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows",
+    "https://community.intersystems.com/post/what-experts-look-contest-entries"
+  ],
+  "previous_contest_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-build-your-own-management-portal",
+  "previous_contest_limits_not_transferred": true,
+  "items": [
+    {
+      "item": "Vector Search / AI Hub knowledge base",
+      "rule_status": "organizer_comment_confirms_qualifying_usage",
+      "points": null,
+      "delivery_status": "not_implemented_optional_after_core_gates",
+      "source": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows"
+    },
+    {
+      "item": "Online demo",
+      "rule_status": "organizer_comment_rejects_static_recorded_REST_demo_for_this_bonus",
+      "points": null,
+      "delivery_status": "private_lab_only_public_demo_not_ready",
+      "source": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows"
+    },
+    {
+      "item": "Developer Community articles and translations",
+      "rule_status": "current_edition_weights_and_caps_not_verified",
+      "points": null,
+      "delivery_status": "private_draft_only_Rafael_approval_before_publication",
+      "prior_limit_note": "Contest48 second article OR translation was one capped extra point, not one per language.",
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-build-your-own-management-portal"
+    },
+    {
+      "item": "Reproducible vendor bug report",
+      "rule_status": "current_eligible_component_channel_and_cap_not_verified",
+      "points": null,
+      "delivery_status": "candidate_EAP_findings_need_isolation_and_vendor_confirmation",
+      "note": "App mistakes, expected SQL collation, disk pressure and unsupported settings are not automatically vendor bugs."
+    },
+    {
+      "item": "Docker / Embedded Python / IPM / community idea / video / tests",
+      "rule_status": "do_not_copy_previous_edition_points_or_infer_unit_test_count_bonus",
+      "points": null,
+      "delivery_status": "map_existing_evidence_to_official_table_when_available"
+    },
+    {
+      "item": "First-time contribution",
+      "rule_status": "not_claimed",
+      "points": null,
+      "note": "Rafael already entered contest48; prior first-ever-entry rule cannot simply be claimed again."
+    }
+  ],
+  "update_consistency": [
+    "release SHA and source archive",
+    "README and installation instructions",
+    "running demo version and health",
+    "test evidence scope and UI screenshots",
+    "article/video descriptions and limitations"
+  ],
+  "policy": "Maximize relevant confirmed bonuses with reproducible evidence. Monitoring public competitors may reveal gaps; preserve original purpose, licenses and reliable scope. Number of posts, tests or languages is not assumed to multiply points."
+}

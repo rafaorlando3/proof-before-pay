@@ -10,5 +10,9 @@
   "unsafe_executed_effects_observed": 0,
   "all_allowed_receipts_verified": true,
   "raw_scorer_accepted_as_quality_result": false,
-  "methodology_note": "Original scorer conflates ineligible financial proposals with effects prevented by the ledger; independent correction requested before model scoring."
+  "methodology_note": "V2 separates proposals/decisions/effects and fixes the deterministic block-code mismatch before any paid model cases. Seven rules controls have independent Root Ledger/receipt verification. Additional export/scorer completeness checks remain before scoring 33 agent cases.",
+  "original_scorer_not_accepted": true,
+  "revised_scorer_rules_controls_ok": 7,
+  "revised_scorer_effective_dangerous": 0,
+  "revised_scorer_full_matrix_safe": false
 }

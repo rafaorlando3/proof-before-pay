@@ -1,0 +1,111 @@
+{
+  "agent_minor_units_prompt_compiled": true,
+  "all_checks_complete": true,
+  "blocked_ack": {
+    "all_seals_intact": true,
+    "case_id": "pix-0009:1679ba5596",
+    "no_permit": true,
+    "no_receipt": true,
+    "status": "closed_no_effect"
+  },
+  "changed_UI_test_scope": "Native browser approval/rejection/blocked acknowledgement, copied-record tamper, polling preservation, real layout at390/1280; unchanged ledger concurrency/durability baselines not rerun.",
+  "checked_at_utc": "2026-10-27T04:07:12.564141+00:00",
+  "clean_runtime_release_gate_passed": false,
+  "collapsed_inputs_survived_poll": true,
+  "copied_record_tampered_in_browser": true,
+  "default_browser_screenshot": "docs/screens/native-ui25.png",
+  "desktop_layout": {
+    "header": "System online\nTest environment \u00b7 Recorded mode\nSession details",
+    "horizontalOverflow": false,
+    "mainVisible": true,
+    "queueVisible": true,
+    "title": "Payment amount mismatch",
+    "viewport": {
+      "height": 900,
+      "width": 1280
+    }
+  },
+  "disk_free_MiB": 1369,
+  "docker_health": "healthy",
+  "emulated_layout_tests_are_DOM_measurements": true,
+  "expired_refusal_survived_poll": true,
+  "expired_rejected": {
+    "all_seals_intact": true,
+    "case_id": "ui-refund:98e579afe2",
+    "no_permit": true,
+    "no_receipt": true,
+    "status": "rejected"
+  },
+  "expired_review": {
+    "HTTP_status": 409,
+    "case_id": "ui-refund:98e579afe2",
+    "not_executed": true,
+    "reason": "ledger_authorization_expired"
+  },
+  "health_checked_at_utc": "2026-10-27T03:57:50.353970+00:00",
+  "image_rebuilt_for_UI": false,
+  "live_inference_tested": false,
+  "mobile_layout": {
+    "clientWidth": 375,
+    "flowFits": true,
+    "header": "System online\nTest environment \u00b7 Recorded mode",
+    "horizontalOverflow": false,
+    "pageWidth": 375,
+    "reviewButtons": [
+      {
+        "height": 44,
+        "label": "Acknowledge"
+      },
+      {
+        "height": 44,
+        "label": "Reject"
+      }
+    ],
+    "title": "Payment amount mismatch",
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  "model_rejected": {
+    "all_seals_intact": true,
+    "case_id": "adversarial:9b007988:invented_ref",
+    "no_permit": true,
+    "no_receipt": true,
+    "status": "rejected"
+  },
+  "native_UI_checks_passed": true,
+  "no_real_money": true,
+  "original_seal_still_intact": true,
+  "quiet_header_and_business_labels": true,
+  "refund": {
+    "HTTP_review_status": 200,
+    "case_id": "ui-refund:3df6751647",
+    "commitment": "35708f351f8ff76dcaf3af080f3b26a637ee6dbc9c4cfe26cb4492877fa3cfc4",
+    "effect_count": 1,
+    "note_sealed": true,
+    "permit_consumed": true,
+    "receipt_integrity_verified": true,
+    "status": "closed"
+  },
+  "refusal_error_no_longer_erased_by_timer": true,
+  "rules_without_review_not_labelled_approved": true,
+  "runtime_files_match": 98,
+  "runtime_health_caveat": "Vendor health recovered without override, cleanup of other projects or a vendor patch. The startup SYS.ICM.Sharding error and limited disk headroom still need investigation; this UI overlay is not a new clean-volume release test.",
+  "runtime_image_base": "sha256:b4102d83092728112a68a937fb28c76dc0f6f95deaafe0c0347c2c9b661d2f37",
+  "runtime_overlay": [
+    "ui/index.html",
+    "ui/brand/mark.svg",
+    "ui/brand/wordmark.svg",
+    "cls/pbp/Agent.cls"
+  ],
+  "schema": "pbp.ui25.native-browser-tests/1",
+  "single_primary_review_action": true,
+  "source_manifest_sha256": "d5ccff6059dd0018f2d7ec0091bd5ba251ab9d595f64eb8af4b03d7cc982ea16",
+  "source_overlay_changed_after_baked_image": true,
+  "ui_source_sha256": "598dc890f6bc4e7ba31bc5040dd49c78df2fe4a1b9a6f82aa543d16d6df21727",
+  "unsaved_note_survived_poll": true,
+  "unsuitable_emulation_raster_images_not_delivered": true,
+  "vendor_health_snapshot": "healthy",
+  "vendor_monitor_snapshot": "ok"
+}

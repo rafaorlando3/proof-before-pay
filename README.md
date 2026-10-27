@@ -23,10 +23,14 @@ Maintainer: [Rafael Orlando Mendes](https://community.intersystems.com/user/rafa
 Code developed with AI assistants under Rafael's direction. License: [MIT](LICENSE).
 The vendor EAP image is separately licensed and is not distributed here.
 
+![Authenticated native IRIS reviewer console in recorded mode](docs/screens/native-ui25.png)
+
+Recorded-mode private lab, with synthetic data. This is a real IRIS-backed console, not a public demo.
+
 ## Start the isolated IRIS lab
 
 Prerequisites: Docker Engine with Compose v2; x86-64 Linux (tested); enough capacity
-for the approximately 3.4 GB vendor image, build overhead and 1.2 GiB of container RAM.
+for the approximately 6.8 GB unpacked vendor image, its archive/build overhead and 1.2 GiB of container RAM.
 The tested lab had at least 2.5 GB free **after** the base image had already been loaded.
 
 1. Obtain the **AI Hub Community build 154** archive from the

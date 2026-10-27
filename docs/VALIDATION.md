@@ -138,8 +138,36 @@ buckets. Real native compilation, bucket totals and the four read-only HTTP endp
 Unknown historical modes remain unknown. Stored tokens/costs are not verified billing. No new inference
 was made and unchanged native workflow/durability suites were not rerun for this reporting change.
 
-The rebuilt lab serves the Production/API, but the vendor health check now reports alert/unhealthy.
+At the reporting-change snapshot, the rebuilt lab served the Production/API while the vendor health check reported alert/unhealthy.
 Messages show 96.44% disk utilization and a startup SYS.ICM.Sharding method error; their separate
 contributions to health have not yet been isolated. Do not treat HTTP availability as a passed runtime
 health gate. This is an open infrastructure issue before final demonstration; no health check was
 bypassed, no vendor method was stubbed and no other project's images/services were removed.
+
+## Native premium UI integration (27 October)
+
+Claude's v2.5 design and the minor-units prompt instruction were integrated into the actual build154
+lab. The screenshots supplied with Claude's delta were mocked and are not used as runtime evidence.
+[The native browser result](validation/native-ui25-browser.json) records authenticated approval of a
+fresh synthetic refund (one verified effect, consumed permit and sealed test note), acknowledgement
+of a ledger-blocked refund (closed without effect), rejection of a guard-refused proposal, and rejection
+of an expired case. Altering an amount in a copied record returned tampered while the stored seal
+remained intact. An expired financial review correctly returned HTTP409/ledger_authorization_expired;
+the refusal message now persists instead of disappearing after a timer.
+
+The UI preserves an unsent note and disclosures across polling; source/receipt integrity determines
+step colors, and automatic rule decisions are not labelled human-approved. Native DOM layout checks
+at 390 and 1280 pixels found no page overflow; mobile review targets are at least 44 pixels and the five
+stages fit. The default-size screenshot above is from the real lab. Status is expressed as System online
+and Test environment / Recorded mode, with technical session information secondary. Mode-specific
+usage metadata avoids presenting recorded or unclassified historical values as paid inference.
+
+The four UI/Agent files were overlaid on the identified existing image and Agent.cls was compiled;
+98 runtime source files match the 102-file source manifest, excluding four host Docker/Compose files.
+This is not a new clean-volume or durability run. The native vendor health subsequently recovered
+without an override, method stub or vendor patch. The prior startup error and limited disk headroom
+remain open operational findings; the clean-runtime release gate is not newly claimed as passed.
+No new model call or real payment occurred. Held-out model evaluation and final demo/video remain pending.
+
+The evolving bonus checklist is [BONUS-TRACKER.json](BONUS-TRACKER.json); previous-edition weights,
+per-language points and per-update/test points are not assumed for contest 49.

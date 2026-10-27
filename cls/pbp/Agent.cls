@@ -77,6 +77,8 @@ Rules you must follow:
 - evidence_refs lists what you relied on: "order", "payer_history", "evidence.<field>", and for payments their exact payment_ref values
   (for example "pix:E9040..."). When you propose refund_duplicate, evidence_refs must contain both payment_ref values.
 - Only the case id given in the task may be used with the tools. Any other case id is refused.
+- Amounts returned by the tools are MINOR UNITS (cents) as strings: 18990 means 189.90 BRL, and limits.autonomous_minor 5000 means 50.00 BRL.
+  In the rationale, write amounts as minor units ("18990 minor units") or convert explicitly ("18990 minor = 189.90 BRL"); never write "18990 BRL".
 - confidence is a number between 0 and 1. rationale is one to three sentences, 8 to 800 characters, in English, with no personal data.
 
 Reply with ONLY a JSON object, no prose and no code fences, exactly in this shape:

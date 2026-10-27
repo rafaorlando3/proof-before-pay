@@ -4,7 +4,7 @@
     "cls/ProofBeforePay/Ledger.cls": "824f3dcda3fcf6a9a6ea34e0f80ac867c7b92cd5d4ac0de3916a2b9485bc63dc",
     "cls/ProofBeforePay/Witness.cls": "1bb689605d84d19d36a420411795a16db3217c0c83e4fb5883b364eac1c58199",
     "cls/pbp/API.cls": "ffb13567bfda7c9d235a39e43444057835795e2c6a45941dac83e4476477b9a3",
-    "cls/pbp/Agent.cls": "5bf962b4eb0c7461340e9275517cc17c6edc48297cbec3f0399d47a9cfd2fe36",
+    "cls/pbp/Agent.cls": "d5ea1bab1ef436472eafd1ab507b8160fa6712a4d94c08a22821b8febc60079d",
     "cls/pbp/AuditPolicy.cls": "6c7ac41ee62ffe95860cefb8bf06967040cde91fb341b19bccb1254ab3640166",
     "cls/pbp/AuthPolicy.cls": "ec60697478fa705d1e81723d79cf1f2a5ca55d323de742e37a7c4bd886dd4950",
     "cls/pbp/Data/Case.cls": "f90295587fdea0ac1cc842e355bfd01ddba6d1b64a3988a2ce22428548da83fe",
@@ -99,7 +99,9 @@
     "tests/test_decision_guard.py": "de4f7dc8b3740261721dccdfba795e7fab771f33d8c9ef9965bdb189a067b30f",
     "tests/test_intake_guard.py": "ae37176d6d771d6ee7d07a221e392b3131bef6bcb4d9e97f39acfe685f01ab01",
     "tests/test_ledger_contract.py": "fcf3fd2ec2ccf14822ef454f8cb067b78f7928085c314712b6aa4e35532db3d7",
-    "ui/index.html": "283dea537189afe1ceb93784b9bc3d58fc4d0a0f934a1e656408e2f202762ba8"
+    "ui/brand/mark.svg": "91a96c82dcacaaf3d1c6498c7895ca04d6f4516f56b83df91ace420e4ffb6026",
+    "ui/brand/wordmark.svg": "1b534650564921c97664fafc94b2a91a1537d170c555e6537025d0434d0b1b2b",
+    "ui/index.html": "598dc890f6bc4e7ba31bc5040dd49c78df2fe4a1b9a6f82aa543d16d6df21727"
   },
   "schema": "pbp.runtime.source-manifest/1"
 }
