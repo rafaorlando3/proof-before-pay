@@ -46,6 +46,30 @@ the vendor EAP Sharding observation remains recorded. No vendor stub, alert clea
 or health bypass was used. Final demo/video, independent validation and Rafael's
 express approval are still required before an Open Exchange submission.
 
+### Independent v2 review and Agent E / closed-case UI
+
+Claude subsequently recomputed the eight-case evidence gate and unchanged v4 scorer;
+both parsed JSON results match ours exactly. C-1183 also reports
+the mandatory positive gate accepted; its separate JSON artifact was not included
+and has been requested. [Review provenance](validation/independent-v2-review.json)
+keeps that distinction visible. The result remains post-baseline regression evidence;
+the original failed baseline has not been rescored or replaced.
+
+Agent E adds two general evidence instructions: repeated observations of the same
+payment reference are not a second payment, and an absent recipient must be declared
+missing with human review. The native class compiled, and five focused Agent tests
+passed: provider construction without inference, valid/invalid output parsing,
+recorded-mode behavior and tool case isolation. These checks do **not** establish
+live model quality for the new instructions; a new protocol must be frozen first.
+
+The actual IRIS-backed UI at 332 pixels has no page overflow. Closed cases move
+audit actions into seal cards and collapse technical identifiers under a disclosure
+that survives polling. The existing receipt remained intact, with no new effect.
+[Native evidence](validation/agentE-ui30.json) and the
+[actual screenshot](screens/native-closed30-mobile.png) exclude the supplied mock.
+The server's raw outcome reason still includes receipt/time metadata in the header;
+further copy refinement remains a UI follow-up.
+
 The native workflow has been exercised in a dedicated, synthetic x86-64 Linux build154 laboratory.
 The public CI and private licensed-runtime gates are deliberately separate.
 

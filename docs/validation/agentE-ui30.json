@@ -1,0 +1,35 @@
+{
+  "schema": "pbp.native.agentE-ui30/1",
+  "source_base": "d3d45ee5e984a46984689b9a2cb5f513b36f3e5b",
+  "Agent_sha256": "5340b4d145294f140ab02afd772a5ab12ce97438a06946c8248b43d55eb726df",
+  "UI_sha256": "a93cee7548fa0d538078d98c1bfdbff196d32c3778875500f0f79945b914aa53",
+  "compile_ok": true,
+  "native_unit_methods": [
+    "TestGeminiPrivateBaseConfiguration",
+    "TestParseInvalid",
+    "TestParseValid",
+    "TestRecordedModeWithoutKey",
+    "TestToolCaseIsolation"
+  ],
+  "count": 5,
+  "live_inference_tested": false,
+  "paid_calls": 0,
+  "benchmark_cases_attempted": 0,
+  "clean_install": false,
+  "scope": "AgentE compiled in actualbuild154; five native Agent parser/provider/context/recorded tests. Runtime overlay only; guard/Ledger unchanged. Model quality awaits a new freeze.",
+  "UI": {
+    "native_IRIS_backed": true,
+    "mode": "recorded",
+    "viewport_width": 332,
+    "no_page_overflow": true,
+    "closed_case_top_tamper_button_absent": true,
+    "secondary_tamper_buttons": 2,
+    "technical_details_default_collapsed": true,
+    "technical_details_open_close_functional": true,
+    "technical_details_preserved_across_polling": true,
+    "original_receipt_336_intact": true,
+    "historical_financial_effects_reexecuted": 0,
+    "screenshot": "docs/screens/native-closed30-mobile.png",
+    "raw_server_reason_still_contains_receipt_timestamp": "observed; supplied to Claude as future copy refinement, not altered in this delta"
+  }
+}

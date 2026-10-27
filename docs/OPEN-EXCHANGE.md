@@ -42,7 +42,7 @@ and [the aggregate result](validation/live-regression-v2.json).
 - [x] Witness compiled and both methods tested in actual build154 IRIS.
 - [x] TypeScript/Python test workflow prepared.
 - [x] GitHub workflow confirmed green for the published commit (see validation and repository Actions).
-- [x] Initial Claude code review received (C-1163); subsequent source/freeze review received in C-1182.
+- [x] Initial Claude code review received (C-1163); source/freeze review in C-1182 and independent v2 result review in C-1183, with artifact limits recorded in validation.
 - [x] Native AI Hub agent participates in a working Interoperability production, with actual native tool calls.
 - [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
 - [ ] Public authenticated demo with qualified model inference.

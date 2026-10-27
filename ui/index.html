@@ -96,6 +96,7 @@ a{color:var(--accent)}
 .case-hd h2{margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px}
 .case-hd .desc{flex:1 1 100%;color:var(--text-2);font-size:13px;display:flex;flex-wrap:wrap;gap:4px 14px}
 .case-hd .desc span b{color:var(--text);font-weight:600}
+.case-hd details.tech{flex:1 1 100%;margin-top:0;background:transparent;border:0}.case-hd details.tech>summary{padding:4px 0;font-size:12px;color:var(--text-3)}.case-hd details.tech>.in{padding:2px 0 0}
 .cta{margin-left:auto;display:flex;gap:8px;align-items:center}
 .btn{height:36px;padding:0 14px;border-radius:10px;border:1px solid transparent;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform var(--dur),filter var(--dur)}
 .btn:active{transform:translateY(1px)}
@@ -423,7 +424,7 @@ function primaryCTA(x){
     if(!state.me.can_review) return `<span class="pill warn">reviewer login required</span>`;
     return ''; // The review card is already first: keep one primary action, not a duplicate scroll button.
   }
-  if(x.headSeal) return `<button class="btn ghost" data-tamper="${esc(x.headSeal.commitment)}" data-focus-seal="true">Try to tamper the seal</button>`;
+  // Closed cases: no top-level audit button; "Try to tamper" stays secondary inside the seal card.
   return '';
 }
 function sealCard(s){
@@ -473,7 +474,8 @@ async function openCase(id, userAction){
   <div class="case-hd">
     <div class="title"><h2>${esc(caseTitle(c))}</h2><span class="pill ${stTone(c.status)}">${esc(stLabel(c.status))}</span></div>
     <div class="cta">${primaryCTA(x)}</div>
-    <div class="desc"><span class="mono">${esc(c.case_id)}</span><span>store ${esc(c.store)}</span><span>policy ${esc(c.policy?.id)} v${esc(c.policy?.version)}</span>${c.input?.environment?`<span>environment <b>${esc(c.input.environment)}</b></span>`:''}${c.reason?`<span class="muted">${c.status==='blocked'?human(c.reason):esc(c.reason)}</span>`:''}</div>
+    <div class="desc">${c.reason?`<span>${c.status==='blocked'?human(c.reason):esc(c.reason)}</span>`:''}${c.input?.environment?`<span class="muted">environment <b>${esc(c.input.environment)}</b></span>`:''}</div>
+    <details class="tech"><summary>Technical details</summary><div class="in small muted"><span class="mono">${esc(c.case_id)}</span> · store ${esc(c.store)} · policy ${esc(c.policy?.id)} v${esc(c.policy?.version)} · created ${fmtTime(c.created_at)} · updated ${fmtTime(c.updated_at)}${c.session_id?` · trace session <span class="mono">${esc(c.session_id)}</span>`:''}</div></details>
   </div>
   ${flow(x,d)}
   <div class="cols" style="padding:0 16px 16px">

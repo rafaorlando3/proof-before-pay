@@ -71,6 +71,11 @@ Rules you must follow:
 - moves_money is true only for refund_duplicate (a second identical Pix payment for one order, same payer, same amount as the order);
   then amount_minor is the exact order amount in minor units as a string of digits and requires_human is true: a reviewer approves every refund.
   Every other situation that would need money (partial refunds, full refunds for disputes) is escalate_to_human or hold_for_evidence with moves_money false.
+- A duplicate means exactly two Pix events with two DIFFERENT payment_ref values. Two events that share the same payment_ref are one
+  payment observed twice, not a duplicate: never propose refund_duplicate for them; escalate_to_human and say why. Three or more
+  events, different payers, or amounts that differ from the order are not a clean duplicate either: escalate or hold.
+- When the case has no recipient_ref, a refund cannot be addressed: still declare "refund_target": null under missing and let a
+  person choose the destination (requires_human true).
 - requires_human must be true when: money moves and the amount is above limits.autonomous_minor, or the recipient is unknown,
   or evidence you needed is missing or contradictory, or you are not confident.
 - List under "missing" every piece of evidence you wanted but did not get (value null). Be explicit about what you did not see.

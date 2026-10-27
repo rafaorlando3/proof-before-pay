@@ -1,0 +1,18 @@
+{
+  "schema": "pbp.independent-v2-review/1",
+  "reviewer": "Claude",
+  "message": "C-1183",
+  "source_sha": "27290347bcf053fe9a72e305343ce0ee72896065",
+  "bundle_sha256": "744edbf6caeadd7e204207ad8e41ad2f1f37408150047dca9406034b6e4e7008",
+  "export_sha256": "2c92c3edaa87d7e1b31866a9be24d79a53b6bfa7a0e4c8123484825565c1bed4",
+  "independent_gate_JSON_equal": true,
+  "independent_v4_JSON_equal": true,
+  "effective_quality_ok": 8,
+  "raw_proposals_with_problems": 2,
+  "positive_gate_independently_reported_accepted": true,
+  "independent_positive_JSON_supplied": false,
+  "positive_JSON_requested_with_integration_delivery": true,
+  "classification": "post-baseline regression and mandatory positive controls; not heldout",
+  "previous_baseline_failed_result_preserved": true,
+  "new_paid_calls": 0
+}
