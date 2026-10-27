@@ -59,6 +59,27 @@ ClassMethod RunRecorded(pRequest As pbp.Msg.DecisionRequest, pResponse As pbp.Ms
         Quit
     }
     Do ..Fill(pResponse, decision)
+    Do ..ValidateContext(pResponse)
+}
+
+/// A valid JSON shape is insufficient: references must come from actual tool outputs and flags must
+/// agree with the v1 action contract. A failure becomes a sealed human escalation in the process.
+ClassMethod ValidateContext(response As pbp.Msg.DecisionResponse)
+{
+    Set reason="decision_context_check_failed"
+    Try {
+        Set guard=##class(%SYS.Python).Import("pbp_guard.decision")
+        Set response.MissingJSON=guard."merge_missing"(response.MissingJSON,response.ToolsJSON)
+        Set d={"action":(response.Action),"moves_money":(response.MovesMoney),"requires_human":(response.RequiresHuman)}
+        Do d.%Set("moves_money",response.MovesMoney,"boolean")
+        Do d.%Set("requires_human",response.RequiresHuman,"boolean")
+        Set d."evidence_refs"=##class(pbp.Util).ParseJSON(response.EvidenceRefsJSON,.r)
+        Set d.missing=##class(pbp.Util).ParseJSON(response.MissingJSON,.r)
+        Set reason=guard."check_context"(d.%ToJSON(),response.ToolsJSON)
+    } Catch ex {
+        Do ##class(pbp.Util).LogEx("pbp.Operation.Replay.ValidateContext",ex)
+    }
+    If reason'="" Set response.Ok=0,response.Reason="decision_context_invalid:"_reason
 }
 
 /// Copy a validated decision object into the response.
@@ -92,7 +113,7 @@ ClassMethod ParseDecision(text As %String, Output reason As %String) As %Dynamic
     If reason'= "" Quit ""
     Set d = ##class(pbp.Util).ParseJSON(json, .reason)
     If d = "" Quit ""
-    If d.action = "" { Set reason = "action_missing" Quit "" }
+    If (d.%GetTypeOf("action")'="string") || (d.action = "") { Set reason = "action_missing" Quit "" }
     If d.%GetTypeOf("moves_money") '= "boolean" { Set reason = "moves_money_not_boolean" Quit "" }
     If d.%GetTypeOf("requires_human") '= "boolean" { Set reason = "requires_human_not_boolean" Quit "" }
     If d."moves_money" {
@@ -101,10 +122,17 @@ ClassMethod ParseDecision(text As %String, Output reason As %String) As %Dynamic
         Do d.%Remove("amount_minor")
     }
     If (d.%GetTypeOf("confidence") '= "number") || (d.confidence < 0) || (d.confidence > 1) { Set reason = "confidence_out_of_range" Quit "" }
+    If d.%GetTypeOf("rationale")'="string" { Set reason="rationale_not_string" Quit "" }
     Set r = $ZSTRIP(d.rationale, "<>W")
     If ($LENGTH(r) < 8) || ($LENGTH(r) > 800) { Set reason = "rationale_length" Quit "" }
     Set d.rationale = r
     If (d.%GetTypeOf("evidence_refs") '= "array") || (d."evidence_refs".%Size() = 0) { Set reason = "evidence_refs_missing" Quit "" }
+    Set refs=d."evidence_refs"
+    For n=0:1:refs.%Size()-1 {
+        If (refs.%GetTypeOf(n)'="string") || ($LENGTH(refs.%Get(n))=0) { Set reason="evidence_refs_invalid" Quit }
+    }
+    If reason'="" Quit ""
+    If $LENGTH(refs.%ToJSON())>1024 { Set reason="evidence_refs_too_large" Quit "" }
     If d.%GetTypeOf("missing") = "unassigned" Set d.missing = {}
     If d.%GetTypeOf("missing") '= "object" { Set reason = "missing_not_object" Quit "" }
     // Normalize: every value under missing is null.
@@ -116,6 +144,7 @@ ClassMethod ParseDecision(text As %String, Output reason As %String) As %Dynamic
     }
     If reason'="" Quit ""
     Set d.missing = m
+    If $LENGTH(m.%ToJSON())>4000 { Set reason="missing_too_large" Quit "" }
     Quit d
 }
 

@@ -7,11 +7,12 @@ The public CI and private licensed-runtime gates are deliberately separate.
 |---|---|---|
 | TypeScript reference | 20 vectors and typecheck passed in foundation validation | S0 source unchanged |
 | Python reference | 24 vectors passed in foundation validation | S0 source unchanged |
-| Offline boundary suites | 31 methods passed; forbidden network/process attempts 0 | Witness adapter, ledger plan, intake guards |
+| Offline boundary suites | 46 methods passed; forbidden network/process attempts 0 | Witness adapter, ledger plan, intake guards |
 | Native Witness bridge | 12 checks passed | Actual ObjectScript → embedded Python, no model |
 | Native ledger | 39 checks plus 12 independent IRIS execution sessions | One effect, identical receipts, authenticated review, TTL, tampering, loss/retry |
 | Native unit suites | 20 methods; framework reports All PASSED | Rules, output contract, scope isolation, permits, receipt projection tampering |
 | Native Production replay | 48 checks on ten fresh synthetic cases | Service → Process → recorded agent/tools → Workflow review → seal approval → permit → one effect → readback |
+| Native adversarial workflow | Three development attacks now await human review, with intact seals and zero permits/receipts | Inconsistent financial intent, fabricated evidence ref, declared missing evidence without review |
 | Actual HTTP workflow | 34 checks | Authenticated reviewer session, version binding, CSRF header, copied-record tamper, timeline/tool retrieval, refusal paths |
 | Real model integration | Gemini, GPT-5.4 Mini and Claude Haiku each completed one synthetic scenario | Five native tools, sealed decision/approval, authenticated test review, one sandbox effect; not a quality benchmark |
 | Actual browser | Approve closes synthetic case; modified amount returns tampered | IRIS-backed API, not a mock API |
@@ -50,3 +51,26 @@ The server's full logs remain private; they are not required to distribute vendo
 - No bank/chain transaction, settlement, independent timestamp or external anchoring is claimed.
   An administrator who can replace all local evidence can rewrite local history.
 - No Open Exchange submission or public demo has been published by these tests. Rafael's final OK is required.
+
+## Model-context regression
+
+At baseline `d39c7085ed5ed7f8274c332adfa24270861cafe7`, three syntactically valid recorded proposals
+incorrectly closed their cases without review: `refund_full` with `moves_money=false`, an invented
+evidence reference, and a declared missing signature with `requires_human=false`. None moved money.
+[Original reproduction](validation/adversarial-before.json) is retained rather than rewritten.
+
+The corrected path rejects each proposal for its specific reason, seals an escalation, preserves
+declared missing evidence and actual tool outputs, and leaves the native human task open with no
+permit or receipt. The same native runner also verifies the ten original cases and successful
+review paths. Offline positive controls include complete nonfinancial cases, genuine false/zero
+evidence and all three captured live-provider proposals, so a broken guard that rejects everything
+cannot satisfy the regression. Model explanations still need independent evaluation.
+
+These cases were authored by Codex during development. Claude's separate held-out set and peer review
+remain pending; no new live inference, calibrated quality ranking or three-agent advantage is claimed.
+
+Final context-guard runtime: `sha256:644a631e1d7453f4d2bab9f921189e21b86d095efc0b36f1042f2a0e389869a1`. Source manifest SHA-256:
+`397c53c98b5e79393c4b2d2f652e9f90956eb2d18db292547906a9f2cf3c8a6d` (95 baked runtime files matched).
+[Native regression evidence](validation/decision-guard-regression.json) contains the 20 native unit
+methods, 48 original E2E checks and three adversarial cases with their expected refusal reasons.
+No paid inference was performed in this later regression. HTTP workflow passed 34 checks again.

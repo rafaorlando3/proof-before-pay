@@ -68,3 +68,10 @@ fields, correctly escalated contradictions, useful disagreements, latency, calls
 cost. Include correlated-error cases where all three agree incorrectly. Separate model comparisons
 from architectural comparisons. Adopt only if the observed gain merits its cost and failure surface;
 report sample sizes and uncertainty. Do not convert a small test into a probability of winning.
+
+## Subsequent local hardening
+
+The context guard is exercised without new inference calls against the three actual captured
+provider proposals above, as well as development attacks and positive controls. These proposals
+remain accepted by the new structural/context checks. This is replay of existing evidence, not
+three new live calls, a held-out quality result, or a demonstration of ensemble benefit.

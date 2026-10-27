@@ -103,6 +103,7 @@ Method Live(pRequest As pbp.Msg.DecisionRequest, pResponse As pbp.Msg.DecisionRe
     }
     If n'=5 Quit
     Do ##class(pbp.Operation.Replay).Fill(pResponse, decision)
+    Do ##class(pbp.Operation.Replay).ValidateContext(pResponse)
     If pResponse.Ok Set ^pbp.live(pResponse.ModelProvider,pResponse.ModelId,"last_ok")=##class(pbp.Util).NowISO()
 }
 

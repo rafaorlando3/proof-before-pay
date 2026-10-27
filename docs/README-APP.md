@@ -87,3 +87,25 @@ Any Business Process can seal a decision with `pbp.Msg.SealRequest` to `pbp.Oper
 one-liner yet.)
 
 A local administrator able to replace the stored record, salt and commitment can rewrite local history. No independent timestamp, external anchor or protection from a malicious IRIS administrator is claimed.
+
+## Context validation after model output
+
+Valid JSON is only the first check. The live and recorded operations call the same local,
+I/O-free context guard after collecting tool outputs. The guard accepts only the v1 action
+semantics: `refund_duplicate` must request money and human review; other executable proposals
+must not move money. Full/partial refunds and withdrawal retries are outside v1 execution and
+become a human escalation. The ledger remains the sole authority for any sandbox financial effect.
+
+Every cited reference must identify a non-null output actually returned by the scoped tools.
+A tool's absence/error wrapper does not count as evidence. Null evidence observed by tools is
+merged into `missing`, even if the model returned an empty object; any declared or observed
+missing evidence requires review on the model path. Trusted deterministic rules keep their own
+business criteria and continue to seal their observed missing fields.
+
+A rejected proposal produces a sealed escalation with a stable reason, actual tool outputs and
+the declared missing fields. It does not create a permit or effect. This guard does not establish
+that a model's natural-language explanation is correct; the recorded Haiku unit error remains an
+explicit limitation. Development tests are not an independent held-out model benchmark.
+
+New permit/effect events explicitly label raw amounts as **minor units**. Older diagnostic events
+are preserved; the main decision, permit and receipt cards format BRL amounts as reais.

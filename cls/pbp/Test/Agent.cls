@@ -38,7 +38,7 @@ Method TestRecordedModeWithoutKey()
     If '$ISOBJECT(case) {
         Set case = ##class(pbp.Data.Case).%New()
         Set case.CaseId = cid, case.StoreId = "store-default", case.ExceptionType = "amount_mismatch"
-        Set case.InputJSON = "{""case_id"":""pix-0005"",""exception"":""amount_mismatch"",""order"":{""amount_minor"":""8900""},""payments"":[{""payment_ref"":""pix:X"",""amount_minor"":""12900"",""payer"":""test:p""}],""evidence"":{}}"
+        Set case.InputJSON = "{""case_id"":""pix-0005"",""exception"":""amount_mismatch"",""order"":{""amount_minor"":""8900""},""payments"":[{""payment_ref"":""pix:E90400888202610221004G8"",""amount_minor"":""12900"",""payer"":""test:p""}],""payer_history"":{""orders_90d"":3},""evidence"":{""customer_message"":""Please return the difference.""}}"
         Do case.%Save()
     }
     Set req = ##class(pbp.Msg.DecisionRequest).%New()

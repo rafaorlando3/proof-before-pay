@@ -17,6 +17,8 @@ The application provides a native Interoperability Production: intake, determini
 AI Hub agent interface with recorded fallback, authenticated Workflow review, a sealed approval,
 a single-use permit, one journaled sandbox effect and independently checked readback. The authenticated
 console exposes the sealed chain, missing evidence, forensic tool outputs and a copied-record tamper test.
+Model proposals also pass an I/O-free context check against observed tool outputs; inconsistent action
+flags, fabricated references and missing evidence without review become sealed human escalations.
 The full path has run with explicitly recorded decisions and in a private one-scenario integration
 trial with real Gemini, OpenAI and Anthropic models through OpenRouter. This proves native tool and
 workflow integration, not model quality or ensemble benefit. The live trial exposed a reviewer-note

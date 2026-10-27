@@ -5,6 +5,9 @@ The application runs on InterSystems IRIS AI Hub EAP build154: native Interopera
 intake/process/operations, deterministic policy, scoped read-only tools, authenticated
 Workflow review, a sealed approval, a single-use permit and one confirmed sandbox effect.
 The review console detects edits to decision copies and shows the sealed evidence chain.
+Model proposals are also checked against actual tool observations: invented/null references,
+inconsistent money flags and missing evidence cannot silently close a case. Unsupported financial
+actions go to a person; only duplicate refunds are executable in v1.
 
 **Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
 and Anthropic models through OpenRouter in a private synthetic lab. Each model completed

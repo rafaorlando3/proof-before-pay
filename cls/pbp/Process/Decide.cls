@@ -178,6 +178,14 @@ Method OnAgent(case As pbp.Data.Case, resp As pbp.Msg.DecisionResponse) As %Stat
         Set d.rationale = "The model did not return a valid decision (" _ $EXTRACT(resp.Reason, 1, 120) _ "); a person decides."
         Set d."evidence_refs" = ["order"]
         Set d.missing = ##class(pbp.Rules).Missing(input)
+        // Keep the proposal's declared ignorance even when its action/refs fail contextual validation.
+        Set wanted=##class(pbp.Util).ParseJSON(resp.MissingJSON,.r)
+        If $ISOBJECT(wanted) {
+            Set it=wanted.%GetIterator()
+            While it.%GetNext(.k,.v) {
+                If wanted.%GetTypeOf(k)="null" Do d.missing.%Set(k,"","null")
+            }
+        }
         Do case.SetStatus("agent_failed", resp.Reason, "")
         Set record = ..BuildDecisionRecord(input, pol, d, resp, ..ToolsOf(resp))
         If record = "" Quit ..Block("record_build_failed")
@@ -448,7 +456,7 @@ Method OnLedger(case As pbp.Data.Case, resp As pbp.Msg.LedgerResponse) As %Statu
         Do ##class(pbp.Operation.TestLedger).Reconcile(..PermitId, .rec)
         If rec.Ok {
             Do ##class(pbp.Data.Event).Add(..CaseId, "reconciled", "effect found once in the ledger, no second effect", rec.ReceiptId)
-            Do case.SetStatus("effected", ..AmountMinor _ " " _ ..Currency _ " receipt " _ rec.ReceiptId _ " (reconciled)", rec.ReceiptId)
+            Do case.SetStatus("effected", ..AmountMinor _ " minor units " _ ..Currency _ " receipt " _ rec.ReceiptId _ " (reconciled)", rec.ReceiptId)
             Quit ..Close(case, "closed", "effect " _ rec.ReceiptId _ " confirmed by reconciliation")
         }
         If rec.Uncertain Quit ..Block("reconcile_required:" _ rec.Reason)
@@ -456,7 +464,7 @@ Method OnLedger(case As pbp.Data.Case, resp As pbp.Msg.LedgerResponse) As %Statu
     }
     If 'resp.Ok Quit ..Block("ledger_refused:" _ resp.Reason)
     If resp.Duplicate Do ##class(pbp.Data.Event).Add(..CaseId, "duplicate_effect_prevented", resp.Reason, resp.ReceiptId)
-    Do case.SetStatus("effected", ..AmountMinor _ " " _ ..Currency _ " receipt " _ resp.ReceiptId, resp.ReceiptId)
+    Do case.SetStatus("effected", ..AmountMinor _ " minor units " _ ..Currency _ " receipt " _ resp.ReceiptId, resp.ReceiptId)
     Quit ..Close(case, "closed", "effect " _ resp.ReceiptId _ " at " _ resp.EffectAt)
 }
 

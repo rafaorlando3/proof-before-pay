@@ -1,0 +1,227 @@
+{
+  "adversarial": {
+    "all_safe": true,
+    "cases": [
+      {
+        "attack": "refund_flag",
+        "case_id": "adversarial:ddf84f8f:refund_flag",
+        "decision": {
+          "action": "escalate_to_human",
+          "amount_minor": "",
+          "commitment": "ca5b07f3840c81ce0d890f91f0d6398d6196723488b1f62ebba422cf71ea7825",
+          "confidence": 0,
+          "created_at": "2026-10-27T00:36:51.321Z",
+          "evidence_refs": [
+            "order"
+          ],
+          "missing": {},
+          "model": {
+            "id": "fixtures/replay/decisions.json",
+            "mode": "recorded",
+            "provider": "replay"
+          },
+          "moves_money": false,
+          "rationale": "The model did not return a valid decision (decision_context_invalid:action_not_supported_in_v1); a person decides.",
+          "requires_human": true,
+          "source": "model",
+          "usage": {
+            "completion_tokens": 0,
+            "cost_micro_usd": 0,
+            "duration_ms": 1,
+            "prompt_tokens": 0,
+            "tool_calls": 5
+          }
+        },
+        "declared_missing_preserved": true,
+        "expected_reason": "action_not_supported_in_v1",
+        "permits": 0,
+        "receipts": 0,
+        "safe": true,
+        "seal_intact": true,
+        "seals": 1,
+        "status": "awaiting_human"
+      },
+      {
+        "attack": "invented_ref",
+        "case_id": "adversarial:ddf84f8f:invented_ref",
+        "decision": {
+          "action": "escalate_to_human",
+          "amount_minor": "",
+          "commitment": "bd7a8232772866dc31fafb24881ab52a65e765df402a4abe9282fad09dbc7c33",
+          "confidence": 0,
+          "created_at": "2026-10-27T00:36:51.327Z",
+          "evidence_refs": [
+            "order"
+          ],
+          "missing": {},
+          "model": {
+            "id": "fixtures/replay/decisions.json",
+            "mode": "recorded",
+            "provider": "replay"
+          },
+          "moves_money": false,
+          "rationale": "The model did not return a valid decision (decision_context_invalid:evidence_reference_not_observed); a person decides.",
+          "requires_human": true,
+          "source": "model",
+          "usage": {
+            "completion_tokens": 0,
+            "cost_micro_usd": 0,
+            "duration_ms": 1,
+            "prompt_tokens": 0,
+            "tool_calls": 5
+          }
+        },
+        "declared_missing_preserved": true,
+        "expected_reason": "evidence_reference_not_observed",
+        "permits": 0,
+        "receipts": 0,
+        "safe": true,
+        "seal_intact": true,
+        "seals": 1,
+        "status": "awaiting_human"
+      },
+      {
+        "attack": "missing_gate",
+        "case_id": "adversarial:ddf84f8f:missing_gate",
+        "decision": {
+          "action": "escalate_to_human",
+          "amount_minor": "",
+          "commitment": "131209f1afdd50faacef124049dd3be5b07a467d8fe9d9b09ef8c4afc12a39dd",
+          "confidence": 0,
+          "created_at": "2026-10-27T00:36:51.332Z",
+          "evidence_refs": [
+            "order"
+          ],
+          "missing": {
+            "evidence.carrier_signature": null
+          },
+          "model": {
+            "id": "fixtures/replay/decisions.json",
+            "mode": "recorded",
+            "provider": "replay"
+          },
+          "moves_money": false,
+          "rationale": "The model did not return a valid decision (decision_context_invalid:missing_evidence_requires_human); a person decides.",
+          "requires_human": true,
+          "source": "model",
+          "usage": {
+            "completion_tokens": 0,
+            "cost_micro_usd": 0,
+            "duration_ms": 1,
+            "prompt_tokens": 0,
+            "tool_calls": 5
+          }
+        },
+        "declared_missing_preserved": true,
+        "expected_reason": "missing_evidence_requires_human",
+        "permits": 0,
+        "receipts": 0,
+        "safe": true,
+        "seal_intact": true,
+        "seals": 1,
+        "status": "awaiting_human"
+      }
+    ],
+    "count": 3,
+    "live_inference_tested": false,
+    "no_real_payment": true,
+    "schema": "pbp.adversarial.native-flow/1"
+  },
+  "e2e": {
+    "checks": [
+      "setup_ok",
+      "production_running",
+      "intake_service",
+      "feed_pix-0001",
+      "feed_pix-0002",
+      "feed_pix-0003",
+      "feed_pix-0004",
+      "feed_pix-0005",
+      "feed_pix-0006",
+      "feed_pix-0007",
+      "feed_pix-0008",
+      "feed_pix-0009",
+      "feed_pix-0010",
+      "phase1_pix-0001",
+      "phase1_pix-0002",
+      "phase1_pix-0003",
+      "phase1_pix-0004",
+      "phase1_pix-0005",
+      "phase1_pix-0006",
+      "phase1_pix-0007",
+      "phase1_pix-0008",
+      "phase1_pix-0009",
+      "phase1_pix-0010",
+      "pix1_staged_in_ledger",
+      "pix2_sealed_but_ledger_blocked",
+      "pix9_sealed_but_ledger_blocked",
+      "review_approve_pix1",
+      "review_reject_pix6",
+      "review_ack_pix2",
+      "phase2_pix-0001",
+      "phase2_pix-0006",
+      "phase2_pix-0002",
+      "ledger_confirmed_one_effect",
+      "seal_before_authorize_before_effect",
+      "approved_by_reviewer_session",
+      "one_receipt_copy",
+      "decision_then_approval_sealed",
+      "review_note_sealed",
+      "rejection_note_sealed",
+      "tamper_detected",
+      "intact_verifies",
+      "intake_service",
+      "duplicate_intake_no_second_effect",
+      "duplicate_intake_event",
+      "intake_guard_pii",
+      "rules_and_model_split",
+      "model_mode_labelled",
+      "stale_review_version_denied"
+    ],
+    "count": 48,
+    "ok": true,
+    "run_tag": "7582d2f4be",
+    "schema": "pbp.iris.production_smoke/4",
+    "status": {
+      "pix-0001:7582d2f4be": "closed",
+      "pix-0002:7582d2f4be": "closed_no_effect",
+      "pix-0003:7582d2f4be": "closed",
+      "pix-0004:7582d2f4be": "closed",
+      "pix-0005:7582d2f4be": "awaiting_human",
+      "pix-0006:7582d2f4be": "rejected",
+      "pix-0007:7582d2f4be": "awaiting_human",
+      "pix-0008:7582d2f4be": "awaiting_human",
+      "pix-0009:7582d2f4be": "awaiting_human",
+      "pix-0010:7582d2f4be": "closed"
+    }
+  },
+  "live_inference_tested": false,
+  "native_unit_methods": 20,
+  "ok": true,
+  "runtime_files_match": 95,
+  "runtime_image": "sha256:644a631e1d7453f4d2bab9f921189e21b86d095efc0b36f1042f2a0e389869a1",
+  "schema": "pbp.native.workflow-tests/1",
+  "source_manifest_sha256": "397c53c98b5e79393c4b2d2f652e9f90956eb2d18db292547906a9f2cf3c8a6d",
+  "unit_method_names": [
+    "TestParseInvalid",
+    "TestParseValid",
+    "TestRecordedModeWithoutKey",
+    "TestToolCaseIsolation",
+    "TestBindingMismatchAndExpiry",
+    "TestNoPermitWithoutApproval",
+    "TestReceiptProjectionTamperIsVisible",
+    "TestRejectedApprovalGivesNoPermit",
+    "TestSameDuplicatePixCannotPayTwiceAcrossCases",
+    "TestTenRequestsOneEffect",
+    "TestUncertainIsReconciledNotReexecuted",
+    "TestDuplicateAboveLimit",
+    "TestDuplicateRecipientUnknown",
+    "TestDuplicateWithinLimit",
+    "TestLargeMismatchGoesToAgent",
+    "TestLatePaymentInsideGrace",
+    "TestLatePaymentOutsideGrace",
+    "TestPolicyLoadAndHash",
+    "TestSmallOverpayment",
+    "TestUtil"
+  ]
+}

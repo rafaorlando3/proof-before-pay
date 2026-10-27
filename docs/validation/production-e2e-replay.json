@@ -51,18 +51,18 @@
   ],
   "count": 48,
   "ok": true,
-  "run_tag": "ad8e471960",
+  "run_tag": "7582d2f4be",
   "schema": "pbp.iris.production_smoke/4",
   "status": {
-    "pix-0001:ad8e471960": "closed",
-    "pix-0002:ad8e471960": "closed_no_effect",
-    "pix-0003:ad8e471960": "closed",
-    "pix-0004:ad8e471960": "closed",
-    "pix-0005:ad8e471960": "awaiting_human",
-    "pix-0006:ad8e471960": "rejected",
-    "pix-0007:ad8e471960": "awaiting_human",
-    "pix-0008:ad8e471960": "awaiting_human",
-    "pix-0009:ad8e471960": "awaiting_human",
-    "pix-0010:ad8e471960": "closed"
+    "pix-0001:7582d2f4be": "closed",
+    "pix-0002:7582d2f4be": "closed_no_effect",
+    "pix-0003:7582d2f4be": "closed",
+    "pix-0004:7582d2f4be": "closed",
+    "pix-0005:7582d2f4be": "awaiting_human",
+    "pix-0006:7582d2f4be": "rejected",
+    "pix-0007:7582d2f4be": "awaiting_human",
+    "pix-0008:7582d2f4be": "awaiting_human",
+    "pix-0009:7582d2f4be": "awaiting_human",
+    "pix-0010:7582d2f4be": "closed"
   }
 }

@@ -106,7 +106,7 @@ ClassMethod Issue(seal As pbp.Data.Seal, recipient As %String, amountMinor As %S
     Set p.ApprovalCommitment = approvalCommitment
     Set sc = p.%Save()
     If $$$ISERR(sc) { Set reason = "permit_save_failed: " _ ##class(pbp.Util).StatusText(sc) Quit "" }
-    Do ##class(pbp.Data.Event).Add(seal.CaseId, "permit_issued", amountMinor _ " " _ currency _ " to " _ recipient _ " by " _ authorizedBy, p.PermitId)
+    Do ##class(pbp.Data.Event).Add(seal.CaseId, "permit_issued", amountMinor _ " minor units " _ currency _ " to " _ recipient _ " by " _ authorizedBy, p.PermitId)
     Quit p
 }
 
