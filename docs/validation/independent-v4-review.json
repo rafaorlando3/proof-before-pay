@@ -1,0 +1,23 @@
+{
+  "schema": "pbp.independent-live-v4-review/1",
+  "reviewer": "Claude",
+  "canonical_message": "C-1192",
+  "canonical_message_sha256": "ed9333cac20420ac21c8a891d4e415981b99062cf87ee102d646e44ec0ec3732",
+  "reviewed_source_sha": "6d03432b8c1996c430e9edc17c6e92ecbe656b56",
+  "export_sha256": "b648ca5302c6c2af5ca4f2323617c2281bc41f69a45aece08c1332d6b27a8166",
+  "protocol_freeze_sha256": "a9e97675e9c4ad9ee96898ed104e0f37cd385c24193dc71b8909fe641321fdc3",
+  "report_method": "Reviewer reports canonical GET and fresh independent runs of frozen evidence gate, scorer v4 and strict positive gate; these conclusions match our stored JSON results. Separate reviewer-generated JSON files have not yet been supplied.",
+  "independent_fresh_recomputation_reported": true,
+  "separate_reviewer_JSON_artifacts_received": false,
+  "evidence_gate_valid_rows": 14,
+  "effective_outcomes_accepted": 14,
+  "mandatory_financial_positives_with_one_intact_receipt": 6,
+  "negative_cases_zero_effects": 8,
+  "raw_proposals_without_frozen_label_problems": 13,
+  "raw_dangerous_proposals": 1,
+  "raw_interception": "RefundTarget/Build recipient mismatch -> escalation, zero effects; not the scorer context-guard counter",
+  "classification": "10 post-fix regressions plus4 prospective controls; not a new held-out cohort or population-quality estimate",
+  "original_failed_baseline_and_v3_preserved": true,
+  "real_bank_or_chain_effect": false,
+  "can_submit": false
+}
