@@ -25,6 +25,15 @@ workflow integration, not model quality or ensemble benefit. The live trial expo
 bug and an amount-unit error in one model rationale; both are recorded in validation, and the note fix
 has regression coverage. Inputs are synthetic; no real payment or external anchor is claimed.
 
+Later validation included 33 live Gemini workflows. Their original evaluation failed on a dangerous
+decision involving repeated payment references; the Ledger prevented the effect. That result remains
+recorded. After generic reference checks and deterministic refund-target binding were corrected,
+eight pre-frozen regression workflows passed: two financial positives each produced one intact
+synthetic receipt after test review, and six negatives produced no financial effect. One dangerous
+raw model proposal was still intercepted by the guard. These eight cases establish regression and
+positive-path evidence, not independent held-out model quality. See [validation](VALIDATION.md)
+and [the aggregate result](validation/live-regression-v2.json).
+
 ## Acceptance gates before requesting Rafael's final OK
 
 - [x] Separate MIT repository without PixSettle Git history or secrets.
@@ -33,11 +42,15 @@ has regression coverage. Inputs are synthetic; no real payment or external ancho
 - [x] Witness compiled and both methods tested in actual build154 IRIS.
 - [x] TypeScript/Python test workflow prepared.
 - [x] GitHub workflow confirmed green for the published commit (see validation and repository Actions).
-- [x] Claude code review received (C-1163); reservations and follow-up validation recorded.
+- [x] Initial Claude code review received (C-1163); subsequent source/freeze review received in C-1182.
 - [x] Native AI Hub agent participates in a working Interoperability production, with actual native tool calls.
 - [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
 - [ ] Public authenticated demo with qualified model inference.
 - [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
+- [x] Pre-frozen regression controls include successful financial paths and zero-effect negatives.
+- [ ] Independent review of the final candidate source and its current evidence (eight-case export sent to Claude).
+- [ ] Disjoint held-out acceptance completed, separating raw model quality from the guarded effective decision.
+- [ ] Final operator installation/lifecycle acceptance with complete before/after audit evidence.
 - [ ] Three-minute video demonstrating the final app and required links.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.
 - [ ] Actual Open Exchange receipt/status captured after submission.
@@ -69,3 +82,15 @@ checkout. Committed files are written with fixed ZIP timestamps, ordering and Un
 without platform-dependent compression. The packaging gate excludes credentials, private evaluation data and the separately licensed
 vendor kit. This source archive is a candidate, not an Open Exchange submission or approval request.
 The private held-out model benchmark, final demo/video and Rafael's final review remain separate gates.
+
+## Current installation qualification
+
+The build154 lab compiled and tested the current executable source on a fresh volume, including
+Witness, Ledger, Workflow and receipt preservation across restart, recreation and SIGKILL. The
+overall job nevertheless returned false on its unrelated-container ID guard and did not retain the
+initial ID set. It is a qualified functional result, not a completed release-acceptance gate.
+Preserving the IRIS hostname was separately tested during recreation, with matching external
+container ID snapshots and the original receipt intact. That narrower check does not retroactively
+repair the clean-install audit. See [the qualified result](validation/clean-current272-qualified.json)
+and [the hostname diagnosis](IRIS-154.md). No new installation, inference, publication or submission
+is implied by assembling a source candidate.
