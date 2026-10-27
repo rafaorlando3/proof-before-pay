@@ -34,6 +34,13 @@ raw model proposal was still intercepted by the guard. These eight cases establi
 positive-path evidence, not independent held-out model quality. See [validation](VALIDATION.md)
 and [the aggregate result](validation/live-regression-v2.json).
 
+The later ten-case live challenge failed all four mandatory financial positives because
+the agent's tools omitted an existing refund destination. That failed result is retained.
+The recipient-observation correction has passed native and recorded workflow regressions;
+its live acceptance remains pending. A scorer accepting ten actions does not establish
+that the four required refunds happened. See [the failed result](validation/live-v3-failed.json)
+and [the correction's scope](validation/recipient-observability-fix.json).
+
 ## Acceptance gates before requesting Rafael's final OK
 
 - [x] Separate MIT repository without PixSettle Git history or secrets.

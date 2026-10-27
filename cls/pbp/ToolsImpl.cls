@@ -37,6 +37,30 @@ ClassMethod Serve(caseId As %String, tool As %String, section As %String) As %St
     Quit ..Record(caseId, tool, {"caseId": (caseId)}, value, t0)
 }
 
+/// GetOrder's payload: the stored order section plus the refund destination on record for this case.
+/// The destination comes from the normalized input (recipient_ref), never from evidence or messages; null when absent.
+/// A COPY is returned; the stored input is never mutated.
+ClassMethod ServeOrder(caseId As %String) As %String
+{
+    Set t0 = $ZHOROLOG
+    If ..SessionCase()="" Quit "{""error"":""case_context_missing""}"
+    If '..Allowed(caseId) Quit ..Record(..SessionCase(), "GetOrder", {"caseId": "[other case refused]"}, {"error": "case_not_in_session"}, t0)
+    Set case = ##class(pbp.Data.Case).Find(caseId)
+    If '$ISOBJECT(case) Quit ..Record(caseId, "GetOrder", {"caseId": (caseId)}, {"error": "case_not_found"}, t0)
+    Set input = case.Input()
+    If '$ISOBJECT(input) Quit ..Record(caseId, "GetOrder", {"caseId": (caseId)}, {"error": "case_input_invalid"}, t0)
+    If input.%GetTypeOf("order")'="object" Quit ..Record(caseId, "GetOrder", {"caseId": (caseId)}, {"absent": true, "section": "order"}, t0)
+    Set out = ##class(%DynamicObject).%FromJSON(input.order.%ToJSON())
+    Set rec = ""
+    If input.%GetTypeOf("recipient_ref")="string" Set rec=input."recipient_ref"
+    If (rec '= "") && ($EXTRACT(rec, 1, 5) = "test:") {
+        Set out."refund_destination" = {"recipient_ref": (rec), "source": "store_record"}
+    } Else {
+        Do out.%Set("refund_destination", "", "null")
+    }
+    Quit ..Record(caseId, "GetOrder", {"caseId": (caseId)}, out, t0)
+}
+
 /// Persist the call and return the output JSON string to the agent.
 ClassMethod Record(caseId As %String, tool As %String, args As %DynamicObject, outputObj As %DynamicAbstractObject, t0 As %Numeric) As %String
 {

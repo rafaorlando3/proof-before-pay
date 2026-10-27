@@ -14,7 +14,11 @@ AI Hub agent reads the five scoped tools and proposes a decision; policy and the
 guard constrain it before sealing. The live integration evidence includes a legacy
 `duplicate_charge` case where the agent proposed a refund and authenticated test review
 produced one verified sandbox receipt. This establishes integration, not an advantage
-over a deterministic solution. The held-out agent benchmark is still pending.
+over a deterministic solution. A later ten-case live challenge failed all four mandatory
+financial positives: the agent could not observe the stored refund destination.
+The tools now expose that case-bound value explicitly; native and recorded regression
+checks pass, while live acceptance of the correction remains pending.
+[The failed result](docs/validation/live-v3-failed.json) is retained.
 
 **Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
 and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
@@ -72,6 +76,7 @@ The tested lab had at least 2.5 GB free **after** the base image had already bee
    python3 scripts/test_ledger.py
    python3 scripts/test_workflow.py
    python3 scripts/test_pairguard.py
+   python3 scripts/test_recipient.py
    ```
 
    Startup compiles the application recursively, loads synthetic policies/replay fixtures,

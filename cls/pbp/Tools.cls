@@ -10,10 +10,11 @@ Property Name As %String [ InitialExpression = "pbp.Tools" ];
 
 Property Description As %String(MAXLEN = "") [ InitialExpression = "Read-only access to one payment exception case: order, Pix events, payer history, evidence and the store policy in force." ];
 
-/// The order the exception refers to: amount (minor units), currency, status, timestamps, shipping state.
+/// The order, amounts in minor units, currency, status and timestamps, plus refund_destination:
+/// the case's stored destination {recipient_ref, source: store_record}, or null when unavailable.
 ClassMethod GetOrder(caseId As %String(DESCRIPTION = "The case id exactly as given in the task")) As %String
 {
-    Quit ##class(pbp.ToolsImpl).Serve(caseId, "GetOrder", "order")
+    Quit ##class(pbp.ToolsImpl).ServeOrder(caseId)
 }
 
 /// Pix events received for the order: amount, payer pseudonym, received_at, end-to-end id.

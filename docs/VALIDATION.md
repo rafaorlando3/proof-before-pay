@@ -73,6 +73,45 @@ authorized before the fix also produced only one effect afterward. These are
 baseline and the distinct after-fix checks. A new paid benchmark and final audited
 clean installation remain release gates.
 
+### Live v3 availability failure and recipient observation
+
+Ten prospective live workflows at `79a9aa19cdfd627253a5a276db065e36d8fc87ec`
+completed with 20 successful API generations. Evidence was valid for all ten, and
+the unchanged v4 scorer accepted their effective actions, but the separate mandatory
+positive gate **failed all four financial positives**: each closed with zero effects
+and `required_evidence_missing`. Six negatives also had zero effects. This is a failed
+end-to-end acceptance, despite the scorer's `safe=true`. One dangerous raw proposal
+was converted to escalation by refund-binding enforcement. Claude independently
+recomputed all three JSON reports in C-1188; they match exactly.
+
+The stored recipient existed and matched the payer on every positive. None of the
+five tools returned it, while Agent E required the model to declare an unobserved
+destination missing. The resulting `refund_target: null` correctly blocked the Ledger.
+The original outputs, answer key and failed result remain unchanged. The run cost
+US$0.03573675 by token/tariff estimate; this is not a Google billing receipt. The
+cumulative cap stayed at US$1 and prior uncertain reservations were retained.
+[Failed aggregate evidence](validation/live-v3-failed.json) records the distinction.
+
+The correction exposes `GetOrder.refund_destination` as a copy of the case's own
+normalized destination with `source: store_record`, or explicit null when unavailable.
+It overwrites any similarly named field supplied inside the order. Invalid types are
+not coerced; the stored input is unmodified. Agent F uses only this observed destination.
+Case scoping, authenticated tools, the critical-missing guard and the Ledger are unchanged.
+This application remains a **BRL/test-payer sandbox**; neither the destination's origin
+label nor a local seal independently verifies a real bank recipient or settlement.
+
+Native verification passed eight projection scenarios, including nested shadow fields,
+message injection, true absence, mismatch, invalid types and missing/array orders.
+Transient fixtures were rolled back and their absence checked in another IRIS session.
+Three fresh recorded Production workflows exercised the five actual sealed tools and
+authenticated synthetic review: the known recipient produced one intact, bound receipt;
+absence and mismatch produced zero effects. The full framework passed 35 unit methods,
+48 original E2E checks and three adversarial checks; all 112 runtime files matched the
+manifest. These are development regressions with **zero model calls**. A subsequent
+live protocol must be frozen before new outputs; rerunning prior cases will be labelled
+post-fix regression, never a new held-out quality estimate.
+[Native correction evidence](validation/recipient-observability-fix.json) describes scope.
+
 ### Independent v2 review and Agent E / closed-case UI
 
 Claude subsequently recomputed the eight-case evidence gate and unchanged v4 scorer;
