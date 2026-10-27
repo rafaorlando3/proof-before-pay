@@ -129,3 +129,17 @@ with sorted entries, fixed timestamps and explicit Unix permissions, avoiding Gi
 Runtime evidence above still describes the tested runtime snapshot; packaging-only changes do not
 claim a rerun of the native workflow. Cross-host archive hashes must match before a source candidate
 is treated as portable.
+
+## Usage dashboard provenance and current runtime caveat
+
+A read-only API addition separates stored model decision metadata into live, recorded and unknown-mode
+buckets. Real native compilation, bucket totals and the four read-only HTTP endpoints were checked;
+[stats-provenance.json](validation/stats-provenance.json) states the exact source/image and test limits.
+Unknown historical modes remain unknown. Stored tokens/costs are not verified billing. No new inference
+was made and unchanged native workflow/durability suites were not rerun for this reporting change.
+
+The rebuilt lab serves the Production/API, but the vendor health check now reports alert/unhealthy.
+Messages show 96.44% disk utilization and a startup SYS.ICM.Sharding method error; their separate
+contributions to health have not yet been isolated. Do not treat HTTP availability as a passed runtime
+health gate. This is an open infrastructure issue before final demonstration; no health check was
+bypassed, no vendor method was stubbed and no other project's images/services were removed.

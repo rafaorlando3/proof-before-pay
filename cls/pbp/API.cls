@@ -299,6 +299,25 @@ ClassMethod Stats() As %Status
     Set bySource = {}
     While rs.%Next() { Do bySource.%Set($ZCONVERT(rs.%Get("Source"),"L"), {"decisions": (+rs.%Get("N")), "prompt_tokens": (+rs.%Get("P")), "completion_tokens": (+rs.%Get("C")), "cost_micro_usd": ($SELECT(+rs.%Get("UnknownCosts")>0:-1,1:+rs.%Get("Cost"))), "avg_duration_ms": (+rs.%Get("D"))}) }
     Set out."decisions_by_source" = bySource
+    // Recorded fixture usage is not paid inference. Keep separate buckets for the reviewer UI.
+    Set byMode = {}
+    For bucket="live","recorded","unknown" {
+        Do byMode.%Set(bucket,{"decisions":0,"prompt_tokens":0,"completion_tokens":0,"known_cost_micro_usd":0,"unknown_cost_decisions":0,"cost_micro_usd":0,"billing_verified":false})
+    }
+    Set rs = ##class(%SQL.Statement).%ExecDirect(, "SELECT Mode, COUNT(*) AS N, SUM(PromptTokens) AS P, SUM(CompletionTokens) AS C, SUM(CASE WHEN CostMicroUSD >= 0 THEN CostMicroUSD ELSE 0 END) AS KnownCost, SUM(CASE WHEN CostMicroUSD IS NULL OR CostMicroUSD < 0 THEN 1 ELSE 0 END) AS UnknownCosts FROM pbp_Data.Decision WHERE Source = 'model' GROUP BY Mode")
+    While rs.%Next() {
+        Set bucket=$ZCONVERT(rs.%Get("Mode"),"L")
+        If (bucket'="live") && (bucket'="recorded") Set bucket="unknown"
+        Set usage=byMode.%Get(bucket)
+        Set usage.decisions=usage.decisions+rs.%Get("N")
+        Set usage."prompt_tokens"=usage."prompt_tokens"+rs.%Get("P")
+        Set usage."completion_tokens"=usage."completion_tokens"+rs.%Get("C")
+        Set usage."known_cost_micro_usd"=usage."known_cost_micro_usd"+rs.%Get("KnownCost")
+        Set usage."unknown_cost_decisions"=usage."unknown_cost_decisions"+rs.%Get("UnknownCosts")
+        Set usage."cost_micro_usd"=$SELECT(usage."unknown_cost_decisions">0:-1,1:usage."known_cost_micro_usd")
+    }
+    Set out."model_decisions_by_mode"=byMode
+    Set out."usage_cost_basis"="stored_decision_metadata_not_billing"
     Set rs = ##class(%SQL.Statement).%ExecDirect(, "SELECT COUNT(*) AS N FROM pbp_Data.Seal")
     If rs.%Next() Do out.%Set("seals", +rs.%Get("N"), "number")
     Set rs = ##class(%SQL.Statement).%ExecDirect(, "SELECT COUNT(*) AS N FROM pbp_Data.Receipt WHERE Status = 'effected'")

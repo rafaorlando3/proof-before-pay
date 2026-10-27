@@ -1,0 +1,54 @@
+{
+  "API_compiled": true,
+  "counts_match_legacy_totals": true,
+  "docker_health": "unhealthy",
+  "live_bucket_empty_tested": true,
+  "model_decisions_by_mode": {
+    "live": {
+      "billing_verified": false,
+      "completion_tokens": 0,
+      "cost_micro_usd": 0,
+      "decisions": 0,
+      "known_cost_micro_usd": 0,
+      "prompt_tokens": 0,
+      "unknown_cost_decisions": 0
+    },
+    "recorded": {
+      "billing_verified": false,
+      "completion_tokens": 0,
+      "cost_micro_usd": 0,
+      "decisions": 22,
+      "known_cost_micro_usd": 0,
+      "prompt_tokens": 0,
+      "unknown_cost_decisions": 0
+    },
+    "unknown": {
+      "billing_verified": false,
+      "completion_tokens": 230,
+      "cost_micro_usd": 103326,
+      "decisions": 51,
+      "known_cost_micro_usd": 103326,
+      "prompt_tokens": 0,
+      "unknown_cost_decisions": 0
+    }
+  },
+  "native_workflow_rerun": false,
+  "no_new_model_calls": true,
+  "ok": true,
+  "populated_live_bucket_tested": false,
+  "populated_unknown_bucket_tested": true,
+  "read_only_endpoint_regression": [
+    "/stats",
+    "/health",
+    "/whoami",
+    "/cases?limit=1"
+  ],
+  "recorded_usage_not_paid_inference": true,
+  "runtime_files_match": 96,
+  "runtime_health_caveat": "Native vendor health reports alert; messages show disk 96.44% full and SYS.ICM.Sharding startup method absent. API/Production work, but the runtime health gate is not passed. No health bypass or unrelated service cleanup.",
+  "runtime_health_gate_passed": false,
+  "runtime_image": "sha256:b4102d83092728112a68a937fb28c76dc0f6f95deaafe0c0347c2c9b661d2f37",
+  "schema": "pbp.stats.provenance-check/1",
+  "source_manifest_sha256": "e7590b9debeaa7be3a267ad51b05ed0223c7ef65c2bde8c722b34a978fc2d45f",
+  "source_sha256": "ffb13567bfda7c9d235a39e43444057835795e2c6a45941dac83e4476477b9a3"
+}

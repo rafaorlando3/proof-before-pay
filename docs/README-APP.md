@@ -126,3 +126,12 @@ still pass the nonfinancial positive control. This tradeoff is fixed before the 
 `model.temperature=-1` means the transport sampling temperature was not established. It is a metadata
 sentinel, not a requested negative temperature. When a gateway omits the native client's requested zero,
 set `PBP_LLM_TEMPERATURE_SENT=0`; old seals remain unchanged and retain their documented limitation.
+
+### Dashboard usage provenance
+
+`GET /pbp/api/stats` additionally exposes `model_decisions_by_mode` buckets (`live`, `recorded`,
+`unknown`). Each contains decision counts, stored token metadata, known cost subtotal, unknown-cost
+decision count and total cost (`-1` if any cost is unknown). Recorded values are fixture/replay metadata,
+not paid inference. A live bucket counts decisions/attempts, not successful generations.
+`billing_verified` remains false and `usage_cost_basis` is `stored_decision_metadata_not_billing`.
+Legacy source totals remain for compatibility; a dashboard must not label those mixed values as a bill.
