@@ -2,6 +2,21 @@
 Class pbp.Test.Agent Extends %UnitTest.TestCase
 {
 
+Method TestGeminiPrivateBaseConfiguration()
+{
+    Set base="http://127.0.0.1:9/v1"
+    Set rejected=##class(pbp.Agent).ProviderConfig("offline-dummy-not-a-credential",base,"gemini",.reason)
+    Do $$$AssertTrue('$ISOBJECT(rejected),"Gemini override rejected; no silently ignored private route")
+    Do $$$AssertEquals(reason,"gemini_custom_base_unsupported_use_explicit_openai_transport","explicit transport required")
+    Set config=##class(pbp.Agent).ProviderConfig("offline-dummy-not-a-credential","","gemini",.reason)
+    Set provider=##class(%AI.Provider).Create("gemini",config)
+    Do $$$AssertTrue($ISOBJECT(provider),"actual Gemini constructor accepts standard configuration; no inference")
+    Set config=##class(pbp.Agent).ProviderConfig("offline-dummy-not-a-credential",base,"openai",.reason)
+    Set provider=##class(%AI.Provider).Create("openai",config)
+    Do $$$AssertTrue($ISOBJECT(provider),"actual compatible constructor accepts controlled route; no inference")
+    Do $$$AssertEquals(config."base_url",base,"compatible endpoint preserved")
+}
+
 Method TestParseValid()
 {
     Set d = ##class(pbp.Operation.Replay).ParseDecision("Here you go:" _ $CHAR(10) _ "```json" _ $CHAR(10) _ "{""action"":""escalate_to_human"",""moves_money"":false,""requires_human"":true,""confidence"":0.9,""rationale"":""Evidence contradicts the customer; a person decides."",""evidence_refs"":[""order""],""missing"":{""evidence.carrier_signature"":null}}" _ $CHAR(10) _ "```", .reason)

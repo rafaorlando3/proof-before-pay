@@ -1,0 +1,647 @@
+{
+  "Gemini_named_provider_generative_route_tested": false,
+  "Gemini_named_provider_limit": "build154 advertises a fixed endpoint and only api_key; top-level base_url is rejected, nested http_config.base_url was accepted but ignored. Probe was DNS-blocked with a non-secret routing label and sent zero paid upstream calls. Explicit OpenAI-compatible transport was then used and recorded.",
+  "Rafael_payment_or_OEX_approval": false,
+  "actual_Google_billing_receipt_available": false,
+  "actual_bank_payment": false,
+  "actual_completion_tokens": 340,
+  "actual_prompt_tokens": 2557,
+  "combined_reserved_usd": "0.813733",
+  "date_PY": "2026-10-26",
+  "estimated_standard_cost_usd": "0.00319275",
+  "input": "one synthetic duplicate_charge legacy exception deliberately unmatched by R1, with trusted refund_payment_ref",
+  "intermediary": "private bounded gateway; no OpenRouter",
+  "lifetime_trial_cap_usd": "1.00",
+  "model_vendor": "Google",
+  "native_IRIS_agent_and_tools": true,
+  "native_protocol_provider": "openai",
+  "native_result": {
+    "actual_bank_payment": false,
+    "case_id": "live-legacy:e2b8230b06",
+    "decision": {
+      "action": "refund_duplicate",
+      "amount_minor": "18990",
+      "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+      "confidence": 0.98,
+      "created_at": "2026-10-27T00:55:08.167Z",
+      "evidence_refs": [
+        "order",
+        "payer_history",
+        "evidence.customer_message",
+        "pix:E90400888202610201401A1:e2b8230b06",
+        "pix:E90400888202610201403B7:e2b8230b06"
+      ],
+      "missing": {
+        "evidence.delivery_proof": null
+      },
+      "model": {
+        "id": "gemini-3.8-flash",
+        "mode": "live",
+        "provider": "openai"
+      },
+      "moves_money": true,
+      "rationale": "Two identical Pix payments matching the exact order amount were received from the same payer. The extra payment should be refunded as a duplicate, requiring human review per policy and amount thresholds.",
+      "requires_human": true,
+      "source": "model",
+      "usage": {
+        "completion_tokens": 340,
+        "cost_micro_usd": 3192,
+        "duration_ms": 4995,
+        "prompt_tokens": 2557,
+        "tool_calls": 5
+      }
+    },
+    "events": [
+      {
+        "at": "2026-10-27T00:55:02.902Z",
+        "detail": "duplicate_charge",
+        "kind": "received",
+        "ref": ""
+      },
+      {
+        "at": "2026-10-27T00:55:02.903Z",
+        "detail": "live agent",
+        "kind": "agent_requested",
+        "ref": ""
+      },
+      {
+        "at": "2026-10-27T00:55:08.167Z",
+        "detail": "refund_duplicate (live, gemini-3.8-flash)",
+        "kind": "agent_decided",
+        "ref": ""
+      },
+      {
+        "at": "2026-10-27T00:55:08.194Z",
+        "detail": "decision sealed (ledger, ledger awaiting_approval)",
+        "kind": "sealed",
+        "ref": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5"
+      },
+      {
+        "at": "2026-10-27T00:55:08.199Z",
+        "detail": "refund_duplicate (ledger awaiting_approval)",
+        "kind": "awaiting_human",
+        "ref": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5"
+      },
+      {
+        "at": "2026-10-27T00:55:08.930Z",
+        "detail": "by irisowner in their own session",
+        "kind": "ledger_authorized",
+        "ref": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5"
+      },
+      {
+        "at": "2026-10-27T00:55:08.938Z",
+        "detail": "by irisowner",
+        "kind": "human_approved",
+        "ref": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5"
+      },
+      {
+        "at": "2026-10-27T00:55:08.941Z",
+        "detail": "approval sealed (witness)",
+        "kind": "sealed",
+        "ref": "4e74df64bf4d4fc96dc98c0b339e464771508aea2bc1edd794352e0f55e72d46"
+      },
+      {
+        "at": "2026-10-27T00:55:09.127Z",
+        "detail": "18990 minor units BRL to test:payer_h3f9 by irisowner",
+        "kind": "permit_issued",
+        "ref": "pmt_920cdcc38f2c6f5dff11c820"
+      },
+      {
+        "at": "2026-10-27T00:55:09.127Z",
+        "detail": "permit pmt_920cdcc38f2c6f5dff11c820 by irisowner",
+        "kind": "permitted",
+        "ref": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5"
+      },
+      {
+        "at": "2026-10-27T00:55:09.385Z",
+        "detail": "18990 minor units BRL receipt test-refund:15",
+        "kind": "effected",
+        "ref": "test-refund:15"
+      },
+      {
+        "at": "2026-10-27T00:55:09.386Z",
+        "detail": "effect test-refund:15 at 2026-10-27T00:55:09.374Z",
+        "kind": "closed",
+        "ref": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5"
+      }
+    ],
+    "ledger_after_review": {
+      "approved_by": "irisowner",
+      "authorized_seq": 14,
+      "authorizes_real_payment": false,
+      "case_id": "live-legacy:e2b8230b06",
+      "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+      "confirmed_seq": 16,
+      "effect_count": 1,
+      "environment": "sandbox",
+      "expires_utc_seconds": 5863971908.193167,
+      "ok": true,
+      "on_chain_verified": false,
+      "reason": "stored_state",
+      "receipt": {
+        "amount_minor": "18990",
+        "authorized_seq": 14,
+        "case_id": "live-legacy:e2b8230b06",
+        "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+        "currency": "BRL",
+        "effect_key": "pix:E90400888202610201403B7:e2b8230b06",
+        "environment": "sandbox",
+        "executed_at": "2026-10-27T00:55:09.374Z",
+        "executed_seq": 15,
+        "receipt_id": "test-refund:15",
+        "recipient_ref": "test:payer_h3f9",
+        "schema": "pbp.test-receipt/1",
+        "sealed_seq": 13,
+        "settlement_verified": false
+      },
+      "receipt_integrity_verified": true,
+      "replayed": false,
+      "schema": "pbp.test-ledger/1",
+      "sealed_seq": 13,
+      "state": "confirmed",
+      "test_effect": true,
+      "verification_state": "pending_local_only"
+    },
+    "ledger_before_review": {
+      "authorizes_real_payment": false,
+      "case_id": "live-legacy:e2b8230b06",
+      "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+      "environment": "sandbox",
+      "expires_utc_seconds": 5863971908.193167,
+      "ok": true,
+      "on_chain_verified": false,
+      "reason": "stored_state",
+      "replayed": false,
+      "schema": "pbp.test-ledger/1",
+      "sealed_seq": 13,
+      "state": "awaiting_approval",
+      "test_effect": false,
+      "verification_state": "pending_local_only"
+    },
+    "legacy_source_type": "duplicate_charge",
+    "ok": true,
+    "permit": {
+      "amount_minor": "18990",
+      "approval_commitment": "4e74df64bf4d4fc96dc98c0b339e464771508aea2bc1edd794352e0f55e72d46",
+      "authorized_by": "irisowner",
+      "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+      "consumed_at": "2026-10-27T00:55:09.374Z",
+      "currency": "BRL",
+      "expires_at": "2026-10-27T01:05:09.126Z",
+      "issued_at": "2026-10-27T00:55:09.126Z",
+      "permit_id": "pmt_920cdcc38f2c6f5dff11c820",
+      "receipt_id": "test-refund:15",
+      "recipient": "test:payer_h3f9",
+      "status": "consumed"
+    },
+    "reason": "refund_duplicate (ledger awaiting_approval)",
+    "receipt_projection": {
+      "amount_minor": "18990",
+      "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+      "currency": "BRL",
+      "effect_at": "2026-10-27T00:55:09.374Z",
+      "ledger_ref": "sandbox:test-refund:15",
+      "permit_id": "pmt_920cdcc38f2c6f5dff11c820",
+      "receipt_id": "test-refund:15",
+      "recipient": "test:payer_h3f9",
+      "status": "effected",
+      "verification": "intact"
+    },
+    "review": {
+      "action": "Approve",
+      "case_id": "live-legacy:e2b8230b06",
+      "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+      "ledger_state": "authorized",
+      "ok": true,
+      "reason": "",
+      "task_id": "68",
+      "user": "irisowner"
+    },
+    "review_note_sealed": true,
+    "schema": "pbp.native.live-case/1",
+    "seals": [
+      {
+        "anchor_ref": "",
+        "case_id": "live-legacy:e2b8230b06",
+        "commitment": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+        "kind": "decision",
+        "memo": "pbp1:56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+        "money_moved_before_seal": false,
+        "prev": null,
+        "record": {
+          "at": "2026-10-27T00:55:08.167Z",
+          "case": {
+            "exception": "duplicate_charge",
+            "id": "live-legacy:e2b8230b06",
+            "store": "store-default"
+          },
+          "decision": {
+            "action": "refund_duplicate",
+            "amount_minor": "18990",
+            "confidence": 0.98,
+            "evidence_refs": [
+              "order",
+              "payer_history",
+              "evidence.customer_message",
+              "pix:E90400888202610201401A1:e2b8230b06",
+              "pix:E90400888202610201403B7:e2b8230b06"
+            ],
+            "moves_money": true,
+            "rationale": "Two identical Pix payments matching the exact order amount were received from the same payer. The extra payment should be refunded as a duplicate, requiring human review per policy and amount thresholds.",
+            "requires_human": true
+          },
+          "forbidden": [
+            "change_policy",
+            "delete_evidence",
+            "pay_external_account",
+            "waive_dispute_defense"
+          ],
+          "kind": "decision",
+          "limits": {
+            "autonomous_minor": "0",
+            "currency": "BRL"
+          },
+          "missing": {
+            "evidence.delivery_proof": null
+          },
+          "model": {
+            "id": "gemini-3.8-flash",
+            "mode": "live",
+            "provider": "openai",
+            "temperature": 0
+          },
+          "policy": {
+            "id": "store-default",
+            "sha256": "9829ede8f50964d16951d3c89ef9a302367ddb72e9b25b590949eb65c45dc6a8",
+            "version": "1"
+          },
+          "prev": null,
+          "rules": {
+            "engine": "pbp.Rules",
+            "result": "no_match",
+            "version": 2
+          },
+          "saw": {
+            "inputs": {
+              "case_id": "live-legacy:e2b8230b06",
+              "currency": "BRL",
+              "environment": "sandbox",
+              "evidence": {
+                "customer_message": "I was charged twice, please refund one.",
+                "delivery_proof": null
+              },
+              "exception": "duplicate_charge",
+              "order": {
+                "amount_minor": "18990",
+                "created_at": "2026-10-20T14:00:00.000Z",
+                "currency": "BRL",
+                "expires_at": "2026-10-20T15:00:00.000Z",
+                "id": "ord_1001",
+                "items": 2,
+                "shipped": false,
+                "status": "paid"
+              },
+              "order_amount_minor": "18990",
+              "payer_history": {
+                "chargebacks": 0,
+                "disputes_90d": 0,
+                "orders_90d": 3
+              },
+              "payments": [
+                {
+                  "amount_minor": "18990",
+                  "payer": "test:payer_h3f9",
+                  "payment_ref": "pix:E90400888202610201401A1:e2b8230b06",
+                  "received_at": "2026-10-20T14:02:00.000Z"
+                },
+                {
+                  "amount_minor": "18990",
+                  "payer": "test:payer_h3f9",
+                  "payment_ref": "pix:E90400888202610201403B7:e2b8230b06",
+                  "received_at": "2026-10-20T14:03:00.000Z"
+                }
+              ],
+              "recipient_ref": "test:payer_h3f9",
+              "refund_payment_ref": "pix:E90400888202610201403B7:e2b8230b06",
+              "store": "store-default"
+            },
+            "tools": [
+              {
+                "args": {
+                  "caseId": "live-legacy:e2b8230b06"
+                },
+                "name": "GetEvidence",
+                "output": {
+                  "customer_message": "I was charged twice, please refund one.",
+                  "delivery_proof": null
+                }
+              },
+              {
+                "args": {
+                  "caseId": "live-legacy:e2b8230b06"
+                },
+                "name": "GetOrder",
+                "output": {
+                  "amount_minor": "18990",
+                  "created_at": "2026-10-20T14:00:00.000Z",
+                  "currency": "BRL",
+                  "expires_at": "2026-10-20T15:00:00.000Z",
+                  "id": "ord_1001",
+                  "items": 2,
+                  "shipped": false,
+                  "status": "paid"
+                }
+              },
+              {
+                "args": {
+                  "caseId": "live-legacy:e2b8230b06"
+                },
+                "name": "GetPayerHistory",
+                "output": {
+                  "chargebacks": 0,
+                  "disputes_90d": 0,
+                  "orders_90d": 3
+                }
+              },
+              {
+                "args": {
+                  "caseId": "live-legacy:e2b8230b06"
+                },
+                "name": "GetPixEvents",
+                "output": [
+                  {
+                    "amount_minor": "18990",
+                    "payer": "test:payer_h3f9",
+                    "payment_ref": "pix:E90400888202610201401A1:e2b8230b06",
+                    "received_at": "2026-10-20T14:02:00.000Z"
+                  },
+                  {
+                    "amount_minor": "18990",
+                    "payer": "test:payer_h3f9",
+                    "payment_ref": "pix:E90400888202610201403B7:e2b8230b06",
+                    "received_at": "2026-10-20T14:03:00.000Z"
+                  }
+                ]
+              },
+              {
+                "args": {
+                  "caseId": "live-legacy:e2b8230b06"
+                },
+                "name": "GetStorePolicy",
+                "output": {
+                  "allowed_actions": [
+                    "refund_duplicate",
+                    "refund_full",
+                    "refund_partial",
+                    "accept_order",
+                    "accept_order_keep_credit",
+                    "release_order",
+                    "hold_for_evidence",
+                    "request_top_up",
+                    "retry_withdrawal",
+                    "escalate_to_human"
+                  ],
+                  "forbidden": [
+                    "change_policy",
+                    "delete_evidence",
+                    "pay_external_account",
+                    "waive_dispute_defense"
+                  ],
+                  "id": "store-default",
+                  "limits": {
+                    "autonomous_minor": "5000",
+                    "currency": "BRL"
+                  },
+                  "rules": {
+                    "late_grace_hours": "48",
+                    "small_diff_minor": "200"
+                  },
+                  "sha256": "9829ede8f50964d16951d3c89ef9a302367ddb72e9b25b590949eb65c45dc6a8",
+                  "version": "1"
+                }
+              }
+            ]
+          },
+          "v": "pbp.seal/1"
+        },
+        "sealed_at": "2026-10-27T00:55:08.167Z",
+        "stored_state": "pending",
+        "verification": {
+          "bridge_state": "pending",
+          "on_chain_verified": false,
+          "reason": "local_match_not_anchored",
+          "state": "intact"
+        }
+      },
+      {
+        "anchor_ref": "",
+        "case_id": "live-legacy:e2b8230b06",
+        "commitment": "4e74df64bf4d4fc96dc98c0b339e464771508aea2bc1edd794352e0f55e72d46",
+        "kind": "approval",
+        "memo": "pbp1:4e74df64bf4d4fc96dc98c0b339e464771508aea2bc1edd794352e0f55e72d46",
+        "money_moved_before_seal": false,
+        "prev": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+        "record": {
+          "at": "2026-10-27T00:55:08.938Z",
+          "case": {
+            "exception": "duplicate_charge",
+            "id": "live-legacy:e2b8230b06",
+            "store": "store-default"
+          },
+          "human": {
+            "approves": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+            "note": "Automated synthetic live-inference test; not Rafael approval.",
+            "operator": "irisowner",
+            "outcome": "approved"
+          },
+          "kind": "approval",
+          "prev": "56b69e83a3905173be3654bda473c4c74c90613fb0b4979f4578927b014052e5",
+          "v": "pbp.seal/1"
+        },
+        "sealed_at": "2026-10-27T00:55:08.938Z",
+        "stored_state": "pending",
+        "verification": {
+          "bridge_state": "pending",
+          "on_chain_verified": false,
+          "reason": "local_match_not_anchored",
+          "state": "intact"
+        }
+      }
+    ],
+    "status_after_review": "closed",
+    "status_before_review": "awaiting_human",
+    "tool_calls": [
+      {
+        "args": {
+          "caseId": "live-legacy:e2b8230b06"
+        },
+        "name": "GetEvidence",
+        "output": {
+          "customer_message": "I was charged twice, please refund one.",
+          "delivery_proof": null
+        }
+      },
+      {
+        "args": {
+          "caseId": "live-legacy:e2b8230b06"
+        },
+        "name": "GetOrder",
+        "output": {
+          "amount_minor": "18990",
+          "created_at": "2026-10-20T14:00:00.000Z",
+          "currency": "BRL",
+          "expires_at": "2026-10-20T15:00:00.000Z",
+          "id": "ord_1001",
+          "items": 2,
+          "shipped": false,
+          "status": "paid"
+        }
+      },
+      {
+        "args": {
+          "caseId": "live-legacy:e2b8230b06"
+        },
+        "name": "GetPayerHistory",
+        "output": {
+          "chargebacks": 0,
+          "disputes_90d": 0,
+          "orders_90d": 3
+        }
+      },
+      {
+        "args": {
+          "caseId": "live-legacy:e2b8230b06"
+        },
+        "name": "GetPixEvents",
+        "output": [
+          {
+            "amount_minor": "18990",
+            "payer": "test:payer_h3f9",
+            "payment_ref": "pix:E90400888202610201401A1:e2b8230b06",
+            "received_at": "2026-10-20T14:02:00.000Z"
+          },
+          {
+            "amount_minor": "18990",
+            "payer": "test:payer_h3f9",
+            "payment_ref": "pix:E90400888202610201403B7:e2b8230b06",
+            "received_at": "2026-10-20T14:03:00.000Z"
+          }
+        ]
+      },
+      {
+        "args": {
+          "caseId": "live-legacy:e2b8230b06"
+        },
+        "name": "GetStorePolicy",
+        "output": {
+          "allowed_actions": [
+            "refund_duplicate",
+            "refund_full",
+            "refund_partial",
+            "accept_order",
+            "accept_order_keep_credit",
+            "release_order",
+            "hold_for_evidence",
+            "request_top_up",
+            "retry_withdrawal",
+            "escalate_to_human"
+          ],
+          "forbidden": [
+            "change_policy",
+            "delete_evidence",
+            "pay_external_account",
+            "waive_dispute_defense"
+          ],
+          "id": "store-default",
+          "limits": {
+            "autonomous_minor": "5000",
+            "currency": "BRL"
+          },
+          "rules": {
+            "late_grace_hours": "48",
+            "small_diff_minor": "200"
+          },
+          "sha256": "9829ede8f50964d16951d3c89ef9a302367ddb72e9b25b590949eb65c45dc6a8",
+          "version": "1"
+        }
+      }
+    ]
+  },
+  "prior_OpenRouter_reported_spend_usd": "0.01699175",
+  "private_gateway_generation_controls": {
+    "max_calls": 2,
+    "max_output_tokens_per_request": 2048,
+    "reasoning_effort": "low"
+  },
+  "provider_generations": [
+    {
+      "billing_receipt_available": false,
+      "call_id": "67c73e7f699a449ab81d49d2df92f786",
+      "completion_tokens": 149,
+      "cost_usd": null,
+      "duration_ms": 2313,
+      "error_code": null,
+      "error_type": null,
+      "estimated_standard_cost_usd": "0.00123825",
+      "finish_reason": "tool_calls",
+      "generation_id": "Z_bfavKqDYKxxdIPofy3gAg",
+      "http_status": 200,
+      "max_output_tokens": 2048,
+      "omitted_parameters": [],
+      "parameter_keys": [
+        "max_tokens",
+        "model",
+        "reasoning_effort",
+        "temperature"
+      ],
+      "prompt_tokens": 906,
+      "provider": "Google Gemini API direct",
+      "reasoning_breakdown_note": "Separate reasoning count was not independently preserved; zero must not be inferred.",
+      "reasoning_effort": "low",
+      "reasoning_tokens": null,
+      "requested_model": "gemini-3.8-flash",
+      "served_model": "gemini-3.8-flash",
+      "tool_count": 5
+    },
+    {
+      "billing_receipt_available": false,
+      "call_id": "16e50815055543868a461b4b5053beb9",
+      "completion_tokens": 191,
+      "cost_usd": null,
+      "duration_ms": 2642,
+      "error_code": null,
+      "error_type": null,
+      "estimated_standard_cost_usd": "0.00195450",
+      "finish_reason": "stop",
+      "generation_id": "afbfarC4IO-yytMPwZLC2Aw",
+      "http_status": 200,
+      "max_output_tokens": 2048,
+      "omitted_parameters": [],
+      "parameter_keys": [
+        "max_tokens",
+        "model",
+        "reasoning_effort",
+        "temperature"
+      ],
+      "prompt_tokens": 1651,
+      "provider": "Google Gemini API direct",
+      "reasoning_breakdown_note": "Separate reasoning count was not independently preserved; zero must not be inferred.",
+      "reasoning_effort": "low",
+      "reasoning_tokens": null,
+      "requested_model": "gemini-3.8-flash",
+      "served_model": "gemini-3.8-flash",
+      "tool_count": 5
+    }
+  ],
+  "quality_ranking_established": false,
+  "rate_date": "2026-10-26",
+  "rate_source": "https://ai.google.dev/gemini-api/docs/pricing",
+  "reservations_released": false,
+  "schema": "pbp.native.gemini-direct-smoke/1",
+  "source_commit": "63dd2b3cb1c746141e6a82e115dfef8c8de2a39e",
+  "standard_rate_usd_per_million": {
+    "input": "0.75",
+    "output_including_thinking": "3.75"
+  },
+  "upstream": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+}

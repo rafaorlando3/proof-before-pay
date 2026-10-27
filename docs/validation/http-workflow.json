@@ -1,5 +1,5 @@
 {
-  "case_id": "ui-refund:989d3b7a44",
+  "case_id": "ui-refund:aceeb6c058",
   "checks": [
     "health_production_running",
     "recorded_not_live_proof",
@@ -37,7 +37,7 @@
     "production_input_refused"
   ],
   "count": 34,
-  "decision_commitment": "694b0e6724896537b854833615bc4e68eb27cfaf50a2bcd0d7883657e03bf0f7",
+  "decision_commitment": "bb91076785f8b07fc44920aa2568f3e866c3978553e1c1f1eb2c9e7fff222b10",
   "live_inference_tested": false,
   "ok": true,
   "schema": "pbp.http.workflow-tests/1",

@@ -75,3 +75,31 @@ The context guard is exercised without new inference calls against the three act
 provider proposals above, as well as development attacks and positive controls. These proposals
 remain accepted by the new structural/context checks. This is replay of existing evidence, not
 three new live calls, a held-out quality result, or a demonstration of ensemble benefit.
+
+## Direct Google API key trial
+
+Rafael supplied the private Gemini key on 26 October. Authenticated model metadata succeeded,
+then one synthetic case completed the actual IRIS agent/tool/review/ledger workflow using Google's
+OpenAI-compatible endpoint directly, without OpenRouter. The native protocol provider was explicitly
+`openai`; the model vendor was Google and model `gemini-3.8-flash`. This route is documented by
+[Google](https://ai.google.dev/gemini-api/docs/openai).
+
+Two generation requests returned 2,557 prompt tokens and 340 completion tokens. Applying the
+[standard rates](https://ai.google.dev/gemini-api/docs/pricing) checked that day gives US$0.00319275.
+That is a usage-based estimate, not a Google billing receipt. Separate thinking-token detail was not
+independently preserved; zero is not inferred. Full conservative reservations remain held. The trial
+retained the original US$1 lifetime cap, prior spend and the failed OpenAI request reservation.
+
+The private gateway capped this direct phase at two generation requests and 2,048 output tokens each,
+and explicitly requested reasoning_effort=low. It did not fabricate a model response or tool result.
+The decision and approval seals, consumed permit, intact receipt and one sandbox effect are in
+[direct Gemini evidence](validation/gemini-direct-smoke.json). Automated test review is not Rafael's
+approval of a real payment or contest submission.
+
+On build154, `%AI.Provider.%GetProviders()` advertises only api_key for the named Gemini provider;
+its fixed default endpoint is Google's compatible API. A top-level base_url fails construction;
+nesting it under http_config constructs successfully but does not change the destination. Therefore
+the application rejects a custom base URL for provider=gemini and requires an explicit compatible
+transport selection. A native constructor regression covers both the rejection and valid standard
+Gemini/OpenAI configurations, without inference. Do not treat a successful constructor alone as
+proof that network routing works.

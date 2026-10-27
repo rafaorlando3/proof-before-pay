@@ -24,7 +24,7 @@ halt
     passed=re.findall(r'^      (Test\w+) passed\s*$', text, re.M)
     assert p.returncode==0 and 'All PASSED' in text and 'PBP_UNIT_SC=1' in text, text[-5000:]
     assert not re.search(r'FAILED|<THROW>|<UNDEFINED>|\(failed\)|AssertSkipped', text),text[-5000:]
-    assert len(passed)>=20 and {"TestReceiptProjectionTamperIsVisible","TestToolCaseIsolation"} <= set(passed), passed
+    assert len(passed)>=21 and {"TestReceiptProjectionTamperIsVisible","TestToolCaseIsolation","TestGeminiPrivateBaseConfiguration"} <= set(passed), passed
     source='''set s=##class(%SYS.Python).Import("sys")
 do s.path.insert(0,"/opt/pbp/tests/iris")
 set m=##class(%SYS.Python).Import("production_smoke")

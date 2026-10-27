@@ -10,7 +10,7 @@ The public CI and private licensed-runtime gates are deliberately separate.
 | Offline boundary suites | 46 methods passed; forbidden network/process attempts 0 | Witness adapter, ledger plan, intake guards |
 | Native Witness bridge | 12 checks passed | Actual ObjectScript → embedded Python, no model |
 | Native ledger | 39 checks plus 12 independent IRIS execution sessions | One effect, identical receipts, authenticated review, TTL, tampering, loss/retry |
-| Native unit suites | 20 methods; framework reports All PASSED | Rules, output contract, scope isolation, permits, receipt projection tampering |
+| Native unit suites | 21 methods; framework reports All PASSED | Rules, output contract, scope isolation, permits, receipt projection tampering |
 | Native Production replay | 48 checks on ten fresh synthetic cases | Service → Process → recorded agent/tools → Workflow review → seal approval → permit → one effect → readback |
 | Native adversarial workflow | Three development attacks now await human review, with intact seals and zero permits/receipts | Inconsistent financial intent, fabricated evidence ref, declared missing evidence without review |
 | Actual HTTP workflow | 34 checks | Authenticated reviewer session, version binding, CSRF header, copied-record tamper, timeline/tool retrieval, refusal paths |
@@ -74,3 +74,19 @@ Final context-guard runtime: `sha256:644a631e1d7453f4d2bab9f921189e21b86d095efc0
 [Native regression evidence](validation/decision-guard-regression.json) contains the 20 native unit
 methods, 48 original E2E checks and three adversarial cases with their expected refusal reasons.
 No paid inference was performed in this later regression. HTTP workflow passed 34 checks again.
+
+## Subsequent direct Gemini key trial
+
+[Direct Google evidence](validation/gemini-direct-smoke.json) records one successful native workflow
+with the context guard active: five tools, explicit missing delivery proof, authenticated test review,
+sealed reviewer note, one consumed permit and one verified sandbox effect. Two API generations used
+2,557 prompt and 340 completion tokens; standard-price estimate US$0.00319275, actual Google billing
+unverified. The named Gemini provider's unsupported private-route configuration was discovered and
+is rejected explicitly; the successful trial used the native OpenAI-compatible provider against Google.
+These are different claims and are labelled separately. No additional model-quality ranking is implied.
+
+The subsequent provider-configuration correction passed **21 native unit methods**, all 48 original
+E2E checks and all three adversarial cases. The runner requires the new constructor/configuration
+method by name as well as the framework's All PASSED result. Runtime image `sha256:1074da796e1a1eb3c3ec659255265b157a0fa91578475f6f6b1d623154d36f4e`
+matched 95 source files; manifest SHA-256 `49d4b34066a9a044d18f1cefd5151ef983458de47caa8d9e5969e781b7ed27c9`.
+See [provider configuration regression](validation/native-provider-config-regression.json).

@@ -38,16 +38,26 @@ Method %OnInit() As %Status
     If key = "" Quit $$$ERROR($$$GeneralError, "llm_key_missing:" _ ..KeyVariable())
     If ..ModelId() = "" Quit $$$ERROR($$$GeneralError, "llm_model_required")
     If (..ProviderId()'="gemini") && (..ProviderId()'="openai") && (..ProviderId()'="anthropic") Quit $$$ERROR($$$GeneralError,"llm_provider_invalid")
-    Set config = {}
-    Do config.%Set("api_key", key)
     Set base = ##class(pbp.Util).Env("PBP_LLM_BASE_URL", "")
-    If base '= "" Do config.%Set("base_url", base)
+    Set config = ..ProviderConfig(key,base,..ProviderId(),.reason)
+    If '$ISOBJECT(config) Quit $$$ERROR($$$GeneralError,reason)
     Set ..Provider = ##class(%AI.Provider).Create(..ProviderId(), config)
     If '$ISOBJECT(..Provider) Quit $$$ERROR($$$GeneralError, "provider_create_failed:" _ ..ProviderId())
     Set ..Model = ..ModelId()
     Set ..Temperature = 0
     Set ..MaxIterations = 8
     Quit $$$OK
+}
+
+/// Build154 Gemini has a fixed endpoint. Reject unsupported overrides rather than silently ignoring
+/// the private route; select provider=openai explicitly for Google's compatible endpoint.
+ClassMethod ProviderConfig(key As %String, base As %String, provider As %String, Output reason As %String) As %DynamicObject
+{
+    Set reason=""
+    If (base'="") && (provider="gemini") { Set reason="gemini_custom_base_unsupported_use_explicit_openai_transport" Quit "" }
+    Set config={"api_key":(key)}
+    If base'="" Set config."base_url"=base
+    Quit config
 }
 
 XData INSTRUCTIONS [ MimeType = text/markdown ]
