@@ -6,9 +6,9 @@
   "reviewed_source_sha": "6d03432b8c1996c430e9edc17c6e92ecbe656b56",
   "export_sha256": "b648ca5302c6c2af5ca4f2323617c2281bc41f69a45aece08c1332d6b27a8166",
   "protocol_freeze_sha256": "a9e97675e9c4ad9ee96898ed104e0f37cd385c24193dc71b8909fe641321fdc3",
-  "report_method": "Reviewer reports canonical GET and fresh independent runs of frozen evidence gate, scorer v4 and strict positive gate; these conclusions match our stored JSON results. Separate reviewer-generated JSON files have not yet been supplied.",
+  "report_method": "Canonical C-1192 reports the independent fresh runs; C-1194 supplies the original reviewer-generated gate/scorer/positive JSON files. Each parsed JSON equals our original stored result; no re-execution was needed.",
   "independent_fresh_recomputation_reported": true,
-  "separate_reviewer_JSON_artifacts_received": false,
+  "separate_reviewer_JSON_artifacts_received": true,
   "evidence_gate_valid_rows": 14,
   "effective_outcomes_accepted": 14,
   "mandatory_financial_positives_with_one_intact_receipt": 6,
@@ -19,5 +19,27 @@
   "classification": "10 post-fix regressions plus4 prospective controls; not a new held-out cohort or population-quality estimate",
   "original_failed_baseline_and_v3_preserved": true,
   "real_bank_or_chain_effect": false,
-  "can_submit": false
+  "can_submit": false,
+  "separate_reviewer_JSON_artifact_message": "C-1194",
+  "separate_reviewer_JSON_artifacts_compared": true,
+  "artifact_comparisons": [
+    {
+      "peer_file": "docs/validation-claude/v4-gate-claude.json",
+      "local_result": "v4-gate.json",
+      "peer_sha256": "641d2af94fe87c31984301330be1f3b7bf22fb895d82bb0ee60d3f7d320dbf84",
+      "parsed_JSON_equal": true
+    },
+    {
+      "peer_file": "docs/validation-claude/v4-positive-claude.json",
+      "local_result": "v4-positive.json",
+      "peer_sha256": "413e1174fc49896c51c236ac684892d4c2912bca97fd68681fe209ce70f15e49",
+      "parsed_JSON_equal": true
+    },
+    {
+      "peer_file": "docs/validation-claude/v4-score-claude.json",
+      "local_result": "v4-score.json",
+      "peer_sha256": "01aa627649d91655c266a150a2b86d54b79bffc1e67b5af93cd043d7a1e7e863",
+      "parsed_JSON_equal": true
+    }
+  ]
 }

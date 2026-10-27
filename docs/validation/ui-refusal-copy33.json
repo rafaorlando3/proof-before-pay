@@ -1,0 +1,56 @@
+{
+  "schema": "pbp.native.ui-refusal-copy33/1",
+  "peer_delta": "C-1194",
+  "ui_sha256": "15681d5d8bc3ab3f7968dbdf1212c07e689eb0bafc9e838dfb89ec1e92a33adc",
+  "changes": [
+    "three duplicate reason keys removed",
+    "absent/invalid refund destination distinguished from other missing evidence",
+    "blocked review acknowledges the decision without a permit/effect"
+  ],
+  "native_browser_check": {
+    "case_id": "pix-0009:70dc920238",
+    "source": "actual native authenticated HTTP and browser DOM",
+    "case_still_awaiting_human": true,
+    "seals_still_one": true,
+    "no_permit": true,
+    "no_receipt": true,
+    "approval_or_rejection_clicked": false,
+    "model_calls": 0,
+    "new_financial_effects": 0,
+    "desktop_and_mobile_read_only": true,
+    "mobile": {
+      "acknowledgeButtons": [
+        "Acknowledge",
+        "Reject"
+      ],
+      "noteEmpty": true,
+      "pageScrollWidth": 317,
+      "refusalExplained": true,
+      "reviewVisible": true,
+      "reviewWidth": 259,
+      "view": "case",
+      "width": 332
+    }
+  },
+  "isolated_JS_refusal_context_checks": {
+    "source": "actual UI inline script before bootstrap; source functions unmodified",
+    "unit_semantics": [
+      "actual missing/invalid recipient explained",
+      "other critical missing evidence does not falsely claim missing recipient",
+      "already-refunded related pair explained",
+      "all three are acknowledgement only, no permit/effect"
+    ],
+    "passed": true,
+    "backend_calls": 0,
+    "model_calls": 0
+  },
+  "desktop_screenshot": "docs/screens/native-refusal33-desktop.jpg",
+  "mobile_screenshot": "docs/screens/native-refusal33-mobile.jpg",
+  "screenshots_are_actual_native_UI": true,
+  "mock_or_image_edit_used": false,
+  "financial_or_provider_code_changed": false,
+  "paid_calls": 0,
+  "new_financial_effects": 0,
+  "new_native_suite_run_claimed": false,
+  "scope": "UI refusal copy and read-only native/browser regression; not a new model benchmark or final cold-install acceptance"
+}

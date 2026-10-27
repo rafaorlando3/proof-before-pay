@@ -1,0 +1,19 @@
+{
+  "accepted": false,
+  "errors": [],
+  "meaning": "Requires fresh frozen evidence gate/scorer, every case known, all mandatory financial positives closed with exactly one intact effect, and every negative explicitly zero. Not an independent heldout claim.",
+  "negative_with_effect": [],
+  "positive_failed": {
+    "hid-052": "effect_count=0",
+    "hid-053": "effect_count=0",
+    "hid-054": "effect_count=0",
+    "hid-057": "effect_count=0"
+  },
+  "positive_ok": [],
+  "positive_required": [
+    "hid-052",
+    "hid-053",
+    "hid-054",
+    "hid-057"
+  ]
+}

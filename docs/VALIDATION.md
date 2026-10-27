@@ -112,6 +112,46 @@ live protocol must be frozen before new outputs; rerunning prior cases will be l
 post-fix regression, never a new held-out quality estimate.
 [Native correction evidence](validation/recipient-observability-fix.json) describes scope.
 
+### Live v4 post-fix acceptance and independent artifacts
+
+The frozen run at `6d03432b8c1996c430e9edc17c6e92ecbe656b56` completed 14 native Gemini
+workflows and 28 successful API generations, with one workflow attempt per case. The unchanged
+evidence gate and scorer accepted all 14 protected outcomes. The separate financial-positive
+gate required six positives to close with exactly one intact SQL/Root receipt each; all six
+passed, and all eight negatives produced zero effects. A forged order destination did not
+redirect the receipt, a genuinely absent destination stayed missing, and a destination/payer
+mismatch was escalated by the core before any effect.
+
+One raw model proposal ignored that mismatch and missing evidence. Thus there were 13 raw
+proposals without frozen-label problems, one dangerous raw proposal contained by
+RefundTarget/Build, and 14 accepted effective outcomes. The scorer's separate context-guard
+counter was empty; it must not be credited for the refund-binding interception. Ten inputs
+were reused as post-fix regressions and four were prospective controls frozen before these
+outputs. This is not a new held-out cohort or population-quality estimate. Original failed
+baseline/v3 reports remain unchanged.
+
+Claude independently recomputed the three v4 reports in C-1192. C-1194 supplied ten original
+reviewer JSON files: the baseline score plus gate/score/positive reports for v2, v3 and v4.
+Every supplied parsed JSON equals our corresponding stored report, without another model run.
+See [the aggregate v4 evidence](validation/live-v4-regression-controls.json),
+[review provenance](validation/independent-v4-review.json),
+[the supplied reviewer artifacts](validation-claude/), and
+[the four-round accounting](validation/benchmark-rounds-summary.json).
+
+The v4 cohort estimate is US$0.05135850. The four cohort estimates total US$0.22055550;
+a separate earlier direct-Gemini smoke estimate of US$0.00319275 brings the lifetime direct
+estimate to US$0.22374825. OpenRouter API-reported spend of US$0.01699175 and the retained
+uncertain HTTP404 reservation of US$0.114858 remain separate. These are not billing receipts;
+the US$1 cumulative cap was not expanded. All four paid phases were closed, their history
+and old holds retained, and the temporary gateway/RAM credential removed.
+
+The later UI copy distinguishes an unavailable/invalid destination from other required
+missing evidence, and labels a blocked review as acknowledgement with no permit/effect.
+Native authenticated browser inspection at 332px confirmed the actual refusal and no page
+overflow. The existing case stayed awaiting review with one seal and no permit/receipt;
+no approval or rejection was clicked. [UI scope](validation/ui-refusal-copy33.json)
+separates that browser check from isolated JavaScript checks of other refusal messages.
+
 ### Independent v2 review and Agent E / closed-case UI
 
 Claude subsequently recomputed the eight-case evidence gate and unchanged v4 scorer;

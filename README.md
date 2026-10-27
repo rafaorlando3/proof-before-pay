@@ -16,17 +16,23 @@ guard constrain it before sealing. The live integration evidence includes a lega
 produced one verified sandbox receipt. This establishes integration, not an advantage
 over a deterministic solution. A later ten-case live challenge failed all four mandatory
 financial positives: the agent could not observe the stored refund destination.
-The tools now expose that case-bound value explicitly; native and recorded regression
-checks pass, while live acceptance of the correction remains pending.
-[The failed result](docs/validation/live-v3-failed.json) is retained.
+The tools now expose that case-bound value explicitly. The subsequent frozen live run
+passed 14 protected outcomes: six mandatory positives each produced one intact synthetic
+receipt, and eight negatives produced zero effects. Ten cases were post-fix regressions
+and four were prospective controls. One raw proposal was still incorrect and was contained
+by the core; this is not a claim of 14 correct model proposals or population-level accuracy.
+Claude independently recomputed the results, and all ten supplied historical reviewer JSON
+reports match our parsed originals. [The failed result](docs/validation/live-v3-failed.json),
+[post-fix scope](docs/validation/live-v4-regression-controls.json), and
+[independent review](docs/validation/independent-v4-review.json) are retained together.
 
 **Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
 and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
 one scenario with five native tool calls, authenticated test review, sealed approval and
 one confirmed sandbox effect. This is an integration smoke test, not a model-quality ranking
 or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
-and covered by replay regression. Public demo, held-out benchmark, video and final submission
-remain pending. No bank settlement or independent external anchor is claimed. See
+and covered by replay regression. Public demo, final operator/IPM acceptance, recorded video and final submission remain
+pending; a fresh fully disjoint post-fix quality cohort has not been established. No bank settlement or independent external anchor is claimed. See
 [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
 [provider experiment](docs/PROVIDERS.md).
 

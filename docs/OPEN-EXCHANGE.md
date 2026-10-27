@@ -36,10 +36,15 @@ and [the aggregate result](validation/live-regression-v2.json).
 
 The later ten-case live challenge failed all four mandatory financial positives because
 the agent's tools omitted an existing refund destination. That failed result is retained.
-The recipient-observation correction has passed native and recorded workflow regressions;
-its live acceptance remains pending. A scorer accepting ten actions does not establish
-that the four required refunds happened. See [the failed result](validation/live-v3-failed.json)
-and [the correction's scope](validation/recipient-observability-fix.json).
+The recipient-observation correction subsequently passed a frozen live run of ten
+post-fix regressions plus four prospective controls: six mandatory financial positives
+closed with one intact synthetic receipt each, and eight negatives had zero effects.
+There were 14 accepted protected outcomes and 13 raw proposals without frozen-label
+problems; one dangerous raw proposal was contained by refund-binding enforcement.
+Claude's independent JSON reports match ours. This is not a fresh held-out cohort or
+population-quality estimate. See [the failed result](validation/live-v3-failed.json),
+[post-fix scope](validation/live-v4-regression-controls.json), and
+[independent review and supplied artifacts](validation/independent-v4-review.json).
 
 ## Acceptance gates before requesting Rafael's final OK
 
@@ -55,8 +60,8 @@ and [the correction's scope](validation/recipient-observability-fix.json).
 - [ ] Public authenticated demo with qualified model inference.
 - [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
 - [x] Pre-frozen regression controls include successful financial paths and zero-effect negatives.
-- [ ] Independent review of the final candidate source and its current evidence (eight-case export sent to Claude).
-- [ ] Disjoint held-out acceptance completed, separating raw model quality from the guarded effective decision.
+- [ ] Final candidate UI/text cross-review; core6d source review and v4 independent evidence review are complete (C-1189/C-1192/C-1194).
+- [ ] Fully disjoint post-fix held-out quality acceptance; v4 currently provides explicitly qualified regression/prospective-control evidence.
 - [ ] Final operator installation/lifecycle acceptance with complete before/after audit evidence.
 - [ ] Three-minute video demonstrating the final app and required links.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.
