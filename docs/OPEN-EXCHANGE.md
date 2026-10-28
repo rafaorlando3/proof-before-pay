@@ -60,7 +60,7 @@ population-quality estimate. See [the failed result](validation/live-v3-failed.j
 - [ ] Public authenticated demo with qualified model inference.
 - [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
 - [x] Pre-frozen regression controls include successful financial paths and zero-effect negatives.
-- [ ] Final candidate UI/text cross-review; core6d source review and v4 independent evidence review are complete (C-1189/C-1192/C-1194).
+- [x] Final candidate UI/text cross-review received (C-1196): UI156, provenance index, public prose, private article and video script3.1 accepted, with editorial follow-ups. Core6d source review and v4 independent evidence review are complete (C-1189/C-1192/C-1194).
 - [ ] Fully disjoint post-fix held-out quality acceptance; v4 currently provides explicitly qualified regression/prospective-control evidence.
 - [ ] Final operator installation/lifecycle acceptance with complete before/after audit evidence.
 - [ ] Three-minute video demonstrating the final app and required links.

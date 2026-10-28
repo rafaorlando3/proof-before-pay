@@ -17,8 +17,9 @@ from the vendor portal and loaded locally; the repository ships no image. Then `
            test proposal; caption: "Recorded mode: replayed agent decision, no live inference in this take"). The flow
            stepper shows Evidence (5 tool calls), Proposal, Seal, Review, Test effect. Narration: "The agent reads the
            order, the Pix events, the payer history, the evidence and the store policy through scoped read-only tools,
-           using the actual historical tool outputs. This old decision seal predates the destination projection fix, so do not narrate or display that new field as part of this record. It proposes a refund of 8400 minor units, that
+           using the actual historical tool outputs. It proposes a refund of 8400 minor units, that
            is 84.00 BRL, to the recorded payer, and flags that a person must approve."
+           NOTE: this old decision seal predates the destination projection fix. Do not narrate or display that new field as part of this historical record.
 
 0:40-1:05  Same case, Decision card: "Saw" and "Did not see (sealed as missing)". Narration: "What the agent did not get
            is sealed as missing. Nobody can complete the file afterwards." Then the FORGED-DESTINATION case from the v4

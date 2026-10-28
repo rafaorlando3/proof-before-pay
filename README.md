@@ -11,7 +11,21 @@ actions go to a person; only duplicate refunds are executable in v1.
 
 Simple cases use deterministic rules without a model call. When no rule matches, the
 AI Hub agent reads the five scoped tools and proposes a decision; policy and the context
-guard constrain it before sealing. The live integration evidence includes a legacy
+guard constrain it before sealing.
+
+**Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
+and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
+one scenario with five native tool calls, authenticated test review, sealed approval and
+one confirmed sandbox effect. This is an integration smoke test, not a model-quality ranking
+or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
+and covered by replay regression. Public demo, final operator/IPM acceptance, recorded video and final submission remain
+pending; a fresh fully disjoint post-fix quality cohort has not been established. No bank settlement or independent external anchor is claimed. See
+[application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
+[provider experiment](docs/PROVIDERS.md).
+
+## Validation summary
+
+The live integration evidence includes a legacy
 `duplicate_charge` case where the agent proposed a refund and authenticated test review
 produced one verified sandbox receipt. This establishes integration, not an advantage
 over a deterministic solution. A later ten-case live challenge failed all four mandatory
@@ -25,16 +39,6 @@ Claude independently recomputed the results, and all ten supplied historical rev
 reports match our parsed originals. [The failed result](docs/validation/live-v3-failed.json),
 [post-fix scope](docs/validation/live-v4-regression-controls.json), and
 [independent review](docs/validation/independent-v4-review.json) are retained together.
-
-**Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
-and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
-one scenario with five native tool calls, authenticated test review, sealed approval and
-one confirmed sandbox effect. This is an integration smoke test, not a model-quality ranking
-or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
-and covered by replay regression. Public demo, final operator/IPM acceptance, recorded video and final submission remain
-pending; a fresh fully disjoint post-fix quality cohort has not been established. No bank settlement or independent external anchor is claimed. See
-[application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
-[provider experiment](docs/PROVIDERS.md).
 
 Maintainer: [Rafael Orlando Mendes](https://community.intersystems.com/user/rafaelorlando-mendes).
 Code developed with AI assistants under Rafael's direction. License: [MIT](LICENSE).

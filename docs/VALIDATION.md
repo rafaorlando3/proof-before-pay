@@ -242,8 +242,9 @@ review paths. Offline positive controls include complete nonfinancial cases, gen
 evidence and all three captured live-provider proposals, so a broken guard that rejects everything
 cannot satisfy the regression. Model explanations still need independent evaluation.
 
-These cases were authored by Codex during development. Claude's peer review has arrived; the held-out model benchmark
-remains pending; no new live inference, calibrated quality ranking or three-agent advantage is claimed.
+These cases were authored by Codex during development. Claude's peer review has arrived; a fully disjoint post-fix held-out cohort remains
+pending; see the frozen-round sections above. This development regression added no live inference;
+no calibrated quality ranking or three-agent advantage is claimed.
 
 Final context-guard runtime: `sha256:644a631e1d7453f4d2bab9f921189e21b86d095efc0b36f1042f2a0e389869a1`. Source manifest SHA-256:
 `397c53c98b5e79393c4b2d2f652e9f90956eb2d18db292547906a9f2cf3c8a6d` (95 baked runtime files matched).
