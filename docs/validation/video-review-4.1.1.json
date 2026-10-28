@@ -1,0 +1,101 @@
+{
+  "schema": "pbp.video-C1203-corrections/1",
+  "version": "4.1.1",
+  "duration_seconds": 168,
+  "video_dimensions": [
+    1920,
+    1080
+  ],
+  "source_browser_dimensions": [
+    1280,
+    720
+  ],
+  "fps": 30,
+  "frames": 5040,
+  "source_script_sha256": "e09bdffece6d48624bcebff0e4a5c5d0f0d1152af5e7170e23eb6b2527646f84",
+  "base_application_source": "53a15b057779ba6589a7a78444c47c9ebdf36871",
+  "C1203_corrections": [
+    "native activepanel2xcrops S02 S04 S05 for6seconds",
+    "S07 past-live footer matches top caption",
+    "S04 Test reviewer login label",
+    "two-pass4language loudness measured from encoded AAC",
+    "Latin sentence-clause CC38/39/40;ZH31retained"
+  ],
+  "additional_integrity": "S01 preapproval6..20 with editorial pacing excludes approval click; click appears once inS04. Fixed observed benchmark counts6/8 while bars animate. CFR normalization before editing preserves exact cut durations.",
+  "narration_text_and_performance_unchanged": true,
+  "delivery_audio_measurements": [
+    {
+      "language": "en",
+      "delivery_integrated_LUFS": -16.0,
+      "delivery_true_peak_dBTP": -1.6,
+      "pass": true
+    },
+    {
+      "language": "pt-BR",
+      "delivery_integrated_LUFS": -16.1,
+      "delivery_true_peak_dBTP": -1.7,
+      "pass": true
+    },
+    {
+      "language": "es",
+      "delivery_integrated_LUFS": -16.1,
+      "delivery_true_peak_dBTP": -1.6,
+      "pass": true
+    },
+    {
+      "language": "zh-CN",
+      "delivery_integrated_LUFS": -16.0,
+      "delivery_true_peak_dBTP": -1.7,
+      "pass": true
+    }
+  ],
+  "caption_cues": {
+    "en": 38,
+    "pt-BR": 39,
+    "es": 40,
+    "zh-CN": 31
+  },
+  "captions_max_lines": 2,
+  "full_previous_picture_and_four_audio_decode411_passed": true,
+  "native_speaker_or_listening_review_claimed": false,
+  "Rafael_listening_approval": "pending",
+  "final_Claude_media_check": "requested after delivery",
+  "new_model_calls": 0,
+  "new_approval_events": 0,
+  "new_synthetic_effects": 0,
+  "submitted_to_Open_Exchange": false,
+  "media": [
+    {
+      "file": "Proof-Before-Pay-en.mp4",
+      "bytes": 21570640,
+      "sha256": "8f41024d5781c0467a62c47290c0d9cf0b36656a9fd23e0750c037b572efc89f",
+      "default_narration": "en",
+      "narration_tracks": 4,
+      "closed_caption_tracks": 4
+    },
+    {
+      "file": "Proof-Before-Pay-pt-BR.mp4",
+      "bytes": 11333757,
+      "sha256": "9a8fa5d95ef73686c0e398084167ce6b38e0f2b738385ec5156fc182047cc6ed",
+      "default_narration": "pt-BR",
+      "narration_tracks": 1,
+      "closed_caption_tracks": 4
+    },
+    {
+      "file": "Proof-Before-Pay-es.mp4",
+      "bytes": 11342566,
+      "sha256": "2def827474072a4a2aee314604fdc20c8ea9f692fc38db347c0b9ab7226318e3",
+      "default_narration": "es",
+      "narration_tracks": 1,
+      "closed_caption_tracks": 4
+    },
+    {
+      "file": "Proof-Before-Pay-zh-CN.mp4",
+      "bytes": 11322285,
+      "sha256": "394e9e9d2421a062fa8699b0654de8414666ee019eddaefcafc9bc4126835f06",
+      "default_narration": "zh-CN",
+      "narration_tracks": 1,
+      "closed_caption_tracks": 4
+    }
+  ]
+}

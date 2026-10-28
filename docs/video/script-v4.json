@@ -1,8 +1,8 @@
 {
   "schema": "pbp.video-script/4",
-  "version": "4.1",
+  "version": "4.1.1",
   "prepared_utc": "2026-10-28T05:23:13.751004+00:00",
-  "base_source": "7b506688a301da3ac8d22d7d86f80fe463e5cdaf (viewer gateway); native runtime346ae94/backend6d03432 unchanged",
+  "base_source": "53a15b057779ba6589a7a78444c47c9ebdf36871 (modern auth/recovery) over974df45 (owned demo recovery); native runtime346ae94/backend6d03432 unchanged",
   "target_duration_seconds": 168,
   "master_language": "en",
   "alternate_languages": [
@@ -59,7 +59,7 @@
       "id": "S02",
       "start": 18,
       "end": 40,
-      "visual": "Actual GetOrder/GetEvidence tool panels for the new case; recorded mode visible.",
+      "visual": "Actual GetOrder/GetEvidence tool panels for the new case; recorded mode visible. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.",
       "mode_caption": {
         "en": "RECORDED proposal. Native IRIS workflow. Synthetic effects.",
         "pt-BR": "Proposta GRAVADA. Fluxo nativo IRIS. Efeitos sintéticos.",
@@ -107,7 +107,7 @@
       "id": "S04",
       "start": 60,
       "end": 84,
-      "visual": "Actual one-time approval of video-demo:d83544a2 and receipt test-refund:456. Trim idle time; never duplicate approval or reset.",
+      "visual": "Actual one-time approval of video-demo:d83544a2 and receipt test-refund:456. Trim idle time; never duplicate approval or reset. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.",
       "mode_caption": {
         "en": "RECORDED proposal. Native IRIS workflow. Synthetic effects.",
         "pt-BR": "Proposta GRAVADA. Fluxo nativo IRIS. Efeitos sintéticos.",
@@ -131,7 +131,7 @@
       "id": "S05",
       "start": 84,
       "end": 106,
-      "visual": "Actual editable copy of new case: 8400 to 8401, tampered; original copy restored, intact. Local-seal limitations remain in narration and editorial caption.",
+      "visual": "Actual editable copy of new case: 8400 to 8401, tampered; original copy restored, intact. Local-seal limitations remain in narration and editorial caption. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.",
       "mode_caption": {
         "en": "RECORDED proposal. Native IRIS workflow. Synthetic effects.",
         "pt-BR": "Proposta GRAVADA. Fluxo nativo IRIS. Efeitos sintéticos.",
@@ -179,7 +179,7 @@
       "id": "S07",
       "start": 126,
       "end": 149,
-      "visual": "Animated editorial chart of frozen prior live evaluation: latest14=10regressions+4prospectivecontrols;6legitimateeffects,8negativezero;1dangerousrawproposalcontained. No new run.",
+      "visual": "Animated editorial chart of frozen prior live evaluation: latest14=10regressions+4prospectivecontrols;6legitimateeffects,8negativezero;1dangerousrawproposalcontained. No new run. Footer: PAST LIVE EVALUATION / FROZEN COHORTS / NOT A NEW RUN.",
       "mode_caption": {
         "en": "PAST LIVE EVALUATION. Frozen cohorts, not a new run.",
         "pt-BR": "Avaliação anterior, sem nova inferência.",
@@ -235,5 +235,5 @@
     "All captions carry the mode (RECORDED / LIVE past evidence) and sandbox or test ledger wherever money appears.",
     "CC files regenerated from this JSON after the final cut, with the real timecodes (scripts/video_cc.py)."
   ],
-  "status": "Recorded footage captured; multilingual assembly in progress, final review pending"
+  "status": "C1203 editorial fixes: active-panel crops, consistent past-live footer, reviewer label, four-language loudness, clause CC. Audio unchanged; Rafael listening approval still pending."
 }

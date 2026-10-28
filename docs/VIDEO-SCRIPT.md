@@ -1,6 +1,6 @@
-# Proof Before Pay: video production script v4.1
+# Proof Before Pay: video production script v4.1.1
 
-Base: 7b506688a301da3ac8d22d7d86f80fe463e5cdaf (viewer gateway); native runtime346ae94/backend6d03432 unchanged. Target length 168 s. Master en, alternates pt-BR, es, zh-CN.
+Base: 53a15b057779ba6589a7a78444c47c9ebdf36871 (modern auth/recovery) over974df45 (owned demo recovery); native runtime346ae94/backend6d03432 unchanged. Target length 168 s. Master en, alternates pt-BR, es, zh-CN.
 
 ## Rules
 
@@ -38,7 +38,7 @@ Narration zh-CN: 客户重复付款，人工智能建议退款。执行之前，
 
 ### S02  00:18 to 00:40
 
-Visual: Actual GetOrder/GetEvidence tool panels for the new case; recorded mode visible.
+Visual: Actual GetOrder/GetEvidence tool panels for the new case; recorded mode visible. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -72,7 +72,7 @@ Narration zh-CN: 同一订单出现了两笔八十四雷亚尔的付款，建议
 
 ### S04  01:00 to 01:24
 
-Visual: Actual one-time approval of video-demo:d83544a2 and receipt test-refund:456. Trim idle time; never duplicate approval or reset.
+Visual: Actual one-time approval of video-demo:d83544a2 and receipt test-refund:456. Trim idle time; never duplicate approval or reset. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -89,7 +89,7 @@ Narration zh-CN: 已认证的测试审核人检查金额、目标和决策摘要
 
 ### S05  01:24 to 01:46
 
-Visual: Actual editable copy of new case: 8400 to 8401, tampered; original copy restored, intact. Local-seal limitations remain in narration and editorial caption.
+Visual: Actual editable copy of new case: 8400 to 8401, tampered; original copy restored, intact. Local-seal limitations remain in narration and editorial caption. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -123,7 +123,7 @@ Narration zh-CN: 消息接入、决策处理、智能体工具、Witness、人�
 
 ### S07  02:06 to 02:29
 
-Visual: Animated editorial chart of frozen prior live evaluation: latest14=10regressions+4prospectivecontrols;6legitimateeffects,8negativezero;1dangerousrawproposalcontained. No new run.
+Visual: Animated editorial chart of frozen prior live evaluation: latest14=10regressions+4prospectivecontrols;6legitimateeffects,8negativezero;1dangerousrawproposalcontained. No new run. Footer: PAST LIVE EVALUATION / FROZEN COHORTS / NOT A NEW RUN.
 
 Mode caption (EN): PAST LIVE EVALUATION. Frozen cohorts, not a new run.
 
