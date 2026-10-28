@@ -1,6 +1,36 @@
 # Validation on 26 October 2026
 
-## Current addendum, 27 October
+## Current addendum, 28 October: independent eight-case cohort
+
+A final independent eight-case cohort completed on 28 October. The reviewer wrote
+new trap types after all earlier results were known; the inputs, gold and controls
+were frozen and cross-checked by hash before any output. The three mandatory
+financial positives each produced one intact synthetic receipt to the stored
+destination. The five negatives produced no effect and remain pending for a person.
+One raw proposal was wrong: the model reinterpreted a malformed order amount as
+minor units and proposed a refund. Server-side target derivation refused it; the
+sealed decision was an escalation with the refund target marked missing. Another
+raw refund proposal was contained because of a malformed timestamp. Claude
+independently recomputed the gate, scorer and positive acceptance and reported
+matching results in C-1210. This is an informed adversarial set, not a blind sample
+or a population-quality estimate; it establishes nothing beyond these eight cases.
+See [the aggregate result](validation/live-independent-v5.json) and
+[independent review scope](validation/independent-v5-review.json).
+
+There was one workflow attempt per case, two successful HTTP generations per case
+and no retry. The cohort's token/tariff cost estimate was US$0.02892375. Cumulative
+API-reported spend, provisional token estimates and the retained uncertain404
+reservation total US$0.38452175 under the unchanged US$1 active cap. Estimates are
+not billing receipts; Google invoice reconciliation remains pending. Private inputs,
+answer keys, native exports and credentials are not distributed in this repository.
+
+The authenticated demo and four-language video4.2.1 have been reviewed separately;
+Rafael approved the video. That recording predates this cohort and continues to
+show the earlier native recorded workflow and historical reports. It was not
+re-recorded or relabelled as footage of these new live cases. Final package review
+and Rafael's express Open Exchange submission approval are still required.
+
+## Historical addendum, 27 October
 
 ### Current cold installation and native IPM acceptance
 

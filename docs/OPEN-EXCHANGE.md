@@ -46,6 +46,21 @@ population-quality estimate. See [the failed result](validation/live-v3-failed.j
 [post-fix scope](validation/live-v4-regression-controls.json), and
 [independent review and supplied artifacts](validation/independent-v4-review.json).
 
+A final independent eight-case cohort completed on 28 October. The reviewer wrote
+new trap types after all earlier results were known; the inputs, gold and controls
+were frozen and cross-checked by hash before any output. The three mandatory
+financial positives each produced one intact synthetic receipt to the stored
+destination. The five negatives produced no effect and remain pending for a person.
+One raw proposal was wrong: the model reinterpreted a malformed order amount as
+minor units and proposed a refund. Server-side target derivation refused it; the
+sealed decision was an escalation with the refund target marked missing. Another
+raw refund proposal was contained because of a malformed timestamp. Claude
+independently recomputed the gate, scorer and positive acceptance and reported
+matching results in C-1210. This is an informed adversarial set, not a blind sample
+or a population-quality estimate; it establishes nothing beyond these eight cases.
+See [the aggregate result](validation/live-independent-v5.json) and
+[independent review scope](validation/independent-v5-review.json).
+
 ## Acceptance gates before requesting Rafael's final OK
 
 - [x] Separate MIT repository without PixSettle Git history or secrets.
@@ -62,9 +77,9 @@ population-quality estimate. See [the failed result](validation/live-v3-failed.j
 - [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
 - [x] Pre-frozen regression controls include successful financial paths and zero-effect negatives.
 - [x] Final candidate UI/text cross-review received (C-1196): UI156, provenance index, public prose, private article and video script3.1 accepted, with editorial follow-ups. Core6d source review and v4 independent evidence review are complete (C-1189/C-1192/C-1194).
-- [ ] Fully disjoint post-fix held-out quality acceptance; v4 currently provides explicitly qualified regression/prospective-control evidence.
+- [x] Small independent post-fix cohort accepted (8 new cases, 28 October; 3 positives each effected once, 5 negatives zero, 1 raw proposal contained); population-level quality is not established. See [v5 scope](validation/live-independent-v5.json).
 - [x] Cold/lifecycle, native IPM application and fresh-volume bootstrap acceptance completed; see [installation scope](validation/native-installation-IPM.json) and [bootstrap qualifications](validation/native-IPM-bootstrap.json).
-- [x] 168-second native-workflow review cut exported in four languages. Rafael approved the narration/languages; Claude accepted4.2 visuals and requested the4.2.1 public-footer correction. Final visual/submission approval remains separate.
+- [x] 168-second native-workflow video4.2.1 exported in four languages. Claude accepted the corrected cut (C-1207); Rafael approved its narration, languages and visuals. The video predates v5; final package/submission approval remains separate.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.
 - [ ] Actual Open Exchange receipt/status captured after submission.
 
@@ -102,6 +117,22 @@ preserved every previous route, the tracked proxy file and the intact receipt. T
 IRIS container was not restarted; a full shared-host reboot was not performed. See
 [the service-recovery scope](validation/demo-service-recovery.json).
 
+The video4.2.1 recording predates the independent eight-case v5 cohort. Its newer
+results belong in the accompanying report/description, not in a claim that the
+recording shows that run.
+
+## Integrity boundary and future work
+
+The current runtime uses local salted commitments. It detects changes when checked
+against a retained trusted commitment; an administrator able to replace the record,
+salt and commitment can rewrite local history. Independent external anchoring is
+not implemented. An optional asynchronous checkpoint to an independent guardian,
+with a cross-verifier, is a roadmap proposal without a committed release or date.
+Such a reference could expose later rewriting relative to that checkpoint; it
+would not prove the original evidence correct, prevent all host compromise or
+establish real bank settlement. Existing chain/Solana helpers are outside the
+runtime, which does not sign or broadcast blockchain transactions.
+
 The EAP archive and derived images must never enter the source package or a public registry.
 
 ## Source candidate
@@ -111,7 +142,7 @@ to produce a deterministic source ZIP and per-file SHA-256 manifest. The output 
 checkout. Committed files are written with fixed ZIP timestamps, ordering and Unix permissions,
 without platform-dependent compression. The packaging gate excludes credentials, private evaluation data and the separately licensed
 vendor kit. This source archive is a candidate, not an Open Exchange submission or approval request.
-The fully disjoint post-fix held-out quality gate and Rafael's final review remain separate from the qualified regression/prospective evidence and prepared media.
+The small independent v5 cohort is accepted with the limits above. Final source/package reconciliation and Rafael's express submission approval remain separate.
 
 ## Current installation qualification
 
