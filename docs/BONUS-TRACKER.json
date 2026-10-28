@@ -1,17 +1,17 @@
 {
   "schema": "pbp.contest-bonus-tracker/1",
-  "checked_at_utc": "2026-10-27T06:07:07.671863+00:00",
+  "checked_at_utc": "2026-10-28T23:57:26.078305+00:00",
   "contest": 49,
   "current_full_bonus_table_located": true,
   "no_points_awarded_to_project_verified": true,
   "bonus_list_subject_to_change": true,
   "maximum_total_not_assumed": true,
-  "arithmetic_sum_of_published_item_caps": 34,
+  "arithmetic_sum_of_published_item_caps": 35,
   "arithmetic_sum_is_not_an_award_or_guaranteed_project_score": true,
   "official_bonus_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
   "official_bonus_page_published_at": "2026-10-26T23:14:44-04:00",
-  "official_page_verified_via": "direct HTTPS GET200; page title/author/body/date checked after web tool failed to open it",
-  "official_page_snapshot_sha256": "139b098effc6e274e682fc6690e7de7b39fe3fc7949669f839d5615a32635165",
+  "official_page_verified_via": "Official web page opened28Oct; current questionnaire1 verified. No fresh raw-HTML digest claimed.",
+  "official_page_snapshot_sha256": null,
   "official_sources": [
     "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
     "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows"
@@ -19,6 +19,15 @@
   "submission_and_voting_updates_allowed": true,
   "previous_contest_limits_not_transferred": true,
   "items": [
+    {
+      "item": "Questionnaire",
+      "points_cap": 1,
+      "rule_status": "verified_official_contest49",
+      "delivery_status": "not_submitted",
+      "note": "Official feedback questionnaire can earn one point. No response or submission has been performed or award verified.",
+      "evidence": [],
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+    },
     {
       "item": "Production Extension (PEX)",
       "points_cap": 3,
@@ -100,18 +109,27 @@
       "item": "ZPM package deployment",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "not_implemented_or_published",
-      "note": "Requires a built and published package whose zpm install works; source ZIP alone does not qualify.",
-      "evidence": [],
+      "delivery_status": "native_local_application_package_tested_registry_publication_pending",
+      "note": "Native source package generation, load/uninstall/reload were accepted with documented scope. The current source recipe is present; no public registry publication or zpm install from that registry is verified. A local source ZIP does not establish the bonus.",
+      "evidence": [
+        "module.xml",
+        "IPM-OPERATOR.txt",
+        "docs/validation/native-installation-IPM.json",
+        "docs/validation/native-IPM-bootstrap.json"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Online demo",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "private_lab_only_public_demo_not_ready",
-      "note": "Cloud demo required. Static recorded REST demo does not qualify; replay/BYOK testing accepted separately.",
-      "evidence": [],
+      "delivery_status": "authenticated_IRIS_backed_viewer_deployed_judge_access_and_award_pending",
+      "note": "Authenticated cloud viewer reads selected synthetic cases from running IRIS and verifies record copies. It is consultation-only, without approvals/intake/model calls. This is not a static REST mock; dedicated contest access and organizer eligibility/award remain unverified.",
+      "evidence": [
+        "demo_gateway/README.md",
+        "docs/validation/demo-service-recovery.json",
+        "docs/OPEN-EXCHANGE.md"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -154,9 +172,13 @@
       "item": "YouTube video",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "script_only_no_video_published",
-      "note": "Requires product in action on YouTube; script and screenshots are preparation.",
-      "evidence": [],
+      "delivery_status": "video421_rendered_reviewed_owner_approved_YouTube_not_published",
+      "note": "A168second actual native-workflow video with four narration/CC languages is complete and approved by the owner. Media files remain outside this source repository. YouTube publication and awarded points are not verified.",
+      "evidence": [
+        "docs/VIDEO-SCRIPT.md",
+        "docs/validation/native-recorded-demo42.json",
+        "docs/OPEN-EXCHANGE.md"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     }
   ],
@@ -164,11 +186,12 @@
     "implemented_technology_candidates_points": 7,
     "implemented_candidates_are_not_awarded_points": true,
     "remaining_priority_deliverables": [
-      "working cloud demo (2)",
-      "working published IPM package (2)",
-      "new article reviewed by Rafael (2)",
-      "second article or translation (1 total)",
-      "real product video (3)"
+      "judge-accessible authenticated cloud demo and eligibility confirmation (2 potential)",
+      "working published IPM registry package (2 potential)",
+      "new article reviewed and published with authorization (2 potential)",
+      "second article or translation (1 total potential)",
+      "publish the owner-approved product video on YouTube with authorization (3 potential)",
+      "complete official feedback questionnaire if applicable (1 potential)"
     ],
     "other_ideas_assessed_after_core_gates": "PEX, custom adapter, vector search and Community Opportunity require genuine use, evidence and a sensible product fit. No decorative implementation or manufactured bug claim."
   },
@@ -179,5 +202,20 @@
     "test evidence scope and representative real screenshots",
     "article/video descriptions and limitations"
   ],
-  "policy": "Map official current-edition rules to actual evidence. Test count and language count are not listed multipliers. External reviews are leads; no score or probability of winning is inferred."
+  "policy": "Map official current-edition rules to actual evidence. Test count and language count are not listed multipliers. External reviews are leads; no score or probability of winning is inferred.",
+  "previous_official_snapshot": {
+    "official_page_snapshot_sha256": "139b098effc6e274e682fc6690e7de7b39fe3fc7949669f839d5615a32635165",
+    "checked_at_utc": "2026-10-27T06:07:07.671863+00:00",
+    "arithmetic_sum_of_published_item_caps": 34
+  },
+  "schedule_scope": {
+    "official_submission_deadline_EST": "2026-11-08T23:59:59-05:00",
+    "equivalent_Paraguay": "2026-11-09T01:59:59-03:00",
+    "internal_submission_ceiling_Paraguay": "2026-11-08T18:00:00-03:00",
+    "updates_allowed_during_submission_and_voting": true,
+    "voting_end_EST": "2026-11-15T23:59:00-05:00",
+    "equivalent_voting_end_Paraguay": "2026-11-16T01:59:00-03:00",
+    "source": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows",
+    "publishing_or_submitting_still_requires_Rafael_express_OK": true
+  }
 }
