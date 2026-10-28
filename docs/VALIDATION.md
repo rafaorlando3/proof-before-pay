@@ -1,6 +1,6 @@
 # Validation on 26 October 2026
 
-## Current addendum —27 October
+## Current addendum, 27 October
 
 ### Current cold installation and native IPM acceptance
 

@@ -1,4 +1,4 @@
-Proof Before Pay — IPM operator guide
+Proof Before Pay: IPM operator guide
 
 Application code: MIT. The separately licensed AI Hub Community EAP build154 image
 and vendor SDK are prerequisites; this repository and its IPM package contain neither.
