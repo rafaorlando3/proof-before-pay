@@ -7,8 +7,21 @@ from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import base64, hmac, json, re, sys, threading, time, secrets, urllib.request, urllib.parse, urllib.error
 from http.cookies import SimpleCookie, CookieError
+from typing import Optional
+from collections import OrderedDict
+import ipaddress
+import importlib.util
+_recovery_spec=importlib.util.spec_from_file_location('pbp_viewer_recovery',Path(__file__).with_name('access_recovery.py'))
+_recovery_module=importlib.util.module_from_spec(_recovery_spec)
+_recovery_spec.loader.exec_module(_recovery_module)
+RecoveryStore=_recovery_module.RecoveryStore
 
 MAX_BODY = 32000
+def client_key(peer,headers):
+    # Only the private loopback Caddy hop may supply forwarded addresses.
+    if peer not in {'127.0.0.1','::1'}:return peer
+    try:return str(ipaddress.ip_address(headers.get('X-Forwarded-For','').split(',')[-1].strip()))
+    except ValueError:return peer
 @dataclass
 class Config:
     username: str
@@ -16,6 +29,7 @@ class Config:
     case_ids: tuple[str, ...] = ()
     origin: str = ''
     backend: str = 'http://127.0.0.1:18878'
+    recovery_state: Optional[Path] = field(default=None,repr=False)
     def __post_init__(self):
         if not self.username or ':' in self.username or len(self.password) < 32 or self.password.startswith('GENERATE_'):
             raise ValueError('dedicated_random_demo_credentials_required')
@@ -33,14 +47,15 @@ class Config:
         if p.stat().st_mode & 0o077:
             raise ValueError('private_config_must_be_0600')
         d = json.loads(p.read_text())
-        return cls(d['username'], d['password'], tuple(d['case_ids']), d['origin'], d.get('backend', 'http://127.0.0.1:18878'))
+        state=p.parent/'state'/'viewer-recovery.json'
+        return cls(d['username'], d['password'], tuple(d['case_ids']), d['origin'], d.get('backend', 'http://127.0.0.1:18878'),state if state.exists() else None)
 
 class Gateway:
     def __init__(self, config, fetch=None):
         self.config = config
         self.fetch = fetch or self._fetch
         self.sessions = {}
-        self.failed_logins = []
+        self.failed_logins = OrderedDict()
         self.session_lock = threading.Lock()
     def _fetch(self, path, method='GET', body=None):
         req = urllib.request.Request(self.config.backend + path, data=body, method=method,
@@ -60,27 +75,66 @@ class Gateway:
             cookie=SimpleCookie();cookie.load(headers.get('Cookie',''));token=cookie['pbp49_viewer'].value
         except (KeyError,ValueError,CookieError):return False
         with self.session_lock:return self.sessions.get(token,0)>time.monotonic()
-    def login(self, method, headers, body):
+    def auth_page(self, recovery=False, message=''):
+        import html,hashlib
+        page=Path(__file__).with_name('auth.html').read_text()
+        if recovery:
+            title='Recover access';heading='Recover demo access';intro='Enter the one-time code supplied by the project owner. It is valid for 15 minutes.'
+            form='<form method="post" action="/pbp/recover"><label>Recovery code<div class="field"><input name="code" type="password" data-secret autocomplete="one-time-code" required maxlength="80"><button class="toggle" type="button" aria-label="Show access secret">Show</button></div></label><button class="submit" type="submit">Recover access</button></form>'
+            link='<span class="helpnote">Need a new code? Contact the person who invited you.</span><a href="/pbp/login">Back to sign in</a>'
+        else:
+            title='Sign in';heading='Sign in to the demo';intro='Use the viewer access details provided with your invitation.'
+            form='<form method="post" action="/pbp/login"><label>Viewer name<input name="username" autocomplete="username" required maxlength="100"></label><label>Access password<div class="field"><input name="password" type="password" data-secret autocomplete="current-password" required maxlength="200"><button class="toggle" type="button" aria-label="Show access secret">Show</button></div></label><button class="submit" type="submit">Open the demo</button></form>'
+            link='<a href="/pbp/recover">Forgot your password or access?</a>'
+        notice='<p class="notice" role="status">'+html.escape(message)+'</p>' if message else ''
+        for k,v in {'TITLE':title,'HEADING':heading,'INTRO':intro,'FORM':form,'LINK':link,'NOTICE':notice}.items():page=page.replace('{{'+k+'}}',v)
+        script=re.search(r'<script>(.*?)</script>',page,re.S).group(1)
+        digest=base64.b64encode(hashlib.sha256(script.encode()).digest()).decode()
+        return 200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-"+digest+"'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"},page.encode()
+    def form_redirect(self, error='', recovery=False):
+        path='/pbp/recover' if recovery else '/pbp/login'
+        return 303,{'Location':path+('?error='+error if error else ''),'Cache-Control':'no-store'},b''
+    def session_response(self,token):
+        return 303,{'Location':'/pbp/ui/','Cache-Control':'no-store','Set-Cookie':'pbp49_viewer='+token+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=3600'},b''
+    def reserve_session_locked(self,now):
+        self.sessions={k:v for k,v in self.sessions.items() if v>now}
+        if len(self.sessions)>=32:return None
+        token=secrets.token_urlsafe(32);self.sessions[token]=now+3600;return token
+    def login(self, method, headers, body, query='', recovery=False, client_id='local'):
         if method=='GET':
-            page='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Proof Before Pay | Demo access</title><style>body{margin:0;background:#09111e;color:#dfebf7;font:16px system-ui;display:grid;min-height:100vh;place-items:center}main{max-width:420px;padding:36px;border:1px solid #284153;border-radius:22px;background:#101e2e}small{color:#60dec6;letter-spacing:.1em}h1{font-size:34px;margin-bottom:12px}p{color:#aebfd0;line-height:1.6}label{display:block;margin-top:20px}input,button{box-sizing:border-box;width:100%;padding:13px;margin-top:8px;border-radius:10px;border:1px solid #33516b;background:#091523;color:#fff;font:inherit}button{margin-top:26px;background:#62ddc8;color:#06211e;font-weight:700;cursor:pointer}footer{font-size:12px;color:#91aabd;margin-top:24px}</style><main><small>INTERSYSTEMS IRIS / WORKING DEMO</small><h1>Proof Before Pay</h1><p>Inspect real evidence, sealed decisions and a synthetic receipt on the running IRIS backend.</p><form method="post" action="/pbp/login"><label>Viewer name<input name="username" autocomplete="username" required maxlength="100"></label><label>Access password<input name="password" type="password" autocomplete="current-password" required maxlength="200"></label><button type="submit">Open the demo</button></form><footer>Recorded agent responses. Synthetic funds. Consultation only; approval and model calls are disabled.</footer></main></html>'''
-            return 200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"},page.encode()
+            reasons={'expired=1':'Your session ended. Sign in again to continue.','error=credentials':'The access details were not accepted. Check them and try again.','error=code':'This code was not accepted, has expired or was already used. Ask the owner for a new code.','error=limited':'Too many attempts. Please wait a minute and try again.','error=busy':'The demo is busy. Please try again later.','error=unavailable':'Recovery is temporarily unavailable. Contact the project owner.'}
+            return self.auth_page(recovery,reasons.get(query,''))
         if method!='POST':return self.fail('method_not_allowed',405)
         if headers.get('Origin')!=self.config.origin or headers.get('Content-Type','').split(';')[0]!='application/x-www-form-urlencoded':return self.fail('same_origin_form_required',403)
         if len(body)>1024:return self.fail('input_too_large',413)
         try:
             fields=urllib.parse.parse_qs(body.decode('utf-8'),strict_parsing=True,max_num_fields=2)
-            user,=fields['username'];password,=fields['password']
+            if recovery:
+                if set(fields)!={'code'}:raise ValueError('unexpected_fields')
+                code,=fields['code'];code=code.strip()
+            else:
+                if set(fields)!={'username','password'}:raise ValueError('unexpected_fields')
+                user,=fields['username'];password,=fields['password']
         except (ValueError,KeyError,UnicodeError):return self.fail('invalid_login_form',400)
         now=time.monotonic()
         with self.session_lock:
-            self.failed_logins[:]=[t for t in self.failed_logins if now-t<60]
-            if len(self.failed_logins)>=20:return self.fail('login_rate_limited_try_later',429)
-            if not (hmac.compare_digest(user.encode(),self.config.username.encode()) and hmac.compare_digest(password.encode(),self.config.password.encode())):
-                self.failed_logins.append(now);return self.fail('viewer_credentials_not_accepted',401)
+            for key in list(self.failed_logins):
+                self.failed_logins[key]=[t for t in self.failed_logins[key] if now-t<60]
+                if not self.failed_logins[key]:del self.failed_logins[key]
+            if client_id not in self.failed_logins and len(self.failed_logins)>=256:self.failed_logins.popitem(last=False)
+            attempts=self.failed_logins.setdefault(client_id,[]);self.failed_logins.move_to_end(client_id)
+            if len(attempts)>=20:return self.form_redirect('limited',recovery)
             self.sessions={k:v for k,v in self.sessions.items() if v>now}
-            if len(self.sessions)>=32:return self.fail('viewer_session_limit_try_later',429)
-            token=secrets.token_urlsafe(32);self.sessions[token]=now+3600
-        return 303,{'Location':'/pbp/ui/','Cache-Control':'no-store','Set-Cookie':'pbp49_viewer='+token+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=3600'},b''
+            if len(self.sessions)>=32:return self.form_redirect('busy',recovery)
+            if recovery:
+                if self.config.recovery_state is None:return self.form_redirect('unavailable',True)
+                try:valid=RecoveryStore(self.config.recovery_state).consume(code)
+                except (OSError,ValueError):return self.form_redirect('unavailable',True)
+            else:valid=hmac.compare_digest(user.encode(),self.config.username.encode()) and hmac.compare_digest(password.encode(),self.config.password.encode())
+            if not valid:
+                attempts.append(now);return self.form_redirect('code' if recovery else 'credentials',recovery)
+            token=self.reserve_session_locked(now)
+        return self.session_response(token)
     @staticmethod
     def response(obj, status=200):
         return status, {'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}, json.dumps(obj,ensure_ascii=False).encode()
@@ -99,11 +153,21 @@ class Gateway:
             raise ValueError('public_case_must_be_recorded')
         return d
     def details(self):return [self.one_case(cid) for cid in self.config.case_ids]
-    def dispatch(self, method, target, headers, body=b''):
-        if target=='/pbp/login':return self.login(method,headers,body)
+    def dispatch(self, method, target, headers, body=b'', client_id='local'):
+        login_target=urllib.parse.urlsplit(target)
+        if not login_target.scheme and not login_target.netloc and login_target.path in {'/pbp/login','/pbp/recover'}:return self.login(method,headers,body,query=login_target.query,recovery=login_target.path=='/pbp/recover',client_id=client_id)
+        if target=='/pbp/logout':
+            if method!='POST' or headers.get('Origin')!=self.config.origin:return self.fail('same_origin_POST_required',403)
+            try:
+                cookie=SimpleCookie();cookie.load(headers.get('Cookie',''));token=cookie['pbp49_viewer'].value
+            except (KeyError,ValueError,CookieError):token=''
+            with self.session_lock:self.sessions.pop(token,None)
+            return 303,{'Location':'/pbp/login','Cache-Control':'no-store','Set-Cookie':'pbp49_viewer=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'},b''
         if not self.authorized(headers):
             if method=='GET' and target in {'/','/pbp/ui/','/pbp/ui/index.html'}:return 303,{'Location':'/pbp/login','Cache-Control':'no-store'},b''
-            status,h,b=self.fail('demo_authentication_required',401);h['WWW-Authenticate']='Basic realm="Proof Before Pay demo", charset="UTF-8"';return status,h,b
+            # Never advertise an HTTP authentication challenge: browsers display
+            # a native username/password modal even for background fetches.
+            return self.fail('demo_authentication_required',401)
         p=urllib.parse.urlsplit(target)
         if p.scheme or p.netloc or p.fragment or len(target)>2048: return self.fail('route_not_available',404)
         path=urllib.parse.unquote(p.path)
@@ -119,7 +183,9 @@ class Gateway:
             if method=='GET' and path in {'/pbp/ui/','/pbp/ui/index.html'}:
                 status,kind,raw=self.fetch('/pbp/ui/')
                 if status!=200 or 'text/html' not in kind: return self.fail('upstream_unavailable',502)
-                banner='<aside style="position:fixed;bottom:0;left:0;right:0;z-index:25;padding:8px 16px;background:#111b2b;color:#dce8f5;font:12px system-ui;text-align:center">Authenticated demo. Live IRIS backend. Recorded responses. Synthetic funds. Review disabled. Counters cover only the selected demo cases.</aside>'
+                banner='<aside style="position:fixed;bottom:0;left:0;right:0;z-index:25;padding:8px 16px;background:#111b2b;color:#dce8f5;font:12px system-ui;text-align:center">Authenticated demo. Live IRIS backend. Recorded responses. Synthetic funds. Review disabled. Counters cover only the selected demo cases. <form action="/pbp/logout" method="post" style="display:inline"><button type="submit" style="margin-left:12px;background:#21374c;border:1px solid #50718b;color:#dfebf7;border-radius:6px;padding:4px 10px;cursor:pointer">Sign out</button></form></aside>'
+                session_script=b'''<script>/* PBP viewer session boundary; no request is replayed. */(()=>{const originalFetch=window.fetch.bind(window);let returning=false;window.fetch=async function(input,options){const response=await originalFetch(input,options);const target=new URL(typeof input==='string'?input:input.url,location.href);if(response.status===401&&target.origin===location.origin&&target.pathname.startsWith('/pbp/api/')&&!returning){returning=true;location.replace('/pbp/login?expired=1');}return response;};})();</script>'''
+                raw=raw.replace(b'<script>',session_script+b'<script>',1)
                 return 200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'},raw.replace(b'</body>',banner.encode()+b'</body>')
             if method=='GET' and path=='/pbp/api/health':
                 d=self.document('/pbp/api/health')
@@ -156,18 +222,19 @@ class Gateway:
 def serve(config, port=18879):
     gateway=Gateway(config)
     class Handler(BaseHTTPRequestHandler):
+        timeout=15
         def log_message(self,*args):pass
         def handle_request(self):
             body=b''
             if self.command=='POST':
-                if self.path!='/pbp/login' and not gateway.authorized(self.headers):result=gateway.dispatch(self.command,self.path,self.headers);return self.finish_response(result)
+                if urllib.parse.urlsplit(self.path).path not in {'/pbp/login','/pbp/recover','/pbp/logout'} and not gateway.authorized(self.headers):result=gateway.dispatch(self.command,self.path,self.headers);return self.finish_response(result)
                 if self.headers.get('Transfer-Encoding'):return self.finish_response(gateway.fail('transfer_encoding_not_supported',400))
                 try:n=int(self.headers.get('Content-Length','-1'))
                 except ValueError:return self.finish_response(gateway.fail('invalid_length',400))
                 if n<0 or n>MAX_BODY:return self.finish_response(gateway.fail('input_too_large',413))
                 self.connection.settimeout(10);body=self.rfile.read(n)
                 if len(body)!=n:return self.finish_response(gateway.fail('incomplete_body',400))
-            self.finish_response(gateway.dispatch(self.command,self.path,self.headers,body))
+            self.finish_response(gateway.dispatch(self.command,self.path,self.headers,body,client_key(self.client_address[0],self.headers)))
         def finish_response(self,result):
             status,headers,raw=result;self.send_response(status)
             for k,v in headers.items():self.send_header(k,v)

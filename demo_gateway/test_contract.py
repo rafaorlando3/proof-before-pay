@@ -79,8 +79,57 @@ class Contract(unittest.TestCase):
  def test_login_rejects_forgery_bad_forms_bad_credentials_and_rate_limits(self):
   self.assertEqual(self.login('https://evil.example')[0],403);self.assertEqual(self.login(body=b'username=a&username=b&password=c')[0],400)
   self.assertEqual(self.login(body=b'x'*1025)[0],413)
-  for _ in range(20):self.assertEqual(self.login(body=b'username=judge&password=wrong')[0],401)
-  self.assertEqual(self.login()[0],429);self.assertEqual(self.g.sessions,{});self.assertEqual(self.calls,[])
+  for _ in range(20):self.assertEqual(self.login(body=b'username=judge&password=wrong')[1]['Location'],'/pbp/login?error=credentials')
+  self.assertEqual(self.login()[1]['Location'],'/pbp/login?error=limited');self.assertEqual(self.g.sessions,{});self.assertEqual(self.calls,[])
  def test_forged_cookie_does_not_authorize(self):
   self.assertEqual(self.call('GET','/pbp/api/cases',{'Cookie':'pbp49_viewer=forged'})[0],401);self.assertEqual(self.calls,[])
+ def test_expired_or_missing_session_never_sends_native_auth_challenge(self):
+  for headers in [{},{'Cookie':'pbp49_viewer=expired'},{'Authorization':'Basic wrong'}]:
+   for method,path in [('GET','/pbp/api/health'),('GET','/pbp/api/cases'),('POST','/pbp/api/cases'),('HEAD','/favicon.ico')]:
+    status,h,_=self.call(method,path,headers);self.assertEqual(status,401);self.assertNotIn('WWW-Authenticate',h)
+  self.assertEqual(self.calls,[])
+ def test_login_errors_stay_inside_form_without_dialog_or_credential_echo(self):
+  status,h,_=self.login(body=b'username=judge&password=wrong');self.assertEqual(status,303);self.assertEqual(h['Location'],'/pbp/login?error=credentials')
+  status,h,body=self.call('GET',h['Location'],{});self.assertEqual(status,200);self.assertIn('text/html',h['Content-Type']);self.assertNotIn('WWW-Authenticate',h);self.assertIn(b'role="status"',body);self.assertIn(b'<form',body);self.assertNotIn(b'value="wrong"',body)
+ def test_session_expired_message_is_on_login_page(self):
+  status,h,body=self.call('GET','/pbp/login?expired=1',{});self.assertEqual(status,200);self.assertIn(b'Your session ended',body);self.assertNotIn('WWW-Authenticate',h)
+ def test_live_UI_injects_same_origin_401_return_before_application_script(self):
+  self.g.fetch=lambda *a:(200,'text/html',b'<html><body><script>APP()</script></body></html>')
+  status,_,body=self.call('GET','/pbp/ui/');self.assertEqual(status,200);self.assertLess(body.index(b'originalFetch'),body.index(b'APP()'));self.assertIn(b"target.origin===location.origin",body);self.assertIn(b"location.replace('/pbp/login?expired=1')",body);self.assertNotIn(b'alert(',body);self.assertNotIn(b'prompt(',body);self.assertNotIn(b'confirm(',body)
+ def test_sign_out_revokes_only_current_session_and_clears_private_cookie(self):
+  _,one,_=self.login();_,two,_=self.login();a=one['Set-Cookie'].split(';')[0];b=two['Set-Cookie'].split(';')[0]
+  status,h,_=self.call('POST','/pbp/logout',{'Origin':self.c.origin,'Cookie':a});self.assertEqual(status,303);self.assertIn('HttpOnly; Secure; SameSite=Strict; Max-Age=0',h['Set-Cookie']);self.assertEqual(self.call('GET','/pbp/api/whoami',{'Cookie':a})[0],401);self.assertEqual(self.call('GET','/pbp/api/whoami',{'Cookie':b})[0],200)
+ def test_cross_origin_or_GET_cannot_end_a_session(self):
+  _,h,_=self.login();cookie=h['Set-Cookie'].split(';')[0]
+  for method,origin in [('GET',self.c.origin),('POST','https://evil.example')]:self.assertEqual(self.call(method,'/pbp/logout',{'Origin':origin,'Cookie':cookie})[0],403)
+  self.assertEqual(self.call('GET','/pbp/api/whoami',{'Cookie':cookie})[0],200)
+ def test_auth_page_has_recovery_navigation_and_no_native_dialog_calls(self):
+  _,headers,body=self.call('GET','/pbp/login',{});self.assertIn(b'href="/pbp/recover"',body);self.assertIn("script-src 'sha256-",headers['Content-Security-Policy'])
+  self.assertNotIn(b'{{',body)
+  for forbidden in [b'alert(',b'prompt(',b'confirm(']:self.assertNotIn(forbidden,body)
+ def test_recovery_uses_single_use_code_for_viewer_and_never_changes_password(self):
+  import tempfile
+  from access_recovery import RecoveryStore
+  with tempfile.TemporaryDirectory() as tmp:
+   p=Path(tmp);p.chmod(0o700);self.c.recovery_state=p/'recovery.json';store=RecoveryStore(self.c.recovery_state);code,_=store.issue();before=self.c.password
+   import urllib.parse
+   headers={'Origin':self.c.origin,'Content-Type':'application/x-www-form-urlencoded'};body=urllib.parse.urlencode({'code':code}).encode()
+   status,h,_=self.call('POST','/pbp/recover',headers,body);self.assertEqual(status,303);self.assertEqual(h['Location'],'/pbp/ui/');cookie=h['Set-Cookie'].split(';')[0]
+   _,_,who=self.call('GET','/pbp/api/whoami',{'Cookie':cookie});self.assertFalse(json.loads(who)['can_review']);self.assertEqual(before,self.c.password)
+   self.assertEqual(self.call('POST','/pbp/recover',headers,body)[1]['Location'],'/pbp/recover?error=code')
+ def test_recovery_cannot_be_cross_origin_or_disclose_code_in_redirect(self):
+  headers={'Origin':'https://evil.example','Content-Type':'application/x-www-form-urlencoded'}
+  self.assertEqual(self.call('POST','/pbp/recover',headers,b'code=test')[0],403)
+  status,h,_=self.call('POST','/pbp/recover',{**headers,'Origin':self.c.origin},b'code=test');self.assertEqual(status,303);self.assertEqual(h['Location'],'/pbp/recover?error=unavailable');self.assertNotIn('Set-Cookie',h)
+ def test_rate_limit_for_one_client_does_not_lock_out_another_client(self):
+  import urllib.parse
+  h={'Origin':self.c.origin,'Content-Type':'application/x-www-form-urlencoded'}
+  for _ in range(20):self.g.dispatch('POST','/pbp/login',h,b'username=judge&password=wrong',client_id='clientA')
+  good=urllib.parse.urlencode({'username':self.c.username,'password':self.c.password}).encode()
+  self.assertEqual(self.g.dispatch('POST','/pbp/login',h,good,client_id='clientA')[1]['Location'],'/pbp/login?error=limited')
+  self.assertEqual(self.g.dispatch('POST','/pbp/login',h,good,client_id='clientB')[1]['Location'],'/pbp/ui/')
+ def test_forwarded_client_identity_is_only_accepted_from_loopback_proxy(self):
+  self.assertEqual(m.client_key('127.0.0.1',{'X-Forwarded-For':'untrusted, 192.0.2.9'}),'192.0.2.9')
+  self.assertEqual(m.client_key('192.0.2.3',{'X-Forwarded-For':'192.0.2.9'}),'192.0.2.3')
+  self.assertEqual(m.client_key('127.0.0.1',{'X-Forwarded-For':'not-an-IP'}),'127.0.0.1')
 if __name__=='__main__':unittest.main()
