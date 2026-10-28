@@ -17,10 +17,16 @@ Do not weaken permissions on /usr/irissys/lib; assets use a per-app manager dire
 INSTALL
 1. Keep PBP_LLM_MODE=recorded and all provider keys absent. No model inference is
    needed for this installation or its recorded integration checks.
-2. Obtain IPM from its official release and verify the release digest. One bare-image
-   bootstrap trial with0.10.10 failed with NAMESPACE/PushNS before this app was loaded;
-   a fully repeatable bootstrap is not claimed. The application acceptance used
-   an initialized IPM instance and verified prior PBP classes/packages were absent.
+2. Obtain IPM from its official release and verify the release digest. One earlier
+   bare-image0.10.10 bootstrap failed with NAMESPACE/PushNS before app loading.
+   A later fresh-volume trial passed after waiting at least45seconds, checking
+   vendor logons were enabled and USER existed from %SYS, then loading in USER.
+   That run used process-local diagnostic tracing; the earlier failure's cause
+   and independent untraced repeatability remain unproved. These are observed
+   readiness checks, not a guarantee that waiting45seconds fixes every startup.
+   On that same fresh volume, first PBP installation and48recorded workflow checks
+   passed. The earlier package/uninstall/reinstall trial used initialized IPM.
+   See docs/validation/native-IPM-bootstrap.json for the separate evidence scopes.
 3. Clone the source and use an interoperability-enabled namespace:
 
    set sc=##class(%IPM.Main).Shell("load /absolute/path/to/proof-before-pay -v")

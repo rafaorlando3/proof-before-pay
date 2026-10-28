@@ -17,8 +17,27 @@ file was byte-identical. No original volume was removed.
 Native IPM 0.10.10 application acceptance used the plain vendor image with an
 initialized manager. A prior prototype was uninstalled and absence of PBP classes
 and all seven old package directories verified before the six-package module loaded.
-This qualifies the app installation; it is **not** a successful repeatable bare-image
-IPM bootstrap. One separate bootstrap failed with `NAMESPACE/PushNS` before app loading.
+That application trial alone does **not** establish bare-image IPM bootstrap
+repeatability. One separate bootstrap failed with `NAMESPACE/PushNS` before app loading.
+A later **fresh-volume bootstrap and first PBP installation passed** using the
+unmodified official IPM0.10.10 installer. Before loading in USER, the test waited
+46.735seconds, checked vendor logons were enabled and verified USER existed from
+%SYS. This controlled run used process-local diagnostic tracing; it does not prove
+the cause of the earlier failure or independent untraced repeatability. Internally
+handled diagnostic errors remained in the saved bootstrap output; successful
+native status, actual version and subsequent app behavior were required separately.
+
+On the same new volume/container, stopped and restarted between stages, the first
+PBP load began without PBP classes, all six Python packages, RFC8785 or Ledger data.
+Installation, imports/assets and48recorded workflow checks passed; the approved
+positive case had one intact synthetic Ledger effect. This closes that concrete
+bootstrap-to-application integration gap; it adds no live-agent benchmark cases.
+An earlier diagnostic harness permission failure before IPM was retained and fixed
+by preparing readable payload permissions before startup. The previous package,
+uninstall and archive-reload checks below were not repeated.
+[Structured bootstrap evidence](validation/native-IPM-bootstrap.json) records the
+scope and remaining causal/repeatability qualifications.
+
 Earlier native attempts also exposed numeric-Boolean validation, an unwritable
 vendor library directory and an unused optional Solana dependency; those failures
 and their corrections are retained. Application/Agent/Ledger logic did not change.

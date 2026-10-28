@@ -20,7 +20,7 @@ one confirmed sandbox effect. This is an integration smoke test, not a model-qua
 or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
 and covered by replay regression. Isolated cold installation, lifecycle and native IPM application
 load/uninstall/local-package tests passed; [scope and qualifications](docs/validation/native-installation-IPM.json)
-include the separate IPM bootstrap limitation. Public demo, recorded video and final submission remain
+include the separate [fresh-volume IPM bootstrap result and limitations](docs/validation/native-IPM-bootstrap.json). Public demo, recorded video and final submission remain
 pending; a fresh fully disjoint post-fix quality cohort has not been established. No bank settlement or independent external anchor is claimed. See
 [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
 [provider experiment](docs/PROVIDERS.md).
