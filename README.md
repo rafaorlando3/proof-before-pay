@@ -18,7 +18,9 @@ and Anthropic models through OpenRouter in a private synthetic lab. Each model c
 one scenario with five native tool calls, authenticated test review, sealed approval and
 one confirmed sandbox effect. This is an integration smoke test, not a model-quality ranking
 or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
-and covered by replay regression. Public demo, final operator/IPM acceptance, recorded video and final submission remain
+and covered by replay regression. Isolated cold installation, lifecycle and native IPM application
+load/uninstall/local-package tests passed; [scope and qualifications](docs/validation/native-installation-IPM.json)
+include the separate IPM bootstrap limitation. Public demo, recorded video and final submission remain
 pending; a fresh fully disjoint post-fix quality cohort has not been established. No bank settlement or independent external anchor is claimed. See
 [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
 [provider experiment](docs/PROVIDERS.md).
@@ -53,6 +55,18 @@ shows the consumed permit and intact historical receipt. A separate
 [guard-refusal screen](docs/screens/native-ui25.png) illustrates nonfinancial escalation.
 The [live agent-to-refund evidence](docs/validation/gemini-direct-smoke.json) is a different,
 one-scenario integration test. None of these is a public demo or the held-out benchmark.
+
+## IPM installation option
+
+The repository includes `module.xml` and the hash-pinned `requirements.txt`. Use a
+**dedicated build154 instance with a functioning IPM installation**; the vendor
+image and SDK are obtained separately. Follow [the operator guide](IPM-OPERATOR.txt).
+Configure installs the application with Production stopped. The native module uses
+six Python packages and per-app manager asset directories; the optional legacy
+Solana library is outside this module. The [native acceptance record](docs/validation/native-installation-IPM.json)
+covers loaded classes, 48 recorded workflow checks, package generation, uninstall,
+local archive reinstall and the original receipt in both SQL and the authoritative Ledger.
+This is a local installation test, not a published registry release or a new model benchmark.
 
 ## Start the isolated IRIS lab
 

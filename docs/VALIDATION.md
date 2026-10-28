@@ -2,6 +2,48 @@
 
 ## Current addendum —27 October
 
+### Current cold installation and native IPM acceptance
+
+The current container runtime (112 manifest pins from `346ae94`, unchanged by the
+four editorial files at `ccbd45a`) passed a fresh isolated installation, 12 Witness
+bridge checks, 39 Ledger checks with 12 sessions, 35 native unit methods, 48 recorded
+E2E checks, three adversarial cases, pairguard/race checks, eight recipient projections
+and three recorded recipient workflows. Restart, recreation and SIGKILL preserved
+the same intact receipt and one effect. Main was only paused and resumed: its
+original container ID and historical receipt stayed unchanged. All external IDs,
+states, images, health and mount sets matched their saved snapshots; the budget
+file was byte-identical. No original volume was removed.
+
+Native IPM 0.10.10 application acceptance used the plain vendor image with an
+initialized manager. A prior prototype was uninstalled and absence of PBP classes
+and all seven old package directories verified before the six-package module loaded.
+This qualifies the app installation; it is **not** a successful repeatable bare-image
+IPM bootstrap. One separate bootstrap failed with `NAMESPACE/PushNS` before app loading.
+Earlier native attempts also exposed numeric-Boolean validation, an unwritable
+vendor library directory and an unused optional Solana dependency; those failures
+and their corrections are retained. Application/Agent/Ledger logic did not change.
+
+The final module loaded and compiled 38 classes, installed six Python packages into
+the manager path, copied assets to a writable per-app directory and configured
+without starting Production. The recorded workflow passed 48 checks. Its JSON was
+recovered from the original output after a test-driver marker issue; the workflow
+was not rerun. Package generation succeeded; the 85,799-byte archive contains 94
+source entries and the requirements file, with no vendor image/SDK, private files,
+optional Solana package or database files. Default non-purge uninstall removed the
+six own package directories and preserved unrelated sentinels. Local archive reload
+restored the original intact single-effect receipt. A subsequent read-only query
+confirmed the closed SQL case, its decision and approval seals, one effected SQL
+receipt and the same verified authoritative Ledger effect.
+
+The main service returned with the same ID and historical receipt. All external
+container state/mount sets and the trial budget remained unchanged. There were
+**zero new model calls, real payments or blockchain transactions**. Public registry
+installation/publication and automatic cleanup of custom Setup resources are not
+claimed. [Structured native evidence](validation/native-installation-IPM.json) and
+[the IPM operator guide](../IPM-OPERATOR.txt) distinguish these limits. Final video,
+public demo, qualified post-fix quality scope and Rafael's final approval remain open.
+
+
 The sections below retain their original source snapshots. The subsequent 33 live
 agent cases completed at `7a667263a5a46bd375386c81a243f6643770acd8`:
 all 40 evidence rows (seven earlier controls plus 33 live cases) were valid, but the

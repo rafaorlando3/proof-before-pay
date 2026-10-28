@@ -1,0 +1,72 @@
+Proof Before Pay — IPM operator guide
+
+Application code: MIT. The separately licensed AI Hub Community EAP build154 image
+and vendor SDK are prerequisites; this repository and its IPM package contain neither.
+Tested platform: x86-64 Linux, build154, Python3.12.3 and IPM0.10.10.
+The manifest's version floors do not establish support for other IRIS builds.
+
+ISOLATION
+Use a dedicated private instance. A second namespace is not enough: Setup installs
+fixed instance-wide /pbp/api and /pbp/ui web applications and reviewer resources.
+Start with the plain vendor image and a functioning IPM installation, without PBP
+classes, Python packages or a prebuilt PBP application image masking missing resources.
+When provisioning a new Docker durable volume, give its empty root to the vendor's
+UID/GID51773 before starting IRIS. Do not chown an existing application volume.
+Do not weaken permissions on /usr/irissys/lib; assets use a per-app manager directory.
+
+INSTALL
+1. Keep PBP_LLM_MODE=recorded and all provider keys absent. No model inference is
+   needed for this installation or its recorded integration checks.
+2. Obtain IPM from its official release and verify the release digest. One bare-image
+   bootstrap trial with0.10.10 failed with NAMESPACE/PushNS before this app was loaded;
+   a fully repeatable bootstrap is not claimed. The application acceptance used
+   an initialized IPM instance and verified prior PBP classes/packages were absent.
+3. Clone the source and use an interoperability-enabled namespace:
+
+   set sc=##class(%IPM.Main).Shell("load /absolute/path/to/proof-before-pay -v")
+   write $system.Status.GetErrorText(sc),!
+
+   Require a successful %Status and the actual loaded resources, not just the
+   operating system's terminal exit code.
+4. IPM processes requirements.txt at the module root. It is byte-identical to the
+   hash-pinned requirements.lock. The native offline test supplied the verified
+   rfc8785-0.1.4 wheel through PIP_NO_INDEX=1 and PIP_FIND_LINKS=/path/to/wheels.
+   It did not bypass Python dependency installation. A public registry install
+   and an ordinary online install were not tested or published.
+5. Configure calls pbp.Setup.Install(managerDirectory_"proof-before-pay",0).
+   Verify that Production has not started, the 38 application classes exist,
+   six Python packages resolve from managerDirectory_"python", and policy,
+   replay fixtures and UI files exist in the per-app manager directory.
+   The optional legacy pbp_seal/Solana library is not part of the native IPM module.
+6. After checking recorded mode and the absence of provider credentials, start
+   pbp.Production explicitly and run fresh synthetic cases. Verify authenticated
+   review, one intact sandbox receipt, missing-evidence refusals and tamper detection.
+
+PACKAGE / UNINSTALL / LOCAL REINSTALL
+The native acceptance generated a source-only package with:
+
+   set sc=##class(%IPM.Main).Shell("package -only -path /tmp/pbp-package proof-before-pay -v")
+
+The resulting file is /tmp/pbp-package.tgz, not a file inside a directory of that name.
+Inspect its contents before distributing it. No vendor image, private files,
+credentials, compiled database files or optional Solana SDK are included.
+
+Before uninstalling, stop pbp.Production and keep a separate backup of application
+data. Use a disposable acceptance instance to test the default, non-purge uninstall:
+
+   set sc=##class(%IPM.Main).Shell("uninstall proof-before-pay -v")
+
+Each FileCopy has its own package or asset target; never use the shared manager
+Python root as an uninstall target. Native tests checked unrelated file sentinels
+and reloaded the generated archive with the original intact single-effect receipt.
+Do not assume that uninstall reverses custom Setup side effects: reviewer resources,
+Workflow definitions, web application settings and manual audit globals are not
+declared as standalone uninstall resources. Plan their decommissioning explicitly
+and preserve the evidence. Do not use -purge against application data you need.
+
+Local archive loading is separate from publication:
+
+   set sc=##class(%IPM.Main).Shell("load /tmp/pbp-package.tgz -v")
+
+No public registry release or Open Exchange submission has been performed.
+Both remain subject to Rafael's express final approval.

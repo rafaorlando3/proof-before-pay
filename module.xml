@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+  <Document name="proof-before-pay.ZPM">
+    <Module>
+      <Name>proof-before-pay</Name>
+      <Version>0.1.0-beta.1</Version>
+      <Packaging>module</Packaging>
+      <Description>Sealed AI decision evidence and authenticated review before synthetic duplicate refunds; AI Hub build154 lab only.</Description>
+      <Author>
+        <Person>Rafael Orlando Mendes</Person>
+        <License>MIT</License>
+      </Author>
+      <SystemRequirements Version="&gt;=2026.3" Interoperability="enabled" PythonVersion="&gt;=3.12.0" IPMVersion="&gt;=0.10.4" />
+      <SourcesRoot>cls</SourcesRoot>
+      <Resource Name="ProofBeforePay.Ledger.CLS" />
+      <Resource Name="ProofBeforePay.Witness.CLS" />
+      <Resource Name="pbp.API.CLS" />
+      <Resource Name="pbp.Agent.CLS" />
+      <Resource Name="pbp.AuditPolicy.CLS" />
+      <Resource Name="pbp.AuthPolicy.CLS" />
+      <Resource Name="pbp.Data.Case.CLS" />
+      <Resource Name="pbp.Data.Decision.CLS" />
+      <Resource Name="pbp.Data.Event.CLS" />
+      <Resource Name="pbp.Data.Log.CLS" />
+      <Resource Name="pbp.Data.Permit.CLS" />
+      <Resource Name="pbp.Data.Policy.CLS" />
+      <Resource Name="pbp.Data.Receipt.CLS" />
+      <Resource Name="pbp.Data.Seal.CLS" />
+      <Resource Name="pbp.Data.ToolCall.CLS" />
+      <Resource Name="pbp.Msg.CaseRequest.CLS" />
+      <Resource Name="pbp.Msg.DecisionRequest.CLS" />
+      <Resource Name="pbp.Msg.DecisionResponse.CLS" />
+      <Resource Name="pbp.Msg.LedgerRequest.CLS" />
+      <Resource Name="pbp.Msg.LedgerResponse.CLS" />
+      <Resource Name="pbp.Msg.SealRequest.CLS" />
+      <Resource Name="pbp.Msg.SealResponse.CLS" />
+      <Resource Name="pbp.Operation.Agent.CLS" />
+      <Resource Name="pbp.Operation.Replay.CLS" />
+      <Resource Name="pbp.Operation.TestLedger.CLS" />
+      <Resource Name="pbp.Operation.Witness.CLS" />
+      <Resource Name="pbp.Process.Decide.CLS" />
+      <Resource Name="pbp.Production.CLS" />
+      <Resource Name="pbp.RefundTarget.CLS" />
+      <Resource Name="pbp.Review.CLS" />
+      <Resource Name="pbp.Rules.CLS" />
+      <Resource Name="pbp.Service.Intake.CLS" />
+      <Resource Name="pbp.Setup.CLS" />
+      <Resource Name="pbp.ToolSet.CLS" />
+      <Resource Name="pbp.Tools.CLS" />
+      <Resource Name="pbp.ToolsImpl.CLS" />
+      <Resource Name="pbp.UI.CLS" />
+      <Resource Name="pbp.Util.CLS" />
+      <FileCopy Name="python/pbp_guard/" Target="${mgrdir}python/pbp_guard/" Overlay="0" />
+      <FileCopy Name="python/pbp_ledger/" Target="${mgrdir}python/pbp_ledger/" Overlay="0" />
+      <FileCopy Name="python/pbp_refund_target/" Target="${mgrdir}python/pbp_refund_target/" Overlay="0" />
+      <FileCopy Name="python/pbp_review/" Target="${mgrdir}python/pbp_review/" Overlay="0" />
+      <FileCopy Name="python/pbp_s0_core/" Target="${mgrdir}python/pbp_s0_core/" Overlay="0" />
+      <FileCopy Name="python/pbp_witness/" Target="${mgrdir}python/pbp_witness/" Overlay="0" />
+      <FileCopy Name="ui/" Target="${mgrdir}proof-before-pay/ui/" Overlay="0" />
+      <FileCopy Name="policy/" Target="${mgrdir}proof-before-pay/policy/" Overlay="0" />
+      <FileCopy Name="fixtures/" Target="${mgrdir}proof-before-pay/fixtures/" Overlay="0" />
+      <Invoke Class="pbp.Setup" Method="Install" Phase="Configure" When="After" CheckStatus="1">
+        <Arg>${mgrdir}proof-before-pay</Arg>
+        <Arg>0</Arg>
+      </Invoke>
+      <AfterInstallMessage>Private build154 sandbox configured; no Production was started or case fed. See IPM-OPERATOR.txt for explicit start and validation. Publication is pending Rafael review.</AfterInstallMessage>
+    </Module>
+  </Document>
+</Export>
