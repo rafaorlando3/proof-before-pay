@@ -57,13 +57,14 @@ population-quality estimate. See [the failed result](validation/live-v3-failed.j
 - [x] Initial Claude code review received (C-1163); source/freeze review in C-1182 and independent v2 result review in C-1183, with artifact limits recorded in validation.
 - [x] Native AI Hub agent participates in a working Interoperability production, with actual native tool calls.
 - [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
-- [ ] Public authenticated demo with qualified model inference.
+- [x] Authenticated HTTPS viewer backed by running IRIS: two explicitly selected synthetic cases, recorded proposals, case-scoped seals/receipts and copy verification. Review, intake and model calls are disabled.
+- [ ] Optional public live-inference access with its own quota/BYOK; the viewer does not provide this.
 - [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
 - [x] Pre-frozen regression controls include successful financial paths and zero-effect negatives.
 - [x] Final candidate UI/text cross-review received (C-1196): UI156, provenance index, public prose, private article and video script3.1 accepted, with editorial follow-ups. Core6d source review and v4 independent evidence review are complete (C-1189/C-1192/C-1194).
 - [ ] Fully disjoint post-fix held-out quality acceptance; v4 currently provides explicitly qualified regression/prospective-control evidence.
 - [x] Cold/lifecycle, native IPM application and fresh-volume bootstrap acceptance completed; see [installation scope](validation/native-installation-IPM.json) and [bootstrap qualifications](validation/native-IPM-bootstrap.json).
-- [ ] Three-minute video demonstrating the final app and required links.
+- [x] 168-second review cut exported with actual native workflow footage, synthetic narration and CC in English, Portuguese, Spanish and Mandarin. Final editorial/linguistic review remains pending.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.
 - [ ] Actual Open Exchange receipt/status captured after submission.
 
@@ -74,16 +75,29 @@ Internal delivery deadline: **8 November 2026, 18:00 America/Asuncion**.
 The [official contest page](https://openexchange.intersystems.com/contest/49) lists
 8 November 2026, 23:59:59 EST (9 November, 01:59:59 in Paraguay).
 
-## Planned three-minute demonstration
+## Video and authenticated demonstration
 
-0:00–0:25: a synthetic duplicate-payment exception enters the native production.
-0:25–1:05: show the AI Hub agent's inputs, tool outputs and explicit missing evidence.
-1:05–1:35: seal the decision before the guarded simulated action or human approval.
-1:35–2:15: edit a copy of the decision; verification turns tampered without resealing.
-2:15–2:45: demonstrate missing/unknown evidence and the human boundary.
-2:45–3:00: show reproducible startup, repository, validation and cost/observability facts.
+The 168-second review cut shows a recorded agent proposal on actual native IRIS,
+a fresh case approved once by an authenticated test reviewer, one intact synthetic
+receipt, explicit missing evidence, a copied-record tamper test and the bounded
+results of the separate frozen live evaluation. It does not represent replay as
+live inference. The [four-language production script](VIDEO-SCRIPT.md) and
+[canonical JSON source](video/script-v4.json) identify every scene and qualification.
+Narration is synthetic, not Rafael’s voice. The English master has Portuguese,
+Spanish and Mandarin alternatives and four closed-caption tracks. Language choice
+is for accessibility, with no multilingual-video bonus or certified pronunciation
+review claimed. The exported media and final review kit remain separate from the
+source ZIP.
 
-This is a recording plan. No video has been produced; native workflow results are in validation.
+The authenticated viewer reads the running private IRIS backend through a narrow
+[demo gateway](../demo_gateway/README.md). It exposes two selected synthetic cases,
+with matching subset counters. It allows inspection and copy verification, with no
+intake, approvals or paid model calls. Viewer credentials are private and never
+embedded in a URL, source package or video. Public HTTPS and the browser login
+were verified; publishing the contest entry remains subject to Rafael’s final OK.
+The shared proxy’s current route is scoped to this demo. It must be restored after
+a shared proxy reload/reboot; the tracked PixSettle proxy configuration was preserved.
+
 The EAP archive and derived images must never enter the source package or a public registry.
 
 ## Source candidate
@@ -93,7 +107,7 @@ to produce a deterministic source ZIP and per-file SHA-256 manifest. The output 
 checkout. Committed files are written with fixed ZIP timestamps, ordering and Unix permissions,
 without platform-dependent compression. The packaging gate excludes credentials, private evaluation data and the separately licensed
 vendor kit. This source archive is a candidate, not an Open Exchange submission or approval request.
-The private held-out model benchmark, final demo/video and Rafael's final review remain separate gates.
+The fully disjoint post-fix held-out quality gate and Rafael's final review remain separate from the qualified regression/prospective evidence and prepared media.
 
 ## Current installation qualification
 

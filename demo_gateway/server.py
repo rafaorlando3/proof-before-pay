@@ -5,7 +5,8 @@ The only permitted POST verifies an editable copy, without changing stored data.
 from dataclasses import dataclass, field
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-import base64, hmac, json, re, sys, threading, urllib.request, urllib.parse, urllib.error
+import base64, hmac, json, re, sys, threading, time, secrets, urllib.request, urllib.parse, urllib.error
+from http.cookies import SimpleCookie, CookieError
 
 MAX_BODY = 32000
 @dataclass
@@ -38,6 +39,9 @@ class Gateway:
     def __init__(self, config, fetch=None):
         self.config = config
         self.fetch = fetch or self._fetch
+        self.sessions = {}
+        self.failed_logins = []
+        self.session_lock = threading.Lock()
     def _fetch(self, path, method='GET', body=None):
         req = urllib.request.Request(self.config.backend + path, data=body, method=method,
               headers={'Content-Type':'application/json', 'X-PBP-Request':'1'})
@@ -51,7 +55,32 @@ class Gateway:
             return r.status, r.headers.get('Content-Type','application/json'), raw
     def authorized(self, headers):
         expected = 'Basic ' + base64.b64encode((self.config.username+':'+self.config.password).encode()).decode()
-        return hmac.compare_digest(headers.get('Authorization','').encode(), expected.encode())
+        if hmac.compare_digest(headers.get('Authorization','').encode(), expected.encode()):return True
+        try:
+            cookie=SimpleCookie();cookie.load(headers.get('Cookie',''));token=cookie['pbp49_viewer'].value
+        except (KeyError,ValueError,CookieError):return False
+        with self.session_lock:return self.sessions.get(token,0)>time.monotonic()
+    def login(self, method, headers, body):
+        if method=='GET':
+            page='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Proof Before Pay | Demo access</title><style>body{margin:0;background:#09111e;color:#dfebf7;font:16px system-ui;display:grid;min-height:100vh;place-items:center}main{max-width:420px;padding:36px;border:1px solid #284153;border-radius:22px;background:#101e2e}small{color:#60dec6;letter-spacing:.1em}h1{font-size:34px;margin-bottom:12px}p{color:#aebfd0;line-height:1.6}label{display:block;margin-top:20px}input,button{box-sizing:border-box;width:100%;padding:13px;margin-top:8px;border-radius:10px;border:1px solid #33516b;background:#091523;color:#fff;font:inherit}button{margin-top:26px;background:#62ddc8;color:#06211e;font-weight:700;cursor:pointer}footer{font-size:12px;color:#91aabd;margin-top:24px}</style><main><small>INTERSYSTEMS IRIS / WORKING DEMO</small><h1>Proof Before Pay</h1><p>Inspect real evidence, sealed decisions and a synthetic receipt on the running IRIS backend.</p><form method="post" action="/pbp/login"><label>Viewer name<input name="username" autocomplete="username" required maxlength="100"></label><label>Access password<input name="password" type="password" autocomplete="current-password" required maxlength="200"></label><button type="submit">Open the demo</button></form><footer>Recorded agent responses. Synthetic funds. Consultation only; approval and model calls are disabled.</footer></main></html>'''
+            return 200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"},page.encode()
+        if method!='POST':return self.fail('method_not_allowed',405)
+        if headers.get('Origin')!=self.config.origin or headers.get('Content-Type','').split(';')[0]!='application/x-www-form-urlencoded':return self.fail('same_origin_form_required',403)
+        if len(body)>1024:return self.fail('input_too_large',413)
+        try:
+            fields=urllib.parse.parse_qs(body.decode('utf-8'),strict_parsing=True,max_num_fields=2)
+            user,=fields['username'];password,=fields['password']
+        except (ValueError,KeyError,UnicodeError):return self.fail('invalid_login_form',400)
+        now=time.monotonic()
+        with self.session_lock:
+            self.failed_logins[:]=[t for t in self.failed_logins if now-t<60]
+            if len(self.failed_logins)>=20:return self.fail('login_rate_limited_try_later',429)
+            if not (hmac.compare_digest(user.encode(),self.config.username.encode()) and hmac.compare_digest(password.encode(),self.config.password.encode())):
+                self.failed_logins.append(now);return self.fail('viewer_credentials_not_accepted',401)
+            self.sessions={k:v for k,v in self.sessions.items() if v>now}
+            if len(self.sessions)>=32:return self.fail('viewer_session_limit_try_later',429)
+            token=secrets.token_urlsafe(32);self.sessions[token]=now+3600
+        return 303,{'Location':'/pbp/ui/','Cache-Control':'no-store','Set-Cookie':'pbp49_viewer='+token+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=3600'},b''
     @staticmethod
     def response(obj, status=200):
         return status, {'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}, json.dumps(obj,ensure_ascii=False).encode()
@@ -71,7 +100,9 @@ class Gateway:
         return d
     def details(self):return [self.one_case(cid) for cid in self.config.case_ids]
     def dispatch(self, method, target, headers, body=b''):
+        if target=='/pbp/login':return self.login(method,headers,body)
         if not self.authorized(headers):
+            if method=='GET' and target in {'/','/pbp/ui/','/pbp/ui/index.html'}:return 303,{'Location':'/pbp/login','Cache-Control':'no-store'},b''
             status,h,b=self.fail('demo_authentication_required',401);h['WWW-Authenticate']='Basic realm="Proof Before Pay demo", charset="UTF-8"';return status,h,b
         p=urllib.parse.urlsplit(target)
         if p.scheme or p.netloc or p.fragment or len(target)>2048: return self.fail('route_not_available',404)
@@ -129,7 +160,7 @@ def serve(config, port=18879):
         def handle_request(self):
             body=b''
             if self.command=='POST':
-                if not gateway.authorized(self.headers):result=gateway.dispatch(self.command,self.path,self.headers);return self.finish_response(result)
+                if self.path!='/pbp/login' and not gateway.authorized(self.headers):result=gateway.dispatch(self.command,self.path,self.headers);return self.finish_response(result)
                 if self.headers.get('Transfer-Encoding'):return self.finish_response(gateway.fail('transfer_encoding_not_supported',400))
                 try:n=int(self.headers.get('Content-Length','-1'))
                 except ValueError:return self.finish_response(gateway.fail('invalid_length',400))
@@ -140,7 +171,9 @@ def serve(config, port=18879):
         def finish_response(self,result):
             status,headers,raw=result;self.send_response(status)
             for k,v in headers.items():self.send_header(k,v)
-            self.send_header('X-Content-Type-Options','nosniff');self.send_header('Referrer-Policy','no-referrer');self.send_header('X-Frame-Options','DENY');self.send_header('Content-Length',str(len(raw)));self.end_headers()
+            # same-origin retains Origin on ordinary login forms while never
+            # sending a Referer to another origin. no-referrer makes form Origin null.
+            self.send_header('X-Content-Type-Options','nosniff');self.send_header('Referrer-Policy','same-origin');self.send_header('X-Frame-Options','DENY');self.send_header('Content-Length',str(len(raw)));self.end_headers()
             if self.command!='HEAD':self.wfile.write(raw)
         do_GET=do_POST=do_HEAD=do_PUT=do_DELETE=do_PATCH=do_OPTIONS=do_TRACE=do_CONNECT=handle_request
     class BoundedServer(ThreadingHTTPServer):

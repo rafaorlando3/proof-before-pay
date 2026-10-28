@@ -1,65 +1,171 @@
-# Proof Before Pay: 3-minute video script (draft 3.1, reviewed, English)
+# Proof Before Pay: video production script v4.1
 
-Base: source 6d03432 (runtime of the v4 round), real console captures from the private build-154 lab. The public demo case
-used in scenes 2 to 4 is the recorded public-demo case (56352df3: 0 LLM calls, authenticated review, one 84 BRL test effect,
-receipt 340), labelled RECORDED on screen. Narrated by Rafael (his voice optional; the
-on-screen text is his). The main mode shown is RECORDED (rules + replay); the caption says so in every scene. The separate live v4 round is shown only through actual case evidence or a clearly labelled results still; neither a still nor a recorded scene is presented as live inference in this take. No final video has been recorded. Nothing in this script claims a probability, a prize, a published article or a public demo.
+Base: 7b506688a301da3ac8d22d7d86f80fe463e5cdaf (viewer gateway); native runtime346ae94/backend6d03432 unchanged. Target length 168 s. Master en, alternates pt-BR, es, zh-CN.
 
-Prerequisite line for the description (not narrated): "Install needs the InterSystems AI Hub EAP build 154 image, obtained
-from the vendor portal and loaded locally; the repository ships no image. Then `docker compose up`."
+## Rules
 
-0:00-0:18  Title card over the logo. "An online store gets Pix payments that do not reconcile: paid twice, paid late, paid
-           the wrong amount. When an AI agent helps decide those, the question is not whether it is smart. It is whether
-           you can prove afterwards what it saw, what it did not see, and what it was allowed to do."
-           Caption: "Proof Before Pay. Sealed before anything moves."
+- Every scene that shows the console carries a mode caption: RECORDED (rules + replayed agent decision) or LIVE (Gemini 3.8 Flash, past evidence only).
+- Every scene where money appears carries the word sandbox or test ledger on screen.
+- Case 56352df3 / receipt 340 is read-only history: show its sealed decision, approval and receipt; never approve it again.
+- If an approval click is filmed, it is on a NEW synthetic case prepared before recording, with its real new case id and receipt id visible; one authenticated review, never a reset.
+- Do not narrate or show the refund_destination tool field on the historical case 340 (its seal predates that field).
+- Never present a rules (R1) refund as an agent decision; never label v4 as held-out; no percentages, no prize, no 'first', no article link until one exists.
+- The approver shown is the authenticated synthetic reviewer login; Rafael is not named as approver.
+- Narration is a synthetic voice generated from this script and is identified as such in the description and in the end card; it is not presented as Rafael's voice.
+- On-screen text and CC must not contain the em dash character.
+- Real continuous browser capture is trimmed for pace and receives restrained editorial camera movement. Editorial charts and architecture are explicitly labelled, with animated emphasis. No fabricated UI, terminal runs, approvals, or live inference.
+- S03 uses the recorded synthetic case and recorded missing-recipient regression, not an unfilmed LIVE v4 scene. S06 uses actual tool output and an architecture overview; no Portal trace is implied.
+- The new recorded case is video-demo:d83544a2, receipt test-refund:456, one authenticated synthetic reviewer approval; its recording does not enlarge the live-model benchmark.
 
-0:18-0:40  Console, real screen, queue on the left. Open the public-demo DUPLICATE CHARGE case (recorded model-path example with a replayed
-           test proposal; caption: "Recorded mode: replayed agent decision, no live inference in this take"). The flow
-           stepper shows Evidence (5 tool calls), Proposal, Seal, Review, Test effect. Narration: "The agent reads the
-           order, the Pix events, the payer history, the evidence and the store policy through scoped read-only tools,
-           using the actual historical tool outputs. It proposes a refund of 8400 minor units, that
-           is 84.00 BRL, to the recorded payer, and flags that a person must approve."
-           NOTE: this old decision seal predates the destination projection fix. Do not narrate or display that new field as part of this historical record.
+## Scenes
 
-0:40-1:05  Same case, Decision card: "Saw" and "Did not see (sealed as missing)". Narration: "What the agent did not get
-           is sealed as missing. Nobody can complete the file afterwards." Then the FORGED-DESTINATION case from the v4
-           round (hid-061, shown as its runtime case, labelled LIVE Gemini 3.8 Flash): the order object carried a fake
-           refund destination tagged as the store record and the customer message asked for a third key; the time
-           machine shows the tool returned only the recorded destination; the receipt went to the recorded payer.
-           Caption: "Destinations come from the store record. Messages and payloads cannot redirect money."
-           NOTE: if the v4 lab case cannot be shown, use the recorded guard-refusal case (missing gate) instead and keep
-           the caption honest. Never present a rules (R1) refund as an agent decision.
+### S01  00:00 to 00:18
 
-1:05-1:35  Review card of the duplicate-charge case: amount, currency, destination, "TEST ledger", the exact commitment
-           in the completed record. Open the existing sealed approval and receipt history; do not try to approve the closed case again. If filming an approval click, first prepare a new synthetic recorded demonstration case with new references, show its actual new case/receipt IDs, and record the single authenticated synthetic review once. Never reset case56352df3 or receipt340. Do not name Rafael as the test approver. Narration: "The approval is sealed and chained to the decision. A single-use permit is bound to that
-           seal. The test ledger executes once and returns a receipt." Show permit status consumed, receipt verification
-           intact, and the sequence numbers sealed < authorized < executed. Caption: "One permit, one effect."
-           Do NOT narrate "ten identical requests give one receipt" unless the UI action is filmed; the concurrency test
-           (39 ledger checks, 12 sessions) is cited in the description instead.
+Visual: Real new synthetic case awaiting review, with editorial problem framing; no approval replay in this chapter.
 
-1:35-2:05  Try to tamper: open the sealed record copy, change the amount, verify: tampered. Change a missing field:
-           tampered. Restore: intact. Narration: "The verifier recomputes the commitment from the record. It detects any
-           edit of a copy." Caption, honest limit: "Local seals: this proves a copy was changed. It does not protect
-           against someone who can rewrite the database itself; external anchoring is out of scope."
+Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
-2:05-2:30  Time machine: the inputs and the actual tool outputs the agent saw, model and mode label, tokens, cost label
-           ("none (recorded replay)" here; "estimated from tokens x price table" on live decisions). Cut to the Management
-           Portal visual trace: Intake, Decide, Agent operation, Witness, TestLedger, Workflow task, each message carrying
-           the commitment. Caption: "Native Interoperability: every step is a message."
+On screen (EN): A decision is not a payment.
 
-2:30-2:45  Still: the v4 evaluation table from the article (14 cases: 14/14 protected decisions, 6/6 legitimate refunds
-           executed, 8/8 negatives without effect, 1 raw proposal contained by the server; frozen before outputs).
-           Narration: "We ran four frozen rounds against a hidden matrix with one live model. The baseline found a policy
-           miss and a missing refund target; both were fixed server-side and re-measured. We publish the failures with
-           the fixes." No percentages, no "approved", no "held-out" for v4.
+Narration en: A customer pays twice. An AI proposes a refund. Before anything moves, can you prove what it saw, what was missing, and exactly what a person approved? This is Proof Before Pay.
 
-2:45-3:00  Close over the logo: "Test ledger, synthetic data, local seals, recorded mode labelled as such. Repository on
-           GitHub, MIT. The validation report preserves the failed runs, fixes and limits; related work is linked in the README." No "first", no numbers about chances, no article link until one exists.
+Narration pt-BR: Um cliente paga duas vezes. Uma IA propõe o reembolso. Antes de qualquer movimento, você consegue provar o que ela viu, o que faltava e exatamente o que uma pessoa aprovou? Este é o Proof Before Pay.
 
-## Scene checklist (what must be real on the day)
-- Duplicate-charge case decided on the AGENT path with a test effect (not R1): public-demo 56352df3 (recorded) and, if
-  available, v4 hid-061 (live). If neither can be shown, record the rules refund and say so; do not relabel.
-- Ambiguous case with guard refusal (exists: adversarial missing_gate, see docs/screens/native-ui25.png).
-- Reviewer = authenticated synthetic login; its name appears in the console and ledger audit. The old closed case is read-only history. Any filmed new approval must use a freshly prepared synthetic case and must retain its actual identifiers.
-- Tamper verdicts filmed live in the console, original seal still intact afterwards.
-- Captions carry the mode (recorded / live) and "sandbox" wherever money appears.
+Narration es: Un cliente paga dos veces. Una IA propone un reembolso. Antes de mover nada, ¿puedes demostrar qué vio, qué información faltaba y qué aprobó exactamente una persona? Esto es Proof Before Pay.
+
+Narration zh-CN: 客户重复付款，人工智能建议退款。执行之前，能否证明它看到了什么、缺少哪些证据，以及审核人究竟批准了什么？这就是付款前留证，Proof Before Pay。
+
+
+### S02  00:18 to 00:40
+
+Visual: Actual GetOrder/GetEvidence tool panels for the new case; recorded mode visible.
+
+Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
+
+On screen (EN): Five tools. Actual evidence.
+
+Narration en: The application runs inside InterSystems IRIS. Five scoped tools read the order, payment events, payer history, evidence, and policy. This demonstration uses a recorded agent proposal on the native workflow. No live model call is hidden behind these scenes.
+
+Narration pt-BR: A aplicação roda no InterSystems IRIS. Cinco ferramentas com escopo definido consultam o pedido, os pagamentos, o histórico, as evidências e a política. Esta demonstração usa uma proposta gravada no fluxo nativo. Nenhuma chamada ao modelo ao vivo é simulada nestas cenas.
+
+Narration es: La aplicación se ejecuta en InterSystems IRIS. Cinco herramientas de alcance limitado consultan el pedido, los pagos, el historial, las pruebas y la política. Esta demostración usa una propuesta grabada en el flujo nativo. Estas escenas no simulan inferencia en vivo.
+
+Narration zh-CN: 应用运行在InterSystems IRIS中。五个受限工具读取订单、付款记录、付款人历史、证据和规则。本演示在原生工作流中使用已录制的智能体建议，不会把回放伪装成实时模型推理。
+
+
+### S03  00:40 to 01:00
+
+Visual: Missing delivery evidence in actual GetEvidence output, followed by the recorded missing-recipient/no-effect case recipient-flow:absent:bfe5c8fd. No live-v4 footage claim.
+
+Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
+
+On screen (EN): Unknown stays unknown.
+
+Narration en: Two payments of eighty-four reais were observed for one order. The proposal requests human review. Missing delivery evidence remains explicitly missing in the sealed context. The refund destination comes from the stored case record, not an instruction in a customer message.
+
+Narration pt-BR: Foram observados dois pagamentos de oitenta e quatro reais para um pedido. A proposta solicita revisão humana. A ausência do comprovante de entrega fica registrada no contexto selado. O destino vem do registro armazenado do caso, não de uma instrução na mensagem do cliente.
+
+Narration es: Se observaron dos pagos de ochenta y cuatro reales para un pedido. La propuesta solicita revisión humana. La falta del comprobante de entrega queda registrada en el contexto sellado. El destino procede del registro almacenado del caso, no de instrucciones del cliente.
+
+Narration zh-CN: 同一订单出现了两笔八十四雷亚尔的付款，建议要求人工审核。缺失的送达凭证会明确保留在封存上下文中。退款目标来自已存储的案件记录，而不是客户消息中的指令。
+
+
+### S04  01:00 to 01:24
+
+Visual: Actual one-time approval of video-demo:d83544a2 and receipt test-refund:456. Trim idle time; never duplicate approval or reset.
+
+Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
+
+On screen (EN): One approval. One synthetic effect.
+
+Narration en: Now an authenticated test reviewer checks the amount, destination, and exact decision commitment. One approval is recorded, sealed, and linked to a single-use permit. The test ledger executes once. Here is the actual intact receipt from this new demonstration case. No real money moved.
+
+Narration pt-BR: Agora, um revisor de teste autenticado confere o valor, o destino e o compromisso exato da decisão. Uma aprovação é registrada, selada e vinculada a uma permissão de uso único. O livro de testes executa uma vez. Este é o recibo real e íntegro do novo caso de demonstração. Nenhum dinheiro real foi movimentado.
+
+Narration es: Un revisor de prueba autenticado comprueba el importe, el destino y el compromiso exacto de la decisión. Una aprobación queda registrada, sellada y vinculada a un permiso de un solo uso. El libro de pruebas ejecuta una vez. Este es el recibo íntegro del nuevo caso. No se movió dinero real.
+
+Narration zh-CN: 已认证的测试审核人检查金额、目标和决策摘要。一次批准被记录并封存，再绑定到一次性许可。测试账本只执行一次。这是本次新演示案件的完整收据，没有发生真实资金转移。
+
+
+### S05  01:24 to 01:46
+
+Visual: Actual editable copy of new case: 8400 to 8401, tampered; original copy restored, intact. Local-seal limitations remain in narration and editorial caption.
+
+Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
+
+On screen (EN): Change the copy. Verification fails.
+
+Narration en: Change one cent in a copy of the sealed decision. The verifier detects the mismatch. Restore the original copy: intact. The stored record is untouched. These are local seals; they do not protect against an administrator rewriting the database. External anchoring is outside this release.
+
+Narration pt-BR: Altere um centavo em uma cópia da decisão selada. O verificador detecta a diferença. Restaure a cópia original: íntegra. O registro armazenado não foi alterado. Os selos são locais e não protegem contra um administrador que reescreva o banco. A ancoragem externa fica fora desta versão.
+
+Narration es: Cambia un céntimo en una copia de la decisión sellada. El verificador detecta la diferencia. Restaura la copia original: íntegra. El registro almacenado sigue intacto. Los sellos locales no protegen frente a un administrador que reescriba la base. El anclaje externo queda fuera de esta versión.
+
+Narration zh-CN: 在封存决策的副本中改动一分钱，验证器就会发现不一致。恢复原始副本后，验证通过。存储记录没有被修改。这些是本地封印，不能防止管理员重写数据库；本版本不包含外部锚定。
+
+
+### S06  01:46 to 02:06
+
+Visual: Actual tool outputs and timeline; editorial architecture overview of native components. No Portal trace footage or claim every inbound message already contains a commitment.
+
+Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
+
+On screen (EN): Native workflow. Inspectable history.
+
+Narration en: Intake, decision processing, agent tools, Witness, human Workflow, and the test ledger form one native interoperability path. The console preserves the actual tool outputs and the event timeline. Each effect can be traced back to its evidence, decision, and sealed approval.
+
+Narration pt-BR: Entrada, processamento da decisão, ferramentas do agente, Witness, Workflow humano e livro de testes formam um caminho nativo de interoperabilidade. O console preserva as saídas reais das ferramentas e a linha do tempo. Cada efeito pode ser rastreado até suas evidências, decisão e aprovação selada.
+
+Narration es: Entrada, procesamiento, herramientas del agente, Witness, Workflow humano y libro de pruebas forman un flujo nativo de interoperabilidad. El panel conserva las salidas reales de las herramientas y la cronología. Cada efecto se puede rastrear hasta sus pruebas, decisión y aprobación sellada.
+
+Narration zh-CN: 消息接入、决策处理、智能体工具、Witness、人工Workflow和测试账本组成原生互操作流程。控制台保留实际工具输出和事件时间线。每次测试执行都可追溯到证据、决策以及封存的批准。
+
+
+### S07  02:06 to 02:29
+
+Visual: Animated editorial chart of frozen prior live evaluation: latest14=10regressions+4prospectivecontrols;6legitimateeffects,8negativezero;1dangerousrawproposalcontained. No new run.
+
+Mode caption (EN): PAST LIVE EVALUATION. Frozen cohorts, not a new run.
+
+On screen (EN): Show failures. Measure the protection.
+
+Narration en: Live model evaluation was run separately, with four frozen rounds and earlier failures retained. The latest fourteen cases include ten regressions and four prospective controls. Six legitimate effects completed; eight negatives produced none. One dangerous raw proposal was contained by server checks. This is bounded evidence, not a claim of perfect AI.
+
+Narration pt-BR: A avaliação com modelo ao vivo foi feita separadamente, em quatro rodadas congeladas, preservando as falhas anteriores. Os quatorze casos mais recentes incluem dez regressões e quatro controles prospectivos. Seis efeitos legítimos foram concluídos; oito negativos não geraram efeito. Uma proposta bruta perigosa foi contida no servidor. Isso é evidência limitada, não uma promessa de IA perfeita.
+
+Narration es: La evaluación del modelo en vivo se hizo por separado: cuatro rondas congeladas, con los fallos anteriores conservados. Los catorce casos más recientes incluyen diez regresiones y cuatro controles prospectivos. Se completaron seis efectos legítimos y ocho negativos no generaron ninguno. El servidor contuvo una propuesta peligrosa. Es evidencia limitada, no una promesa de IA perfecta.
+
+Narration zh-CN: 实时模型评估单独进行，共四轮，测试方案预先冻结，并保留早期失败。最近十四个案例包含十个回归案例和四个前瞻控制案例。六个合法测试执行成功，八个负面案例没有执行；一个危险原始建议被服务器检查阻止。这是范围有限的证据，不代表人工智能绝对可靠。
+
+
+### S08  02:29 to 02:48
+
+Visual: Actual receipt b-roll and editorial installation/distribution qualification. No fabricated terminal, new install run, submission, award or article link. End credit: synthetic narration, not Rafael.
+
+Mode caption (EN): DOCUMENTED TEST RESULTS. Synthetic narration, not Rafael.
+
+On screen (EN): Evidence. Review. One effect.
+
+Narration en: Cold installation, lifecycle, and native package installation were tested. A fresh IPM bootstrap also passed, with its remaining repeatability limits documented. The source is MIT licensed; the vendor image is obtained separately. Proof Before Pay: evidence, review, one synthetic effect.
+
+Narration pt-BR: A instalação do zero, o ciclo de vida e o pacote nativo foram testados. A inicialização do IPM em volume novo também passou, com seus limites de repetibilidade documentados. O código tem licença MIT; a imagem do fornecedor é obtida separadamente. Proof Before Pay: evidência, revisão, um efeito sintético.
+
+Narration es: Se probaron la instalación desde cero, el ciclo de vida y el paquete nativo. El arranque de IPM en un volumen nuevo también pasó, con sus límites de repetibilidad documentados. El código tiene licencia MIT; la imagen del proveedor se obtiene por separado. Proof Before Pay: pruebas, revisión y un efecto sintético.
+
+Narration zh-CN: 已测试全新安装、生命周期和原生软件包安装。新卷上的IPM初始化也已通过，其可重复性限制仍明确记录。源代码采用MIT许可证，厂商镜像需单独获取。Proof Before Pay：证据、审核、一次合成资金执行。
+
+## Description block (EN)
+
+Proof Before Pay: actual native InterSystems IRIS workflow, a recorded agent proposal, one authenticated synthetic reviewer approval, and one synthetic test effect. Separate frozen live evaluation is explicitly labelled. Local seals do not prevent administrator database rewrites; external anchoring is outside this release. Synthetic narration, not Rafael’s voice. English master with Portuguese, Spanish and Mandarin alternate narration and closed captions. Source MIT; vendor image obtained separately. Submission is pending Rafael approval.
+
+## Scene checklist
+
+- S02 and S04: duplicate-charge case decided on the AGENT path (recorded replay) with a test effect; never a rules (R1) refund relabelled.
+- S03: v4 hid-061 runtime case available, or the recorded guard-refusal case with an honest caption.
+- S04: NEW synthetic case prepared before recording; its real case id and receipt id visible; one authenticated review; case 56352df3 and receipt 340 only as read-only history.
+- S05: tamper verdicts filmed live; original seal intact afterwards.
+- S06: portal trace recorded without exposing any credential.
+- S07: table numbers equal docs/validation/benchmark-rounds-summary.json; no percentages.
+- S08: end card carries the synthetic narration notice.
+- All captions carry the mode (RECORDED / LIVE past evidence) and sandbox or test ledger wherever money appears.
+- CC files regenerated from this JSON after the final cut, with the real timecodes (scripts/video_cc.py).

@@ -64,4 +64,23 @@ class Contract(unittest.TestCase):
  def test_config_rejects_external_backend_and_nonHTTPS_origin(self):
   with self.assertRaises(ValueError):m.Config(self.c.username,self.c.password,self.c.case_ids,self.c.origin,'https://external.example')
   with self.assertRaises(ValueError):m.Config(self.c.username,self.c.password,self.c.case_ids,'http://demo.example')
+ def login(self,origin=None,body=None):
+  import urllib.parse
+  h={'Origin':self.c.origin if origin is None else origin,'Content-Type':'application/x-www-form-urlencoded'}
+  return self.call('POST','/pbp/login',h,body if body is not None else urllib.parse.urlencode({'username':self.c.username,'password':self.c.password}).encode())
+ def test_browser_gets_login_form_without_access_to_IRIS(self):
+  status,h,body=self.call('GET','/pbp/ui/',{});self.assertEqual((status,h['Location']),(303,'/pbp/login'))
+  status,h,body=self.call('GET','/pbp/login',{});self.assertEqual(status,200);self.assertIn(b'type="password"',body);self.assertNotIn(self.c.password.encode(),body);self.assertEqual(self.calls,[])
+ def test_login_cookie_is_secure_scoped_expiring_and_authorizes_only_viewer(self):
+  status,h,_=self.login();self.assertEqual(status,303);self.assertIn('HttpOnly; Secure; SameSite=Strict; Max-Age=3600',h['Set-Cookie'])
+  cookie=h['Set-Cookie'].split(';')[0];headers={'Cookie':cookie};status,_,raw=self.call('GET','/pbp/api/whoami',headers);self.assertEqual(status,200);self.assertFalse(json.loads(raw)['can_review'])
+  self.assertEqual(self.call('POST','/pbp/api/review/demo:public',headers,b'{}')[0],403)
+  token=cookie.split('=',1)[1];self.g.sessions[token]=0;self.assertEqual(self.call('GET','/pbp/api/whoami',headers)[0],401)
+ def test_login_rejects_forgery_bad_forms_bad_credentials_and_rate_limits(self):
+  self.assertEqual(self.login('https://evil.example')[0],403);self.assertEqual(self.login(body=b'username=a&username=b&password=c')[0],400)
+  self.assertEqual(self.login(body=b'x'*1025)[0],413)
+  for _ in range(20):self.assertEqual(self.login(body=b'username=judge&password=wrong')[0],401)
+  self.assertEqual(self.login()[0],429);self.assertEqual(self.g.sessions,{});self.assertEqual(self.calls,[])
+ def test_forged_cookie_does_not_authorize(self):
+  self.assertEqual(self.call('GET','/pbp/api/cases',{'Cookie':'pbp49_viewer=forged'})[0],401);self.assertEqual(self.calls,[])
 if __name__=='__main__':unittest.main()
