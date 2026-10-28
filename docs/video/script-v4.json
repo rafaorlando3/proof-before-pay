@@ -1,7 +1,7 @@
 {
   "schema": "pbp.video-script/4",
-  "version": "4.2",
-  "prepared_utc": "2026-10-28T07:51:58.598885+00:00",
+  "version": "4.2.1",
+  "prepared_utc": "2026-10-28T09:14:42.220274+00:00",
   "base_source": "Native runtime346ae94/backend6d03432; current revision ui/index.html fixes pending replay invalidation by same-signature polling. No model/core/Ledger change.",
   "target_duration_seconds": 168,
   "master_language": "en",
@@ -226,15 +226,15 @@
     }
   ],
   "scene_checklist": [
-    "S02 and S04: duplicate-charge case decided on the AGENT path (recorded replay) with a test effect; never a rules (R1) refund relabelled.",
-    "S03: v4 hid-061 runtime case available, or the recorded guard-refusal case with an honest caption.",
-    "S04: NEW synthetic case prepared before recording; its real case id and receipt id visible; one authenticated review; case 56352df3 and receipt 340 only as read-only history.",
-    "S05: tamper verdicts filmed live; original seal intact afterwards.",
-    "S06: portal trace recorded without exposing any credential.",
-    "S07: table numbers equal docs/validation/benchmark-rounds-summary.json; no percentages.",
-    "S08: end card carries the synthetic narration notice.",
-    "All captions carry the mode (RECORDED / LIVE past evidence) and sandbox or test ledger wherever money appears.",
-    "CC files regenerated from this JSON after the final cut, with the real timecodes (scripts/video_cc.py)."
+    "S01-S04: actual new recorded agent-path case video-flow:5751dd54; no rules refund relabelled or live inference simulated.",
+    "S03: actual missing delivery evidence and stored target on the same recorded case; no v4live or unfilmed negative-case scene claim.",
+    "S04: exactly one authenticated synthetic review, receipt460 and sealed458<authorized459<executed460. Historical340/456 are not reset or reapproved.",
+    "S05: tampered copy then restored intact; stored native record unchanged.",
+    "S06: actual console timeline and tool outputs after the accepted replay-loading correction; no Portal trace footage claimed.",
+    "S07: browser document compiled from frozen benchmark JSON, explicit prior-evaluation label; no new model run or population-accuracy claim.",
+    "S08: documented installation limits, separate vendor image and synthetic narration credit. Public report footer contains no internal submission-approval discussion.",
+    "Native product labels recorded/sandbox/test ledger remain visible; explanatory report remains visibly identified as a review document.",
+    "All four approved4.1.1 AAC and CC packet streams are copied unchanged; no CC regeneration or fresh TTS for this visual correction."
   ],
-  "status": "C1203 editorial fixes: active-panel crops, consistent past-live footer, reviewer label, four-language loudness, clause CC. Audio unchanged; Rafael listening approval still pending."
+  "status": "C1206 accepts4.2 native visuals, replay-race correction, modern access and persistence.4.2.1 removes internal submission-approval prose from report footer only; native chapters1-6 and approved AAC/CC unchanged. Rafael final visual/submission approval remains separate."
 }

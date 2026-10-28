@@ -64,7 +64,7 @@ population-quality estimate. See [the failed result](validation/live-v3-failed.j
 - [x] Final candidate UI/text cross-review received (C-1196): UI156, provenance index, public prose, private article and video script3.1 accepted, with editorial follow-ups. Core6d source review and v4 independent evidence review are complete (C-1189/C-1192/C-1194).
 - [ ] Fully disjoint post-fix held-out quality acceptance; v4 currently provides explicitly qualified regression/prospective-control evidence.
 - [x] Cold/lifecycle, native IPM application and fresh-volume bootstrap acceptance completed; see [installation scope](validation/native-installation-IPM.json) and [bootstrap qualifications](validation/native-IPM-bootstrap.json).
-- [x] 168-second review cut exported with actual native workflow footage, synthetic narration and CC in English, Portuguese, Spanish and Mandarin. Final editorial/linguistic review remains pending.
+- [x] 168-second native-workflow review cut exported in four languages. Rafael approved the narration/languages; Claude accepted4.2 visuals and requested the4.2.1 public-footer correction. Final visual/submission approval remains separate.
 - [ ] Final package reviewed and approved by Rafael for Open Exchange submission.
 - [ ] Actual Open Exchange receipt/status captured after submission.
 
@@ -115,12 +115,10 @@ The fully disjoint post-fix held-out quality gate and Rafael's final review rema
 
 ## Current installation qualification
 
-The build154 lab compiled and tested the current executable source on a fresh volume, including
-Witness, Ledger, Workflow and receipt preservation across restart, recreation and SIGKILL. The
-overall job nevertheless returned false on its unrelated-container ID guard and did not retain the
-initial ID set. It is a qualified functional result, not a completed release-acceptance gate.
-Preserving the IRIS hostname was separately tested during recreation, with matching external
-container ID snapshots and the original receipt intact. That narrower check does not retroactively
-repair the clean-install audit. See [the qualified result](validation/clean-current272-qualified.json)
-and [the hostname diagnosis](IRIS-154.md). No new installation, inference, publication or submission
-is implied by assembling a source candidate.
+The earlier clean272 attempt is retained as a qualified historical result: its functional workflow passed, but the unrelated-container identity guard failed without a retained initial identity set. That earlier run is not relabelled as a fully audited acceptance pass.
+
+Subsequent cold/lifecycle acceptance of the native backend baseline passed with matching runtime files and external container identity/state/image/health/mount snapshots. Native IPM application loading, local-package generation, uninstall without purge, and reinstall preserved the original intact receipt and one effect. See [native installation and IPM scope](validation/native-installation-IPM.json).
+
+A separate fresh-volume vendor IPM bootstrap and first application load passed once with process-local diagnostic tracing, followed by48 recorded checks. The cause of the earlier NAMESPACE/PushNS failure and repeatability without tracing remain unproved. See [fresh-bootstrap qualifications](validation/native-IPM-bootstrap.json).
+
+The current candidate additionally contains the separately verified UI replay-loading correction, gateway access/copy changes and presentation documentation. These are not represented as a new cold-image or bootstrap run. The latest native deployment changed the UI asset only, with the same IRIS container/start time and mounts. See [the separately validated UI correction](validation/ui-replay-loading42.json). No public IPM-registry installation is claimed.

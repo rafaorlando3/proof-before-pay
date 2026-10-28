@@ -1,0 +1,149 @@
+{
+  "schema": "pbp.real-video-capture/1",
+  "version": "4.2.1",
+  "seconds": 168,
+  "actual_approval_clicks": 1,
+  "case": "video-flow:5751dd54",
+  "receipt": "test-refund:460",
+  "recorded_proposal": true,
+  "native_IRIS_workflow": true,
+  "live_LLM": false,
+  "paid_calls": 0,
+  "real_money": false,
+  "UI_overlay_cursor_injected": false,
+  "motion_criterion": "Actual time and motion cadence, not unique-frame count; still review states are retained naturally.",
+  "chapters": [
+    {
+      "chapter": 1,
+      "take": "01-open-review",
+      "seconds": 18,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 164,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 0,
+      "median_motion_frame_interval_seconds": 0.030616044998168945,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "7acd44c98f409f2cfb4c446a68d0d8d4851abb9071ea00faf8dd73547306af8d"
+    },
+    {
+      "chapter": 2,
+      "take": "02-tools",
+      "seconds": 22,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 174,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 2,
+      "median_motion_frame_interval_seconds": 0.030002474784851074,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "c784bb66d06152163e02b8663ca0b03e1475839c3860992491eec0939b9dc3f1"
+    },
+    {
+      "chapter": 3,
+      "take": "03-missing-context",
+      "seconds": 20,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 151,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 0,
+      "median_motion_frame_interval_seconds": 0.03036642074584961,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "619d32b5b8a6c9606ddd3cfd1f7393176bae3cd830a033616bc8a1ff44d86ff2"
+    },
+    {
+      "chapter": 4,
+      "take": "04d-approval-and-receipt",
+      "seconds": 24,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 240,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 2,
+      "median_motion_frame_interval_seconds": 0.05931687355041504,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "5015c98cba047fe203f04e23dbef79538ae1ab758f52c5df43091384a74ee3dc"
+    },
+    {
+      "chapter": 5,
+      "take": "05-tamper-restore",
+      "seconds": 22,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 168,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 0,
+      "median_motion_frame_interval_seconds": 0.030004501342773438,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "9d8bc50b0f65f4d232cd9527b2efd97722c2e62c0ea481bccc131b6b535ea966"
+    },
+    {
+      "chapter": 6,
+      "take": "06c-native-history-fixed",
+      "seconds": 20,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 231,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 0,
+      "median_motion_frame_interval_seconds": 0.030297040939331055,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "3d6066e554a6abaa5cae48cc27ef74962ef33708351721befb119d94ccd0ad9a"
+    },
+    {
+      "chapter": 7,
+      "take": "07-report-footer421",
+      "seconds": 23,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 198,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 0,
+      "median_motion_frame_interval_seconds": 0.033334970474243164,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "4fb5fd417856436e1f9d75c51a0132fc528702882488bcdf4e1398c5b3cf0d9e"
+    },
+    {
+      "chapter": 8,
+      "take": "08-report-footer421",
+      "seconds": 19,
+      "native_dimensions": [
+        1920,
+        1080
+      ],
+      "captured_changed_frames": 146,
+      "out_of_order_deliveries_sorted_by_capture_timestamp": 0,
+      "median_motion_frame_interval_seconds": 0.03333401679992676,
+      "static_UI_holds_preserved": true,
+      "camera_pan_zoom_interpolation": false,
+      "time_stretch": false,
+      "capture_sha256": "9929267ebcacda43951be73fe8b6e11ae7f9aed0592343b6030250ce6a26547e"
+    }
+  ],
+  "native_UI_replay_fix_sha256": "7e2938b24398bc1d5644c8f20825634475741fc742ff6b68d87d1c78475d3b10",
+  "delayed_replay_regression": "8s native replay delay,5s UI poll: before0tools/stuck,after5tools; obsolete prior-case replay discarded",
+  "changes": "C1206: internal submission approval footer removed from historical report chapters7/8; first6 native chapters unchanged byte-for-byte; light theme retained; no new native/model work.",
+  "peer_review_baseline": "C1206 accepts4.2 visuals/replay guard/auth/persistence; requests footer correction only."
+}
