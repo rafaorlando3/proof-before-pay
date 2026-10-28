@@ -106,3 +106,5 @@ only from the private loopback proxy, which must overwrite untrusted forwarded
 headers (Caddy defaults do so). HTTP request parsing has a15second timeout,
 body reads a10second timeout, and concurrent connections remain bounded to12.
 This is a scoped demo access flow, not a full customer identity/email platform.
+
+The deployed edge was inspected read-only on2026-10-28: Caddy2.11.4, with no `trusted_proxies` configured. This direct Internet-facing edge therefore uses the documented default of ignoring incoming `X-Forwarded-*` values before setting its own. See [Caddy header defaults](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#defaults). The gateway accepts the last validated forwarded address only from its loopback proxy; direct remote peers cannot choose their rate-limit identity. Recheck this assumption before adding a CDN or trusted proxy. The shared Caddyfile was not modified.

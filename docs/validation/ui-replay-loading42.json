@@ -1,0 +1,35 @@
+{
+  "actualNativeResponses": true,
+  "GETOnly": true,
+  "transportDelaySeconds": 8,
+  "pollSeconds": 5,
+  "baselineAfter11Seconds": {
+    "replay": "loading…",
+    "toolPanels": 0
+  },
+  "fixedAfter11Seconds": {
+    "fixedReplayContainsTools": true,
+    "toolPanels": 5
+  },
+  "paidCalls": 0,
+  "newEffects": 0,
+  "rapidCaseSwitchWithObsoleteDelayedReplay": {
+    "currentCase": "video-flow:5751dd54",
+    "receipt": "test-refund:460",
+    "currentReplay": true,
+    "toolPanels": 5,
+    "obsoleteResponseDidNotReplaceCurrent": true
+  },
+  "native_deployment": {
+    "GET_source_matches": true,
+    "ui_old_sha256": "15681d5d8bc3ab3f7968dbdf1212c07e689eb0bafc9e838dfb89ec1e92a33adc",
+    "ui_new_sha256": "7e2938b24398bc1d5644c8f20825634475741fc742ff6b68d87d1c78475d3b10",
+    "container_unchanged_not_restarted": true,
+    "mounts_unchanged": true,
+    "file": "/opt/pbp/ui/index.html",
+    "compile_or_image_or_volume_change": false,
+    "paid_calls": 0,
+    "new_effects": 0
+  },
+  "native_replay_recaptured_after_fix": "06c-native-history-fixed; real case460; no new approval or effect"
+}

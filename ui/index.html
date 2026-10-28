@@ -268,7 +268,7 @@ input.note{width:100%;height:38px;background:var(--surface-2);color:var(--text);
 const API = '/pbp/api';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state = { current:null, commitment:'', me:{user:'',can_review:false}, filter:'all', q:'', cases:[], detailSig:'', detailRequest:0, health:null, notes:Object.create(null) };
+const state = { current:null, commitment:'', me:{user:'',can_review:false}, filter:'all', q:'', cases:[], detailSig:'', detailRequest:0, replayRequest:0, health:null, notes:Object.create(null) };
 
 async function api(path, opts){
   try{
@@ -527,8 +527,10 @@ async function openCase(id, userAction){
   restoreDisclosures(openDetails);
   if(changed && userAction && !window.matchMedia('(max-width:980px)').matches) window.scrollTo({top:0});
 
+  // Same-signature polling leaves this DOM intact; it must not invalidate its pending replay.
+  state.replayRequest = request;
   const r = await api('/cases/'+encodeURIComponent(id)+'/replay');
-  if(state.current!==id || request!==state.detailRequest) return;
+  if(state.current!==id || request!==state.replayRequest) return;
   const box = $('#replay'); if(!box) return;
   if(!r.ok){ state.detailSig=''; box.innerHTML = `<div class="muted small">Replay unavailable: ${human(r.reason)}</div>`; return; }
   box.innerHTML = `<details open><summary>Normalized inputs sealed by the server</summary><div class="in"><pre>${esc(JSON.stringify(c.input, null, 1))}</pre></div></details>

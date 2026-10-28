@@ -1,6 +1,6 @@
-# Proof Before Pay: video production script v4.1.1
+# Proof Before Pay: video production script v4.2
 
-Base: 53a15b057779ba6589a7a78444c47c9ebdf36871 (modern auth/recovery) over974df45 (owned demo recovery); native runtime346ae94/backend6d03432 unchanged. Target length 168 s. Master en, alternates pt-BR, es, zh-CN.
+Base: Native runtime346ae94/backend6d03432; current revision ui/index.html fixes pending replay invalidation by same-signature polling. No model/core/Ledger change.. Target length 168 s. Master en, alternates pt-BR, es, zh-CN.
 
 ## Rules
 
@@ -13,15 +13,16 @@ Base: 53a15b057779ba6589a7a78444c47c9ebdf36871 (modern auth/recovery) over974df4
 - The approver shown is the authenticated synthetic reviewer login; Rafael is not named as approver.
 - Narration is a synthetic voice generated from this script and is identified as such in the description and in the end card; it is not presented as Rafael's voice.
 - On-screen text and CC must not contain the em dash character.
-- Real continuous browser capture is trimmed for pace and receives restrained editorial camera movement. Editorial charts and architecture are explicitly labelled, with animated emphasis. No fabricated UI, terminal runs, approvals, or live inference.
+- Real continuous browser capture is trimmed for pace and preserves native screen size and capture time, without decorative camera movement. The separately compiled historical evidence report is explicitly labelled as a review document. No fabricated UI, terminal runs, approvals, or live inference.
 - S03 uses the recorded synthetic case and recorded missing-recipient regression, not an unfilmed LIVE v4 scene. S06 uses actual tool output and an architecture overview; no Portal trace is implied.
 - The new recorded case is video-demo:d83544a2, receipt test-refund:456, one authenticated synthetic reviewer approval; its recording does not enlarge the live-model benchmark.
+- Rafael approved the four narration performances and languages on2026-10-28. Version4.2 copies the approved4.1.1 AAC/CC packets unchanged; visual approval is separate. No Codex pointer injection, decorative pan/zoom, artificial jitter or speed change.
 
 ## Scenes
 
 ### S01  00:00 to 00:18
 
-Visual: Real new synthetic case awaiting review, with editorial problem framing; no approval replay in this chapter.
+Visual: Real continuous capture of video-flow:5751dd54 awaiting review, full native1920x1080 frame; no decorative pan/zoom.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -38,7 +39,7 @@ Narration zh-CN: 客户重复付款，人工智能建议退款。执行之前，
 
 ### S02  00:18 to 00:40
 
-Visual: Actual GetOrder/GetEvidence tool panels for the new case; recorded mode visible. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.
+Visual: Real interactions with five actual native tool panels, full frame at original capture timing.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -55,7 +56,7 @@ Narration zh-CN: 应用运行在InterSystems IRIS中。五个受限工具读取�
 
 ### S03  00:40 to 01:00
 
-Visual: Missing delivery evidence in actual GetEvidence output, followed by the recorded missing-recipient/no-effect case recipient-flow:absent:bfe5c8fd. No live-v4 footage claim.
+Visual: Actual missing evidence and stored destination on the new case; no missing-recipient case footage or new live inference claim.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -72,7 +73,7 @@ Narration zh-CN: 同一订单出现了两笔八十四雷亚尔的付款，建议
 
 ### S04  01:00 to 01:24
 
-Visual: Actual one-time approval of video-demo:d83544a2 and receipt test-refund:456. Trim idle time; never duplicate approval or reset. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.
+Visual: One authentic approval of new video-flow:5751dd54 and actual test-refund:460,84BRL; prior456/340 preserved.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -89,7 +90,7 @@ Narration zh-CN: 已认证的测试审核人检查金额、目标和决策摘要
 
 ### S05  01:24 to 01:46
 
-Visual: Actual editable copy of new case: 8400 to 8401, tampered; original copy restored, intact. Local-seal limitations remain in narration and editorial caption. C1203: use a true2x crop of the active original captured panel for4to6seconds, with the full console establishing the chapter.
+Visual: Edit one cent in a COPY of the new sealed decision record; actual verification tampered then restored intact. Stored record unchanged.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -106,7 +107,7 @@ Narration zh-CN: 在封存决策的副本中改动一分钱，验证器就会发
 
 ### S06  01:46 to 02:06
 
-Visual: Actual tool outputs and timeline; editorial architecture overview of native components. No Portal trace footage or claim every inbound message already contains a commitment.
+Visual: Actual timeline and receipts on the same completed case after the replay-loading race fix. No additional approval or effect.
 
 Mode caption (EN): RECORDED proposal. Native IRIS workflow. Synthetic effects.
 
@@ -123,7 +124,7 @@ Narration zh-CN: 消息接入、决策处理、智能体工具、Witness、人�
 
 ### S07  02:06 to 02:29
 
-Visual: Animated editorial chart of frozen prior live evaluation: latest14=10regressions+4prospectivecontrols;6legitimateeffects,8negativezero;1dangerousrawproposalcontained. No new run. Footer: PAST LIVE EVALUATION / FROZEN COHORTS / NOT A NEW RUN.
+Visual: Real browser navigation through a review document compiled from published frozen-round JSON;14=10regressions+4controls,6effects,8negativezero,1dangerous proposal contained. Not the product UI or new model run.
 
 Mode caption (EN): PAST LIVE EVALUATION. Frozen cohorts, not a new run.
 
@@ -140,7 +141,7 @@ Narration zh-CN: 实时模型评估单独进行，共四轮，测试方案预先
 
 ### S08  02:29 to 02:48
 
-Visual: Actual receipt b-roll and editorial installation/distribution qualification. No fabricated terminal, new install run, submission, award or article link. End credit: synthetic narration, not Rafael.
+Visual: Real navigation through the same review document: installation qualifications, separate vendor image, MIT source, synthetic-voice credit. No fabricated terminal or fresh installation run.
 
 Mode caption (EN): DOCUMENTED TEST RESULTS. Synthetic narration, not Rafael.
 

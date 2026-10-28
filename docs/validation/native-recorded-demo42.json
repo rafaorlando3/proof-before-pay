@@ -1,0 +1,103 @@
+{
+  "schema": "pbp.native.public-synthetic-demo/1",
+  "ok": true,
+  "case_id": "video-flow:5751dd54",
+  "mode": "recorded",
+  "source": "manual recorded fixture; not live model inference",
+  "original_input": {
+    "case_id": "video-flow:5751dd54",
+    "store": "store-default",
+    "exception": "duplicate_charge",
+    "environment": "sandbox",
+    "currency": "BRL",
+    "order_amount_minor": "8400",
+    "recipient_ref": "test:video-flow",
+    "order": {
+      "id": "test-video-order:5751dd54",
+      "amount_minor": "8400",
+      "currency": "BRL",
+      "status": "paid",
+      "created_at": "2026-10-28T07:12:33Z",
+      "expires_at": "2026-10-28T08:22:33Z",
+      "shipped": false,
+      "items": 1
+    },
+    "payments": [
+      {
+        "payment_ref": "pix:video:A:5751dd54",
+        "amount_minor": "8400",
+        "payer": "test:video-flow",
+        "received_at": "2026-10-28T07:14:33Z"
+      },
+      {
+        "payment_ref": "pix:video:B:5751dd54",
+        "amount_minor": "8400",
+        "payer": "test:video-flow",
+        "received_at": "2026-10-28T07:15:33Z"
+      }
+    ],
+    "payer_history": {
+      "orders_90d": 3,
+      "disputes_90d": 0,
+      "chargebacks": 0
+    },
+    "evidence": {
+      "delivery_proof": null,
+      "customer_message": "I paid twice for the same order; please return the extra payment to the original payer."
+    }
+  },
+  "recorded_proposal": {
+    "action": "refund_duplicate",
+    "moves_money": true,
+    "requires_human": true,
+    "amount_minor": "8400",
+    "confidence": 0.9,
+    "rationale": "Two distinct Pix payments of 8400 minor units were recorded for one order. Request review before returning the extra payment to its original payer.",
+    "evidence_refs": [
+      "order",
+      "pix:video:A:5751dd54",
+      "pix:video:B:5751dd54"
+    ],
+    "missing": {
+      "evidence.delivery_proof": null
+    }
+  },
+  "chronology_consistent": true,
+  "input_had_refund_payment_ref": false,
+  "target_derived": "pix:video:B:5751dd54",
+  "effects_before_review": 0,
+  "effects_after_authenticated_UI_review": 1,
+  "receipt_integrity_verified": true,
+  "receipt": {
+    "schema": "pbp.test-receipt/1",
+    "environment": "sandbox",
+    "settlement_verified": false,
+    "receipt_id": "test-refund:460",
+    "commitment": "ef61f2929ca7e0c21ce81697189d8dc3b0a1efe7d18957fe452a94d55544746a",
+    "effect_key": "pix:video:B:5751dd54",
+    "case_id": "video-flow:5751dd54",
+    "amount_minor": "8400",
+    "currency": "BRL",
+    "recipient_ref": "test:video-flow",
+    "executed_at": "2026-10-28T07:26:26.148Z",
+    "executed_seq": 460,
+    "sealed_seq": 458,
+    "authorized_seq": 459
+  },
+  "test_reviewer": "PBPLabReviewer20261026",
+  "test_review_note_sealed": true,
+  "hidden_benchmark": false,
+  "paid_calls": 0,
+  "real_payments": 0,
+  "public_demo_published": false,
+  "runtime_source_sha": "346ae949e292bb637eb247b98fde0e63ef954c29",
+  "purpose": "new synthetic review filmed once; no new model-quality case",
+  "provenance_note": "The original verifier inherited a legacy documentary SHA label; it was not a byte pin. This derived report omits that stale label. Actual receipt, SQL state and seal ordering were read from native IRIS.",
+  "native_UI_at_approval_sha256": "15681d5d8bc3ab3f7968dbdf1212c07e689eb0bafc9e838dfb89ec1e92a33adc",
+  "native_UI_after_replay_fix_sha256": "7e2938b24398bc1d5644c8f20825634475741fc742ff6b68d87d1c78475d3b10",
+  "earlier_receipts_not_reset": [
+    340,
+    456
+  ],
+  "reapproval_of_prior_case": false
+}

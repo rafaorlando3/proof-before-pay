@@ -81,11 +81,11 @@ class Gateway:
         if recovery:
             title='Recover access';heading='Recover demo access';intro='Enter the one-time code supplied by the project owner. It is valid for 15 minutes.'
             form='<form method="post" action="/pbp/recover"><label>Recovery code<div class="field"><input name="code" type="password" data-secret autocomplete="one-time-code" required maxlength="80"><button class="toggle" type="button" aria-label="Show access secret">Show</button></div></label><button class="submit" type="submit">Recover access</button></form>'
-            link='<span class="helpnote">Need a new code? Contact the person who invited you.</span><a href="/pbp/login">Back to sign in</a>'
+            link='<span class="helpnote">Need a new code? Ask the person who invited you; codes are single use and expire in 15 minutes.</span><a href="/pbp/login">Back to sign in</a>'
         else:
             title='Sign in';heading='Sign in to the demo';intro='Use the viewer access details provided with your invitation.'
             form='<form method="post" action="/pbp/login"><label>Viewer name<input name="username" autocomplete="username" required maxlength="100"></label><label>Access password<div class="field"><input name="password" type="password" data-secret autocomplete="current-password" required maxlength="200"><button class="toggle" type="button" aria-label="Show access secret">Show</button></div></label><button class="submit" type="submit">Open the demo</button></form>'
-            link='<a href="/pbp/recover">Forgot your password or access?</a>'
+            link='<a href="/pbp/recover">Lost your access details?</a>'
         notice='<p class="notice" role="status">'+html.escape(message)+'</p>' if message else ''
         for k,v in {'TITLE':title,'HEADING':heading,'INTRO':intro,'FORM':form,'LINK':link,'NOTICE':notice}.items():page=page.replace('{{'+k+'}}',v)
         script=re.search(r'<script>(.*?)</script>',page,re.S).group(1)
