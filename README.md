@@ -1,7 +1,7 @@
 # Proof Before Pay
 
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
-The application runs on InterSystems IRIS AI Hub EAP build154: native Interoperability
+The application runs on InterSystems IRIS AI Hub EAP build 154: native Interoperability
 intake/process/operations, deterministic policy, scoped read-only tools, authenticated
 Workflow review, a sealed approval, a single-use permit and one confirmed sandbox effect.
 The review console detects edits to decision copies and shows the sealed evidence chain.
@@ -13,6 +13,32 @@ Simple cases use deterministic rules without a model call. When no rule matches,
 AI Hub agent reads the five scoped tools and proposes a decision; policy and the context
 guard constrain it before sealing.
 
+## What this adds
+
+Our contribution is a set of properties that hold together inside one native IRIS production, each
+one checked by the validation evidence linked below:
+
+1. What the agent did **not** see is sealed as missing, as a first-class field of the record. Completing the record
+   afterwards changes its commitment; the reviewer reads the gaps before the proposal. This is a local
+   integrity check with the privileged-rewrite limit described below.
+2. The model never chooses where the money goes or which payment is returned. The destination is the
+   store's own record for the order and the refund target is derived on the server from the observed
+   payments; the customer message, nested order destination fields and model prose do not override that stored
+   test binding. This does not authenticate the original case data or a real bank destination. See
+   [recipient binding](docs/validation/recipient-observability-fix.json) and the
+   [independent cohort](docs/validation/live-independent-v5.json).
+3. One sealed approval binds one single-use permit, which produces at most one test effect; a second
+   attempt with the same permit is refused, also under concurrent sessions.
+4. Model decisions retain their actual tool outputs; rule decisions retain the inputs they read.
+   The native Production messages carry the commitment, and the console reconstructs the retained evidence
+   for inspection. Forensic replay does not rerun a model or guarantee the same future model response.
+5. The failures are published with their fixes: a policy miss in the baseline, an observability gap that
+   failed a whole round, and a raw proposal on a malformed amount that the server contained.
+
+Related work includes Google's [Agent Payments Protocol (AP2)](https://github.com/google-agentic-commerce/AP2);
+we do not claim to have invented proof-before-payment. The combination above, executed natively on IRIS with explicit ignorance
+and published failures, is what we submit for review.
+
 **Status:** the native workflow is tested in recorded mode and with real Gemini, OpenAI
 and Anthropic models through OpenRouter in a private synthetic lab. Each model completed
 one scenario with five native tool calls, authenticated test review, sealed approval and
@@ -20,9 +46,13 @@ one confirmed sandbox effect. This is an integration smoke test, not a model-qua
 or evidence for three-agent voting. A reviewer-note defect found during that trial was fixed
 and covered by replay regression. Isolated cold installation, lifecycle and native IPM application
 load/uninstall/local-package tests passed; [scope and qualifications](docs/validation/native-installation-IPM.json)
-include the separate [fresh-volume IPM bootstrap result and limitations](docs/validation/native-IPM-bootstrap.json). Public demo, recorded video and final submission remain
-pending; a fresh fully disjoint post-fix quality cohort has not been established. No bank settlement or independent external anchor is claimed. See
-[application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
+include the separate [fresh-volume IPM bootstrap result and limitations](docs/validation/native-IPM-bootstrap.json).
+A final independent eight-case cohort was accepted on 28 October with one raw model failure contained by the
+server (see the validation summary). The recorded video predates that cohort. Public demo credentials for
+reviewers, the final package and the submission itself remain pending. No bank settlement or independent
+external anchor is claimed; local seals detect edits to a copy and do not protect against an administrator who
+can rewrite the database, and an optional asynchronous anchor under independent custody is a declared roadmap
+item without a date. See [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
 [provider experiment](docs/PROVIDERS.md).
 
 ## Validation summary
@@ -42,6 +72,16 @@ reports match our parsed originals. [The failed result](docs/validation/live-v3-
 [post-fix scope](docs/validation/live-v4-regression-controls.json), and
 [independent review](docs/validation/independent-v4-review.json) are retained together.
 
+A final independent eight-case cohort (new trap types, written by the reviewer after all earlier results
+were known, frozen and cross-checked by hash before any output) completed on 28 October: the three
+mandatory financial positives each produced one intact synthetic receipt to the stored destination; the
+five negatives produced no effect and remain pending for a person. One raw proposal was wrong: the model
+reinterpreted a malformed order amount ("189.90") as minor units and proposed a refund; the server-side
+target derivation refused it and the sealed decision was an escalation with the refund target marked
+missing. This is an informed adversarial set, not a blind sample or a population estimate; it establishes
+nothing beyond these eight cases. See [the independent cohort](docs/validation/live-independent-v5.json)
+and [its cross-review](docs/validation/independent-v5-review.json).
+
 Maintainer: [Rafael Orlando Mendes](https://community.intersystems.com/user/rafaelorlando-mendes).
 Code developed with AI assistants under Rafael's direction. License: [MIT](LICENSE).
 The vendor EAP image is separately licensed and is not distributed here.
@@ -55,6 +95,68 @@ shows the consumed permit and intact historical receipt. A separate
 [guard-refusal screen](docs/screens/native-ui25.png) illustrates nonfinancial escalation.
 The [live agent-to-refund evidence](docs/validation/gemini-direct-smoke.json) is a different,
 one-scenario integration test. None of these is a public demo or the held-out benchmark.
+
+## Judge path
+
+Two paths exist with the prerequisites below. Times are not promised because the vendor image download,
+license steps and an independent new-operator walkthrough were not measured.
+
+**Path A, no installation: the authenticated read-only viewer.** Open
+[the IRIS-backed demo](https://pbp49.78-17-93-244.sslip.io/pbp/ui/). It uses the application's sign-in form,
+not a browser credential prompt. Access details are supplied privately for review; dedicated contest
+access details have not been released. The eventual Open Exchange listing will need that access arranged.
+You can inspect two selected synthetic cases, the evidence the agent saw, missing information, the
+sealed decision and approval, and an intact synthetic receipt. Use "Try to tamper" to edit a copy and
+verify it: the verdict turns tampered; restoring the copy turns it intact. The stored record is unchanged.
+The viewer cannot approve, create cases or call a model; those routes are refused by the gateway.
+
+**Path B, private execution in recorded mode (no model key or paid inference).** Requires the AI Hub
+EAP build154 image from the vendor portal and the local-image setup described below. The default Compose
+profile has no network; the optional console profile enables normal bridge networking and binds its
+HTTP port only to loopback. The public viewer and this private IRIS authentication are separate.
+
+1. Load and tag the vendor image as described under "Start the isolated IRIS lab", then run:
+
+   ```sh
+   docker compose up --build --detach --wait
+   python3 scripts/test_iris.py
+   python3 scripts/test_workflow.py
+   python3 scripts/test_recipient.py
+   ```
+
+   The first test checks the actual compile/smoke markers and prints `"compile_ok": true` and `"ok": true`.
+   The workflow test prints `"ok": true` with its measured native unit/E2E/adversarial counts; an IRIS
+   session exiting zero alone is not enough. These tests use authenticated automated synthetic review,
+   not a claim that the person running the command manually approved each case. Recipient tests cover
+   one known-destination positive and absent/mismatched-destination zero-effect alternatives in recorded
+   mode. Projection fixtures are rolled back; the recorded workflow cases remain in the private test lab.
+2. To exercise the HTTP workflow, opt into the private console profile:
+
+   ```sh
+   docker compose -f compose.yml -f compose.ui.yml up --build --detach --wait
+   ```
+
+   Privately configure `PBP_TEST_BASE_URL=http://127.0.0.1:52773` and `PBP_TEST_USER`/`PBP_TEST_PASSWORD`.
+   The HTTP test appends `/pbp/api` itself; do not include that suffix in the base URL. Use an existing
+   private IRIS test login whose name begins with `PBP`, with the reviewer role and normal application
+   access; no reviewer password is shipped. Run `python3 tests/http_workflow.py` to exercise authenticated
+   review, one intact receipt, consumed permit, copy verification and refused/stale approval requests.
+   This command reviews its own generated case automatically and performs synthetic effects only.
+3. If you need a **new unreviewed** case for an independently configured private console, use the same
+   private environment and run `python3 tests/http_workflow.py --seed`. This only creates a fresh case and
+   prints its id/commitment. It clones `pix-0001` with unique payment references: a deterministic
+   `duplicate_payment`/R1 case, not a live or recorded agent decision. Do not expect a case already closed
+   by the full HTTP test to be approvable again. The raw local IRIS console uses the instance's own access
+   mechanism; the modern browser demonstration is Path A, which has no approval rights.
+4. To populate the ten public synthetic fixtures, run `Do ##class(pbp.Setup).FeedCases()` in a USER IRIS
+   terminal. Installation and the bridge smoke alone do not feed them. `pix-0009` has no stored destination:
+   inspect its missing refund target and zero effect. `pix-0005` is an `amount_mismatch` with a recorded agent
+   proposal and five retained tool outputs; it escalates without money. These are public fixtures, not
+   the private live benchmark. Repeated fixture ingestion is not a new benchmark or new approval.
+
+
+Live inference (a real model deciding a duplicate charge that moves test money) needs your own provider key
+and the `compose.live.yml` profile described below; it is a cost-bearing opt-in and is not part of this path.
 
 ## IPM installation option
 

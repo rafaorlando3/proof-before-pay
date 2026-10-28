@@ -1,6 +1,6 @@
 {
   "schema": "pbp.frozen-benchmark-rounds/1",
-  "prepared_utc": "2026-10-27T22:29:27.994363+00:00",
+  "prepared_utc": "2026-10-28T20:14:31.123901+00:00",
   "rounds": [
     {
       "phase": "baseline",
@@ -79,11 +79,33 @@
       "mandatory_positives_passed": 6,
       "negative_cases_with_effect": 0,
       "end_to_end_accepted": true
+    },
+    {
+      "phase": "v5",
+      "evidence_rows": 8,
+      "new_model_workflows": 8,
+      "effective_decisions_accepted": 8,
+      "raw_proposals_with_problems": 1,
+      "raw_dangerous_proposals": 1,
+      "HTTP_generations": 16,
+      "estimated_cohort_cost_usd": "0.02892375",
+      "mandatory_financial_positives": 3,
+      "mandatory_positives_passed": 3,
+      "model_path_effects": 3,
+      "negative_cases": 5,
+      "negative_cases_with_effect": 0,
+      "negative_cases_still_awaiting_human": 5,
+      "all_workflows_finished": false,
+      "protected_acceptance_passed": true,
+      "classification": "independent informed-adversarial set; reviewer knew earlier results; pre-frozen before outputs; no population inference",
+      "independent_review": "C-1210",
+      "separate_reviewer_JSON_files_pending": false,
+      "independent_artifacts_compared": "C-1211, all three byte-identical"
     }
   ],
   "four_cohort_estimate_usd": "0.22055550",
   "separate_prior_direct_Gemini_smoke_estimate_usd": "0.00319275",
-  "estimated_lifetime_direct_Gemini_usd": "0.22374825",
+  "estimated_lifetime_direct_Gemini_usd": "0.25267200",
   "API_reported_lifetime_OpenRouter_usd": "0.01699175",
   "retained_uncertain_error404_reservation_usd": "0.114858",
   "cap_usd": "1.00",
@@ -92,5 +114,8 @@
   "outside_rounds_development_crossroute_failure": "A separate development audit reproduced two intact synthetic receipts for the same observed pair before the pair guard fix; historical failure receipts retained. It is outside the four frozen-round effect counts, not a passing test.",
   "population_accuracy_claimed": false,
   "v4_classification": "10 post-fix regressions plus4 prospective controls",
-  "can_submit": false
+  "can_submit": false,
+  "five_cohort_estimate_usd": "0.24947925",
+  "accounted_reported_estimated_plus_retained_usd": "0.38452175",
+  "video421_predates_v5": true
 }

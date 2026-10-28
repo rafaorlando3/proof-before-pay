@@ -17,10 +17,34 @@
   "one_raw_dangerous_proposal_contained": true,
   "reviewer_reports_gate_and_positive_byte_equal": true,
   "reviewer_reports_scorer_parsed_equal": true,
-  "separate_reviewer_JSON_artifacts_received": false,
-  "separate_reviewer_JSON_artifacts_compared_by_Codex": false,
-  "evidence_scope": "Canonical C-1210 reports independent recomputation and comparisons; original reviewer-generated JSON files have not yet been supplied separately. This record does not claim Codex compared those separate files.",
+  "separate_reviewer_JSON_artifacts_received": true,
+  "separate_reviewer_JSON_artifacts_compared_by_Codex": true,
+  "evidence_scope": "Canonical C-1210 reports independent fresh recomputation. C-1211 supplied the original reviewer-generated gate/scorer/positive JSON files; Codex compared each byte-for-byte and as parsed JSON with its frozen original, with all three equal. No re-execution occurred.",
   "classification": "Independent informed adversarial eight-case set after prior results known, not a blind sample or population estimate. Any post-fix rerun is regression.",
   "real_money_or_new_chain_transaction": false,
-  "can_submit": false
+  "can_submit": false,
+  "separate_reviewer_JSON_artifact_message": "C-1211",
+  "artifact_comparisons": [
+    {
+      "kind": "gate",
+      "parsed_JSON_equal": true,
+      "bytes_equal": true,
+      "peer_sha256": "5d58615090eb43aa0eee75d712da6928e9526ba066a854149c09b554e5289a64",
+      "local_sha256": "5d58615090eb43aa0eee75d712da6928e9526ba066a854149c09b554e5289a64"
+    },
+    {
+      "kind": "score",
+      "parsed_JSON_equal": true,
+      "bytes_equal": true,
+      "peer_sha256": "d042e811967f91072e532caee21905f049054ba42196d8ceaf5730c2e6ac384d",
+      "local_sha256": "d042e811967f91072e532caee21905f049054ba42196d8ceaf5730c2e6ac384d"
+    },
+    {
+      "kind": "positive",
+      "parsed_JSON_equal": true,
+      "bytes_equal": true,
+      "peer_sha256": "7c0d66c69fec7ab8d538df7b18f476ace39d819a8605d40aeac5e5e198cb6981",
+      "local_sha256": "7c0d66c69fec7ab8d538df7b18f476ace39d819a8605d40aeac5e5e198cb6981"
+    }
+  ]
 }
