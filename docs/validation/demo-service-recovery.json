@@ -1,0 +1,22 @@
+{
+  "schema": "pbp.demo-owned-service-recovery/1",
+  "ok": true,
+  "own_units": [
+    "pbp49-demo36-iris.service",
+    "pbp49-demo36-relay.service",
+    "pbp49-demo36-viewer.service",
+    "pbp49-demo36-route.service",
+    "pbp49-demo36-route.timer"
+  ],
+  "enabled_at_boot": true,
+  "own_route_removed_then_recovered": true,
+  "all_previous_routes_and_Git_Caddyfile_preserved": true,
+  "IRIS_main_container_not_restarted": true,
+  "actual_receipt456_intact_after_recovery": true,
+  "worker_sha256": "0d4fddda3be478815383dfdb17309e30bd7cd5b3842ed9f604fa6fc1a67b737f",
+  "shared_Caddy_restart_policy": "unless-stopped",
+  "full_shared_host_reboot_tested": false,
+  "scope": "Owned service starts and scoped route restoration tested. Shared host was not rebooted, and shared proxy/Git boot configuration was not changed.",
+  "paid_calls": 0,
+  "new_effects": 0
+}

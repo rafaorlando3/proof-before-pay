@@ -40,3 +40,32 @@ The page identifies this limited viewer mode and does not claim reviewer privile
 The public TLS proxy, private config and service lifecycle are operator responsibilities.
 Bounded request concurrency and service resource limits should protect the lab.
 Do not call a staged loopback service a published demo or an awarded contest bonus.
+
+## Scoped route recovery
+
+`restore_route.py /absolute/path/to/route.json` supports a shared Caddy server whose
+private admin API listens at localhost:2019 and whose HTTPS server is named `srv0`.
+An operator supplies exactly one `pbp49-*` route id, one explicit host and the
+loopback viewer upstream `127.0.0.1:18879`. The worker refuses a conflicting id or
+host and broader handlers. It reads first, appends only when absent using the
+returned ETag, and verifies that all previous routes remain equal. An uncertain
+POST is recovered with GET; it is never blindly resent. It does not replace full
+configuration or edit the shared proxy's tracked Caddyfile.
+
+Example route (replace the host):
+
+```json
+{"@id":"pbp49-demo","match":[{"host":["demo.example.com"]}],"handle":[{"handler":"reverse_proxy","upstreams":[{"dial":"127.0.0.1:18879"}]}],"terminal":true}
+```
+
+An operator may supervise the viewer/private relay and start the owned IRIS
+container with separate systemd units, then run the recovery worker from a bounded
+oneshot timer. In the current lab the timer checks every30seconds; it makes no
+mutation while the exact route exists. Stop/disable that own timer before retiring
+or intentionally removing the demo route. Credentials remain in private0600
+config and opaque browser sessions stay in memory.
+
+The lab verified owned service starts and an actual remove/recover of only its
+route, with the receipt intact and no IRIS restart. It did not reboot the shared
+host or replace shared proxy/boot configuration. These are operational evidence
+limits, not a claim of tested whole-host disaster recovery.

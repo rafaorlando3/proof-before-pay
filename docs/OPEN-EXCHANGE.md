@@ -95,8 +95,12 @@ with matching subset counters. It allows inspection and copy verification, with 
 intake, approvals or paid model calls. Viewer credentials are private and never
 embedded in a URL, source package or video. Public HTTPS and the browser login
 were verified; publishing the contest entry remains subject to Rafael’s final OK.
-The shared proxy’s current route is scoped to this demo. It must be restored after
-a shared proxy reload/reboot; the tracked PixSettle proxy configuration was preserved.
+Owned service units now start the viewer, private relay and existing lab container at boot.
+A bounded timer restores only the exact demo route after a shared proxy reload, with
+ETag protection and no full-config replacement. An actual remove/recover rehearsal
+preserved every previous route, the tracked proxy file and the intact receipt. The
+IRIS container was not restarted; a full shared-host reboot was not performed. See
+[the service-recovery scope](validation/demo-service-recovery.json).
 
 The EAP archive and derived images must never enter the source package or a public registry.
 
