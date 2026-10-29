@@ -122,10 +122,13 @@ license steps and an independent new-operator walkthrough were not measured.
 [the IRIS-backed demo](https://pbp49.78-17-93-244.sslip.io/pbp/ui/). It uses the application's sign-in form,
 not a browser credential prompt. Access details are supplied privately for review; dedicated contest
 access details have not been released. The eventual Open Exchange listing will need that access arranged.
-You can inspect two selected synthetic cases, the evidence the agent saw, missing information, the
+You can inspect three selected synthetic cases, the evidence the agent saw, missing information, the
 sealed decision and approval, and an intact synthetic receipt. Use "Try to tamper" to edit a copy and
 verify it: the verdict turns tampered; restoring the copy turns it intact. The stored record is unchanged.
 The viewer cannot approve, create cases or call a model; those routes are refused by the gateway.
+The selected delivery-conflict example retains its historical rejection. Its role guide reads the
+verified decision snapshot; the historical comparison links separate recorded-refund and live-v5
+reports rather than presenting them as new executions.
 
 **Path B, private execution in recorded mode (no model key or paid inference).** Requires the AI Hub
 EAP build154 image from the vendor portal and the local-image setup described below. The default Compose

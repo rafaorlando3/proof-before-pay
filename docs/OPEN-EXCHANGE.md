@@ -72,7 +72,7 @@ See [the aggregate result](validation/live-independent-v5.json) and
 - [x] Initial Claude code review received (C-1163); source/freeze review in C-1182 and independent v2 result review in C-1183, with artifact limits recorded in validation.
 - [x] Native AI Hub agent participates in a working Interoperability production, with actual native tool calls.
 - [x] Private IRIS-backed reviewer UI and recorded end-to-end evidence.
-- [x] Authenticated HTTPS viewer backed by running IRIS: two explicitly selected synthetic cases, recorded proposals, case-scoped seals/receipts and copy verification. Review, intake and model calls are disabled.
+- [x] Authenticated HTTPS viewer backed by running IRIS: three explicitly selected synthetic cases, recorded proposals, case-scoped seals/receipts and copy verification. Review, intake and model calls are disabled.
 - [ ] Optional public live-inference access with its own quota/BYOK; the viewer does not provide this.
 - [x] Model/protocol/routing provider and actual trial usage/cost recorded; unknown billing kept reserved.
 - [x] Pre-frozen regression controls include successful financial paths and zero-effect negatives.
@@ -105,7 +105,7 @@ review claimed. The exported media and final review kit remain separate from the
 source ZIP.
 
 The authenticated viewer reads the running private IRIS backend through a narrow
-[demo gateway](../demo_gateway/README.md). It exposes two selected synthetic cases,
+[demo gateway](../demo_gateway/README.md). It exposes three selected synthetic cases,
 with matching subset counters. It allows inspection and copy verification, with no
 intake, approvals or paid model calls. Viewer credentials are private and never
 embedded in a URL, source package or video. Public HTTPS and the browser login
@@ -120,6 +120,12 @@ IRIS container was not restarted; a full shared-host reboot was not performed. S
 The video4.2.1 recording predates the independent eight-case v5 cohort. Its newer
 results belong in the accompanying report/description, not in a claim that the
 recording shows that run.
+
+The later presentation-only update explains the roles in an existing recorded
+delivery-conflict case and adds a comparison of separate historical reports. The
+viewer retains that case's rejection; it does not generate a new proposal or effect.
+The explanatory panel requires the retained decision seal to verify intact. The
+video remains unchanged and predates this UI update as well as v5.
 
 ## Integrity boundary and future work
 
