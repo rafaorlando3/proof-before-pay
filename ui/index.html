@@ -122,6 +122,16 @@ a{color:var(--accent)}
 .stack{display:flex;flex-direction:column;gap:var(--s4);min-width:0}
 .card{min-width:0}
 #detail{overflow:hidden}
+.case-guide{margin:0 16px 12px;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--surface)}
+.case-guide>summary{padding:12px 14px;font-weight:700;cursor:pointer}
+.case-guide .guide-body{padding:0 14px 14px}
+.guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.guide-grid article{padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);min-width:0}
+.guide-grid h4{margin:8px 0 5px;font-size:13px}.guide-grid p{margin:0;font-size:12px;color:var(--text-2)}
+.guide-grid code{overflow-wrap:anywhere}.guide-grid a{color:var(--accent)}
+.guide-grid.comparison{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1100px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.guide-grid,.guide-grid.comparison{grid-template-columns:minmax(0,1fr)}}
 
 /* decision */
 .decision .head{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -406,6 +416,39 @@ function classify(d){
   const fin = d.review && typeof d.review==='object' ? d.review : null;
   return {c,dec,p,rc,headSeal,ledgerBlocked,refused,kind,fin};
 }
+// Explanatory copy uses the verified retained snapshot, not mutable case inputs.
+function recordedCaseGuide(d, replay){
+  const seal=(replay.steps||[]).find(s=>s.kind==='decision' && s.commitment===d.decision?.commitment);
+  const r=seal?.record, input=r?.saw?.inputs;
+  if(seal?.verification?.state!=='intact' || r?.case?.id!==d.case.case_id ||
+     !/^pix-0006(?::|$)/.test(r.case.id) || r.model?.mode!=='recorded' ||
+     r.case.exception!=='refund_request' || r.rules?.result!=='no_match' ||
+     r.decision?.action!=='hold_for_evidence' || r.decision?.moves_money!==false ||
+     input?.order?.status!=='delivered' ||
+     input?.evidence?.delivery_proof!=='carrier_scan_2026-10-18' ||
+     input?.evidence?.customer_message!=='Product never arrived, I want my money back.' ||
+     !Object.prototype.hasOwnProperty.call(r.missing||{},'evidence.carrier_signature') ||
+     r.missing['evidence.carrier_signature']!==null) return '';
+  return `<details class="case-guide" open><summary>Who does what in this recorded case</summary><div class="guide-body">
+    <span class="pill info">Recorded replay · not new inference</span>
+    <p class="small muted">This public example explains the workflow. It does not establish a model advantage over rules.</p>
+    <div class="guide-grid">
+      <article><span class="pill info">Contradiction</span><h4>Rules abstain</h4><p>The order is marked delivered, but the customer denies receipt. R1–R3 return <code>no_match</code>; their missing-field check finds no empty evidence here.</p></article>
+      <article><span class="pill warn">Missing evidence</span><h4>Recorded proposal</h4><p>The tape proposes <code>hold_for_evidence</code> and names <code>evidence.carrier_signature</code> as absent. This gap comes from the recorded proposal, not a model call happening now.</p></article>
+      <article><span class="pill warn">Execution boundary</span><h4>Server checks and seals</h4><p>The server retains the tool observations and declared gap. With <code>moves_money=false</code>, this route does not call <code>Ledger.Stage</code> or issue a financial permit.</p></article>
+      <article><span class="pill ok">No financial effect</span><h4>A person investigates</h4><p>A reviewer compares the delivery proof with the claim. A disputed-delivery refund is outside the v1 effect contract; acknowledging this task cannot execute that refund.</p></article>
+    </div></div></details>`;
+}
+function historicalComparison(){
+  const base='https://github.com/rafaorlando3/proof-before-pay/blob/d0c2cf0563804d1abfe99431fbf4c6383f23c55a/docs/validation/';
+  return `<details class="case-guide"><summary>Compare a completed refund with a contained proposal</summary><div class="guide-body">
+    <span class="pill info">Historical evidence · not a new run</span>
+    <div class="guide-grid comparison">
+      <article><span class="pill ok">Recorded native integration</span><h4>A legitimate synthetic refund</h4><p>A recorded proposal passed server checks, then an authenticated test reviewer approved the exact seal. One single-use permit produced one synthetic receipt, verified by readback.</p><p style="margin-top:8px"><a href="${base}native-recorded-demo42.json" target="_blank" rel="noopener">Inspect the recorded integration report</a></p></article>
+      <article><span class="pill warn">Live cohort v5 · public report</span><h4>A raw proposal was contained</h4><p>The model reinterpreted a malformed amount and proposed a refund. Server-side target derivation refused it; the effective sealed decision escalated with the refund target missing and zero effects. The raw proposal remains an unsealed diagnostic.</p><p style="margin-top:8px"><a href="${base}live-independent-v5.json" target="_blank" rel="noopener">Inspect the qualified eight-case report</a></p></article>
+    </div><p class="small muted" style="margin:12px 0 0">These are different historical examples. The v5 report records three intact positive receipts and five zero-effect cases still awaiting a person. It is an informed adversarial set, not a population estimate or evidence that every model error will be caught.</p>
+  </div></details>`;
+}
 function flow(x, d){
   const {c,dec,p,rc,refused,ledgerBlocked,kind} = x; const st=c.status; const seals=(d.seals||[]).length;
   const toolN = dec?.usage?.tool_calls||0; const src = dec?.source;
@@ -478,6 +521,8 @@ async function openCase(id, userAction){
     <details class="tech"><summary>Technical details</summary><div class="in small muted"><span class="mono">${esc(c.case_id)}</span> · store ${esc(c.store)} · policy ${esc(c.policy?.id)} v${esc(c.policy?.version)} · created ${fmtTime(c.created_at)} · updated ${fmtTime(c.updated_at)}${c.session_id?` · trace session <span class="mono">${esc(c.session_id)}</span>`:''}</div></details>
   </div>
   ${flow(x,d)}
+  <div id="case-guide"></div>
+  ${historicalComparison()}
   <div class="cols" style="padding:0 16px 16px">
    <div class="stack">
     ${c.status==='awaiting_human' ? reviewCard(x, cur, dest) : ''}
@@ -533,6 +578,7 @@ async function openCase(id, userAction){
   if(state.current!==id || request!==state.replayRequest) return;
   const box = $('#replay'); if(!box) return;
   if(!r.ok){ state.detailSig=''; box.innerHTML = `<div class="muted small">Replay unavailable: ${human(r.reason)}</div>`; return; }
+  $('#case-guide').innerHTML = recordedCaseGuide(d,r);
   box.innerHTML = `<details open><summary>Normalized inputs sealed by the server</summary><div class="in"><pre>${esc(JSON.stringify(c.input, null, 1))}</pre></div></details>
    ${(r.tool_calls||[]).map(t=>`<details><summary><span class="tool"><span class="seq">${esc(t.seq)}</span><span class="name">${esc(t.name)}</span><span class="ms">${esc(t.duration_ms)} ms · ${fmtTime(t.at)}</span></span></summary><div class="in">${t.args?`<div class="small muted" style="margin:6px 0 4px">arguments</div><pre>${esc(JSON.stringify(t.args,null,1))}</pre>`:''}<div class="small muted" style="margin:6px 0 4px">output</div><pre>${esc(JSON.stringify(t.output, null, 1))}</pre></div></details>`).join('') || '<div class="muted small" style="margin-top:8px">no tool calls (decided by rules)</div>'}`;
   restoreDisclosures(openDetails);
