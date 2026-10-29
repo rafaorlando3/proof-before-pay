@@ -119,9 +119,10 @@ Two paths exist with the prerequisites below. Times are not promised because the
 license steps and an independent new-operator walkthrough were not measured.
 
 **Path A, no installation: the authenticated read-only viewer.** Open
-[the IRIS-backed demo](https://pbp49.78-17-93-244.sslip.io/pbp/ui/). It uses the application's sign-in form,
-not a browser credential prompt. Access details are supplied privately for review; dedicated contest
-access details have not been released. The eventual Open Exchange listing will need that access arranged.
+[the dedicated judge viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/). It uses the application's
+sign-in form, not a browser credential prompt. Use the private access details supplied with your
+invitation; the earlier viewer address uses separate credentials. Dedicated judge access has been
+prepared and tested, but has not yet been released to judges or submitted to Open Exchange.
 You can inspect three selected synthetic cases, the evidence the agent saw, missing information, the
 sealed decision and approval, and an intact synthetic receipt. Use "Try to tamper" to edit a copy and
 verify it: the verdict turns tampered; restoring the copy turns it intact. The stored record is unchanged.
