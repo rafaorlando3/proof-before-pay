@@ -1,0 +1,10 @@
+{
+  "schema": "pbp.questionnaire-confirmation/1",
+  "submitted_at_utc": "2026-11-03T20:46:38.162851+00:00",
+  "official_link": "https://forms.cloud.microsoft/r/upQDKbj78D",
+  "UI_confirmation": "Sua resposta foi enviada.",
+  "submitted_for": "Rafael Orlando Mendes / Proof Before Pay",
+  "scope": "Native agent proof-of-concept, containers; no real-user pilot or production claim",
+  "marketing_case_study_or_presentation_consent_granted": false,
+  "bonus_awarded_verified": false
+}

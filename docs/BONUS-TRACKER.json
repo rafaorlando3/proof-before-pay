@@ -1,6 +1,6 @@
 {
   "schema": "pbp.contest-bonus-tracker/1",
-  "checked_at_utc": "2026-10-28T23:57:26.078305+00:00",
+  "checked_at_utc": "2026-11-03T20:46:38.162851+00:00",
   "contest": 49,
   "current_full_bonus_table_located": true,
   "no_points_awarded_to_project_verified": true,
@@ -10,7 +10,7 @@
   "arithmetic_sum_is_not_an_award_or_guaranteed_project_score": true,
   "official_bonus_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
   "official_bonus_page_published_at": "2026-10-26T23:14:44-04:00",
-  "official_page_verified_via": "Official web page opened28Oct; current questionnaire1 verified. No fresh raw-HTML digest claimed.",
+  "official_page_verified_via": "Official bonus page and DPI-I-689 visible portal checked03Nov; publication confirmations recorded separately.",
   "official_page_snapshot_sha256": null,
   "official_sources": [
     "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
@@ -23,9 +23,11 @@
       "item": "Questionnaire",
       "points_cap": 1,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "not_submitted",
-      "note": "Official feedback questionnaire can earn one point. No response or submission has been performed or award verified.",
-      "evidence": [],
+      "delivery_status": "submitted_UI_confirmed_not_awarded",
+      "note": "Official response submitted03Nov; confirmation retained. No marketing case-study or presentation consent granted.",
+      "evidence": [
+        "docs/validation/questionnaire-20261103.json"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -109,8 +111,8 @@
       "item": "ZPM package deployment",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "native_local_application_package_tested_registry_publication_pending",
-      "note": "Native source package generation, load/uninstall/reload were accepted with documented scope. The current source recipe is present; no public registry publication or zpm install from that registry is verified. A local source ZIP does not establish the bonus.",
+      "delivery_status": "OEX_public_registry_distribution_requested_installation_unverified",
+      "note": "Native source package generation, load/uninstall/reload were accepted with documented scope. The current source recipe is present; no public registry publication or zpm install from that registry is verified. A local source ZIP does not establish the bonus. Publish in Package Manager checked and submitted03Nov; approval/registry processing and actual registry install remain pending.",
       "evidence": [
         "module.xml",
         "IPM-OPERATOR.txt",
@@ -136,9 +138,12 @@
       "item": "Community Opportunity idea",
       "points_cap": 4,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "no_qualifying_implemented_idea_verified",
-      "note": "Must implement an Ideas Portal idea with Community Opportunity status and link it. No claimed match yet.",
-      "evidence": [],
+      "delivery_status": "source_and_historical_runtime_evidence_linked_VisualTrace_capture_pending",
+      "note": "Community Opportunity status checked03Nov. Dedicated idea link submitted to OEX. Fresh native Visual Trace demonstration pending, no award assumed.",
+      "evidence": [
+        "https://ideas.intersystems.com/ideas/DPI-I-689",
+        "docs/TRACEABILITY.md"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -154,9 +159,11 @@
       "item": "First Developer Community article",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "private_draft_Rafael_review_required",
-      "note": "Requires a new published article describing the project and use.",
-      "evidence": [],
+      "delivery_status": "published_UI_confirmed_not_awarded",
+      "note": "Article5.3 with v7 qualifications published03Nov.",
+      "evidence": [
+        "https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -172,12 +179,10 @@
       "item": "YouTube video",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "video421_rendered_reviewed_owner_approved_YouTube_not_published",
-      "note": "A168second actual native-workflow video with four narration/CC languages is complete and approved by the owner. Media files remain outside this source repository. YouTube publication and awarded points are not verified.",
+      "delivery_status": "published_with_English_captions_not_awarded",
+      "note": "Video4.2.1 published03Nov; pre-v7 disclaimer; no new model call.",
       "evidence": [
-        "docs/VIDEO-SCRIPT.md",
-        "docs/validation/native-recorded-demo42.json",
-        "docs/OPEN-EXCHANGE.md"
+        "https://www.youtube.com/watch?v=LX_0V4C6wLw"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     }
@@ -216,6 +221,8 @@
     "voting_end_EST": "2026-11-15T23:59:00-05:00",
     "equivalent_voting_end_Paraguay": "2026-11-16T01:59:00-03:00",
     "source": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows",
-    "publishing_or_submitting_still_requires_Rafael_express_OK": true
+    "publishing_or_submitting_still_requires_Rafael_express_OK": true,
+    "publication_authorized_20261103": true,
+    "current_queue_express_OK_received": "2026-11-03; covers listed publication destinations and authorized staged improvements"
   }
 }

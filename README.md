@@ -1,5 +1,11 @@
 # Proof Before Pay
 
+[Open Exchange](https://openexchange.intersystems.com/package/Proof-Before-Pay) ·
+[Video 4.2.1 with captions](https://www.youtube.com/watch?v=LX_0V4C6wLw) ·
+[Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub)
+
+Published on 3 November 2026. Contest49 participation was requested; its public listing is still pending confirmation. The video predates the v7 evaluation. The authenticated online viewer currently replays retained cases from a running IRIS instance and makes no new model call.
+
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
 The application runs on InterSystems IRIS AI Hub EAP build 154: native Interoperability
 intake/process/operations, deterministic policy, scoped read-only tools, authenticated
@@ -110,7 +116,7 @@ closed different sets of three cases; the selected free-text failures were autho
 with knowledge of D's lexicon. See [both readings and their limits](docs/validation/paired-v6-20261031.json)
 and the [final descriptive report](docs/validation/paired-v6-report-B.md).
 The recorded video predates both cohorts. Dedicated reviewer access is supplied
-privately; the final package and submission remain pending. No bank settlement or independent
+privately; the reviewed r6 source and media are published; contest listing remains pending confirmation. No bank settlement or independent
 external anchor is claimed; local seals detect edits to a copy and do not protect against an administrator who
 can rewrite the database, and an optional asynchronous anchor under independent custody is a declared roadmap
 item without a date. See [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
@@ -420,3 +426,27 @@ See [provenance](docs/PROVENANCE.json), [runtime diagnosis](docs/IRIS-154.md),
 The [contest bonus tracker](docs/BONUS-TRACKER.json) now maps the official contest49
 table to implementation evidence and pending deliverables. Published point values are not
 points awarded to this application.
+
+
+## Bonuses
+
+These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 3 November. Point values are possible bonuses, not awarded points.
+
+| Item | Points | Evidence and current state |
+|---|---:|---|
+| Questionnaire | 1 | Submitted on 3 November; [confirmation record](docs/validation/questionnaire-20261103.json). |
+| Workflow Engine | 2 | Implemented: [native review](cls/pbp/Review.cls), [Production](cls/pbp/Production.cls), [authenticated workflow evidence](docs/validation/http-workflow.json). |
+| Embedded Python | 3 | Implemented: [Witness bridge](cls/ProofBeforePay/Witness.cls), [Ledger bridge](cls/ProofBeforePay/Ledger.cls), [runtime evidence](docs/validation/ledger-runtime.json). |
+| Docker | 2 | Implemented: [Dockerfile](Dockerfile), [Compose](compose.yml), [qualified lifecycle evidence](docs/validation/clean-lifecycle.json). The licensed vendor image is obtained separately. |
+| Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated and currently recorded/read-only. Live bounded inference and public judge-access instructions are being prepared; eligibility is not assumed. |
+| ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt), [qualified local package test](docs/validation/independent-IPM-20261031.json). Public registry distribution requested through OEX; registry installation remains unverified. |
+| Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Visual Trace inspection recipe and evidence limits](docs/TRACEABILITY.md). OEX idea link submitted; fresh Visual Trace demonstration remains pending. |
+| First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
+| Second article or translation | 1 | Translation in preparation; no second publication claimed. |
+| YouTube video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw), English captions and explicit pre-v7 disclosure. |
+| IRIS Vector Search | 2 | Not implemented in this release. Hash/test vectors are not vector retrieval. |
+| Custom Interoperability adapter | 2 | Not implemented in this release. The vendor AI Hub adapter is not our own adapter. |
+| PEX | 3 | Not implemented; outside the current plan. |
+| AI Hub / Embedded Python bugs | up to 3 each | No qualifying submitted reproducible vendor bug is claimed. |
+
+See the [structured tracker](docs/BONUS-TRACKER.json) for the complete item list. New functionality is documented as delivered only after its behavior is verified.
