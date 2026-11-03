@@ -32,6 +32,18 @@ class QueueTests(unittest.TestCase):
         self.assertFalse(q.run_one(lambda *_: self.fail("runner called")))
         self.assertFalse((Path(self.tmp.name) / "queue.json").exists())
 
+    def test_request_identifier_fits_native_case_id_without_truncation(self):
+        q = self.queue(enabled=True)
+        self.assertFalse(q.submit("duplicate", "a" * 49)["ok"])
+        self.assertFalse((Path(self.tmp.name) / "queue.json").exists())
+        token = "a" * 48
+        self.assertTrue(q.submit("duplicate", token)["ok"])
+        q.run_one(self.result)
+        restored = self.queue(enabled=True).submit("duplicate", token)
+        self.assertTrue(restored["duplicate"])
+        self.assertEqual(restored["job"]["case_id"], "public-live:" + token)
+        self.assertLessEqual(len(restored["job"]["case_id"]), 64)
+
     def test_concurrent_admission_one_slot_and_one_claim(self):
         q = self.queue(enabled=True)
         with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:

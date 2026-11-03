@@ -12,6 +12,10 @@ and select only operator-configured scenario names, never user prompts. The
 worker result must identify that request's `public-live:<request_id>` case and a
 decision commitment plus native session id. Arbitrary response fields are not
 stored or exposed by the queue projection.
+Request identifiers contain 16 to 48 ASCII letters, digits, underscores or
+hyphens, keeping the prefixed case within the native 64-character CaseId limit.
+Product errors, status and confirmations must remain in the page; do not add
+native JavaScript alert/confirm/prompt calls or an HTTP authentication challenge.
 
 State lives in a private operator directory outside Git. A process-shared lock,
 atomic replacement and file/directory fsync protect admission across concurrent
@@ -49,7 +53,7 @@ These controls do not protect against a privileged operator rewriting state.
 
 `python3 -m unittest discover -s demo_gateway -p test_live_queue.py -v`
 
-Twelve tests cover concurrent threads and processes, one worker claim, restart
+Thirteen tests cover the native case identifier boundary, concurrent threads and processes, one worker claim, restart
 and idempotency, the Pacific day boundary, delayed worker starts, failed jobs,
 in-flight crash preservation, state corruption, symlinks, unsafe configuration,
 wrong-case replies and exclusion of arbitrary runner fields. An optimized-Python

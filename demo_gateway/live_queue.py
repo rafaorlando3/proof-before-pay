@@ -19,6 +19,11 @@ import time
 from zoneinfo import ZoneInfo
 
 
+# The native pbp.Data.Case.CaseId is limited to 64 characters. Keep the
+# public-live: prefix and request identifier within that persisted boundary.
+REQUEST_ID_PATTERN = r"[a-zA-Z0-9_-]{16,48}"
+
+
 class QueueUnavailable(Exception):
     pass
 
@@ -89,7 +94,7 @@ class LiveQueue:
             active = []
             days = {}
             for token, job in state["jobs"].items():
-                require(re.fullmatch(r"[a-zA-Z0-9_-]{16,80}", token))
+                require(re.fullmatch(REQUEST_ID_PATTERN, token))
                 require(job["status"] in {"queued", "running", "complete", "failed"})
                 require(isinstance(job["scenario"], str))
                 require(dt.date.fromisoformat(job["day"]).isoformat() == job["day"])
@@ -129,7 +134,7 @@ class LiveQueue:
     def submit(self, scenario, request_id):
         if not self.enabled:
             return self.fallback("live_disabled")
-        if not isinstance(scenario, str) or scenario not in self.scenarios or not isinstance(request_id, str) or not re.fullmatch(r"[a-zA-Z0-9_-]{16,80}", request_id):
+        if not isinstance(scenario, str) or scenario not in self.scenarios or not isinstance(request_id, str) or not re.fullmatch(REQUEST_ID_PATTERN, request_id):
             return self.fallback("fixed_scenario_and_request_id_required")
         now = self.clock()
         if type(now) not in (int, float) or not math.isfinite(now):

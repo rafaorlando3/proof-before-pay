@@ -1,0 +1,24 @@
+{
+  "deployed_console_sha256": "2f8aa7e37349deb1db593fde6550071573999c0c720874c1ffdc2fb23524703b",
+  "native_JS_dialog_calls": 0,
+  "inline_review_result": true,
+  "toast_component": true,
+  "console_matches_repository": true,
+  "at": "2026-11-03T23:22:49.783885+00:00",
+  "schema": "pbp.product-native-dialog-audit/1",
+  "source_revision": "03b479280c4306e7272b5e6fd8507623a5baa4f8",
+  "deployed_auth_template_sha256": "0cfc47e29bf42ac4d69d306e8fa1841bf12492c80d7697562a6dd3bdf05ae534",
+  "native_JS_dialog_calls_in_auth": 0,
+  "unauthenticated_API_status": 401,
+  "native_HTTP_auth_challenge_header_present": false,
+  "repository_auth_matches_deployed": true,
+  "source_evidence": [
+    "ui/index.html:273,651-660: in-page toast and review results",
+    "demo_gateway/server.py:89: in-page status notice",
+    "demo_gateway/test_contract.py:98,109: guards against JavaScript dialogs"
+  ],
+  "scope": "Source and deployed console/auth inspection plus unauthenticated API response; not an exhaustive interactive test of every browser feature.",
+  "vendor_IRIS_management_portal_excluded": true,
+  "user_requirement": "Product errors, confirmations and authentication stay in-page; no native JavaScript alert/confirm/prompt or HTTP Basic challenge.",
+  "unchanged_product_no_code_fix_needed": true
+}
