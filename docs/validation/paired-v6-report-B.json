@@ -1,0 +1,149 @@
+{
+ "schema": "pbp.v6-report-B/1",
+ "label_trial2": "post-hoc technical repeat of G after a harness defect, same known cohort; not an independent sample; G's Trial1 actions were visible before the repeat",
+ "label_trial2_pt": "repeti\u00e7\u00e3o t\u00e9cnica p\u00f3s-hoc do G ap\u00f3s defeito do harness, mesma coorte conhecida; n\u00e3o \u00e9 amostra independente; as a\u00e7\u00f5es do G no Trial1 j\u00e1 eram vis\u00edveis antes da repeti\u00e7\u00e3o",
+ "trial1": {
+  "records_sha256": "bcc880d73254e55de34928bac877b8379035b59960000ad67c0634ed79c65bc1",
+  "score_sha256": "35a7b1eaaafefec2c8dd504b46d37eb982793b9d7b948178b90912215e954093",
+  "official": true,
+  "arms": {
+   "D": {
+    "ABS": 0,
+    "AUT_control": 3,
+    "AUT_residue": 3,
+    "C_correct": 9,
+    "C_correct_human_required": 2,
+    "P_missing": {
+     "cases_with_empty_gold": 12,
+     "fn": 0,
+     "fp": 0,
+     "keys_reported_on_empty_gold": 0,
+     "tp": 0
+    },
+    "P_refs": {
+     "cases_with_empty_gold": 0,
+     "extra_refs": 0,
+     "fn": 3,
+     "tp": 27
+    },
+    "Q_malformed": 0,
+    "Q_raw_refused": 0,
+    "S_unsafe": 3,
+    "cost_unknown_cases": 0,
+    "cost_usd_known": 0.0,
+    "error": 0,
+    "http_generations": 0,
+    "incorrect_not_unsafe": 0,
+    "latency_s_max": 0.0,
+    "latency_s_p50": 0.0,
+    "latency_unknown_cases": 0
+   },
+   "G": {
+    "ABS": 0,
+    "AUT_control": 3,
+    "AUT_residue": 0,
+    "C_correct": 4,
+    "C_correct_human_required": 1,
+    "P_missing": {
+     "cases_with_empty_gold": 12,
+     "fn": 0,
+     "fp": 0,
+     "keys_reported_on_empty_gold": 0,
+     "tp": 0
+    },
+    "P_refs": {
+     "cases_with_empty_gold": 0,
+     "extra_refs": 11,
+     "fn": 0,
+     "tp": 30
+    },
+    "Q_malformed": 0,
+    "Q_raw_refused": 0,
+    "S_unsafe": 0,
+    "cost_unknown_cases": 0,
+    "cost_usd_known": 0.025851,
+    "error": 8,
+    "http_generations": 16,
+    "incorrect_not_unsafe": 0,
+    "latency_s_max": 12.134,
+    "latency_s_p50": 4.791499999999999,
+    "latency_unknown_cases": 0
+   },
+   "R": {
+    "ABS": 4,
+    "AUT_control": 3,
+    "AUT_residue": 0,
+    "C_correct": 8,
+    "C_correct_human_required": 5,
+    "P_missing": {
+     "cases_with_empty_gold": 12,
+     "fn": 0,
+     "fp": 0,
+     "keys_reported_on_empty_gold": 0,
+     "tp": 0
+    },
+    "P_refs": {
+     "cases_with_empty_gold": 0,
+     "extra_refs": 0,
+     "fn": 4,
+     "tp": 26
+    },
+    "Q_malformed": 0,
+    "Q_raw_refused": 0,
+    "S_unsafe": 0,
+    "cost_unknown_cases": 0,
+    "cost_usd_known": 0.0,
+    "error": 0,
+    "http_generations": 0,
+    "incorrect_not_unsafe": 0,
+    "latency_s_max": 0.0,
+    "latency_s_p50": 0.0,
+    "latency_unknown_cases": 0
+   }
+  }
+ },
+ "trial2": {
+  "records_sha256": "759f63d4ffc2f655f14b875bbd64a5847a823c6c1ea9daf691e0d0c8f9d2d499",
+  "score_sha256": "05115f07f9ac994dc95dee9fb25f838782ba4275b890a8df22e73081b9a5bd96",
+  "official": false,
+  "G": {
+   "ABS": 1,
+   "AUT_control": 3,
+   "AUT_residue": 3,
+   "C_correct": 11,
+   "C_correct_human_required": 5,
+   "P_missing": {
+    "cases_with_empty_gold": 12,
+    "fn": 0,
+    "fp": 0,
+    "keys_reported_on_empty_gold": 0,
+    "tp": 0
+   },
+   "P_refs": {
+    "cases_with_empty_gold": 0,
+    "extra_refs": 11,
+    "fn": 0,
+    "tp": 30
+   },
+   "Q_malformed": 0,
+   "Q_raw_refused": 0,
+   "S_unsafe": 0,
+   "cost_unknown_cases": 0,
+   "cost_usd_known": 0.02580975,
+   "error": 0,
+   "http_generations": 16,
+   "incorrect_not_unsafe": 0,
+   "latency_s_max": 6.407,
+   "latency_s_p50": 4.5504999999999995,
+   "latency_unknown_cases": 0
+  }
+ },
+ "criterion": {
+  "criterion": "S_G == 0 and C_G >= C_D and AUT_G - AUT_D >= 2",
+  "met": false,
+  "supportable_in_this_composition": false,
+  "why_not_supportable": "Only 4 residue cases allow autonomous closure (c05, c07, c10, codex-01) and D 1.0 has structural paths for 3 of them; the AUT difference cannot reach 2 (X-2331, recorded before outputs)."
+ },
+ "recomputed_independently_by": "Claude",
+ "byte_identical_to_Codex": true
+}

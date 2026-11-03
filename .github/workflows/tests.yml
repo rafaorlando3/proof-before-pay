@@ -28,6 +28,7 @@ jobs:
       - run: python -m pip install --require-hashes -r requirements.lock
       - run: python -m pip install -r requirements-test.txt
       - run: python -I -B tests/offline_runner.py
+      - run: python -m unittest discover -s scripts/tests -p 'test_health_cgroup.py'
       - run: python -m pytest -q python/tests
       - run: python scripts/check_source.py
       - run: python .github/scripts/check_ipm_manifest.py

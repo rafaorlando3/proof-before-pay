@@ -13,6 +13,37 @@ Simple cases use deterministic rules without a model call. When no rule matches,
 AI Hub agent reads the five scoped tools and proposes a decision; policy and the context
 guard constrain it before sealing.
 
+## Audited v7 result, 1 November 2026
+
+The current release adds the [final v7 report](docs/validation/paired-v7-20261101.md)
+and its [structured summary](docs/validation/paired-v7-20261101.json). The older
+validation sections below retain their historical scope and failures.
+
+In one pre-frozen informed set of 12 cases (four controls and eight residues),
+the agent's raw proposals were correct in **11/12**, versus **7/12** for conservative
+rules and **8/12** for the deterministic baseline. The frozen criterion was met:
+at least two more correct raw decisions than both baselines, zero unsafe agent
+decisions and all four controls correct. Effective results were **10/12**, **7/12**
+and **8/12** respectively; correct autonomous closures were 5, 3 and 3. The r4 refund
+was safely blocked because its exception label is outside the ledger contract;
+its frozen eligible-effect label was an authoring error and remains counted against
+the agent. In r8 the agent missed a required missing-evidence declaration. These
+errors were not repaired by another run.
+
+Claude independently remapped all 36 records and recomputed the identical score.
+The result is descriptive evidence on these cases, not a blind sample, independent
+human study, population estimate or general superiority claim. Estimated usage
+cost was US$0.02566575, not a billing receipt. All effects were synthetic.
+
+The basic authenticated viewer journey was checked through automated browser
+navigation with Rafael signing in manually, including three cases, a tampered and
+restored record copy, and queue access at 303/390/980/1100 pixels. Logout and recovery
+code consumption were not run. Installation remained qualified on the owner's
+already loaded licensed build154 amd64 image under emulation on Apple Silicon,
+not a fresh portal download or independent human install. The video 4.2.1 and
+selected replay examples predate v7 and are not footage of that run. See the
+[article 5.3](docs/ARTICLE-5.3.md) for the development history and limitations.
+
 ## What to inspect first
 
 Use the [judge path](#judge-path) below to inspect these examples. Recorded proposals are replay,
@@ -64,9 +95,22 @@ or evidence for three-agent voting. A reviewer-note defect found during that tri
 and covered by replay regression. Isolated cold installation, lifecycle and native IPM application
 load/uninstall/local-package tests passed; [scope and qualifications](docs/validation/native-installation-IPM.json)
 include the separate [fresh-volume IPM bootstrap result and limitations](docs/validation/native-IPM-bootstrap.json).
+The [31 October reproduction](docs/validation/independent-reproduction-A-20261031.md)
+adds a qualified untraced USER IPM bootstrap, source-only package lifecycle and
+scripted judge HTTP journey, cross-reviewed against the retained evidence. It used
+the owner's licensed cached build154 image under amd64 emulation on Apple Silicon;
+it is not an independent human or authenticated browser-DOM walkthrough.
 A final independent eight-case cohort was accepted on 28 October with one raw model failure contained by the
-server (see the validation summary). The recorded video predates that cohort. Public demo credentials for
-reviewers, the final package and the submission itself remain pending. No bank settlement or independent
+server (see the validation summary). The later twelve-case paired trial retains its
+failed first-attempt instrumentation score alongside a separately admitted,
+post-hoc technical repeat on the same known cases. That repeat observed three
+autonomous residue closures for both G and deterministic triage D, so the required
+autonomy gain was not demonstrated. Claude independently recomputed both scores byte for byte in C1236. G and D
+closed different sets of three cases; the selected free-text failures were authored
+with knowledge of D's lexicon. See [both readings and their limits](docs/validation/paired-v6-20261031.json)
+and the [final descriptive report](docs/validation/paired-v6-report-B.md).
+The recorded video predates both cohorts. Dedicated reviewer access is supplied
+privately; the final package and submission remain pending. No bank settlement or independent
 external anchor is claimed; local seals detect edits to a copy and do not protect against an administrator who
 can rewrite the database, and an optional asynchronous anchor under independent custody is a declared roadmap
 item without a date. See [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
@@ -194,12 +238,27 @@ Solana library is outside this module. The [native acceptance record](docs/valid
 covers loaded classes, 48 recorded workflow checks, package generation, uninstall,
 local archive reinstall and the original receipt in both SQL and the authoritative Ledger.
 This is a local installation test, not a published registry release or a new model benchmark.
+The [31 October independent follow-up](docs/validation/independent-IPM-20261031.json)
+adds an untraced USER bootstrap on a fresh plain-vendor volume, all 38 declared
+resources, 48 recorded checks, and package/uninstall/local-reinstall receipt continuity.
+It ran under x64 emulation on Apple Silicon; the failed namespace and readiness
+attempts remain recorded; the qualified final report separately records Claude's review of the supplemental repair evidence.
 
 ## Start the isolated IRIS lab
 
-Prerequisites: Docker Engine with Compose v2; x86-64 Linux (tested); enough capacity
-for the approximately 6.8 GB unpacked vendor image, its archive/build overhead and 1.2 GiB of container RAM.
+Prerequisites: Docker Engine with Compose v2; Python 3 on the host for the `scripts/test_*.py`
+commands; x86-64 Linux (tested); enough capacity
+for the approximately 6.8 GB unpacked vendor image, its archive/build overhead and 2 GiB of container RAM,
+plus memory for Docker and the host. The independent run used a 3 GiB Docker daemon allocation.
 The tested lab had at least 2.5 GB free **after** the base image had already been loaded.
+The earlier 1.2 GiB container limit allowed worker OOM kills during the independent
+recorded workflow run under amd64 emulation on Apple Silicon. The recorded tests and authenticated HTTP workflow subsequently
+passed with a 2 GiB limit; the container supervisor alone had not detected the worker failure.
+In a later cold boot under emulation, compilation and installation finished about three
+minutes after container start. The default health grace period is 180 seconds; it still
+reports healthy as soon as initialization and the checks succeed. The earlier shorter
+grace produced a failed first `compose up --wait` followed by natural recovery in the
+same container. That failed attempt is retained; no restart or health reset was used.
 
 1. Obtain the **AI Hub Community build 154** archive from the
    [official EAP portal](https://evaluation.intersystems.com/EAP/), completing the
@@ -217,11 +276,23 @@ The tested lab had at least 2.5 GB free **after** the base image had already bee
    If build154 is already loaded under another local alias, Compose accepts it without an extra retag:
    `IRIS_IMAGE=iris-community:2026.3.0AI.154.0 docker compose up --build --detach --wait`.
 
-   The validated x64 image ID is
-   `sha256:8fc1e5c64ed790aa263af05089d003a49bba272fb9c714e4823dd868aebff2a6`.
-   The archive's SHA-256 was
+   Inspect the loaded image before building:
+
+   ```sh
+   docker image inspect --format 'id={{.Id}} arch={{.Architecture}} os={{.Os}}' proof-before-pay/iris-eap:2026.3.0AI.154.0
+   ```
+
+   The validated x64 image has OCI manifest digest
+   `sha256:8fc1e5c64ed790aa263af05089d003a49bba272fb9c714e4823dd868aebff2a6`
+   and image configuration digest
+   `sha256:1d3d52bf15f4f69efb7b5d5e857382099694817132ed00aa989aa158adcedf74`.
+   Docker's classic image store reports the configuration digest as `.Id`; the containerd
+   image store used in our earlier lab reported the manifest digest. Both identify the
+   verified image chain; a different store's `.Id` alone does not imply different image contents.
+   The original vendor archive used in the lab had SHA-256
    `8b0daa63f279ef9f11fd2377ab9fcf5d5cc953e8141d000539d7eecceee39170`.
-   Check your archive/image against those values for the same x64 kit.
+   That archive hash applies to the original x64 kit, not to a private `docker save` re-export.
+   The image must report `arch=amd64 os=linux`; keep the vendor archive and image private.
 3. From this repository:
 
    ```sh
@@ -240,6 +311,19 @@ The tested lab had at least 2.5 GB free **after** the base image had already bee
    The pairguard gate also races opposite refund targets and verifies that the rule and
    recorded-agent routes cannot refund both members of the same observed payment pair.
    A missing marker or failed assertion is a failure even if the IRIS terminal exits zero.
+   Where the runtime exposes an `oom_kill` counter for this process's own cgroup,
+   readiness also fails
+   after a kernel OOM kill in this container, even if the IRIS supervisor is still alive.
+   This counter survives a worker's death until the container is recreated; it does not
+   identify the killed job. The helper checks the private v2 cgroup namespace or resolves
+   the exact v1 self path, so a host/root counter cannot attribute another container's
+   OOM to this one. Coverage is established for v2 with a private cgroup namespace.
+   On v1, a mount rooted at the container's own cgroup may hide that self path; the
+   check then reports unavailable rather than using an ambiguous root counter.
+   Missing namespaces or older v1 counters are also reported as unavailable;
+   the normal boot/IRIS checks still apply in those cases.
+   Health status does not establish that every Production worker or the full workflow is
+   functioning: the recorded workflow tests above provide that separate evidence.
 4. Stop with `docker compose stop`. `docker compose down` removes the container but
    preserves the named `iris-state` volume. Restart and recreation retain cases, approvals
    and receipts. `docker compose down --volumes` deliberately erases this lab data.
@@ -251,7 +335,8 @@ to existing users listed in `PBP_REVIEWERS` (default: the installing OS identity
 `_SYSTEM,SuperUser,Admin`). It creates no password or default public reviewer login.
 Only explicitly trusted reviewers should be listed. Do not expose this lab publicly.
 
-Apple Silicon is not validated. An ARM64 EAP kit is available from the vendor;
+The x64 container was also exercised under emulation on Apple Silicon with the resource
+allocation above. A native ARM64 installation is not validated. An ARM64 EAP kit is available from the vendor;
 using it requires the matching local image and `IRIS_PLATFORM=linux/arm64`.
 Do not compare that image with the x64 hash above.
 
@@ -264,9 +349,13 @@ published port and normal bridge networking:
 docker compose -f compose.yml -f compose.ui.yml up --build --detach --wait
 ```
 
-Open `http://127.0.0.1:52773/pbp/ui/` with an existing IRIS login that has the reviewer role
-and normal application/database access. No model key is loaded by this profile. Password
-setup belongs to your private IRIS instance; do not publish vendor default credentials.
+Open `http://127.0.0.1:52773/pbp/ui/` with a private IRIS reviewer login.
+On a fresh volume, follow [the reviewer setup recipe](docs/REVIEWER-SETUP.md) first:
+the HTTP workflow needs `PBPReviewer`, `%DB_USER`, the specific
+`%Service_EmbeddedPython:USE` resource, and membership in native `pbp.Workflow`.
+This combination passed the independent authenticated HTTP test; it is not a proof of
+minimum permissions for every installation. No model key is loaded by this profile.
+Keep the operator-chosen password private; do not publish vendor default credentials.
 The reviewer role includes SELECT on the synthetic projections and native Workflow task
 lookup. The authenticated session, rather than a JSON operator field, supplies identity.
 

@@ -1,0 +1,12 @@
+{
+  "schema": "pbp.r6-public-source-provenance/1",
+  "reviewed_source_revision": "4a1d54e314f0486cec44881162b6e089300b889b",
+  "reviewed_source_archive_sha256": "ce4d6a413b43f54cc792b25830f32bcf6e0ba528ed6a66c9bfeb430b8835a075",
+  "reviewed_private_kit_sha256": "74d2968596583956eee80dd41436d1ac66366041aa9a06ff87b067bf0e77b521",
+  "peer_acceptance": "C1251/C1252, qualified as described in report",
+  "publication_source": "Reviewed240file snapshot applied to clean public725d clone outsideiCloud; documentation additions separately identified in this commit",
+  "newly_authored_runtime_changes": false,
+  "native_execution_reference": "725d549ca56ef0d5bbe2bc0ae3612637cf0a7aec",
+  "video": "4.2.1 historical, predates v7",
+  "private_raw_inputs_answer_keys_vendor_images_credentials_included": false
+}

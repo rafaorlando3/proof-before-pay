@@ -1,6 +1,88 @@
-# Validation on 26 October 2026
+# Validation record
 
-## Current addendum, 28 October: independent eight-case cohort
+## Current addendum, 31 October: paired descriptive trial and technical repeat
+
+The informed twelve-case cohort compared actual rules plus safe abstention (R),
+frozen deterministic triage1.0 (D), and the unchanged rules-first AI Hub agent (G,
+Gemini `gemini-3.8-flash`). Four rule controls were identical across arms. Inputs,
+answer keys, scorer and review policy were frozen; the case authors knew the D
+lexicon and two cancellation cases share a text family. This is not a blind sample.
+
+The **official first attempt remains Trial1**, including all eight G errors. It
+completed 36 records and sixteen observed provider responses, but eight local
+gateway refusals made the frozen normalizer mark every G residue case as error.
+Claude independently reproduced the exact scorer output in C1235. R had zero
+unsafe decisions, eight correct decisions and four safe abstentions; D had three
+unsafe decisions, nine correct decisions and three autonomous residue closures;
+G had zero unsafe decisions, four correct controls and eight errors. The original
+criterion was not met and, as recorded before outputs, the cohort composition
+cannot support its required autonomy gain of two over D.
+
+Controlled native probes without real inference reproduced the SDK's
+`GET /v1/models/gemini-3.8-flash`, which the old gateway rejected. Those original
+eight request URIs were not logged, so the attribution is inferred from that
+controlled reproduction. The corrected gateway serves only the configured
+model's metadata locally. Its exact handler passed a separate fake-provider
+native workflow before the explicit C1235 admission for one technical G repeat.
+
+**Repetição técnica pós-hoc do G após defeito do harness, mesma coorte conhecida;
+não é amostra independente; as ações do G no Trial1 já eram visíveis antes da
+repetição.** Trial2 reused the original R/D records by SHA and ran only G on a new
+volume, with unchanged agent, prompt, policy, cases, D, scorer and answer keys.
+Its sixteen provider responses had no gateway refusal or transport uncertainty.
+G scored zero unsafe decisions, eleven correct decisions, one safe abstention and
+three autonomous residue closures. D also had three autonomous closures: the
+requested autonomy gain was not demonstrated. Conservative R also had zero unsafe
+decisions. These are descriptive observations on these cases, not a population
+accuracy estimate or evidence of general superiority or three-agent voting benefit.
+Claude independently recomputed both scores byte for byte in C1236, including
+a separate assembly of R/D references plus the new G records. The [final report B](validation/paired-v6-report-B.md)
+and [structured report](validation/paired-v6-report-B.json) close this qualified
+descriptive experiment. G autonomously closed c05/c07/c10, while D closed
+c05/c07/codex-01; D's c10 action was correct but routed to a person. The selected
+D free-text failures were authored with knowledge of its lexicon and are expected
+by construction, not general evidence of agent superiority. Correct counts include
+required human referrals; autonomous closures include actions without money and
+are not counts of payments.
+
+All twelve missing-evidence gold sets are empty, so this cohort does not measure
+missing-evidence recognition. Extra cited evidence references are counted, not
+automatically certified exact. The reviewer was an automated privileged test
+session under the frozen policy, not an independent person reading customer text.
+One unsafe D residue decision reached a synthetic effect after that scripted
+review. No real payment or blockchain transaction occurred.
+
+The two cohort cost estimates are US$0.02585100 and US$0.02580975; neither is a
+billing receipt. Cumulative API-reported spend, usage/tariff estimates and the
+retained uncertain404 hold total US$0.43618250 under the unchanged US$1 cap.
+Trial1 is never replaced by Trial2, and no Trial3 is permitted. See the
+[two-reading aggregate and limitations](validation/paired-v6-20261031.json).
+
+## Current addendum, 31 October: installation and judge journey reproduction
+
+The qualified installation reproduction is complete. The README and literal IPM
+steps authored by Claude ran unchanged through a Codex runner against source
+`725d549`, on isolated empty volumes. Codex wrote and executed the separately
+labelled repairs and the judge HTTP journey; Claude inspected the evidence and
+reviewed the final report. IPM load, recorded workflow, source-only packaging,
+non-purge uninstall/reinstall and the original receipt readback passed. The health
+candidate passed a new-volume boot with a 180-second start period and a 2 GiB cap.
+
+These are agent executions on an Apple Silicon host with an amd64 image under
+emulation. The image came from the owner's existing licensed build154 content,
+not a fresh vendor-portal download. The untraced USER IPM bootstrap was authored
+by Codex after the Claude-authored %SYS attempt failed. The judge journey was
+scripted HTTP (55 assertions plus seven refusal checks), not an authenticated
+browser-DOM or independent human walkthrough. Earlier failures remain failures.
+The sufficient reviewer permission set is documented and is not claimed minimal.
+
+The [final reproduction report](validation/independent-reproduction-A-20261031.md)
+and its [structured record](validation/independent-reproduction-A-20261031.json)
+retain the authorship, source, resource, health and causal qualifications. This
+reproduction establishes those installation and workflow behaviors; it does not
+establish a measured advantage of the agent over rules or deterministic triage.
+
+## Historical addendum, 28 October: independent eight-case cohort
 
 A final independent eight-case cohort completed on 28 October. The reviewer wrote
 new trap types after all earlier results were known; the inputs, gold and controls

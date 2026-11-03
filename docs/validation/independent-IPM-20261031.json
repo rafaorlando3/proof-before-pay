@@ -1,0 +1,80 @@
+{
+  "schema": "pbp.independent-IPM-20261031/1",
+  "observed_utc": "2026-10-31T05:35:07.324903+00:00",
+  "application_execution_source": "725d549ca56ef0d5bbe2bc0ae3612637cf0a7aec",
+  "environment": "Private plain AI Hub Community build154 x64 under amd64 emulation on Apple Silicon; 2GiB,0.75CPU,networknone",
+  "independence_scope": "Claude authored32-36; Codex ran exact commands and authored separately labelled supplemental90/91/92 after failures. Claude accepted supplements and attribution in C1231. USER bootstrap91 is Codex-authored, not an independent bootstrap. Not a human walkthrough.",
+  "original34_failed": {
+    "bootstrap_namespace": "%SYS",
+    "load_status_success": true,
+    "USER_IPM_Main_available": false,
+    "terminal_step_exit": 6
+  },
+  "supplemental90_failed": "Readiness harness stopped on initial terminal not yet ready; no bootstrap executed. Failure retained.",
+  "supplemental91_USER_bootstrap": {
+    "fresh_second_volume": true,
+    "plain_vendor_not_PBP_image": true,
+    "IPM_version": "0.10.10",
+    "installer_sha256": "daa2adabd66b488f57187d29712e54b0c25bbe000794fbf2a35a882c458b788a",
+    "installer_source_modified": false,
+    "process_local_tracing_or_breakpoints": false,
+    "USER_bootstrap_and_version_status_success": true,
+    "NAMESPACE_or_PushNS_markers_in_complete_log": 0,
+    "elapsed_seconds": 161.954
+  },
+  "original35_application_install": {
+    "ok": true,
+    "elapsed_seconds": 9.533,
+    "Production_started_by_install": false,
+    "declared_manifest_resources_present": 38,
+    "matching_compiled_classes_total": 40,
+    "six_app_python_packages_and_rfc8785_resolve_from_installed_manager": true,
+    "source_mounted_read_only": true
+  },
+  "original36_recorded_workflow": {
+    "ok": true,
+    "checks": 48,
+    "elapsed_seconds": 28.785,
+    "run_tag": "519f4158b0",
+    "automated_review_not_Rafael_approval": true,
+    "one_synthetic_positive_effect": true,
+    "receipt_integrity_verified": true
+  },
+  "supplemental92_package_nonpurge_uninstall_local_reinstall": {
+    "ok": true,
+    "elapsed_seconds": 18.216,
+    "archive_sha256": "856c7ca1eb83af1c9878f60303bf37889130425d03cdbdefff741328b72f922e",
+    "archive_bytes": 91268,
+    "archive_members": 94,
+    "source_only_exclusion_checks_pass": true,
+    "original_receipt_audit_before_equals_after": true,
+    "effect_count_after": 1,
+    "receipt_integrity_after": true,
+    "unrelated_manager_python_sentinel_preserved": true,
+    "Production_after_reinstall_stopped": true,
+    "volumes_or_databases_purged": false
+  },
+  "not_claimed": [
+    "NativeARM64support",
+    "CauseofthehistoricalPushNSfailure",
+    "Publicregistryinstallation/release",
+    "Newmodelqualitybenchmark",
+    "CompletejudgePathA",
+    "Newcandidatehealthwrapperdeployment"
+  ],
+  "new_paid_model_calls": 0,
+  "real_money_or_blockchain_actions": 0,
+  "budget_modified_by_this_run": false,
+  "publication_or_submission": false,
+  "full_owner_requested_robustness_complete": false,
+  "peer_review": {
+    "canonical_message": "C1231",
+    "supplements_accepted": [
+      90,
+      91,
+      92
+    ],
+    "reviewer_setup49_accepted": true,
+    "F8_concrete_smoke_command_accepted": true
+  }
+}

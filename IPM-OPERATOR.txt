@@ -21,8 +21,16 @@ INSTALL
    bare-image0.10.10 bootstrap failed with NAMESPACE/PushNS before app loading.
    A later fresh-volume trial passed after waiting at least45seconds, checking
    vendor logons were enabled and USER existed from %SYS, then loading in USER.
-   That run used process-local diagnostic tracing; the earlier failure's cause
-   and independent untraced repeatability remain unproved. These are observed
+   That historical run used process-local diagnostic tracing. On31October an
+   agent follow-up (Codex-authored step, after a Claude-authored attempt that
+   deviated from this guide by loading in %SYS) bootstrapped the identical
+   installer in USER without tracing on a new plain-vendor volume under x64
+   emulation on Apple Silicon, with2GiB RAM and0.75CPU. Native load and version
+   statuses both passed. Claude reviewed and accepted the Codex supplements.
+   This is not an independent bootstrap. The failed %SYS attempt was preserved;
+   USER could not find %IPM.Main after that attempt. Bootstrap in the intended
+   interoperability namespace, not %SYS expecting the USER API to be present.
+   The cause of the earlier PushNS failure remains unproved. These are observed
    readiness checks, not a guarantee that waiting45seconds fixes every startup.
    On that same fresh volume, first PBP installation and48recorded workflow checks
    passed. The earlier package/uninstall/reinstall trial used initialized IPM.
@@ -40,13 +48,29 @@ INSTALL
    It did not bypass Python dependency installation. A public registry install
    and an ordinary online install were not tested or published.
 5. Configure calls pbp.Setup.Install(managerDirectory_"proof-before-pay",0).
-   Verify that Production has not started, the 38 application classes exist,
+   Verify that Production has not started, all38 declared class resources exist,
    six Python packages resolve from managerDirectory_"python", and policy,
    replay fixtures and UI files exist in the per-app manager directory.
    The optional legacy pbp_seal/Solana library is not part of the native IPM module.
 6. After checking recorded mode and the absence of provider credentials, start
    pbp.Production explicitly and run fresh synthetic cases. Verify authenticated
    review, one intact sandbox receipt, missing-evidence refusals and tamper detection.
+   In this fresh disposable acceptance lab, the following USER terminal commands
+   run the repository's recorded workflow smoke with the IPM-installed assets:
+
+      set s=##class(%SYS.Python).Import("sys")
+      do s.path.insert(0,"/absolute/path/to/proof-before-pay/tests/iris")
+      set m=##class(%SYS.Python).Import("production_smoke")
+      set result=m.run($system.Util.ManagerDirectory()_"proof-before-pay")
+      write "E2E=",result,!
+
+   The helper explicitly starts Production through Setup.Install(root,1).
+   Require JSON ok:true and all48 checks, including review_note_sealed and
+   rejection_note_sealed. It creates uniquely named synthetic cases and one
+   test-ledger effect; it is an automated installer-session review, not a browser
+   review or Rafael's approval. Do not replay this smoke on an instance whose
+   unrelated application state you need to preserve. The separate private HTTP
+   reviewer recipe is docs/REVIEWER-SETUP.md; no HTTP port is enabled by IPM itself.
 
 PACKAGE / UNINSTALL / LOCAL REINSTALL
 The native acceptance generated a source-only package with:
@@ -76,3 +100,9 @@ Local archive loading is separate from publication:
 
 No public registry release or Open Exchange submission has been performed.
 Both remain subject to Rafael's express final approval.
+
+The31October follow-up also generated and inspected a source-only archive,
+performed the default non-purge uninstall and local archive reinstall, and kept
+the original intact single-effect receipt and an unrelated manager-Python sentinel.
+See docs/validation/independent-IPM-20261031.json for measured scopes, original
+failures and the separately labelled Codex repair steps pending peer review.

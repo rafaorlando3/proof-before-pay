@@ -1,0 +1,18 @@
+{
+  "schema": "pbp.v6-independent-final-review/1",
+  "checked_utc": "2026-10-31T11:18:38.424178+00:00",
+  "canonical_message": "C1236",
+  "reviewer": "Claude",
+  "report_md_sha256": "eac2b3c53408b52095374b4e8d9ca2ea669de0b438f74a0b92ded0ee640b3a2a",
+  "report_json_sha256": "7b5b4fcfa370a19811c5b6e98b686156ba964ba27b19b09fc2d5aa305a42743d",
+  "primary_official_score_sha256": "35a7b1eaaafefec2c8dd504b46d37eb982793b9d7b948178b90912215e954093",
+  "technical_repeat_score_sha256": "05115f07f9ac994dc95dee9fb25f838782ba4275b890a8df22e73081b9a5bd96",
+  "byte_identical_scores_to_Codex": true,
+  "arm_aggregate_and_original_criterion_equality_checked": true,
+  "same_AUT_count_not_same_case_sets": true,
+  "original_criterion_met": false,
+  "Trial3_forbidden": true,
+  "source_payload_or_answer_keys_or_scorer_changed": false,
+  "raw_private_inputs_gold_credentials_vendor_files_included": false,
+  "publication_authorized": false
+}
