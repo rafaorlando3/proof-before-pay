@@ -2,7 +2,8 @@
 
 [Open Exchange](https://openexchange.intersystems.com/package/Proof-Before-Pay) ·
 [Video 4.2.1 with captions](https://www.youtube.com/watch?v=LX_0V4C6wLw) ·
-[Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub)
+[Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub) ·
+[Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
 Published on 3 November 2026. Contest49 participation was requested; its public listing is still pending confirmation. The video predates the v7 evaluation. The authenticated online viewer currently replays retained cases from a running IRIS instance and makes no new model call.
 
@@ -442,8 +443,8 @@ These are evidence and submission states against the [official contest49 bonus r
 | ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt), [qualified local package test](docs/validation/independent-IPM-20261031.json). Public registry distribution requested through OEX; registry installation remains unverified. |
 | Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Visual Trace inspection recipe and evidence limits](docs/TRACEABILITY.md). OEX idea link submitted; fresh Visual Trace demonstration remains pending. |
 | First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
-| Second article or translation | 1 | Translation in preparation; no second publication claimed. |
-| YouTube video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw), English captions and explicit pre-v7 disclosure. |
+| Second article or translation | 1 | [Portuguese translation published 3 November](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub). |
+| YouTube video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw), English, Portuguese, Spanish and Simplified Chinese captions; explicit pre-v7 disclosure. |
 | IRIS Vector Search | 2 | Not implemented in this release. Hash/test vectors are not vector retrieval. |
 | Custom Interoperability adapter | 2 | Not implemented in this release. The vendor AI Hub adapter is not our own adapter. |
 | PEX | 3 | Not implemented; outside the current plan. |

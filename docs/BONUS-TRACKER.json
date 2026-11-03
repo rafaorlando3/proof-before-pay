@@ -170,17 +170,20 @@
       "item": "Second article or translation",
       "points_cap": 1,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "not_published",
-      "note": "One extra point total for second article OR translation; third and subsequent articles add no points.",
-      "evidence": [],
+      "delivery_status": "Portuguese_translation_published_UI_confirmed_not_awarded",
+      "note": "Article5.3 Portuguese translation published03Nov, original link and historical/v7 limitations retained.",
+      "evidence": [
+        "https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub",
+        "docs/ARTICLE-5.3-pt-BR.md"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "YouTube video",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "published_with_English_captions_not_awarded",
-      "note": "Video4.2.1 published03Nov; pre-v7 disclaimer; no new model call.",
+      "delivery_status": "published_with_four_caption_languages_not_awarded",
+      "note": "Video4.2.1 public03Nov; en,pt-BR,es,zh-Hans caption tracks published. Description states pre-v7 footage. No new inference.",
       "evidence": [
         "https://www.youtube.com/watch?v=LX_0V4C6wLw"
       ],

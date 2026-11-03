@@ -1,5 +1,7 @@
 # Proof Before Pay: testing payment proposals inside InterSystems IRIS AI Hub
 
+[Portuguese translation](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
+
 ## 1 November validation update, audited v7 result
 
 In a final informed 12-case test frozen before any output (cases and rubric by one reviewer, a deterministic baseline frozen beforehand by another, one admitted run after two infrastructure aborts with no case output), the native agent's raw proposals were correct in 11 of 12 cases, against 7 for rules with safe abstention and 8 for the deterministic baseline, with no unsafe agent decision. The pre-registered criterion (at least two more correct decisions than both baselines, zero unsafe, all controls) was met. The baseline made one unsafe decision (a synthetic double refund). One correct agent refund was safely blocked because the test ledger does not accept that exception label, and the agent missed one required missing-evidence declaration. Descriptive evidence on these cases only: not blind, not a population estimate, not general superiority. Estimated cost US$0.026, not an invoice.
