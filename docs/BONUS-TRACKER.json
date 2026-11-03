@@ -139,11 +139,13 @@
       "item": "Community Opportunity idea",
       "points_cap": 4,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "source_and_historical_runtime_evidence_linked_VisualTrace_capture_pending",
-      "note": "Community Opportunity status checked03Nov. Dedicated idea link is visible on the public OEX page. Fresh native Visual Trace demonstration pending, no award assumed.",
+      "delivery_status": "native_recorded_VisualTrace_capture_published_live_trace_pending_not_awarded",
+      "note": "DPI-I-689 linked on public OEX. Fresh03Nov native capture of retained recorded session1494 shows11 messages. Historical live integration is separate; not a fresh LIVE trace or awarded points.",
       "evidence": [
         "https://ideas.intersystems.com/ideas/DPI-I-689",
-        "docs/TRACEABILITY.md"
+        "docs/TRACEABILITY.md",
+        "docs/validation/native-VisualTrace-20261103.json",
+        "docs/screens/native-visual-trace-recorded-1494.jpg"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },

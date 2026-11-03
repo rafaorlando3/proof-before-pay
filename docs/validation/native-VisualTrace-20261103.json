@@ -1,0 +1,30 @@
+{
+  "schema": "pbp.native-VisualTrace-retained-recorded/1",
+  "captured_utc": "2026-11-03T23:21:54.245504+00:00",
+  "case_id": "video-flow:5751dd54",
+  "native_session_id": "1494",
+  "original_session_date": "2026-10-28",
+  "native_headers": 11,
+  "mode": "recorded",
+  "flow": [
+    "pbp.Service.Intake",
+    "pbp.Process.Decide",
+    "pbp.Operation.Replay",
+    "pbp.Operation.Witness",
+    "pbp.Workflow",
+    "pbp.Operation.TestLedger"
+  ],
+  "source_of_diagram": "Native IRIS EnsPortal.VisualTrace.zen, not a reconstructed application diagram",
+  "screenshot": "docs/screens/native-visual-trace-recorded-1494.jpg",
+  "screenshot_sha256": "e0d576d8eea7cc29261b5b76eb1acc67ba5b2ab3737114cc9baafbe951043219",
+  "fresh_inference_calls": 0,
+  "new_intake_or_review_or_effect_invoked": false,
+  "historical_report": "docs/validation/native-recorded-demo42.json",
+  "retained_live_decisions_in_this_instance": 0,
+  "not_a_fresh_live_AI_Hub_trace": true,
+  "historical_live_integration_report_is_separate": "docs/validation/gemini-direct-smoke.json",
+  "temporary_private_read_role_and_header_SQL_select_used": true,
+  "original_user_roles_restored_and_temporary_role_deleted": true,
+  "password_or_public_portal_exposure_changed": false,
+  "bonus_points_awarded_not_claimed": true
+}

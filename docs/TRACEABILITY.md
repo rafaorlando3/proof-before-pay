@@ -20,7 +20,24 @@ The [historical live integration report](validation/gemini-direct-smoke.json) re
 4. Inspect the request and response bodies. For a retained live case, compare mode/model, tokens, elapsed time and the five returned tool observations with the case's sealed record. For recorded fixtures, expect `recorded`, zero usage and no provider call.
 5. Compare the sealed decision commitment and review/permit/receipt chronology. A pending/rejected case has no effect; never approve it merely to display a trace.
 
-These are inspection instructions against existing source and retained integration evidence. A fresh native Visual Trace screen capture for this bonus is still pending. No new inference is required to inspect a retained session. Run a new model case only through explicitly bounded, privately configured admission.
+On 3 November, a fresh read-only capture of the retained **recorded** session1494
+showed all eleven native messages from Intake through Replay, Witness, Workflow and
+TestLedger. The session itself dates from 28 October; opening it made no new model
+call, submitted no case and approved no effect. See the [capture report](validation/native-VisualTrace-20261103.json)
+and [native diagram](screens/native-visual-trace-recorded-1494.jpg). It is a native
+IRIS screen, not an application-drawn imitation.
+
+![Native IRIS Visual Trace, retained recorded session1494](screens/native-visual-trace-recorded-1494.jpg)
+
+This screenshot demonstrates the recorded workflow, including its two seal steps
+and authenticated Workflow chronology. It does not show a fresh live AI Hub call.
+The separate historical live integration report above contains the model/tool and
+usage evidence; a fresh LIVE-demo trace remains part of the staged integration.
+No bonus award is assumed. The operator used a private local tunnel and a temporary
+read-only trace role; its assignment and header SELECT privilege were removed after
+capture, and the original roles were verified restored. Judges are not given the
+Management Portal. Run a new model case only through explicitly bounded, privately
+configured admission.
 
 ## Relation to Langfuse
 
