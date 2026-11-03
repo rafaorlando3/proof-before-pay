@@ -111,13 +111,14 @@
       "item": "ZPM package deployment",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "OEX_public_registry_distribution_requested_installation_unverified",
-      "note": "Native source package generation, load/uninstall/reload were accepted with documented scope. The current source recipe is present; no public registry publication or zpm install from that registry is verified. A local source ZIP does not establish the bonus. Publish in Package Manager checked and submitted03Nov; approval/registry processing and actual registry install remain pending.",
+      "delivery_status": "public_registry_package_and_native_install_verified_not_awarded",
+      "note": "Public0.1.0-beta.1 downloaded by native IPM03Nov; status1,38 resources, six app Python imports and online RFC8785 installation. Initialized isolated IPM clone, no fresh bootstrap, no new workflow/model call. Contest listing and awarded points remain unconfirmed.",
       "evidence": [
         "module.xml",
         "IPM-OPERATOR.txt",
         "docs/validation/native-installation-IPM.json",
-        "docs/validation/native-IPM-bootstrap.json"
+        "docs/validation/native-IPM-bootstrap.json",
+        "docs/validation/public-IPM-20261103.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -139,7 +140,7 @@
       "points_cap": 4,
       "rule_status": "verified_official_contest49",
       "delivery_status": "source_and_historical_runtime_evidence_linked_VisualTrace_capture_pending",
-      "note": "Community Opportunity status checked03Nov. Dedicated idea link submitted to OEX. Fresh native Visual Trace demonstration pending, no award assumed.",
+      "note": "Community Opportunity status checked03Nov. Dedicated idea link is visible on the public OEX page. Fresh native Visual Trace demonstration pending, no award assumed.",
       "evidence": [
         "https://ideas.intersystems.com/ideas/DPI-I-689",
         "docs/TRACEABILITY.md"
@@ -191,15 +192,13 @@
     }
   ],
   "prioritization": {
-    "implemented_technology_candidates_points": 7,
+    "implemented_technology_candidates_points": 9,
     "implemented_candidates_are_not_awarded_points": true,
     "remaining_priority_deliverables": [
-      "judge-accessible authenticated cloud demo and eligibility confirmation (2 potential)",
-      "working published IPM registry package (2 potential)",
-      "new article reviewed and published with authorization (2 potential)",
-      "second article or translation (1 total potential)",
-      "publish the owner-approved product video on YouTube with authorization (3 potential)",
-      "complete official feedback questionnaire if applicable (1 potential)"
+      "confirm public contest49 listing",
+      "live judge demo with queue/caps and recorded fallback",
+      "fresh native Visual Trace proof for DPI-I-689",
+      "useful Vector Search and optional tested SolanaMemo adapter"
     ],
     "other_ideas_assessed_after_core_gates": "PEX, custom adapter, vector search and Community Opportunity require genuine use, evidence and a sensible product fit. No decorative implementation or manufactured bug claim."
   },

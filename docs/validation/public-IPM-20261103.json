@@ -1,0 +1,41 @@
+{
+  "schema": "pbp.public-IPM-install/1",
+  "observed_utc": "2026-11-03T21:28:28.511457+00:00",
+  "application_version": "0.1.0-beta.1",
+  "public_archive_URL": "https://pm.community.intersystems.com/download/proof-before-pay/-/proof-before-pay-0.1.0-beta.1.tgz",
+  "public_archive_sha256": "8faf9192ab45fe880556b812755643bb7148d45c8ac98da863218dfe0930f017",
+  "public_archive_bytes": 811642,
+  "public_registry_configured_and_enabled": true,
+  "public_registry_download_confirmed_in_native_client": true,
+  "native_install_status_success": true,
+  "native_build": "2026.3.0AI.154.0 x86-64 under amd64 emulation on Apple Silicon",
+  "IPM_version": "0.10.10",
+  "container_memory_GiB": 2,
+  "environment_scope": "Isolated copy of a previously initialized plain-vendor IPM durable volume. The cloned app was uninstalled without purge, then installed from the public registry. Original volume and all original containers were preserved. Not a fresh vendor or fresh IPM bootstrap.",
+  "resources_compiled_and_present": 38,
+  "public_source_files_compared": 81,
+  "public_source_mismatches": 0,
+  "native_Python_version": "3.12.3",
+  "native_app_packages_imported_from_manager_python": [
+    "pbp_guard",
+    "pbp_ledger",
+    "pbp_refund_target",
+    "pbp_review",
+    "pbp_s0_core",
+    "pbp_witness"
+  ],
+  "rfc8785_downloaded_online_and_native_import_verified": "0.1.4",
+  "production_running_after_install": false,
+  "provider_credentials_present": false,
+  "new_model_calls": 0,
+  "new_synthetic_cases_or_financial_effects": 0,
+  "new_blockchain_transactions": 0,
+  "previous_workflow_tests_not_repeated": true,
+  "no_bonus_points_claimed_as_awarded": true,
+  "retained_attempts": [
+    "Initial registry install returned status0 because the historical offline lab had no enabled repositories. Configured an enabled public read repository only in the new isolated clone, then status1 installation succeeded.",
+    "Initial import-path display used invalid ObjectScript underscore syntax. Imports themselves succeeded; corrected quoted __file__ display separately, without rerunning the installation."
+  ],
+  "proof_transcript_sha256": "f63005f26c6afc3256bd4f1e9f6bee4b889e4b0af0253666aa8dd88266ada538",
+  "imports_transcript_sha256": "8aa4b1855aa3498a489a98e19e1f8a5fa86564bf404085bce2dea5aa9aeb7897"
+}

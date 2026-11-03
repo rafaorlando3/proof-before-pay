@@ -35,7 +35,20 @@ INSTALL
    On that same fresh volume, first PBP installation and48recorded workflow checks
    passed. The earlier package/uninstall/reinstall trial used initialized IPM.
    See docs/validation/native-IPM-bootstrap.json for the separate evidence scopes.
-3. Clone the source and use an interoperability-enabled namespace:
+3. Public registry installation is available as of03November. In a dedicated
+   interoperability instance with IPM installed, enable the official public
+   repository if the lab was previously configured offline:
+
+   set sc=##class(%IPM.Main).Shell("repo -r -n public-community -url https://pm.community.intersystems.com/ -enable -prereleases 1 -publish 0")
+   set sc=##class(%IPM.Main).Shell("install proof-before-pay -v")
+   write $system.Status.GetErrorText(sc),!
+
+   The public prerelease currently tested is0.1.0-beta.1. Native install status,
+   38 resources, six Embedded Python imports and stopped Production were checked
+   in an isolated copy of an initialized IPM lab; no old instance was changed.
+   See docs/validation/public-IPM-20261103.json.
+
+   Alternatively, clone the source and use an interoperability-enabled namespace:
 
    set sc=##class(%IPM.Main).Shell("load /absolute/path/to/proof-before-pay -v")
    write $system.Status.GetErrorText(sc),!
@@ -45,8 +58,8 @@ INSTALL
 4. IPM processes requirements.txt at the module root. It is byte-identical to the
    hash-pinned requirements.lock. The native offline test supplied the verified
    rfc8785-0.1.4 wheel through PIP_NO_INDEX=1 and PIP_FIND_LINKS=/path/to/wheels.
-   It did not bypass Python dependency installation. A public registry install
-   and an ordinary online install were not tested or published.
+   It did not bypass Python dependency installation. The separate03November
+   public-registry installation fetched rfc8785 online and imported it natively.
 5. Configure calls pbp.Setup.Install(managerDirectory_"proof-before-pay",0).
    Verify that Production has not started, all38 declared class resources exist,
    six Python packages resolve from managerDirectory_"python", and policy,
@@ -98,8 +111,9 @@ Local archive loading is separate from publication:
 
    set sc=##class(%IPM.Main).Shell("load /tmp/pbp-package.tgz -v")
 
-No public registry release or Open Exchange submission has been performed.
-Both remain subject to Rafael's express final approval.
+The public registry release and Open Exchange submission were performed on
+03November under Rafael's express approval. The public contest49 listing remains
+a separate confirmation; registry availability does not prove contest registration.
 
 The31October follow-up also generated and inspected a source-only archive,
 performed the default non-purge uninstall and local archive reinstall, and kept

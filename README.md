@@ -236,6 +236,12 @@ and the `compose.live.yml` profile described below; it is a cost-bearing opt-in 
 
 ## IPM installation option
 
+The [public-registry installation](docs/validation/public-IPM-20261103.json) passed on 3 November 2026:
+`zpm "install proof-before-pay"` downloaded version `0.1.0-beta.1` from the public
+community registry, compiled all 38 resources and imported all six native Python packages.
+This used an isolated copy of an initialized IPM lab, not a new vendor bootstrap;
+Production remained stopped and no new cases or model calls were made.
+
 The repository includes `module.xml` and the hash-pinned `requirements.txt`. Use a
 **dedicated build154 instance with a functioning IPM installation**; the vendor
 image and SDK are obtained separately. Follow [the operator guide](IPM-OPERATOR.txt).
@@ -440,7 +446,7 @@ These are evidence and submission states against the [official contest49 bonus r
 | Embedded Python | 3 | Implemented: [Witness bridge](cls/ProofBeforePay/Witness.cls), [Ledger bridge](cls/ProofBeforePay/Ledger.cls), [runtime evidence](docs/validation/ledger-runtime.json). |
 | Docker | 2 | Implemented: [Dockerfile](Dockerfile), [Compose](compose.yml), [qualified lifecycle evidence](docs/validation/clean-lifecycle.json). The licensed vendor image is obtained separately. |
 | Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated and currently recorded/read-only. Live bounded inference and public judge-access instructions are being prepared; eligibility is not assumed. |
-| ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt), [qualified local package test](docs/validation/independent-IPM-20261031.json). Public registry distribution requested through OEX; registry installation remains unverified. |
+| ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt), [qualified local package test](docs/validation/independent-IPM-20261031.json). [Public registry install passed](docs/validation/public-IPM-20261103.json): 38 resources, six native Python imports; initialized isolated IPM lab, no new model call. |
 | Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Visual Trace inspection recipe and evidence limits](docs/TRACEABILITY.md). OEX idea link submitted; fresh Visual Trace demonstration remains pending. |
 | First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
 | Second article or translation | 1 | [Portuguese translation published 3 November](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub). |
