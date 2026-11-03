@@ -5,7 +5,7 @@
 [Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub) ·
 [Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
-Published on 3 November 2026. Contest49 participation was requested; its public listing is still pending confirmation. The video predates the v7 evaluation. The authenticated online viewer currently replays retained cases from a running IRIS instance and makes no new model call.
+Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49), confirmed on 3 November ([verification](docs/validation/contest49-public-listing-20261103.json)); the package review badge remains Awaiting Review. The video predates the v7 evaluation. The authenticated online viewer currently replays retained cases from a running IRIS instance and makes no new model call.
 
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
 The application runs on InterSystems IRIS AI Hub EAP build 154: native Interoperability
@@ -117,7 +117,7 @@ closed different sets of three cases; the selected free-text failures were autho
 with knowledge of D's lexicon. See [both readings and their limits](docs/validation/paired-v6-20261031.json)
 and the [final descriptive report](docs/validation/paired-v6-report-B.md).
 The recorded video predates both cohorts. Dedicated reviewer access is supplied
-privately; the reviewed r6 source and media are published; contest listing remains pending confirmation. No bank settlement or independent
+privately; the reviewed r6 source and media are published; contest49 registration is publicly listed. No bank settlement or independent
 external anchor is claimed; local seals detect edits to a copy and do not protect against an administrator who
 can rewrite the database, and an optional asynchronous anchor under independent custody is a declared roadmap
 item without a date. See [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and

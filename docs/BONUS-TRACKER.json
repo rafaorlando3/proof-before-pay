@@ -197,7 +197,6 @@
     "implemented_technology_candidates_points": 9,
     "implemented_candidates_are_not_awarded_points": true,
     "remaining_priority_deliverables": [
-      "confirm public contest49 listing",
       "live judge demo with queue/caps and recorded fallback",
       "fresh native Visual Trace proof for DPI-I-689",
       "useful Vector Search and optional tested SolanaMemo adapter"
@@ -228,5 +227,11 @@
     "publishing_or_submitting_still_requires_Rafael_express_OK": true,
     "publication_authorized_20261103": true,
     "current_queue_express_OK_received": "2026-11-03; covers listed publication destinations and authorized staged improvements"
+  },
+  "contest_registration": {
+    "public_listing_confirmed": true,
+    "checked_utc": "2026-11-03T23:34:45.761430+00:00",
+    "evidence": "docs/validation/contest49-public-listing-20261103.json",
+    "not_bonus_award_confirmation": true
   }
 }

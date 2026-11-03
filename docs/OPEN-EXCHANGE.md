@@ -1,5 +1,7 @@
 # Proof Before Pay, Open Exchange release description
 
+Publication status, 3 November: the [package](https://openexchange.intersystems.com/package/Proof-Before-Pay) is public and [contest49 registration](https://openexchange.intersystems.com/contest/49) is confirmed in the public list. The package badge still says Awaiting Review. The public viewer remains recorded; no live-demo or awarded bonus is claimed.
+
 Proof Before Pay seals what an AI Hub agent observed, what evidence was missing and what it proposed before a synthetic payment effect.
 
 The application runs inside an InterSystems IRIS Interoperability production on AI Hub EAP build 154. Simple cases use deterministic rules. When no rule matches, the native agent reads five scoped tools: order, payments, payer history, evidence and store policy. The server checks the proposal, preserves the evidence and missing fields, and requires authenticated Workflow approval before an eligible duplicate refund can receive a single-use test permit and an intact synthetic receipt. The review console replays the sealed observations and lets a juror edit a copy to see intact versus tampered verification.
@@ -16,7 +18,7 @@ The basic authenticated judge journey was checked through automated browser navi
 
 Installation and scope
 
-Follow the English README in the source repository. Obtain the licensed build-154 AI Hub Community image from the InterSystems EAP portal, load it locally, and use the supplied Dockerfile/Compose recipe. The vendor image and derived images are not distributed. Source-only IPM loading, packaging and non-purge uninstall/reinstall were qualified on the owner's already loaded licensed image under amd64 emulation on Apple Silicon; this was not a fresh portal download, a public IPM-registry installation or an independent human install.
+Follow the English README in the source repository. Obtain the licensed build-154 AI Hub Community image from the InterSystems EAP portal, load it locally, and use the supplied Dockerfile/Compose recipe. The vendor image and derived images are not distributed. Source-only IPM loading, packaging and non-purge uninstall/reinstall were qualified on the owner's already loaded licensed image under amd64 emulation on Apple Silicon; that historical test was not a fresh portal download or an independent human install. A separate [3 November public-registry installation](validation/public-IPM-20261103.json) subsequently downloaded and installed the public IPM package on an isolated copy of an initialized IPM lab, with its scope and retained failed attempts documented.
 
 All effects are synthetic. Local salted commitments detect changes against a retained trusted commitment; they do not provide external notarization or resist an administrator who can rewrite the database and its commitments. No real payment or blockchain transaction is performed. No general model superiority or production payment readiness is claimed.
 

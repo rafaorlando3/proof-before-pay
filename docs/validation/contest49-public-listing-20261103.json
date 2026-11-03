@@ -1,0 +1,19 @@
+{
+  "schema": "pbp.public-contest-listing/1",
+  "observed_utc": "2026-11-03T23:34:45.761430+00:00",
+  "contest_url": "https://openexchange.intersystems.com/contest/49",
+  "package_url": "https://openexchange.intersystems.com/package/Proof-Before-Pay",
+  "public_listing_confirmed": true,
+  "application_name": "Proof Before Pay",
+  "author": "Rafael Orlando Mendes",
+  "registered_count_including_PBP": 13,
+  "anonymous_GET_status": 200,
+  "anonymous_GET_body_sha256": "7a249ee2c43ec6ec1114f281dc3f36163967f5112a74d5b69bdd59adf26ded16",
+  "browser_rendered_listing_also_confirmed": true,
+  "registration_deadline_displayed": "08 Nov 2026 23:59:59 EST",
+  "bonus_points_awarded_claimed": false,
+  "package_review_badge": "Awaiting Review",
+  "review_badge_is_separate_from_public_registration": true,
+  "new_submission_or_reapplication_performed": false,
+  "demo_still_recorded": true
+}
