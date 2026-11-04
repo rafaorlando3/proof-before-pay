@@ -1,0 +1,83 @@
+{
+  "observed_utc": "2026-11-04T03:16:14.740952+00:00",
+  "source_revision": "f177bcecdea708883ebad39ff007046a91935b53",
+  "active_cap_usd": "2.00",
+  "accounted_usd": "1.50955825",
+  "headroom_usd": "0.49044175",
+  "provider_phase_OFF": true,
+  "native_profile_OFF": true,
+  "no_inflight_or_armed_case": true,
+  "successful_LIVE_generation": false,
+  "automatic_provider_retry": false,
+  "new_old_case_resubmission": false,
+  "accounting_scope": "Persisted prior usage estimates plus all conservative uncertain holds; not a billing receipt or proof that free-tier requests were charged.",
+  "attempts": [
+    {
+      "case_id": "public-live:250d4e613f9545ed895e2ee1745f1e01",
+      "http_status": null,
+      "native_session_id": 1520,
+      "proposal_refused": true,
+      "proposal_reason": "llm_call_failed",
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "duration_ms": 58862,
+        "cost_micro_usd": -1,
+        "tool_calls": 0
+      },
+      "moves_money": false,
+      "requires_human": true,
+      "decision_commitment": "be62a5c403f0198878ae8aa4a6e752f8029562f5de88478fd7f7ce77761adeed",
+      "decision_seal_intact": true,
+      "permit_present": false,
+      "receipt_present": false
+    },
+    {
+      "case_id": "public-live:05771d2b3d6e49a39e6f3a7150b358fd",
+      "http_status": 503,
+      "native_session_id": 1530,
+      "proposal_refused": true,
+      "proposal_reason": "llm_call_failed",
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "duration_ms": 15121,
+        "cost_micro_usd": -1,
+        "tool_calls": 0
+      },
+      "moves_money": false,
+      "requires_human": true,
+      "decision_commitment": "b493a47433518f2f567001c34722f3dbbc505e2642d2a581f0ae6161c122880a",
+      "decision_seal_intact": true,
+      "permit_present": false,
+      "receipt_present": false
+    },
+    {
+      "case_id": "public-live:fe6e72940b32457799251b929d4e311f",
+      "http_status": 503,
+      "native_session_id": 1536,
+      "proposal_refused": true,
+      "proposal_reason": "llm_call_failed",
+      "usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "duration_ms": 13119,
+        "cost_micro_usd": -1,
+        "tool_calls": 0
+      },
+      "moves_money": false,
+      "requires_human": true,
+      "decision_commitment": "1e365d5428180b821fe26a573c34c1237cb0513234b2e96c363566e216dbe94c",
+      "decision_seal_intact": true,
+      "permit_present": false,
+      "receipt_present": false
+    }
+  ],
+  "latest_error": "Google UNAVAILABLE/HTTP503, temporary high demand; same error archived for sessions1530 and1536. The third observation used the other fixed fixture after more than ten minutes; old cases were not resubmitted.",
+  "claims_not_established": [
+    "successful fresh model/tool/cited-policy decision",
+    "online-demo bonus awarded",
+    "new quality benchmark",
+    "new financial effect"
+  ]
+}
