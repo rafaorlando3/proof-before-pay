@@ -29,8 +29,8 @@ RESPONSE_MODEL_IDS = frozenset({MODEL, "models/gemini-3.6-flash",
 PHASE = "public_live_demo"
 CASE_PATTERN = r"public-live:[A-Za-z0-9_-]{16,48}"
 MAX_REQUEST_BYTES = 40000
-ACTIVE_CAP_USD = Decimal("2")
-CAP_APPROVAL_REF = "Rafael03Nov2026 explicit US$2 LIVE qualification"
+ACTIVE_CAP_USD = Decimal("5")
+CAP_APPROVAL_REF = "Rafael04Nov2026 explicit US$5 LIVE qualification"
 
 
 def reservation_for_bytes(size):
@@ -313,7 +313,7 @@ class LiveBudget:
     def validate(state, *, expected_model=MODEL):
         require(expected_model in {MODEL, LEGACY_MODEL}, "fixed_migration_model_required")
         require(state.get("schema") == "pbp.inference-budget/1", "existing_budget_schema_required")
-        require(money(state["cap_usd"]) == ACTIVE_CAP_USD, "explicit_two_dollar_cap_required")
+        require(money(state["cap_usd"]) == ACTIVE_CAP_USD, "explicit_five_dollar_cap_required")
         require(accounted(state) <= ACTIVE_CAP_USD, "budget_exhausted_or_inconsistent")
         require((state.get("estimated_settlement_policy") or {}).get("active") is True, "existing_estimate_settlement_policy_required")
         phase = state.get(PHASE)
