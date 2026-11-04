@@ -30,12 +30,23 @@ These controls do not protect against a privileged operator rewriting state.
    fixtures, submit once to native Interoperability and read the resulting seal.
    It must never call the reviewer/approval endpoint. The sealed case and trace,
    rather than a successful admission response, establish completion.
-2. A separate provider bridge must enforce the existing cumulative US$1 ledger
-   before **every** HTTP request, preserving all prior costs and uncertain holds.
-   The planned free-tier bridge permits at most three HTTP requests per decision,
-   admits only the configured Gemini model/local tools, records usage estimates
-   as estimates and preserves uncertain reservations. Five admissions alone do
-   not enforce provider RPM/RPD or spending. Quotas must be checked at deployment.
+2. `live_budget.py` and `live_provider.py` now implement the separate per-HTTP
+   admission and private transport, but are **not deployed or enabled**. They
+   require an explicitly approved public phase in the existing `budget.json`,
+   use its existing `budget.lock`, keep the cumulative cap at US$1, and preserve
+   prior costs, holds and historical phases. There is no new/reset budget.
+   Admission reserves before sending, allows three HTTP requests per case and
+   fifteen per Pacific day, and enforces fifteen seconds between starts. The
+   only upstream is Google's compatible Gemini endpoint; redirects, alternate
+   models, remote tools and unbounded input/output are refused. A successful
+   response needs an archived matching-model usage report before provisional
+   estimate settlement. Uncertain responses retain the reservation and disable
+   the public phase; there is no provider retry. A pre-admission pacing wait is
+   separate from a retry. Five queue admissions alone are not a cost control.
+   Quotas and the free-tier project must still be checked before deployment.
+   These are limits on this bridge, not a guarantee about calls made elsewhere
+   using the same provider project. The real key is read from an operator-only
+   credential file; it is absent from native IRIS, requests, logs and public code.
 3. Configure the native agent through a private, reviewed runtime recipe without
    keys in source, command arguments, UI, logs or public Docker metadata. Check
    host capacity before any deployment; do not remove historical volumes or
@@ -59,3 +70,11 @@ in-flight crash preservation, state corruption, symlinks, unsafe configuration,
 wrong-case replies and exclusion of arbitrary runner fields. An optimized-Python
 run also checks that validation does not depend on removable `assert` statements.
 No provider request or native workflow is performed by these tests.
+
+The per-HTTP budget/transport tests use a temporary synthetic ledger and an
+injected provider, including an actual local HTTP server. They cover shared
+process admission, archived estimates, preservation of unrelated history and
+old uncertain holds, crash/restart, quota/day boundaries, denied redirects,
+secret echoes, wrong-model/missing-usage responses, scoped peers/routes and
+disabled or corrupt state. They never open the operator's real ledger or call
+Google. Passing these tests does not establish the native end-to-end LIVE path.
