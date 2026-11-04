@@ -34,9 +34,10 @@ These controls do not protect against a privileged operator rewriting state.
    money flag, permit or receipt. The service also requires a settled observed
    provider request; a fabricated or recorded result cannot establish completion.
 2. `live_budget.py` and `live_provider.py` now implement the separate per-HTTP
-   admission and private transport, but are **not deployed or enabled**. They
+   admission and private transport. The integration is deployed but **paused after the first real provider timeout**, with its reservation retained. The subsequent US$2 cap authorization does not itself enable admission. They
    require an explicitly approved public phase in the existing `budget.json`,
-   use its existing `budget.lock`, keep the cumulative cap at US$1, and preserve
+   use its existing `budget.lock`, use the explicitly approved US$2 cumulative cap
+   (Rafael, 3 November 2026; recorded approval reference required), and preserve
    prior costs, holds and historical phases. There is no new/reset budget.
    Admission reserves before sending, allows three HTTP requests per case and
    fifteen per Pacific day, and enforces fifteen seconds between starts. The
@@ -46,7 +47,7 @@ These controls do not protect against a privileged operator rewriting state.
    estimate settlement. Uncertain responses retain the reservation and disable
    the public phase; there is no provider retry. A pre-admission pacing wait is
    separate from a retry. Five queue admissions alone are not a cost control.
-   Quotas and the free-tier project must still be checked before deployment.
+   The free-tier project and its quota were checked on 3 November; preserve that binding when resuming.
    These are limits on this bridge, not a guarantee about calls made elsewhere
    using the same provider project. The real key is read from an operator-only
    credential file; it is absent from native IRIS, requests, logs and public code.

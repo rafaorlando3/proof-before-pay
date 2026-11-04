@@ -1,0 +1,42 @@
+{
+  "observed_utc": "2026-11-04T02:53:38.088801+00:00",
+  "version": "0.1.0-beta.2",
+  "source_revision": "046b75636de2595c169c18c4a60644d35650df66",
+  "public_archive_url": "https://pm.community.intersystems.com/download/proof-before-pay/-/proof-before-pay-0.1.0-beta.2.tgz",
+  "HTTP_status": 200,
+  "public_archive_sha256": "681882a81d77d26f89a44df12ed0c5f4414e84df079d0a5cb86b4bc9f80a6872",
+  "public_archive_bytes": 959665,
+  "public_archive_files": 287,
+  "public_archive_matches_current_git": true,
+  "native_install_command": "install proof-before-pay 0.1.0-beta.2 -v",
+  "native_registry_download_observed": true,
+  "native_install_status": true,
+  "compiled_app_resources": 47,
+  "embedded_Python_packages_imported": [
+    "pbp_guard",
+    "pbp_ledger",
+    "pbp_refund_target",
+    "pbp_review",
+    "pbp_s0_core",
+    "pbp_solana_demo",
+    "pbp_witness"
+  ],
+  "comparison": {
+    "downloaded_files_compared": 287,
+    "installed_declared_assets_compared": 34,
+    "mismatches": []
+  },
+  "private_vendor_image_or_binaries_in_archive": false,
+  "scope": "isolated initialized licensed build154 lab clone, amd64 emulation on Apple Silicon; not independent human/fresh vendor download",
+  "default_install_production_started": false,
+  "default_live_profile_absent": true,
+  "default_policy_RAG_disabled": true,
+  "model_calls": 0,
+  "blockchain_calls": 0,
+  "first_version_argument_failure_preserved": true,
+  "comparison_scope_corrected_to_declared_FileCopy_only": true,
+  "OEX_release_submit_toast_observed": true,
+  "OEX_release_list_also_displayed_Draft": true,
+  "OEX_public_sidebar_download_still_beta1_on_first_read": true,
+  "no_claim_moderator_approval": true
+}

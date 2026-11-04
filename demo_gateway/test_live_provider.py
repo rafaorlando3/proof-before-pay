@@ -4,6 +4,7 @@ import threading
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch, MagicMock
 import urllib.error
 import urllib.request
 
@@ -79,6 +80,22 @@ class LiveProviderTests(unittest.TestCase):
         self.assertEqual(provider.complete(self.body())[0], 200)
         self.assertEqual(calls[1] - calls[0], 15)
         self.assertEqual(self.read()["forwarded_calls"], 205)
+
+    def test_pacing_is_deducted_from_upstream_timeout_window(self):
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.status, payload = self.response()
+        response.read.return_value = payload
+        opener = MagicMock()
+        opener.open.return_value = response
+        provider = PrivateProvider(self.budget, "not-a-real-key-test-only-" + "x" * 32,
+                                   wait=lambda seconds: setattr(self, "now", self.now + seconds),
+                                   clock=lambda: self.now)
+        with patch("live_provider.urllib.request.build_opener", return_value=opener):
+            self.assertEqual(provider.complete(self.body())[0], 200)
+            self.assertEqual(provider.complete(self.body())[0], 200)
+        self.assertEqual([call.kwargs["timeout"] for call in opener.open.call_args_list], [55, 40])
+        self.assertIsNone(provider.request_deadline)
 
     def test_slow_admission_persistence_does_not_shorten_actual_start_interval(self):
         original = self.budget.admit

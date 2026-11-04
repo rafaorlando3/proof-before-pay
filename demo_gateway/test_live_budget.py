@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 
-from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE
+from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE, CAP_APPROVAL_REF
 
 
 class LiveBudgetTests(unittest.TestCase):
@@ -20,7 +20,7 @@ class LiveBudgetTests(unittest.TestCase):
         self.case = "public-live:" + "a" * 16
         self.now = dt.datetime(2026, 11, 3, 22, tzinfo=dt.timezone.utc).timestamp()
         self.state = {
-            "schema": "pbp.inference-budget/1", "cap_usd": "1.00", "spent_usd": ".02",
+            "schema": "pbp.inference-budget/1", "cap_usd": "2.00", "spent_usd": ".02",
             "estimated_spent_usd": ".32", "reserved": {"old-uncertain": ".114858"},
             "forwarded_calls": 203, "gemini_forwarded_calls": 196,
             "calls": [{"call_id": "historical", "phase": "historical", "opaque": {"keep": True}}],
@@ -28,6 +28,7 @@ class LiveBudgetTests(unittest.TestCase):
             "benchmark_v7_phase": {"enabled": False, "frozen": "unchanged"},
             "unrelated_history": [1, {"nested": "preserved"}],
             PHASE: {"schema": "pbp.public-live-budget/1", "enabled": True,
+                    "cap_approval_ref": CAP_APPROVAL_REF,
                     "approval_ref": "synthetic-test-only", "model": MODEL,
                     "expires_at": self.now + 86400 * 3, "active_case": self.case,
                     "case_http": {}, "day_http": {}, "in_flight": {}, "last_http_at": None},
@@ -138,7 +139,7 @@ class LiveBudgetTests(unittest.TestCase):
         self.assertIsNotNone(restarted.admit(self.body(), self.case))
 
     def test_cap_cannot_expand_and_denied_requests_do_not_write(self):
-        for change in ({"cap_usd": "5"}, {"estimated_spent_usd": ".8"}, {"estimated_settlement_policy": {"active": False}}):
+        for change in ({"cap_usd": "5"}, {"cap_usd": "1"}, {"estimated_spent_usd": "1.8"}, {"estimated_settlement_policy": {"active": False}}):
             state = copy.deepcopy(self.state)
             state.update(change)
             self.save(state)
@@ -207,17 +208,17 @@ class LiveBudgetTests(unittest.TestCase):
     def test_status_reserves_worst_allowed_request_instead_of_fixed_point35(self):
         state = copy.deepcopy(self.state)
         state[PHASE]["active_case"] = None
-        state["estimated_spent_usd"] = ".50"
+        state["estimated_spent_usd"] = "1.50"
         self.save(state)
-        # Accounted .634858 leaves .365142: more than .35, less than .384064.
+        # Accounted 1.634858 leaves .365142: more than .35, less than .384064.
         self.assertEqual(self.budget.public_status()["reason"], "cumulative_budget_headroom_required")
-        state["estimated_spent_usd"] = ".48"
+        state["estimated_spent_usd"] = "1.48"
         self.save(state)
         self.assertTrue(self.budget.public_status()["available"])
 
     def test_no_http_finish_identifies_no_provider_request_and_preserves_holds(self):
         state = copy.deepcopy(self.state)
-        state["estimated_spent_usd"] = ".7"
+        state["estimated_spent_usd"] = "1.7"
         self.save(state)
         with self.assertRaisesRegex(BudgetDenied, "headroom"):
             self.budget.admit(self.body(), self.case)
@@ -246,6 +247,15 @@ class LiveBudgetTests(unittest.TestCase):
         self.assertFalse(after[PHASE]["enabled"])
         self.assertEqual(after[PHASE]["active_case"], self.case)
         self.assertIn(call, after["reserved"])
+
+    def test_two_dollar_cap_needs_explicit_persisted_approval_reference(self):
+        state = copy.deepcopy(self.state)
+        del state[PHASE]["cap_approval_ref"]
+        self.save(state)
+        before = self.path.read_bytes()
+        with self.assertRaisesRegex(BudgetDenied, "approval_reference"):
+            self.budget.admit(self.body(), self.case)
+        self.assertEqual(self.path.read_bytes(), before)
 
 
 if __name__ == "__main__":

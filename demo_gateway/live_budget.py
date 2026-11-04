@@ -24,6 +24,8 @@ MODEL = "gemini-3.8-flash"
 PHASE = "public_live_demo"
 CASE_PATTERN = r"public-live:[A-Za-z0-9_-]{16,48}"
 MAX_REQUEST_BYTES = 40000
+ACTIVE_CAP_USD = Decimal("2")
+CAP_APPROVAL_REF = "Rafael03Nov2026 explicit US$2 LIVE qualification"
 
 
 def reservation_for_bytes(size):
@@ -162,7 +164,7 @@ class LiveBudget:
                 reason = "native_case_in_progress"
             elif phase["day_http"].get(day, 0) >= 15:
                 reason = "daily_model_quota_reached"
-            elif accounted(state) + reservation_for_bytes(MAX_REQUEST_BYTES) > Decimal("1"):
+            elif accounted(state) + reservation_for_bytes(MAX_REQUEST_BYTES) > ACTIVE_CAP_USD:
                 reason = "cumulative_budget_headroom_required"
             return {"available": reason is None, "reason": reason,
                     "remaining_model_calls_today": max(0, 15 - phase["day_http"].get(day, 0))}
@@ -226,11 +228,12 @@ class LiveBudget:
     @staticmethod
     def validate(state):
         require(state.get("schema") == "pbp.inference-budget/1", "existing_budget_schema_required")
-        require(money(state["cap_usd"]) == Decimal("1"), "active_one_dollar_cap_required")
-        require(accounted(state) <= Decimal("1"), "budget_exhausted_or_inconsistent")
+        require(money(state["cap_usd"]) == ACTIVE_CAP_USD, "explicit_two_dollar_cap_required")
+        require(accounted(state) <= ACTIVE_CAP_USD, "budget_exhausted_or_inconsistent")
         require((state.get("estimated_settlement_policy") or {}).get("active") is True, "existing_estimate_settlement_policy_required")
         phase = state.get(PHASE)
         require(isinstance(phase, dict) and phase.get("schema") == "pbp.public-live-budget/1", "explicit_public_phase_required")
+        require(phase.get("cap_approval_ref") == CAP_APPROVAL_REF, "explicit_cap_approval_reference_required")
         require(isinstance(phase.get("approval_ref"), str) and bool(phase["approval_ref"]), "approval_reference_required")
         require(phase.get("model") == MODEL and type(phase.get("enabled")) is bool, "phase_configuration_invalid")
         require(isinstance(phase.get("case_http"), dict) and isinstance(phase.get("day_http"), dict) and isinstance(phase.get("in_flight"), dict), "phase_counters_invalid")
@@ -263,7 +266,7 @@ class LiveBudget:
             require(not phase["in_flight"], "uncertain_inflight_reconcile_first")
             require(phase["case_http"].get(case_id, 0) < 3 and phase["day_http"].get(day, 0) < 15, "HTTP_quota_reached")
             require(phase["last_http_at"] is None or now >= phase["last_http_at"] + 15, "HTTP_rate_limit_wait")
-            require(accounted(state) + reserve <= Decimal("1"), "cumulative_headroom_required")
+            require(accounted(state) + reserve <= ACTIVE_CAP_USD, "cumulative_headroom_required")
             call = uuid.uuid4().hex
             state["reserved"][call] = str(reserve)
             state["forwarded_calls"] += 1

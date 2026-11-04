@@ -32,11 +32,12 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class PrivateProvider:
-    def __init__(self, budget, provider_key, *, send=None, wait=time.sleep):
+    def __init__(self, budget, provider_key, *, send=None, wait=time.sleep, clock=time.monotonic):
         require(isinstance(provider_key, str) and len(provider_key) >= 32, "private_provider_credential_required")
         self.budget, self.key = budget, provider_key
         self.send = send or self._send
         self.wait = wait
+        self.clock, self.request_deadline = clock, None
         self.slot = threading.Lock()
         self.archive = budget.directory / "public-live-responses"
         self.archive.mkdir(mode=0o700, exist_ok=True)
@@ -46,8 +47,13 @@ class PrivateProvider:
         request = urllib.request.Request(ENDPOINT, data=raw, method="POST",
                   headers={"Authorization": "Bearer " + self.key, "Content-Type": "application/json"})
         opener = urllib.request.build_opener(NoRedirect())
+        remaining = self.request_deadline - self.clock()
+        if remaining <= 0:
+            raise TimeoutError("provider_dispatch_deadline_elapsed")
         try:
-            response = opener.open(request, timeout=55)
+            # Pacing consumes this request's transport window rather than adding
+            # another 15 seconds on top of the upstream socket timeout.
+            response = opener.open(request, timeout=min(55, remaining))
         except urllib.error.HTTPError as error:
             response = error
         with response:
@@ -92,6 +98,7 @@ class PrivateProvider:
         if not self.slot.acquire(blocking=False):
             return self.failure("one_live_HTTP_at_a_time", 429)
         call = None
+        self.request_deadline = self.clock() + 55
         try:
             # Arming is an operator/worker action under the authoritative lock,
             # never a case_id or URL accepted from the HTTP caller.
@@ -123,6 +130,7 @@ class PrivateProvider:
             # A crash/failed accounting write retains any admitted in-flight hold.
             return self.failure("accounting_unavailable_reconcile_before_retry", 503)
         finally:
+            self.request_deadline = None
             self.slot.release()
 
 
