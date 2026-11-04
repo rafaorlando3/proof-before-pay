@@ -21,7 +21,7 @@ classes = {
 assert {resource.attrib['Name'] for resource in module.findall('Resource')} == classes
 assert all(name.endswith('.CLS') for name in classes), 'no application data globals'
 
-packages = {'pbp_guard', 'pbp_ledger', 'pbp_refund_target', 'pbp_review', 'pbp_s0_core', 'pbp_witness'}
+packages = {'pbp_guard', 'pbp_ledger', 'pbp_refund_target', 'pbp_review', 'pbp_s0_core', 'pbp_solana_demo', 'pbp_witness'}
 expected = {'python/' + name + '/': '${mgrdir}python/' + name + '/' for name in packages}
 expected.update({name + '/': '${mgrdir}proof-before-pay/' + name + '/' for name in ('ui', 'policy', 'fixtures')})
 copies = module.findall('FileCopy')
