@@ -1,0 +1,38 @@
+{
+  "schema": "pbp.solana-memo-adapter-qualification/1",
+  "observed_utc": "2026-11-04T02:04:07.231992+00:00",
+  "sources": [
+    "cls/pbp/Adapter/SolanaMemo.cls",
+    "cls/pbp/Operation/SolanaMemo.cls",
+    "cls/pbp/Msg/AnchorRequest.cls",
+    "python/pbp_solana_demo/adapter.py"
+  ],
+  "native_production_message_invocation": true,
+  "native_message_status_OK": true,
+  "proof": {
+    "ok": true,
+    "state": "confirmed",
+    "cluster": "devnet",
+    "commitment": "be62a5c403f0198878ae8aa4a6e752f8029562f5de88478fd7f7ce77761adeed",
+    "signature": "5RYEUprgJtLQ72n1JLiVBQ3ePdD7dxPQU9FRUbMJwudqbYJG742wvdzpEFGjLZBqA7XaABU2RcF4xvoPg1TL9PDF",
+    "memo": "pbp1:be62a5c403f0198878ae8aa4a6e752f8029562f5de88478fd7f7ce77761adeed",
+    "slot": 518419664,
+    "on_chain_verified": true,
+    "authorizes_payment": false,
+    "explorer": "https://explorer.solana.com/tx/5RYEUprgJtLQ72n1JLiVBQ3ePdD7dxPQU9FRUbMJwudqbYJG742wvdzpEFGjLZBqA7XaABU2RcF4xvoPg1TL9PDF?cluster=devnet"
+  },
+  "submitted_transactions": 1,
+  "real_money": false,
+  "transfer_instructions": 0,
+  "private_key_or_salt_disclosed": false,
+  "own_host_disabled_after_test": true,
+  "default_install_enables_or_funds_adapter": false,
+  "native_local_verifier_queries_chain": false,
+  "qualification_commitment_origin": "Non-financial fail-closed decision from LIVE attempt session1520; this chain proof is not a claim of successful model generation.",
+  "uncertain_send_policy": "Persist expected signature before sole sendTransaction. Subsequent calls only reconcile that signature, with exact Memo readback; no new blockhash/re-sign/send after ambiguity.",
+  "optional_dependencies": "requirements-solana-devnet.lock; official PyPI wheels verified by hash, separate from default image/install",
+  "offline_tests": 8,
+  "native_classes_compiled": 3,
+  "official_RPC_reference": "https://solana.com/docs/rpc/http/sendtransaction",
+  "exact_returned_transaction_signature_check": true
+}

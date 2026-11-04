@@ -1,0 +1,4 @@
+# Optional Solana Memo adapter, licensed IRIS154 amd64 / Python>=3.12; not installed by default.
+solders==0.27.1 --hash=sha256:6082bbe46b7b1b2b005d046011f89fcae75fc5ea4f1a0ef5c2e9dfb5fe7930ce
+jsonalias==0.1.1 --hash=sha256:a56d2888e6397812c606156504e861e8ec00e188005af149f003c787db3d3f18
+typing_extensions==4.15.0 --hash=sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548

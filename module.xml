@@ -27,6 +27,7 @@
       <Resource Name="pbp.Data.Receipt.CLS" />
       <Resource Name="pbp.Data.Seal.CLS" />
       <Resource Name="pbp.Data.ToolCall.CLS" />
+      <Resource Name="pbp.Adapter.SolanaMemo.CLS" />
       <Resource Name="pbp.Demo.Agent.CLS" />
       <Resource Name="pbp.Demo.Intake.CLS" />
       <Resource Name="pbp.Demo.Operation.CLS" />
@@ -39,11 +40,13 @@
       <Resource Name="pbp.Msg.LedgerRequest.CLS" />
       <Resource Name="pbp.Msg.LedgerResponse.CLS" />
       <Resource Name="pbp.Msg.SealRequest.CLS" />
+      <Resource Name="pbp.Msg.AnchorRequest.CLS" />
       <Resource Name="pbp.Msg.SealResponse.CLS" />
       <Resource Name="pbp.Operation.Agent.CLS" />
       <Resource Name="pbp.Operation.Replay.CLS" />
       <Resource Name="pbp.Operation.TestLedger.CLS" />
       <Resource Name="pbp.Operation.Witness.CLS" />
+      <Resource Name="pbp.Operation.SolanaMemo.CLS" />
       <Resource Name="pbp.Process.Decide.CLS" />
       <Resource Name="pbp.Production.CLS" />
       <Resource Name="pbp.RefundTarget.CLS" />
@@ -61,6 +64,7 @@
       <FileCopy Name="python/pbp_refund_target/" Target="${mgrdir}python/pbp_refund_target/" Overlay="0" />
       <FileCopy Name="python/pbp_review/" Target="${mgrdir}python/pbp_review/" Overlay="0" />
       <FileCopy Name="python/pbp_s0_core/" Target="${mgrdir}python/pbp_s0_core/" Overlay="0" />
+      <FileCopy Name="python/pbp_solana_demo/" Target="${mgrdir}python/pbp_solana_demo/" Overlay="0" />
       <FileCopy Name="python/pbp_witness/" Target="${mgrdir}python/pbp_witness/" Overlay="0" />
       <FileCopy Name="ui/" Target="${mgrdir}proof-before-pay/ui/" Overlay="0" />
       <FileCopy Name="policy/" Target="${mgrdir}proof-before-pay/policy/" Overlay="0" />

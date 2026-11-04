@@ -5,9 +5,9 @@
 [Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub) ·
 [Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
-Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49), confirmed on 3 November ([verification](docs/validation/contest49-public-listing-20261103.json)); the package review badge remains Awaiting Review. The video predates the v7 evaluation. The authenticated online viewer currently replays retained cases from a running IRIS instance and makes no new model call.
+Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49), confirmed on 3 November ([verification](docs/validation/contest49-public-listing-20261103.json)); the package review badge remains Awaiting Review. The video predates the v7 evaluation. The authenticated online viewer serves retained examples from a running IRIS instance. Its optional fresh-decision integration is currently paused after a provider timeout; the page explicitly falls back to recorded mode.
 
-An optional fixed-scenario LIVE path is [staged, disabled and awaiting end-to-end qualification](demo_gateway/LIVE-DEMO-PLAN.md). Its native hooks compiled and local tests passed, while the published viewer remains recorded. These preparation results are not a LIVE-demo bonus claim.
+The optional fixed-scenario LIVE path has native actors, a private budget bridge, a persistent queue and inline status. [The first real attempt failed closed](docs/validation/live-integration-attempt-20261103.json), with no verified model response, permit, receipt or money effect. Its uncertain reservation is retained; no successful LIVE generation or online-demo bonus is claimed. [Operator plan](demo_gateway/LIVE-DEMO-PLAN.md).
 
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
 The application runs on InterSystems IRIS AI Hub EAP build 154: native Interoperability
@@ -179,7 +179,7 @@ prepared and tested, but has not yet been released to judges or submitted to Ope
 You can inspect three selected synthetic cases, the evidence the agent saw, missing information, the
 sealed decision and approval, and an intact synthetic receipt. Use "Try to tamper" to edit a copy and
 verify it: the verdict turns tampered; restoring the copy turns it intact. The stored record is unchanged.
-The viewer cannot approve, create cases or call a model; those routes are refused by the gateway.
+The viewer cannot approve payments or submit arbitrary cases. An optional, explicitly labelled button admits only two fixed public synthetic fixtures through the dedicated bounded LIVE route. That route is currently paused; viewing the recorded examples never calls a model. [Qualification state](docs/validation/live-integration-attempt-20261103.json).
 The selected delivery-conflict example retains its historical rejection, made by the instance owner
 account during an automated synthetic test. Its role guide reads the
 verified decision snapshot; the historical comparison links separate recorded-refund and live-v5
@@ -447,15 +447,28 @@ These are evidence and submission states against the [official contest49 bonus r
 | Workflow Engine | 2 | Implemented: [native review](cls/pbp/Review.cls), [Production](cls/pbp/Production.cls), [authenticated workflow evidence](docs/validation/http-workflow.json). |
 | Embedded Python | 3 | Implemented: [Witness bridge](cls/ProofBeforePay/Witness.cls), [Ledger bridge](cls/ProofBeforePay/Ledger.cls), [runtime evidence](docs/validation/ledger-runtime.json). |
 | Docker | 2 | Implemented: [Dockerfile](Dockerfile), [Compose](compose.yml), [qualified lifecycle evidence](docs/validation/clean-lifecycle.json). The licensed vendor image is obtained separately. |
-| Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated and currently recorded/read-only. Live bounded inference and public judge-access instructions are being prepared; eligibility is not assumed. |
+| Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated and currently recorded/read-only. The bounded fresh-decision integration is deployed but paused after a failed-closed provider timeout; successful LIVE qualification and eligibility remain pending. |
 | ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt), [qualified local package test](docs/validation/independent-IPM-20261031.json). [Public registry install passed](docs/validation/public-IPM-20261103.json): 38 resources, six native Python imports; initialized isolated IPM lab, no new model call. |
 | Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Visual Trace inspection recipe and evidence limits](docs/TRACEABILITY.md). OEX idea link submitted; fresh Visual Trace demonstration remains pending. |
 | First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
 | Second article or translation | 1 | [Portuguese translation published 3 November](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub). |
 | YouTube video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw), English, Portuguese, Spanish and Simplified Chinese captions; explicit pre-v7 disclosure. |
-| IRIS Vector Search | 2 | Not implemented in this release. Hash/test vectors are not vector retrieval. |
-| Custom Interoperability adapter | 2 | Not implemented in this release. The vendor AI Hub adapter is not our own adapter. |
+| IRIS Vector Search | 2 | [Optional native policy KB](cls/pbp/RAG/Policy.cls): `%AI.RAG`, local FastEmbed and IRIS Vector Search. [Native retrieval and sealed-passage tests passed](docs/validation/policy-rag-native-20261103.json); first LIVE agent use remains pending. Full policy constraints remain authoritative. |
+| Custom Interoperability adapter | 2 | [Own SolanaMemo outbound adapter](cls/pbp/Adapter/SolanaMemo.cls), [native Operation](cls/pbp/Operation/SolanaMemo.cls), [confirmed devnet-only Production test](docs/validation/solana-memo-devnet-20261103.json). One Memo instruction, no transfer; disabled without explicit private configuration. This is an implementation/test claim, not an awarded bonus. |
 | PEX | 3 | Not implemented; outside the current plan. |
 | AI Hub / Embedded Python bugs | up to 3 each | No qualifying submitted reproducible vendor bug is claimed. |
 
 See the [structured tracker](docs/BONUS-TRACKER.json) for the complete item list. New functionality is documented as delivered only after its behavior is verified.
+
+
+## Optional policy retrieval and devnet anchoring
+
+The fixed-scenario demo can supplement `GetStorePolicy` with passages from an AI Hub knowledge base. Local FastEmbed produces 384-dimensional embeddings; `%AI.RAG.VectorStore.IRIS` stores the vectors and `%AI.RAG.KnowledgeBase` performs retrieval. Each policy hash gets a separate table. Every returned passage must match the exact active policy text and its hash. The full allowed actions, forbidden actions and limits are still returned. Retrieval does not change approval or payment policy.
+
+The demo prompt asks for `policy.chunk:<chunk_id>` references to passages it actually relies on. The context guard rejects unobserved, changed or uncited retrieved passages. The decision seal contains both the tool output and the cited references. [Native qualification](docs/validation/policy-rag-native-20261103.json) covers local retrieval, guard binding, sealing and tamper rejection; it does not establish successful LIVE model use or a measured quality gain.
+
+Indexing is an explicit operator action: `##class(pbp.RAG.Policy).Stage(pol)` for the loaded policy, then `SetEnabled(1)` only after reviewing the proof. Installation does neither. FastEmbed's first use may download its local model; allow cache disk space and qualify on the declared build before activation. A failed retrieval is labelled unavailable and retains the full policy constraints.
+
+The optional `pbp.Operation.SolanaMemo` uses our `pbp.Adapter.SolanaMemo` to publish only `pbp1:<commitment>` to the fixed Solana devnet endpoint. It accepts an already intact local seal and never creates a payment approval or transfer. The private journal records the signed transaction's expected signature before the sole send. An uncertain result is reconciled by that signature with exact Memo readback; it is never re-signed or resent automatically. [Native Production proof](docs/validation/solana-memo-devnet-20261103.json).
+
+The module is not added as a running Production host by installation. It needs an explicit enabled flag, private 0600 devnet keypair file and 0700 state directory. Optional amd64 Python dependencies are pinned in [requirements-solana-devnet.lock](requirements-solana-devnet.lock); install them separately with `python3 -m pip install --require-hashes -r requirements-solana-devnet.lock` into the operator's private Python environment. No key, wallet funding, mainnet endpoint or automatic airdrop is shipped. The qualification host was disabled after its single confirmed test. The normal local verifier continues to report local integrity; it does not silently become a blockchain verifier.

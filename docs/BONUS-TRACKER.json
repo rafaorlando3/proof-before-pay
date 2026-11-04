@@ -1,6 +1,6 @@
 {
   "schema": "pbp.contest-bonus-tracker/1",
-  "checked_at_utc": "2026-11-03T20:46:38.162851+00:00",
+  "checked_at_utc": "2026-11-04T02:07:09.488505+00:00",
   "contest": 49,
   "current_full_bonus_table_located": true,
   "no_points_awarded_to_project_verified": true,
@@ -56,9 +56,13 @@
       "item": "Custom adapter",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "not_implemented",
-      "note": "The vendor EnsLib.AI.Agent.OutboundAdapter is not a custom adapter; only a genuinely implemented and used adapter can qualify.",
-      "evidence": [],
+      "delivery_status": "implemented_native_Production_devnet_test_confirmed_not_awarded",
+      "note": "Own outbound SolanaMemo adapter and Operation, fixed devnet Memo only. One real synthetic devnet transaction confirmed by exact Memo readback. Default disabled without private operator configuration; qualification host disabled afterwards. No transfer, real money, key or salt published.",
+      "evidence": [
+        "cls/pbp/Adapter/SolanaMemo.cls",
+        "cls/pbp/Operation/SolanaMemo.cls",
+        "docs/validation/solana-memo-devnet-20261103.json"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -88,9 +92,14 @@
       "item": "IRIS Vector Search",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "not_implemented",
-      "note": "AI Hub RAG can qualify per organizer comment; only useful retrieval belongs in the product.",
-      "evidence": [],
+      "delivery_status": "implemented_native_component_qualified_first_LIVE_agent_use_pending",
+      "note": "AI Hub %AI.RAG + local FastEmbed + IRIS Vector Search policy KB. Current policy identity/passage integrity checked; native guard requires observed cited chunks and rejects tampering. Component sealing passed. First successful model use remains pending; no measured quality gain or awarded bonus claimed.",
+      "evidence": [
+        "cls/pbp/RAG/Policy.cls",
+        "cls/pbp/Tools.cls",
+        "python/pbp_guard/decision.py",
+        "docs/validation/policy-rag-native-20261103.json"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -126,12 +135,11 @@
       "item": "Online demo",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "authenticated_IRIS_backed_viewer_deployed_judge_access_and_award_pending",
-      "note": "Authenticated cloud viewer reads selected synthetic cases from running IRIS and verifies record copies. It is consultation-only, without approvals/intake/model calls. This is not a static REST mock; dedicated contest access and organizer eligibility/award remain unverified.",
+      "delivery_status": "recorded_fallback_live_integration_deployed_first_attempt_failed_closed",
+      "note": "Authenticated running IRIS viewer with fixed-scenario live integration. First provider call expired without verifiable response or usage, no effect, no permit/receipt, reservation retained. Phase/native profile paused. No successful LIVE or eligibility claim.",
       "evidence": [
-        "demo_gateway/README.md",
-        "docs/validation/demo-service-recovery.json",
-        "docs/OPEN-EXCHANGE.md"
+        "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
+        "docs/validation/live-integration-attempt-20261103.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
