@@ -54,7 +54,8 @@ class LiveViewerTests(unittest.TestCase):
         self.enable()
         native = self.g.fetch
         live_doc = {"ok": True, "case": {"case_id": self.live.case, "input": {"environment": "sandbox"}},
-                    "decision": {"source": "model", "model": {"mode": "live"}}, "seals": [{"commitment": self.live.job["commitment"]}]}
+                    "decision": {"source": "model", "model": {"mode": "live"}, "commitment":self.live.job["commitment"]},
+                    "seals": [{"commitment": self.live.job["commitment"], "kind":"decision","verification":{"state":"intact"}}]}
         def fetch(path, method="GET", body=None):
             if self.live.case in path.replace("%3A", ":"):
                 return 200, "application/json", json.dumps(live_doc).encode()
@@ -64,6 +65,12 @@ class LiveViewerTests(unittest.TestCase):
         live_doc["decision"]["model"]["mode"] = "recorded"
         self.assertEqual(self.call("GET", "/pbp/api/cases/" + self.live.case)[0], 502)
         live_doc["decision"]["model"]["mode"] = "live"
+        live_doc["decision"]["commitment"] = "e" * 64
+        self.assertEqual(self.call("GET", "/pbp/api/cases/" + self.live.case)[0], 502)
+        live_doc["decision"]["commitment"] = self.live.job["commitment"]
+        live_doc["seals"][0]["verification"]["state"] = "tampered"
+        self.assertEqual(self.call("GET", "/pbp/api/cases/" + self.live.case)[0], 502)
+        live_doc["seals"][0]["verification"]["state"] = "intact"
         live_doc["seals"][0]["commitment"] = "e" * 64
         self.assertEqual(self.call("GET", "/pbp/api/cases/" + self.live.case)[0], 502)
         self.assertEqual(self.call("GET", "/pbp/api/cases/public-live:" + "z" * 16)[0], 404)

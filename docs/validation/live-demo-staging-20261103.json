@@ -71,5 +71,15 @@
     "Vector Search, optional devnet adapter and final bilateral benchmark",
     "LinkedIn only after full authorized queue complete"
   ],
-  "not_bonus_award_evidence": true
+  "not_bonus_award_evidence": true,
+  "followup_qualification": {
+    "at_utc": "2026-11-04T01:07:42.308239+00:00",
+    "browser_UI": "Integrated-browser development stub: cap fallback/disabled button, one submission/running/failed with no replay;390px viewport had no horizontal overflow; viewport reset and temp tabs/server closed. No IRIS/model used in UI stub.",
+    "first_native_enable": "Refused before intake/provider call: ObjectScript numeric comparison of ISO timestamps treated same-year dates incorrectly. Profile stayed OFF; budget bytes unchanged.",
+    "expiry_fix": "Native IsUnexpired uses string collation. Six fixed native boundary cases passed, including same-year future, past, equality and millisecond/day/year boundaries.",
+    "retained_failed_load": "First correction load could not read root0600 copied public source; corrected only public class source file access, then native compile and six cases passed. Both logs retained.",
+    "fallback_after_restart": "Two new local tests confirm recorded viewer can start when phase expired/disabled or native route unavailable; no native submission.",
+    "live_case_binding": "Viewer additionally requires decision commitment equality and intact decision seal, not only a matching case/model label.",
+    "native_result_gate": "Requires accepted raw proposal plus five observed tools; an agent-failure fallback is not advertised as a successful LIVE decision."
+  }
 }

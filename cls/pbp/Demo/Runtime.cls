@@ -22,7 +22,14 @@ ClassMethod Allows(caseId As %String) As %Boolean
     If '$MATCH(caseId,"public-live:[A-Za-z0-9_\-]{16,48}") Quit 0
     Set cfg=..Config()
     If '$ISOBJECT(cfg) Quit 0
-    Quit +cfg.enabled && (##class(pbp.Util).NowISO()<cfg."expires_at")
+    Quit +cfg.enabled && ..IsUnexpired(cfg."expires_at")
+}
+
+/// Canonical UTC ISO strings require string collation, not numeric < or >.
+ClassMethod IsUnexpired(expires As %String, now As %String = "") As %Boolean
+{
+    If now="" Set now=##class(pbp.Util).NowISO()
+    Quit expires]now
 }
 
 ClassMethod ItemsReady() As %Boolean
@@ -52,7 +59,7 @@ ClassMethod PublicStatus() As %DynamicObject
     Set cfg=..Config(),out={"enabled":false,"model":(..#MODEL),"case_prefix":"public-live:","transport":"private_budget_bridge","autonomous_effects":false,"source_revision":""}
     If '$ISOBJECT(cfg) Quit out
     Set out."source_revision"=cfg."source_revision"
-    Set ok=+cfg.enabled && (##class(pbp.Util).NowISO()<cfg."expires_at") && ..ItemsReady()
+    Set ok=+cfg.enabled && ..IsUnexpired(cfg."expires_at") && ..ItemsReady()
     Do out.%Set("enabled",ok,"boolean")
     Quit out
 }
@@ -116,12 +123,30 @@ ClassMethod SetEnabled(enabled As %Boolean) As %Status
     If '$SYSTEM.Security.Check("%Admin_Manage","USE") Quit $$$ERROR($$$GeneralError,"demo_operator_required")
     Set cfg=..Config()
     If '$ISOBJECT(cfg) Quit $$$ERROR($$$GeneralError,"demo_profile_missing")
-    If enabled && ((##class(pbp.Util).NowISO()'<cfg."expires_at") || '..ItemsReady()) Quit $$$ERROR($$$GeneralError,"demo_profile_not_ready")
+    If enabled && ('..IsUnexpired(cfg."expires_at") || '..ItemsReady()) Quit $$$ERROR($$$GeneralError,"demo_profile_not_ready")
     Do cfg.%Set("enabled",enabled,"boolean")
     Set ^pbp.demoRuntime("config")=cfg.%ToJSON()
     Set entry={"enabled":(enabled),"at":(##class(pbp.Util).NowISO())}
     Set index=$INCREMENT(^pbp.demoRuntime("enabled_history"))
     Set ^pbp.demoRuntime("enabled_history",index)=entry.%ToJSON()
+    Quit $$$OK
+}
+
+/// Rebind only a disabled profile after verifying changed native source files.
+/// This does not recreate the profile, clear its history or touch any budget.
+ClassMethod RebindRevision(expected As %String, revision As %String, approval As %String) As %Status
+{
+    If '$SYSTEM.Security.Check("%Admin_Manage","USE") Quit $$$ERROR($$$GeneralError,"demo_operator_required")
+    Set cfg=..Config()
+    If '$ISOBJECT(cfg) Quit $$$ERROR($$$GeneralError,"demo_profile_missing")
+    If cfg.enabled Quit $$$ERROR($$$GeneralError,"disable_demo_before_source_rebind")
+    If cfg."source_revision"'=expected Quit $$$ERROR($$$GeneralError,"demo_source_revision_changed")
+    If '$MATCH(revision,"[0-9a-f]{40}") || (approval="") Quit $$$ERROR($$$GeneralError,"reviewed_revision_reference_required")
+    Set entry={"from":(expected),"to":(revision),"approval_ref":(approval),"at":(##class(pbp.Util).NowISO())}
+    Set index=$INCREMENT(^pbp.demoRuntime("revision_history"))
+    Set ^pbp.demoRuntime("revision_history",index)=entry.%ToJSON()
+    Set cfg."source_revision"=revision
+    Set ^pbp.demoRuntime("config")=cfg.%ToJSON()
     Quit $$$OK
 }
 }

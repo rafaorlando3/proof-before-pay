@@ -122,6 +122,10 @@ class NativeRunner:
         model = decision.get("model") or {}
         require(decision.get("source") == "model" and model.get("mode") == "live" and model.get("id") == MODEL,
                 "fresh_native_live_decision_required")
+        require(decision.get("proposal_refused") is False and not decision.get("proposal_reason")
+                and isinstance(decision.get("proposal"), dict)
+                and type((decision.get("usage") or {}).get("tool_calls")) is int
+                and decision["usage"]["tool_calls"] >= 5, "validated_proposal_and_five_observed_tools_required")
         require(decision.get("moves_money") is False and not document.get("receipt") and not document.get("permit"), "nonfinancial_demo_result_required")
         commitment = decision["commitment"]
         require(isinstance(commitment, str) and re.fullmatch(r"[0-9a-f]{64}", commitment), "native_commitment_required")

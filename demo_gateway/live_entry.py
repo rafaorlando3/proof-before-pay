@@ -24,10 +24,9 @@ def load_live(path):
     relay = NativeRelay(data["native_relay"], expected_revision=data["native_source_revision"])
     runner = NativeRunner(data["fixtures_directory"], data["native_attempt_directory"], relay)
     queue = LiveQueue(data["queue_directory"], FIXTURES, enabled=data["enabled"])
-    if data["enabled"]:
-        # Both independent controls and the real native route must be ready
-        # before the live-enabled service can replace a recorded viewer.
-        require(budget.public_status()["available"] and relay.ready(), "live_runtime_not_qualified")
+    # Runtime admission checks every independent gate. An exhausted quota,
+    # expired phase, uncertain in-flight job or unavailable native route must
+    # leave the recorded viewer usable after a service restart.
     return LiveService(queue, budget, runner, relay.ready, enabled=data["enabled"])
 
 

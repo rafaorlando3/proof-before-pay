@@ -156,7 +156,9 @@ class Gateway:
                 raise ValueError('public_case_must_be_recorded')
         elif (d['decision'].get('model',{}).get('mode')!='live'
               or d['decision'].get('source')!='model'
-              or not any(s.get('commitment')==job['commitment'] for s in d.get('seals',[]))):
+              or d['decision'].get('commitment')!=job['commitment']
+              or not any(s.get('commitment')==job['commitment'] and s.get('kind')=='decision'
+                         and s.get('verification',{}).get('state')=='intact' for s in d.get('seals',[]))):
             raise ValueError('public_live_case_evidence_mismatch')
         return d
     def live_cases(self):return self.live.completed_cases() if self.live is not None else {}

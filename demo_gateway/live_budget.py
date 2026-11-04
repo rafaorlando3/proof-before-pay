@@ -153,6 +153,8 @@ class LiveBudget:
                 reason = "live_disabled_or_expired"
             elif phase["in_flight"]:
                 reason = "model_request_in_progress"
+            elif phase.get("active_case") is not None:
+                reason = "native_case_in_progress"
             elif phase["day_http"].get(day, 0) >= 15:
                 reason = "daily_model_quota_reached"
             elif accounted(state) + Decimal(".35") > Decimal("1"):

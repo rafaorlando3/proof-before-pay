@@ -52,12 +52,12 @@
     for(let attempt=0;attempt<120;attempt++){
       let data;
       try{data=await request('/'+encodeURIComponent(token));}
-      catch(error){say('Status could not be confirmed. No request was replayed. Recorded examples remain available.');break;}
+      catch(error){say('Status could not be confirmed. No request was replayed. Reload to check the same request. Recorded examples remain available.');break;}
       const job=data.job;
       if(!data.ok||!job){say('This request cannot be confirmed. No new decision was submitted. Recorded mode is available.');break;}
       if(job.status==='complete'){
         selectedCase=job.case_id;inspect.hidden=false;
-        say('LIVE decision sealed. Case '+job.case_id+' · native trace session '+job.session_id+'. No payment was approved.');
+        say('LIVE decision sealed. Case '+job.case_id+' · native trace session '+job.session_id+'. This demo did not approve a payment.');
         break;
       }
       if(job.status==='failed'){say('The live decision did not finish with verified evidence. No retry was made. Recorded mode is available.');break;}
@@ -75,7 +75,7 @@
     say('Submitting one fixed synthetic example…');
     let data;
     try{data=await request('',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario:choice.value,request_id:token})});}
-    catch(error){say('Submission could not be confirmed. It will not be replayed automatically. Recorded mode is available.');pending=false;await status();return;}
+    catch(error){say('Submission could not be confirmed. Reload to check the same request; it will not be submitted again. Recorded mode is available.');pending=false;await status();return;}
     if(!data.ok){say(reason[data.reason]||'Live admission is unavailable. Recorded mode is available.');pending=false;await status();return;}
     await watch(token);
   });

@@ -43,7 +43,8 @@ class NativeRunnerTests(unittest.TestCase):
     def document(self):
         return {"ok": True, "case": {"case_id": self.case, "input": {"environment": "sandbox"},
                                      "session_id": "1499", "status": "awaiting_human"},
-                "decision": {"source": "model", "moves_money": False, "model": {"mode": "live", "id": MODEL}, "commitment": "a" * 64},
+                "decision": {"source": "model", "moves_money": False, "model": {"mode": "live", "id": MODEL}, "commitment": "a" * 64,
+                             "proposal_refused":False,"proposal_reason":"","proposal":{"action":"hold_for_evidence"},"usage":{"tool_calls":5}},
                 "seals": [{"kind": "decision", "commitment": "a" * 64, "verification": {"state": "intact"}, "money_moved_before_seal": False}],
                 "receipt": None, "permit": None}
 
@@ -105,6 +106,8 @@ class NativeRunnerTests(unittest.TestCase):
     def test_recorded_rules_and_financial_results_cannot_be_claimed_live(self):
         changes = [lambda d: d["decision"]["model"].update(mode="recorded"),
                    lambda d: d["decision"].update(source="rules"),
+                   lambda d: d["decision"].update(proposal_refused=True,proposal_reason="llm_call_failed"),
+                   lambda d: d["decision"]["usage"].update(tool_calls=0),
                    lambda d: d["decision"].update(moves_money=True),
                    lambda d: d.update(receipt={"status": "effected"}),
                    lambda d: d.update(permit={"state": "issued"})]
