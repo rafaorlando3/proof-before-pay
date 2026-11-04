@@ -3,7 +3,7 @@
   <Document name="proof-before-pay.ZPM">
     <Module>
       <Name>proof-before-pay</Name>
-      <Version>0.1.0-beta.1</Version>
+      <Version>0.1.0-beta.2</Version>
       <Packaging>module</Packaging>
       <Description>Sealed AI decision evidence and authenticated review before synthetic duplicate refunds; AI Hub build154 lab only.</Description>
       <Author>
@@ -73,7 +73,7 @@
         <Arg>${mgrdir}proof-before-pay</Arg>
         <Arg>0</Arg>
       </Invoke>
-      <AfterInstallMessage>Private build154 sandbox configured; no Production was started or case fed. See IPM-OPERATOR.txt for explicit start and validation. Publication is pending Rafael review.</AfterInstallMessage>
+      <AfterInstallMessage>Private build154 sandbox configured; no Production was started or case fed. See IPM-OPERATOR.txt for explicit start and validation. Optional LIVE, policy retrieval and devnet anchoring require explicit operator configuration; all are disabled by a normal installation.</AfterInstallMessage>
     </Module>
   </Document>
 </Export>

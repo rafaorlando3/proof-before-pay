@@ -463,6 +463,8 @@ See the [structured tracker](docs/BONUS-TRACKER.json) for the complete item list
 
 ## Optional policy retrieval and devnet anchoring
 
+These source additions are prepared as package `0.1.0-beta.2`. The public `0.1.0-beta.1` installation proof above covers its original 38 classes and six Python packages; it does not establish installation of these newer components.
+
 The fixed-scenario demo can supplement `GetStorePolicy` with passages from an AI Hub knowledge base. Local FastEmbed produces 384-dimensional embeddings; `%AI.RAG.VectorStore.IRIS` stores the vectors and `%AI.RAG.KnowledgeBase` performs retrieval. Each policy hash gets a separate table. Every returned passage must match the exact active policy text and its hash. The full allowed actions, forbidden actions and limits are still returned. Retrieval does not change approval or payment policy.
 
 The demo prompt asks for `policy.chunk:<chunk_id>` references to passages it actually relies on. The context guard rejects unobserved, changed or uncited retrieved passages. The decision seal contains both the tool output and the cited references. [Native qualification](docs/validation/policy-rag-native-20261103.json) covers local retrieval, guard binding, sealing and tamper rejection; it does not establish successful LIVE model use or a measured quality gain.

@@ -61,8 +61,9 @@ INSTALL
    It did not bypass Python dependency installation. The separate03November
    public-registry installation fetched rfc8785 online and imported it natively.
 5. Configure calls pbp.Setup.Install(managerDirectory_"proof-before-pay",0).
-   Verify that Production has not started, all38 declared class resources exist,
-   six Python packages resolve from managerDirectory_"python", and policy,
+   The0.1.0-beta.2 source declares47class resources and7Python packages.
+   Verify that Production has not started, every declared class exists,
+   and all seven packages resolve from managerDirectory_"python", and policy,
    replay fixtures and UI files exist in the per-app manager directory.
    The optional legacy pbp_seal/Solana library is not part of the native IPM module.
 6. After checking recorded mode and the absence of provider credentials, start
@@ -106,6 +107,13 @@ Do not assume that uninstall reverses custom Setup side effects: reviewer resour
 Workflow definitions, web application settings and manual audit globals are not
 declared as standalone uninstall resources. Plan their decommissioning explicitly
 and preserve the evidence. Do not use -purge against application data you need.
+
+The0.1.0-beta.2 candidate adds optional native LIVE actors, local policy RAG
+and the devnet-only SolanaMemo adapter. The public0.1.0-beta.1 installation
+evidence remains historical and does not prove installation of those additions.
+A normal install does not stage a LIVE profile, index a KB, enable an adapter,
+create a provider/wallet key or make a model/blockchain request. Optional solders
+dependencies are separate and required only when explicitly configuring devnet.
 
 Local archive loading is separate from publication:
 
