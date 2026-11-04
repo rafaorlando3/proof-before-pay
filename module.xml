@@ -69,6 +69,8 @@
       <FileCopy Name="ui/" Target="${mgrdir}proof-before-pay/ui/" Overlay="0" />
       <FileCopy Name="policy/" Target="${mgrdir}proof-before-pay/policy/" Overlay="0" />
       <FileCopy Name="fixtures/" Target="${mgrdir}proof-before-pay/fixtures/" Overlay="0" />
+      <FileCopy Name="IPM-OPERATOR.txt" Target="${mgrdir}proof-before-pay/IPM-OPERATOR.txt" Overlay="0" />
+      <FileCopy Name="requirements-solana-devnet.lock" Target="${mgrdir}proof-before-pay/requirements-solana-devnet.lock" Overlay="0" />
       <Invoke Class="pbp.Setup" Method="Install" Phase="Configure" When="After" CheckStatus="1">
         <Arg>${mgrdir}proof-before-pay</Arg>
         <Arg>0</Arg>

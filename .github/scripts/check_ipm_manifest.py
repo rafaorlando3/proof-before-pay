@@ -24,12 +24,15 @@ assert all(name.endswith('.CLS') for name in classes), 'no application data glob
 packages = {'pbp_guard', 'pbp_ledger', 'pbp_refund_target', 'pbp_review', 'pbp_s0_core', 'pbp_solana_demo', 'pbp_witness'}
 expected = {'python/' + name + '/': '${mgrdir}python/' + name + '/' for name in packages}
 expected.update({name + '/': '${mgrdir}proof-before-pay/' + name + '/' for name in ('ui', 'policy', 'fixtures')})
+operator_files = {'IPM-OPERATOR.txt', 'requirements-solana-devnet.lock'}
+expected.update({name: '${mgrdir}proof-before-pay/' + name for name in operator_files})
 copies = module.findall('FileCopy')
 assert {copy.attrib['Name']: copy.attrib['Target'] for copy in copies} == expected
 for copy in copies:
     assert copy.attrib['Overlay'] in ('0', '1'), 'IPM FileCopy uses numeric Boolean values'
     assert copy.attrib['Overlay'] == '0'
-    assert (root / copy.attrib['Name']).is_dir()
+    source = root / copy.attrib['Name']
+    assert source.is_file() if copy.attrib['Name'] in operator_files else source.is_dir()
 
 invoke = module.find('Invoke')
 assert invoke.attrib == {'Class': 'pbp.Setup', 'Method': 'Install', 'Phase': 'Configure', 'When': 'After', 'CheckStatus': '1'}
