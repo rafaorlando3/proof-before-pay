@@ -139,6 +139,52 @@ class LiveBudget:
         finally:
             os.close(fd)
 
+    def public_status(self):
+        fd = self.private_fd(self.directory / "budget.lock", os.O_RDONLY)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_SH)
+            state, _ = self.load()
+            phase = state[PHASE]
+            now = self.clock()
+            require(type(now) in (int, float) and math.isfinite(now), "clock_unavailable")
+            day = dt.datetime.fromtimestamp(now, ZoneInfo("America/Los_Angeles")).date().isoformat()
+            reason = None
+            if not phase["enabled"] or now >= phase["expires_at"]:
+                reason = "live_disabled_or_expired"
+            elif phase["in_flight"]:
+                reason = "model_request_in_progress"
+            elif phase["day_http"].get(day, 0) >= 15:
+                reason = "daily_model_quota_reached"
+            elif accounted(state) + Decimal(".35") > Decimal("1"):
+                reason = "cumulative_budget_headroom_required"
+            return {"available": reason is None, "reason": reason,
+                    "remaining_model_calls_today": max(0, 15 - phase["day_http"].get(day, 0))}
+        finally:
+            os.close(fd)
+
+    def arm_case(self, case_id):
+        require(isinstance(case_id, str) and re.fullmatch(CASE_PATTERN, case_id), "public_case_required")
+        with self.transaction() as state:
+            phase = self.validate(state)
+            require(phase["enabled"] and self.clock() < phase["expires_at"], "public_phase_disabled_or_expired")
+            require(not phase["in_flight"] and phase.get("active_case") is None, "previous_case_reconcile_first")
+            require(case_id not in phase["case_http"], "previous_case_attempt_reconcile_first")
+            phase["active_case"] = case_id
+
+    def finish_case(self, case_id, successful):
+        with self.transaction() as state:
+            phase = self.validate(state)
+            require(phase.get("active_case") == case_id, "armed_case_identity_changed")
+            entries = [entry for entry in state["calls"] if entry.get("phase") == PHASE and entry.get("case_id") == case_id]
+            successful = bool(successful and entries and not phase["in_flight"]
+                              and all(entry.get("reservation_disposition") == "settled_provisional_estimate" for entry in entries))
+            if not successful or phase["in_flight"]:
+                phase["enabled"] = False
+                phase["stop_reason"] = "native_result_uncertain_reconcile_before_retry"
+            if not phase["in_flight"]:
+                phase["active_case"] = None
+        return successful
+
     @contextmanager
     def transaction(self):
         fd = self.private_fd(self.directory / "budget.lock", os.O_RDWR)

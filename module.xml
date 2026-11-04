@@ -27,6 +27,11 @@
       <Resource Name="pbp.Data.Receipt.CLS" />
       <Resource Name="pbp.Data.Seal.CLS" />
       <Resource Name="pbp.Data.ToolCall.CLS" />
+      <Resource Name="pbp.Demo.Agent.CLS" />
+      <Resource Name="pbp.Demo.Intake.CLS" />
+      <Resource Name="pbp.Demo.Operation.CLS" />
+      <Resource Name="pbp.Demo.Process.CLS" />
+      <Resource Name="pbp.Demo.Runtime.CLS" />
       <Resource Name="pbp.Msg.CaseRequest.CLS" />
       <Resource Name="pbp.Msg.DecisionRequest.CLS" />
       <Resource Name="pbp.Msg.DecisionResponse.CLS" />

@@ -51,12 +51,13 @@ class Config:
         return cls(d['username'], d['password'], tuple(d['case_ids']), d['origin'], d.get('backend', 'http://127.0.0.1:18878'),state if state.exists() else None)
 
 class Gateway:
-    def __init__(self, config, fetch=None):
+    def __init__(self, config, fetch=None, live=None):
         self.config = config
         self.fetch = fetch or self._fetch
         self.sessions = {}
         self.failed_logins = OrderedDict()
         self.session_lock = threading.Lock()
+        self.live = live
     def _fetch(self, path, method='GET', body=None):
         req = urllib.request.Request(self.config.backend + path, data=body, method=method,
               headers={'Content-Type':'application/json', 'X-PBP-Request':'1'})
@@ -149,10 +150,19 @@ class Gateway:
         d=self.document('/pbp/api/cases/'+urllib.parse.quote(cid,safe=''))
         if d['case']['case_id']!=cid or d['case'].get('input',{}).get('environment')!='sandbox':
             raise ValueError('public_case_identity_or_environment_mismatch')
-        if d['decision'].get('model',{}).get('mode')!='recorded':
-            raise ValueError('public_case_must_be_recorded')
+        job=self.live.completed_cases().get(cid) if self.live is not None else None
+        if job is None:
+            if d['decision'].get('model',{}).get('mode')!='recorded':
+                raise ValueError('public_case_must_be_recorded')
+        elif (d['decision'].get('model',{}).get('mode')!='live'
+              or d['decision'].get('source')!='model'
+              or not any(s.get('commitment')==job['commitment'] for s in d.get('seals',[]))):
+            raise ValueError('public_live_case_evidence_mismatch')
         return d
-    def details(self):return [self.one_case(cid) for cid in self.config.case_ids]
+    def live_cases(self):return self.live.completed_cases() if self.live is not None else {}
+    def details(self):
+        live_ids=list(self.live_cases())[-5:]
+        return [self.one_case(cid) for cid in (*self.config.case_ids,*live_ids)]
     def dispatch(self, method, target, headers, body=b'', client_id='local'):
         login_target=urllib.parse.urlsplit(target)
         if not login_target.scheme and not login_target.netloc and login_target.path in {'/pbp/login','/pbp/recover'}:return self.login(method,headers,body,query=login_target.query,recovery=login_target.path=='/pbp/recover',client_id=client_id)
@@ -177,15 +187,27 @@ class Gateway:
             if len(body)>MAX_BODY: return self.fail('input_too_large',413)
             if headers.get('Origin')!=self.config.origin or headers.get('X-PBP-Request')!='1' or headers.get('Content-Type','').split(';')[0]!='application/json':
                 return self.fail('same_origin_JSON_required',403)
-            if not re.fullmatch(r'/pbp/api/seals/[0-9a-f]{64}/verify',path): return self.fail('read_only_demo',405)
+            if not re.fullmatch(r'/pbp/api/seals/[0-9a-f]{64}/verify',path) and not (path=='/pbp/api/live' and self.live is not None): return self.fail('read_only_demo',405)
         elif path=='/': return 302,{'Location':'/pbp/ui/','Cache-Control':'no-store'},b''
         try:
+            if path=='/pbp/api/live':
+                if self.live is None:return self.response({'ok':True,'mode':'recorded','available':False,'reason':'live_not_configured','scenarios':[]})
+                if method=='GET':return self.response(self.live.status())
+                try:request=json.loads(body)
+                except (ValueError,UnicodeError):return self.fail('invalid_JSON',400)
+                return self.response(self.live.submit(request))
+            live_job=re.fullmatch(r'/pbp/api/live/([A-Za-z0-9_-]{16,48})',path)
+            if live_job and method=='GET' and self.live is not None:return self.response(self.live.status(live_job[1]))
             if method=='GET' and path in {'/pbp/ui/','/pbp/ui/index.html'}:
                 status,kind,raw=self.fetch('/pbp/ui/')
                 if status!=200 or 'text/html' not in kind: return self.fail('upstream_unavailable',502)
                 banner='<style>:root{--pbp-viewer-notice-height:96px}body{padding-bottom:var(--pbp-viewer-notice-height)}@media(min-width:981px){.queue{height:calc(100vh - var(--header-h) - var(--s4)*2 - var(--pbp-viewer-notice-height))}}@media(max-width:980px){body{padding-bottom:0}.app{padding-bottom:calc(76px + var(--pbp-viewer-notice-height))}.tabs{bottom:var(--pbp-viewer-notice-height)}.toast{bottom:calc(80px + var(--pbp-viewer-notice-height))}}</style><aside id="pbp-viewer-notice" aria-label="Demo session" style="position:fixed;bottom:0;left:0;right:0;z-index:25;padding:8px 16px;background:#111b2b;color:#dce8f5;font:12px system-ui;text-align:center">Authenticated demo. Live IRIS backend. Recorded responses. Synthetic funds. Review disabled. Counters cover only the selected demo cases. <form action="/pbp/logout" method="post" style="display:inline"><button type="submit" style="margin-left:12px;background:#21374c;border:1px solid #50718b;color:#dfebf7;border-radius:6px;padding:4px 10px;cursor:pointer">Sign out</button></form></aside><script>/* Reserve the real viewer notice height so mobile navigation remains clickable. */(()=>{const notice=document.getElementById("pbp-viewer-notice");if(!notice)return;const sync=()=>document.documentElement.style.setProperty("--pbp-viewer-notice-height",Math.ceil(notice.getBoundingClientRect().height)+"px");sync();window.addEventListener("resize",sync,{passive:true});if(typeof ResizeObserver==="function")new ResizeObserver(sync).observe(notice);})();</script>'
+                if self.live is not None:banner=banner.replace('Recorded responses.','Recorded examples and explicitly labelled live requests.')
                 session_script=b'''<script>/* PBP viewer session boundary; no request is replayed. */(()=>{const originalFetch=window.fetch.bind(window);let returning=false;window.fetch=async function(input,options){const response=await originalFetch(input,options);const target=new URL(typeof input==='string'?input:input.url,location.href);if(response.status===401&&target.origin===location.origin&&target.pathname.startsWith('/pbp/api/')&&!returning){returning=true;location.replace('/pbp/login?expired=1');}return response;};})();</script>'''
                 raw=raw.replace(b'<script>',session_script+b'<script>',1)
+                if self.live is not None:
+                    panel=Path(__file__).with_name('live_panel.html').read_bytes()
+                    raw=raw.replace(b'</body>',panel+b'</body>')
                 return 200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'},raw.replace(b'</body>',banner.encode()+b'</body>')
             if method=='GET' and path=='/pbp/api/health':
                 d=self.document('/pbp/api/health')
@@ -196,19 +218,19 @@ class Gateway:
             if method=='GET' and path in {'/pbp/api/cases','/pbp/api/stats'}:
                 docs=self.details()
                 if path.endswith('/cases'):return self.response({'ok':True,'cases':[d['case'] for d in docs],'scope':'selected_public_demo_cases'})
-                status_counts={};seals=effects=0;recorded=0
+                status_counts={};seals=effects=0;recorded=live_count=0
                 for d in docs:
-                    st=d['case']['status'];status_counts[st]=status_counts.get(st,0)+1;seals+=len(d.get('seals',[]));recorded+=d['decision'].get('source')=='model';rc=d.get('receipt');effects+=bool(isinstance(rc,dict) and rc.get('status')=='effected' and rc.get('verification')=='intact')
-                return self.response({'ok':True,'cases_by_status':status_counts,'seals':seals,'effects':effects,'model_decisions_by_mode':{'live':{'decisions':0},'recorded':{'decisions':recorded},'unknown':{'decisions':0}},'scope':'selected_public_demo_cases','usage_cost_basis':'recorded_demo_no_new_model_calls'})
+                    st=d['case']['status'];status_counts[st]=status_counts.get(st,0)+1;seals+=len(d.get('seals',[]));is_model=d['decision'].get('source')=='model';mode=d['decision'].get('model',{}).get('mode');recorded+=bool(is_model and mode=='recorded');live_count+=bool(is_model and mode=='live');rc=d.get('receipt');effects+=bool(isinstance(rc,dict) and rc.get('status')=='effected' and rc.get('verification')=='intact')
+                return self.response({'ok':True,'cases_by_status':status_counts,'seals':seals,'effects':effects,'model_decisions_by_mode':{'live':{'decisions':live_count},'recorded':{'decisions':recorded},'unknown':{'decisions':0}},'scope':'selected_public_demo_cases','usage_cost_basis':'mixed_live_and_recorded_demo' if live_count else 'recorded_demo_no_new_model_calls'})
             if path.startswith('/pbp/api/cases/'):
                 suffix=path.removeprefix('/pbp/api/cases/');cid=suffix.removesuffix('/replay')
-                if method!='GET' or cid not in self.config.case_ids:return self.fail('case_not_in_demo',404)
+                if method!='GET' or (cid not in self.config.case_ids and cid not in self.live_cases()):return self.fail('case_not_in_demo',404)
                 d=self.one_case(cid)
                 if suffix.endswith('/replay'):return self.fetch_response('/pbp/api/cases/'+urllib.parse.quote(cid,safe='')+'/replay')
                 return self.response(d)
             match=re.fullmatch(r'/pbp/api/(seals|ledger)/([0-9a-f]{64})(/verify)?',path)
             if match:
-                kind,commitment,verify=match.groups();allowed={s['commitment'] for d in self.details() for s in d.get('seals',[])}
+                kind,commitment,verify=match.groups();allowed={s['commitment'] for d in self.details() for s in d.get('seals',[])}|{j['commitment'] for j in self.live_cases().values()}
                 if commitment not in allowed:return self.fail('seal_not_in_demo',404)
                 if method=='POST' and (kind!='seals' or verify!='/verify'):return self.fail('read_only_demo',405)
                 if method=='GET' and verify:return self.fail('method_not_allowed',405)
@@ -219,8 +241,8 @@ class Gateway:
         status,kind,raw=self.fetch(path,method,body)
         return status,{'Content-Type':kind,'Cache-Control':'no-store'},raw
 
-def serve(config, port=18879):
-    gateway=Gateway(config)
+def serve(config, port=18879, *, live=None):
+    gateway=Gateway(config, live=live)
     class Handler(BaseHTTPRequestHandler):
         timeout=15
         def log_message(self,*args):pass
@@ -253,5 +275,11 @@ def serve(config, port=18879):
         def process_request_thread(self,request,address):
             try:super().process_request_thread(request,address)
             finally:self.slots.release()
-    BoundedServer(('127.0.0.1',port),Handler).serve_forever()
+    server=BoundedServer(('127.0.0.1',port),Handler)
+    stop=threading.Event()
+    if live is not None:threading.Thread(target=live.work,args=(stop,),daemon=True).start()
+    try:server.serve_forever()
+    finally:
+        stop.set()
+        server.server_close()
 if __name__=='__main__':serve(Config.load(sys.argv[1]))

@@ -97,6 +97,10 @@ class LiveQueue:
                 require(re.fullmatch(REQUEST_ID_PATTERN, token))
                 require(job["status"] in {"queued", "running", "complete", "failed"})
                 require(isinstance(job["scenario"], str))
+                if job["status"] == "complete":
+                    require(job.get("case_id") == "public-live:" + token)
+                    require(re.fullmatch(r"[0-9a-f]{64}", job.get("commitment", "")))
+                    require(isinstance(job.get("session_id"), str) and job["session_id"].isdigit())
                 require(dt.date.fromisoformat(job["day"]).isoformat() == job["day"])
                 days[job["day"]] = days.get(job["day"], 0) + 1
                 if job["status"] in {"queued", "running"}:
@@ -130,6 +134,23 @@ class LiveQueue:
     @staticmethod
     def projection(job):
         return {k: job[k] for k in ("status", "scenario", "day", "case_id", "commitment", "session_id") if k in job}
+
+    def inspect(self, request_id=None):
+        """Read-only public projection; never starts, retries or resets a job."""
+        if request_id is not None and (not isinstance(request_id, str) or not re.fullmatch(REQUEST_ID_PATTERN, request_id)):
+            return self.fallback("invalid_request_id")
+        now = self.clock()
+        if type(now) not in (int, float) or not math.isfinite(now):
+            return self.fallback("clock_unavailable")
+        day = dt.datetime.fromtimestamp(now, ZoneInfo("America/Los_Angeles")).date().isoformat()
+        with self.locked() as state:
+            if request_id is not None:
+                job = state["jobs"].get(request_id)
+                return {"ok": True, "job": self.projection(job)} if job else self.fallback("job_not_found")
+            complete = [self.projection(job) for job in state["jobs"].values() if job["status"] == "complete"]
+            return {"ok": True, "enabled": self.enabled, "busy": state["active"] is not None,
+                    "remaining_decisions_today": max(0, self.daily_cap - state["days"].get(day, 0)),
+                    "scenarios": sorted(self.scenarios), "completed": complete}
 
     def submit(self, scenario, request_id):
         if not self.enabled:

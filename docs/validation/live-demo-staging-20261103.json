@@ -1,0 +1,75 @@
+{
+  "schema": "pbp.live-demo-staging/1",
+  "checked_utc": "2026-11-04T00:39:54.388219+00:00",
+  "local_date": "2026-11-03",
+  "timezone": "America/Asuncion",
+  "published_viewer_mode": "recorded",
+  "public_live_demo_deployed": false,
+  "native_profile_configured": false,
+  "provider_calls": 0,
+  "new_native_cases_or_effects": 0,
+  "real_budget_mutated": false,
+  "gateway_local_tests_passed": 91,
+  "application_resources_in_manifest": 43,
+  "native_compile": {
+    "classes": 7,
+    "result": "passed_first_attempt",
+    "instance": "owners existing private IRIS AI Hub build154",
+    "original_two_classes_exported_privately_before_update": true,
+    "fresh_install_or_full_native_E2E": false,
+    "files": [
+      {
+        "path": "cls/pbp/API.cls",
+        "sha256": "a5f82d316f37ecdde81a455c996f141ef4ae9d90622a9d5e3de5a043e6c81e93"
+      },
+      {
+        "path": "cls/pbp/Process/Decide.cls",
+        "sha256": "7d5591d45c8cf63cb9ed12ed40925288b6c1a6c0ff71a5aa8000a4ed5c480ca8"
+      },
+      {
+        "path": "cls/pbp/Demo/Agent.cls",
+        "sha256": "ab8bbaa17402e4095cc678a9a43735f983bcde8e4f9d82c171062210d2611f94"
+      },
+      {
+        "path": "cls/pbp/Demo/Intake.cls",
+        "sha256": "91eee55001ccba32c8fc4614741fc0e794f3b6276b2e50e25b4cbd275c61b723"
+      },
+      {
+        "path": "cls/pbp/Demo/Operation.cls",
+        "sha256": "e2b23fc1a67a2658836be3a763817981b5226fabbcc86130d88792dd343bfeb1"
+      },
+      {
+        "path": "cls/pbp/Demo/Process.cls",
+        "sha256": "480d69d30638e2dced9ef348e04e50b8cff4134db4f83acde9f10b6f00b5e406"
+      },
+      {
+        "path": "cls/pbp/Demo/Runtime.cls",
+        "sha256": "f0a1d49700bcf394d97ed4de7c7f628e383efc0e2fc90e49758f6d45c85dfeaa"
+      }
+    ]
+  },
+  "postcompile_readonly": {
+    "production_running": true,
+    "default_mode": "recorded",
+    "demo_profile_enabled": false,
+    "retained_recorded_case": "video-flow:5751dd54",
+    "retained_receipt_verification": "intact"
+  },
+  "controls": [
+    "Single native intake after exclusive durable intent; no automatic resubmission after ambiguous response",
+    "Pinned public fixtures0005/0006; original dates/data preserved, unique identifiers only",
+    "Existing ledger1USD and all old holds/history retained; no separate/reset budget",
+    "A LIVE completion requires observed settled provider request plus matching native mode/model/intact decision seal/session",
+    "No money flag, permit or receipt accepted from public demo runner; no review endpoint",
+    "Default native process key/environment behavior preserved; separate explicit optional demo route",
+    "In-page status/fallback; no alert/confirm/prompt or HTTP authentication challenge"
+  ],
+  "remaining": [
+    "Browser UI qualification",
+    "Native actor/profile staging, bridge transport preflight without provider call",
+    "Reviewed deployment, actual budget-controlled native LIVE E2E and trace",
+    "Vector Search, optional devnet adapter and final bilateral benchmark",
+    "LinkedIn only after full authorized queue complete"
+  ],
+  "not_bonus_award_evidence": true
+}

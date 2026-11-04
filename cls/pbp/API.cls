@@ -62,6 +62,7 @@ ClassMethod Health() As %Status
     Set out."last_live_call_at"=last
     Set out."last_live_success_at"=success
     Set out.spec = "pbp.seal/1"
+    Set out."public_live_demo"=##class(pbp.Demo.Runtime).PublicStatus()
     Set out.time = ##class(pbp.Util).NowISO()
     Quit ..Out(out)
 }
@@ -102,7 +103,13 @@ ClassMethod Intake() As %Status
     Set body=..ReadJSONBody(.reason)
     If reason'="" Quit ..Fail(reason)
     If body = "" Quit ..Fail("empty_body")
-    Set sc = ##class(Ens.Director).CreateBusinessService("pbp.Service.Intake", .svc)
+    Set service="pbp.Service.Intake"
+    Set input=##class(pbp.Util).ParseJSON(body,.reason)
+    If $ISOBJECT(input) && ($EXTRACT(input."case_id",1,12)="public-live:") {
+        If '##class(pbp.Demo.Runtime).Allows(input."case_id") Quit ..Fail("public_demo_not_configured","503")
+        Set service="pbp.Demo.Intake"
+    }
+    Set sc = ##class(Ens.Director).CreateBusinessService(service, .svc)
     If $$$ISERR(sc) Quit ..Fail("intake_service_unavailable", "503")
     Set sc = svc.ProcessInput(##class(Ens.StringContainer).%New(body), .out)
     If $$$ISERR(sc) Quit ..Fail($PIECE(##class(pbp.Util).StatusText(sc), " ", 1, 6))

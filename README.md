@@ -7,6 +7,8 @@
 
 Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49), confirmed on 3 November ([verification](docs/validation/contest49-public-listing-20261103.json)); the package review badge remains Awaiting Review. The video predates the v7 evaluation. The authenticated online viewer currently replays retained cases from a running IRIS instance and makes no new model call.
 
+An optional fixed-scenario LIVE path is [staged, disabled and awaiting end-to-end qualification](demo_gateway/LIVE-DEMO-PLAN.md). Its native hooks compiled and local tests passed, while the published viewer remains recorded. These preparation results are not a LIVE-demo bonus claim.
+
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
 The application runs on InterSystems IRIS AI Hub EAP build 154: native Interoperability
 intake/process/operations, deterministic policy, scoped read-only tools, authenticated

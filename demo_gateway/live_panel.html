@@ -1,0 +1,95 @@
+<style>
+#pbp-live{position:fixed;right:12px;top:calc(var(--header-h,64px) + 10px);z-index:26;width:min(390px,calc(100vw - 24px));color:#e6edf5;background:#152132;border:1px solid #40556e;border-radius:12px;box-shadow:0 8px 28px #0005;font:13px/1.5 system-ui}
+#pbp-live:not([open]){width:auto;max-width:calc(100vw - 24px)}
+#pbp-live summary{padding:10px 14px;cursor:pointer;font-weight:650;list-style-position:inside}
+#pbp-live .live-content{padding:0 14px 14px;max-height:65vh;overflow:auto}
+#pbp-live p{margin:8px 0}#pbp-live label{display:block;margin:10px 0 6px}
+#pbp-live select,#pbp-live button{font:inherit;color:inherit;background:#21374c;border:1px solid #56718c;border-radius:7px;padding:8px 10px;max-width:100%}
+#pbp-live select{width:100%}#pbp-live button{cursor:pointer;margin:8px 5px 0 0}#pbp-live button:disabled{opacity:.55;cursor:default}
+#pbp-live .live-primary{background:#17635a;border-color:#388d7c}#pbp-live .live-muted{color:#bcc9d8;font-size:12px}
+#pbp-live-result{border-left:3px solid #3d8f88;padding:8px 10px;background:#0f1a28;overflow-wrap:anywhere}
+</style>
+<details id="pbp-live">
+  <summary>Try a live decision</summary>
+  <div class="live-content">
+    <p>A fresh AI Hub decision on a synthetic example. The model reads the case tools; it cannot approve a payment.</p>
+    <p class="live-muted">One decision at a time, at most five per provider day. Recorded examples remain available below.</p>
+    <p id="pbp-live-availability" role="status">Checking live availability…</p>
+    <label for="pbp-live-scenario">Example</label>
+    <select id="pbp-live-scenario" disabled></select>
+    <button id="pbp-live-run" class="live-primary" type="button" disabled>Run a fresh decision</button>
+    <div id="pbp-live-result" role="status" aria-live="polite" hidden></div>
+    <button id="pbp-live-inspect" type="button" hidden>Open the sealed decision</button>
+    <p class="live-muted">If live service is unavailable or the cap is reached, this page explicitly stays in recorded mode. Viewing a recorded case never calls the model.</p>
+  </div>
+</details>
+<script>
+(()=>{
+  const panel=document.getElementById('pbp-live'),choice=document.getElementById('pbp-live-scenario');
+  const run=document.getElementById('pbp-live-run'),availability=document.getElementById('pbp-live-availability');
+  const result=document.getElementById('pbp-live-result'),inspect=document.getElementById('pbp-live-inspect');
+  const labels={missing_evidence:'Missing delivery proof',amount_conflict:'Payment amount mismatch'};
+  let pending=false,selectedCase=null;
+  const reason={decision_in_progress:'A decision is already running. Recorded examples remain available.',daily_decision_cap_reached:'The daily decision cap is reached. Recorded mode is available.',daily_model_quota_reached:'The provider-day quota is reached. Recorded mode is available.',cumulative_budget_headroom_required:'The reserved inference budget is unavailable. Recorded mode is available.',live_disabled_or_expired:'Live service is paused. Recorded mode is available.',live_state_unavailable:'Live service needs operator attention. Recorded mode is available.',live_interval:'Please wait before another decision. Recorded examples remain available.'};
+  function say(text){result.hidden=false;result.textContent=text;}
+  async function request(path,options={}){
+    const response=await fetch('/pbp/api/live'+path,{...options,headers:{'X-PBP-Request':'1',...(options.headers||{})}});
+    if(!response.ok)throw new Error('live_unavailable');
+    return response.json();
+  }
+  async function status(){
+    try{
+      const data=await request('');
+      const previous=choice.value;choice.replaceChildren();
+      for(const scenario of data.scenarios||[]){const option=document.createElement('option');option.value=scenario;option.textContent=labels[scenario]||scenario.replaceAll('_',' ');choice.append(option);}
+      if([...choice.options].some(o=>o.value===previous))choice.value=previous;
+      const ready=data.available===true&&!pending&&typeof crypto.randomUUID==='function';
+      run.disabled=!ready;choice.disabled=!ready;
+      availability.textContent=data.available===true?'LIVE available · '+data.remaining_decisions_today+' decisions remaining today.':(reason[data.reason]||'Live service is unavailable. Recorded mode is available.');
+    }catch(error){run.disabled=true;choice.disabled=true;availability.textContent='Live service is unavailable. Recorded mode is available.';}
+  }
+  async function watch(token){
+    for(let attempt=0;attempt<120;attempt++){
+      let data;
+      try{data=await request('/'+encodeURIComponent(token));}
+      catch(error){say('Status could not be confirmed. No request was replayed. Recorded examples remain available.');break;}
+      const job=data.job;
+      if(!data.ok||!job){say('This request cannot be confirmed. No new decision was submitted. Recorded mode is available.');break;}
+      if(job.status==='complete'){
+        selectedCase=job.case_id;inspect.hidden=false;
+        say('LIVE decision sealed. Case '+job.case_id+' · native trace session '+job.session_id+'. No payment was approved.');
+        break;
+      }
+      if(job.status==='failed'){say('The live decision did not finish with verified evidence. No retry was made. Recorded mode is available.');break;}
+      say(job.status==='queued'?'Queued. Waiting for the single live worker.':'The native AI Hub workflow is running. Waiting for its sealed decision.');
+      if(attempt===119){say('The result is still unconfirmed. No retry was made. Recorded examples remain available.');break;}
+      await new Promise(resolve=>setTimeout(resolve,2000));
+    }
+    pending=false;await status();
+  }
+  run.addEventListener('click',async()=>{
+    if(pending||run.disabled)return;
+    pending=true;run.disabled=true;choice.disabled=true;inspect.hidden=true;selectedCase=null;
+    const token=crypto.randomUUID().replaceAll('-','');
+    try{sessionStorage.setItem('pbp49-live-request',token);}catch(error){}
+    say('Submitting one fixed synthetic example…');
+    let data;
+    try{data=await request('',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenario:choice.value,request_id:token})});}
+    catch(error){say('Submission could not be confirmed. It will not be replayed automatically. Recorded mode is available.');pending=false;await status();return;}
+    if(!data.ok){say(reason[data.reason]||'Live admission is unavailable. Recorded mode is available.');pending=false;await status();return;}
+    await watch(token);
+  });
+  inspect.addEventListener('click',async()=>{
+    if(!selectedCase)return;
+    try{
+      if(typeof refresh==='function')await refresh();
+      if(typeof openCase==='function'){await openCase(selectedCase);panel.open=false;}
+      else say('The sealed case is ready: '+selectedCase+'. Select it in the case queue.');
+    }catch(error){say('The sealed case is ready, but could not be opened here. Refresh the case queue to inspect it.');}
+  });
+  status();
+  let retained=null;try{retained=sessionStorage.getItem('pbp49-live-request');}catch(error){}
+  if(retained&&/^[A-Za-z0-9_-]{16,48}$/.test(retained)){pending=true;run.disabled=true;watch(retained);}
+  setInterval(()=>{if(!document.hidden&&!pending)status();},10000);
+})();
+</script>

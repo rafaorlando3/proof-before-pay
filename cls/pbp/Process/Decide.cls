@@ -119,10 +119,17 @@ Method OnRequest(pRequest As pbp.Msg.CaseRequest, Output pResponse As Ens.Respon
     }
     Set req = ##class(pbp.Msg.DecisionRequest).%New()
     Set req.CaseId = ..CaseId, req.StoreId = ..StoreId, req.PolicyId = ..PolicyId, req.PolicyVersion = ..PolicyVersion, req.RulesResult = ..RulesResult
-    Set live = ##class(pbp.Agent).HasKey() && (##class(pbp.Util).Env("PBP_LLM_MODE", "auto") '= "recorded")
-    Set target = $SELECT(live: ..AgentTarget, 1: ..ReplayTarget)
+    Set target = ..DecisionTarget(.live)
     Do case.SetStatus("agent_requested", $SELECT(live: "live agent", 1: "recorded decisions (no key)"), "")
     Quit ..SendRequestAsync(target, req, 1, "agent")
+}
+
+/// Extension point for an explicitly configured synthetic demo production route.
+/// The default route retains its original key/environment behavior.
+Method DecisionTarget(Output live As %Boolean) As %String
+{
+    Set live = ##class(pbp.Agent).HasKey() && (##class(pbp.Util).Env("PBP_LLM_MODE", "auto") '= "recorded")
+    Quit $SELECT(live: ..AgentTarget, 1: ..ReplayTarget)
 }
 
 /// Canonical input shape shared by rules, agent tools and the test-ledger contract, preserving the original fields:
