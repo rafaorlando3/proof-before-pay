@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 import threading
+import subprocess
+import sys
 import unittest
 import urllib.error
 import urllib.request
@@ -15,6 +17,11 @@ class LiveProviderTests(unittest.TestCase):
     save = budget_tests.LiveBudgetTests.save
     read = budget_tests.LiveBudgetTests.read
     body = budget_tests.LiveBudgetTests.body
+
+    def test_isolated_operator_entry_can_start_without_environment_imports(self):
+        result = subprocess.run([sys.executable, "-I", "-B", str(Path(__file__).with_name("live_provider.py")), "--help"], capture_output=True, text=True, timeout=5)
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("--credential-file", result.stdout)
 
     def provider(self, send):
         return PrivateProvider(self.budget, "not-a-real-key-test-only-" + "x" * 32,

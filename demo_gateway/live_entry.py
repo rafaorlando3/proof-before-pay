@@ -35,5 +35,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--viewer-config", required=True)
     parser.add_argument("--live-config", required=True)
+    parser.add_argument("--port", type=int, default=18879)
     args = parser.parse_args()
-    serve(Config.load(args.viewer_config), live=load_live(args.live_config))
+    serve(Config.load(args.viewer_config), port=args.port, live=load_live(args.live_config))

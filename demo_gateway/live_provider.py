@@ -11,11 +11,13 @@ import ipaddress
 import json
 import os
 import stat
+import sys
 import threading
 import time
 import urllib.error
 import urllib.request
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from live_budget import BudgetDenied, LiveBudget, MODEL, require
 
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
