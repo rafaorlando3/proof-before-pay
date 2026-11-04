@@ -1,0 +1,55 @@
+{
+  "schema": "pbp.policy-rag-qualification/1",
+  "observed_utc": "2026-11-04T02:00:41.413993+00:00",
+  "status": "native_component_qualified_agent_live_use_pending",
+  "source": "cls/pbp/RAG/Policy.cls",
+  "stack": [
+    "%AI.RAG.Embedding.FastEmbed",
+    "%AI.RAG.VectorStore.IRIS",
+    "%AI.RAG.KnowledgeBase",
+    "%AI.ToolMgr.ExecuteTool"
+  ],
+  "embedding_model": "AllMiniLML6V2",
+  "dimensions": 384,
+  "embedding_location": "local",
+  "external_embedding_or_LLM_requests": 0,
+  "indexed_policy_sha256": "9829ede8f50964d16951d3c89ef9a302367ddb72e9b25b590949eb65c45dc6a8",
+  "indexed_sections": [
+    "limits",
+    "allowed_actions",
+    "forbidden",
+    "rules"
+  ],
+  "observed_queries": {
+    "forbidden_actions_top_section": "forbidden",
+    "autonomous_amount_and_currency_top_section": "limits"
+  },
+  "passage_checks": [
+    "exact current policy hash",
+    "section text matches active policy",
+    "passage SHA256 matches text"
+  ],
+  "seal_component_test": {
+    "commitment": "b32788b8e8665e652d796e3a242a136999901734e3d76526e37af8d177e700e8",
+    "original_intact": true,
+    "changed_passage_rejected": true,
+    "salt_disclosed": false,
+    "new_native_intakes": 0,
+    "effects": 0,
+    "model_generation": false
+  },
+  "score_representation": "decimal strings preserve frozen pbp.seal/1 numeric contract",
+  "agent_integration": "Existing GetStorePolicy returns full constraints plus optional retrieved passages. Demo prompt requires observed policy.chunk:<id> citations; context guard rejects invented/unbound/uncited passages. Decision seal retains observations and cited evidence_refs.",
+  "default_enabled": false,
+  "frozen_cohorts_rerun": false,
+  "no_general_quality_or_bonus_award_claim": true,
+  "official_stack_documentation": "https://github.com/intersystems-community/ai-hub-eap/blob/master/ObjectScript_SDK_Advanced.md",
+  "native_prompt_and_guard_checks": {
+    "parent_default_prompt_suffix_empty": true,
+    "demo_requires_policy_chunk_citation": true,
+    "uncited_policy_refused": true,
+    "observed_citation_accepted": true,
+    "external_model_calls": 0
+  },
+  "local_context_guard_tests": 22
+}

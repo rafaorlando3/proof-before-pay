@@ -76,7 +76,7 @@ Method Live(pRequest As pbp.Msg.DecisionRequest, pResponse As pbp.Msg.DecisionRe
     Set startSeq = ##class(pbp.Operation.Replay).LastToolSeq(caseId)
     Set t0 = $ZHOROLOG
     Set session = ..Adapter.Agent.CreateSession()
-    Set prompt = "Case id: " _ caseId _ ". Exception type: " _ ..ExceptionOf(caseId) _ ". Rules engine result: " _ pRequest.RulesResult _ ". Fetch everything with the tools (this case id only), then answer with the JSON object only."
+    Set prompt = "Case id: " _ caseId _ ". Exception type: " _ ..ExceptionOf(caseId) _ ". Rules engine result: " _ pRequest.RulesResult _ ". Fetch everything with the tools (this case id only), then answer with the JSON object only." _ ..PromptSuffix()
     Set sc = ..Adapter.SendChat(prompt, .llm, session)
     If $$$ISERR(sc) {
         Set pResponse.Reason = "llm_call_failed"
@@ -113,6 +113,12 @@ Method Live(pRequest As pbp.Msg.DecisionRequest, pResponse As pbp.Msg.DecisionRe
     Do ##class(pbp.Operation.Replay).Fill(pResponse, decision)
     Do ##class(pbp.Operation.Replay).ValidateContext(pResponse)
     If pResponse.Ok Set ^pbp.live(pResponse.ModelProvider,pResponse.ModelId,"last_ok")=##class(pbp.Util).NowISO()
+}
+
+/// Optional specialization text. The normal agent task remains byte-for-byte unchanged.
+ClassMethod PromptSuffix() As %String
+{
+    Quit ""
 }
 
 /// Text of an agent reply (%AI.LLM.Response.Content on build 154).

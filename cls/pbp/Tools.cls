@@ -54,6 +54,9 @@ ClassMethod GetStorePolicy(caseId As %String(DESCRIPTION = "The case id exactly 
     Set out.forbidden = obj.forbidden
     Set out."allowed_actions" = obj."allowed_actions"
     Set out.rules = obj.rules
+    If ##class(%Dictionary.CompiledClass).%ExistsId("pbp.RAG.Policy") {
+        If ##class(pbp.RAG.Policy).Applies(caseId,pol) Set out.retrieval=##class(pbp.RAG.Policy).ForCase(pol,case)
+    }
     Quit ##class(pbp.ToolsImpl).Record(caseId, "GetStorePolicy", {"caseId": (caseId)}, out, t0)
 }
 

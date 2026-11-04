@@ -5,10 +5,28 @@ valid proposal from closing a case using invented evidence or inconsistent actio
 It performs no I/O and does not interpret instructions embedded in tool data.
 """
 import json
+import hashlib
+import re
 
 TOOLS = {'GetOrder', 'GetPixEvents', 'GetPayerHistory', 'GetEvidence', 'GetStorePolicy'}
 NON_FINANCIAL = {'accept_order', 'accept_order_keep_credit', 'release_order',
                  'hold_for_evidence', 'request_top_up', 'escalate_to_human'}
+
+
+def policy_chunk_refs(output):
+    retrieval = output.get('retrieval')
+    if not isinstance(retrieval, dict) or retrieval.get('available') is not True or retrieval.get('policy_sha256') != output.get('sha256'):
+        return set()
+    refs = set()
+    for passage in retrieval.get('passages', []):
+        if not isinstance(passage, dict):
+            continue
+        chunk, text, digest = passage.get('chunk_id'), passage.get('text'), passage.get('sha256')
+        if (isinstance(chunk, str) and re.fullmatch(r'[0-9a-f]{64}', chunk)
+                and isinstance(text, str) and isinstance(digest, str)
+                and hashlib.sha256(text.encode()).hexdigest() == digest):
+            refs.add('policy.chunk:' + chunk)
+    return refs
 
 
 def observed_missing(tools: list) -> dict:
@@ -63,7 +81,7 @@ def check_context(decision_json: str, tools_json: str) -> str:
         if (missing or observed_missing(tools)) and not human:
             return 'missing_evidence_requires_human'
 
-        seen, refs = set(), set()
+        seen, refs, policy_refs = set(), set(), set()
         for tool in tools:
             if not isinstance(tool, dict):
                 return 'tool_trace_invalid'
@@ -87,6 +105,11 @@ def check_context(decision_json: str, tools_json: str) -> str:
                             and payment['payment_ref'])
             elif name == 'GetStorePolicy' and isinstance(output, dict) and output.get('sha256'):
                 refs.update({'policy', 'store_policy'})
+                chunks = policy_chunk_refs(output)
+                if isinstance(output.get('retrieval'), dict) and output['retrieval'].get('available') is True and not chunks:
+                    return 'policy_retrieval_invalid'
+                policy_refs.update(chunks)
+                refs.update(policy_refs)
         if seen != TOOLS:
             return 'required_tool_not_observed'
         if action == 'refund_duplicate':
@@ -107,6 +130,8 @@ def check_context(decision_json: str, tools_json: str) -> str:
             return 'evidence_refs_invalid'
         if any(ref not in refs for ref in cited):
             return 'evidence_reference_not_observed'
+        if policy_refs and not policy_refs.intersection(cited):
+            return 'policy_passage_reference_required'
         return ''
     except (ValueError, TypeError, KeyError):
         return 'decision_context_invalid'

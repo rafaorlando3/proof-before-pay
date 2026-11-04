@@ -18,6 +18,30 @@ class TestDecisionContext(unittest.TestCase):
             dict(name='GetStorePolicy', output=dict(sha256='a' * 64)),
         ]
 
+    def retrieved_policy(self):
+        import hashlib
+        tools = copy.deepcopy(self.tools)
+        text = 'limits: {"autonomous_minor":"0","currency":"BRL"}'
+        tools[-1]['output']['retrieval'] = {'available': True, 'policy_sha256': 'a' * 64,
+            'passages': [{'chunk_id': 'b' * 64, 'text': text, 'sha256': hashlib.sha256(text.encode()).hexdigest()}]}
+        return tools
+
+    def test_retrieved_policy_requires_an_observed_chunk_citation(self):
+        tools = self.retrieved_policy()
+        self.assertEqual('policy_passage_reference_required', self.check(tools=tools))
+        cited = {**self.decision, 'evidence_refs': self.decision['evidence_refs'] + ['policy.chunk:' + 'b' * 64]}
+        self.assertEqual('', self.check(cited, tools))
+        invented = {**cited, 'evidence_refs': ['policy.chunk:' + 'c' * 64]}
+        self.assertEqual('evidence_reference_not_observed', self.check(invented, tools))
+
+    def test_policy_chunk_from_another_version_or_modified_text_is_refused(self):
+        tools = self.retrieved_policy()
+        tools[-1]['output']['retrieval']['policy_sha256'] = 'c' * 64
+        self.assertEqual('policy_retrieval_invalid', self.check(tools=tools))
+        tools = self.retrieved_policy()
+        tools[-1]['output']['retrieval']['passages'][0]['text'] = 'changed after retrieval'
+        self.assertEqual('policy_retrieval_invalid', self.check(tools=tools))
+
     def check(self, decision=None, tools=None):
         return check_context(json.dumps(self.decision if decision is None else decision),
                              json.dumps(self.tools if tools is None else tools))

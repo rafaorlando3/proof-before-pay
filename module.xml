@@ -32,6 +32,7 @@
       <Resource Name="pbp.Demo.Operation.CLS" />
       <Resource Name="pbp.Demo.Process.CLS" />
       <Resource Name="pbp.Demo.Runtime.CLS" />
+    <Resource Name="pbp.RAG.Policy.CLS" />
       <Resource Name="pbp.Msg.CaseRequest.CLS" />
       <Resource Name="pbp.Msg.DecisionRequest.CLS" />
       <Resource Name="pbp.Msg.DecisionResponse.CLS" />
