@@ -139,6 +139,15 @@ class LiveProviderTests(unittest.TestCase):
         thread.start()
         try:
             base = "http://127.0.0.1:" + str(server.server_address[1])
+            before = self.path.read_bytes()
+            for route in ("/v1/models", "/v1/models/" + MODEL):
+                with urllib.request.urlopen(base + route, timeout=3) as reply:
+                    metadata = json.load(reply)
+                    model = metadata["data"][0] if "data" in metadata else metadata
+                    self.assertEqual(model["id"], MODEL)
+                    self.assertEqual(model["owned_by"], "local-allowlist-not-provider-observation")
+            self.assertEqual(self.path.read_bytes(), before)
+            self.assertEqual(sent, [])
             for route, headers in (("/chat/completions", {}), ("/wrong", {"Authorization": "Bearer " + LOCAL_TOKEN})):
                 request = urllib.request.Request(base + route, data=json.dumps(self.body()).encode(), headers=headers)
                 with self.assertRaises(urllib.error.HTTPError) as error:

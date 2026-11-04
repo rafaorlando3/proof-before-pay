@@ -16,7 +16,7 @@ import time
 import urllib.error
 import urllib.request
 
-from live_budget import BudgetDenied, LiveBudget, require
+from live_budget import BudgetDenied, LiveBudget, MODEL, require
 
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 LOCAL_TOKEN = "pbp-public-live-local-placeholder-not-a-provider-key"
@@ -155,6 +155,20 @@ def create_server(directory, credential_path, bind, port, clients, *, send=None,
             except Exception:
                 return self.reply(*provider.failure("invalid_bounded_JSON", 400))
             self.reply(*provider.complete(body))
+
+        def do_GET(self):
+            if self.client_address[0] not in allowed:
+                return self.reply(*provider.failure("private_route_denied", 403))
+            # Build154 discovers its configured model before inference. These
+            # static local allow-list facts neither contact Google nor assert
+            # upstream availability; no key, usage or budget data is returned.
+            model = {"id": MODEL, "object": "model", "created": 0,
+                     "owned_by": "local-allowlist-not-provider-observation"}
+            if self.path in {"/models", "/v1/models"}:
+                return self.reply(200, json.dumps({"object": "list", "data": [model]}).encode())
+            if self.path in {"/models/" + MODEL, "/v1/models/" + MODEL}:
+                return self.reply(200, json.dumps(model).encode())
+            self.reply(*provider.failure("private_route_denied", 404))
 
     class Server(ThreadingHTTPServer):
         daemon_threads = True
