@@ -1,0 +1,33 @@
+{
+  "observed_utc": "2026-11-04T02:48:14.760828+00:00",
+  "source_revision": "8a39ce0ab19e85936c9967b2734bfbc7ef244834",
+  "version": "0.1.0-beta.2",
+  "scope": "native source load, native package export, native archive installation in isolated initialized IRIS build154 lab clone, not fresh independent bootstrap",
+  "archive_sha256": "ee6c29779188c2805a9a0541e591099684febd6ad38032ff26b68ecbaeb79bc1",
+  "archive_bytes": 109341,
+  "archive_files": 85,
+  "app_classes": 47,
+  "embedded_python_packages_imported": [
+    "pbp_guard",
+    "pbp_ledger",
+    "pbp_refund_target",
+    "pbp_review",
+    "pbp_s0_core",
+    "pbp_solana_demo",
+    "pbp_witness"
+  ],
+  "installed_file_comparison": {
+    "files_compared": 34,
+    "mismatches": []
+  },
+  "operator_guide_included": true,
+  "optional_lock_included": true,
+  "private_binary_path_audit": "passed",
+  "normal_install_live_profile_absent": true,
+  "normal_install_RAG_disabled": true,
+  "production_started_by_install": false,
+  "model_calls": 0,
+  "blockchain_calls": 0,
+  "public_registry_beta2_verified": false,
+  "historical_beta1_lab_preserved": true
+}

@@ -204,6 +204,49 @@ class LiveBudgetTests(unittest.TestCase):
             self.budget.admit(self.body(), self.case)
         self.assertEqual(before, self.path.read_bytes())
 
+    def test_status_reserves_worst_allowed_request_instead_of_fixed_point35(self):
+        state = copy.deepcopy(self.state)
+        state[PHASE]["active_case"] = None
+        state["estimated_spent_usd"] = ".50"
+        self.save(state)
+        # Accounted .634858 leaves .365142: more than .35, less than .384064.
+        self.assertEqual(self.budget.public_status()["reason"], "cumulative_budget_headroom_required")
+        state["estimated_spent_usd"] = ".48"
+        self.save(state)
+        self.assertTrue(self.budget.public_status()["available"])
+
+    def test_no_http_finish_identifies_no_provider_request_and_preserves_holds(self):
+        state = copy.deepcopy(self.state)
+        state["estimated_spent_usd"] = ".7"
+        self.save(state)
+        with self.assertRaisesRegex(BudgetDenied, "headroom"):
+            self.budget.admit(self.body(), self.case)
+        self.assertFalse(self.budget.finish_case(self.case, False))
+        after = self.read()
+        self.assertFalse(after[PHASE]["enabled"])
+        self.assertIsNone(after[PHASE]["active_case"])
+        self.assertEqual(after[PHASE]["stop_reason"], "native_result_not_qualified_no_provider_request")
+        self.assertEqual(after["reserved"], state["reserved"])
+        self.assertEqual(after["calls"], state["calls"])
+        self.assertEqual(after["forwarded_calls"], state["forwarded_calls"])
+
+    def test_finish_case_without_http_does_not_reenable_disabled_phase(self):
+        state = copy.deepcopy(self.state)
+        state[PHASE]["enabled"] = False
+        state[PHASE]["stop_reason"] = "preserved_operator_stop"
+        self.save(state)
+        self.assertFalse(self.budget.finish_case(self.case, False))
+        self.assertFalse(self.read()[PHASE]["enabled"])
+        self.assertEqual(self.read()[PHASE]["stop_reason"], "native_result_not_qualified_no_provider_request")
+
+    def test_uncertain_inflight_finish_stays_disabled_with_case_and_hold(self):
+        call, _ = self.budget.admit(self.body(), self.case)
+        self.assertFalse(self.budget.finish_case(self.case, False))
+        after = self.read()
+        self.assertFalse(after[PHASE]["enabled"])
+        self.assertEqual(after[PHASE]["active_case"], self.case)
+        self.assertIn(call, after["reserved"])
+
 
 if __name__ == "__main__":
     unittest.main()

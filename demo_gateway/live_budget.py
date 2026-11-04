@@ -23,6 +23,11 @@ import uuid
 MODEL = "gemini-3.8-flash"
 PHASE = "public_live_demo"
 CASE_PATTERN = r"public-live:[A-Za-z0-9_-]{16,48}"
+MAX_REQUEST_BYTES = 40000
+
+
+def reservation_for_bytes(size):
+    return Decimal(size + 16384) * Decimal(".000001") + Decimal(65536) * Decimal(".000005")
 
 
 class BudgetDenied(Exception):
@@ -101,8 +106,8 @@ def prepare_request(body, case_id):
     # Google 3.8 ignores temperature; do not represent it as temperature-zero sampling.
     forwarded.pop("temperature", None)
     raw = json.dumps(forwarded, allow_nan=False, separators=(",", ":")).encode()
-    require(len(raw) <= 40000 and case_id.encode() in raw, "input_bound_or_case_scope")
-    reserve = Decimal(len(raw) + 16384) * Decimal(".000001") + Decimal(65536) * Decimal(".000005")
+    require(len(raw) <= MAX_REQUEST_BYTES and case_id.encode() in raw, "input_bound_or_case_scope")
+    reserve = reservation_for_bytes(len(raw))
     return raw, reserve
 
 
@@ -157,7 +162,7 @@ class LiveBudget:
                 reason = "native_case_in_progress"
             elif phase["day_http"].get(day, 0) >= 15:
                 reason = "daily_model_quota_reached"
-            elif accounted(state) + Decimal(".35") > Decimal("1"):
+            elif accounted(state) + reservation_for_bytes(MAX_REQUEST_BYTES) > Decimal("1"):
                 reason = "cumulative_budget_headroom_required"
             return {"available": reason is None, "reason": reason,
                     "remaining_model_calls_today": max(0, 15 - phase["day_http"].get(day, 0))}
@@ -180,9 +185,14 @@ class LiveBudget:
             entries = [entry for entry in state["calls"] if entry.get("phase") == PHASE and entry.get("case_id") == case_id]
             successful = bool(successful and entries and not phase["in_flight"]
                               and all(entry.get("reservation_disposition") == "settled_provisional_estimate" for entry in entries))
+            attempted = case_id in phase["case_http"]
             if not successful or phase["in_flight"]:
                 phase["enabled"] = False
-                phase["stop_reason"] = "native_result_uncertain_reconcile_before_retry"
+                # The native path does not distinguish a local bridge refusal
+                # from an invalid/missing seal. Keep fail-closed admission while
+                # distinguishing absence of a provider request from uncertainty.
+                phase["stop_reason"] = ("native_result_uncertain_reconcile_before_retry" if attempted
+                                        else "native_result_not_qualified_no_provider_request")
             if not phase["in_flight"]:
                 phase["active_case"] = None
         return successful
