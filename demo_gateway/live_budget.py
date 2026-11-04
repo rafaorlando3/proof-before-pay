@@ -12,6 +12,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 import datetime as dt
 import fcntl
+import hashlib
 import json
 import math
 import os
@@ -20,7 +21,11 @@ import stat
 import time
 import uuid
 
-MODEL = "gemini-3.8-flash"
+MODEL = "gemini-3.6-flash"
+LEGACY_MODEL = "gemini-3.8-flash"
+# Exact approved identities from the model metadata; never a prefix match.
+RESPONSE_MODEL_IDS = frozenset({MODEL, "models/gemini-3.6-flash",
+                               "gemini-3.6-flash-07-2026", "models/gemini-3.6-flash-07-2026"})
 PHASE = "public_live_demo"
 CASE_PATTERN = r"public-live:[A-Za-z0-9_-]{16,48}"
 MAX_REQUEST_BYTES = 40000
@@ -104,8 +109,8 @@ def prepare_request(body, case_id):
         names.add(name)
     cap = body.get("max_tokens", 2048)
     require(type(cap) is int and 1 <= cap <= 2048, "output_bound")
-    forwarded = dict(body, max_tokens=cap, reasoning_effort="low", stream=False)
-    # Google 3.8 ignores temperature; do not represent it as temperature-zero sampling.
+    forwarded = dict(body, max_tokens=cap, reasoning_effort="medium", stream=False)
+    # Google 3.6 ignores temperature; do not represent it as temperature-zero sampling.
     forwarded.pop("temperature", None)
     raw = json.dumps(forwarded, allow_nan=False, separators=(",", ":")).encode()
     require(len(raw) <= MAX_REQUEST_BYTES and case_id.encode() in raw, "input_bound_or_case_scope")
@@ -127,15 +132,107 @@ class LiveBudget:
             raise BudgetDenied("private_regular_budget_file_required")
         return fd
 
-    def load(self):
+    def read_raw(self):
         require(not list(self.directory.glob("budget*.tmp")), "partial_save_reconcile_first")
         source = self.private_fd(self.directory / "budget.json", os.O_RDONLY)
-        with os.fdopen(source, "r") as stream:
+        with os.fdopen(source, "rb") as stream:
             metadata = os.fstat(stream.fileno())
             require(metadata.st_size <= 8_000_000, "budget_archive_required")
-            state = json.load(stream)
+            raw = stream.read(8_000_001)
+        require(len(raw) <= 8_000_000, "budget_archive_required")
+        return raw, metadata
+
+    def load(self):
+        raw, metadata = self.read_raw()
+        state = json.loads(raw)
         self.validate(state)
         return state, metadata
+
+    def migrate_disabled_model(self, *, expected_ledger_sha256, source_revision, approval_ref, migration_id):
+        """Explicit private operator action, never called by an HTTP route or loader.
+
+        Only phase.model and an appended model_migration_history entry change.
+        An external private journal attests exact ledger hashes before/after:
+        embedding a ledger's own post-write hash inside it would be self-referential.
+        A prepared/uncertain journal is reconciled by hashes, never blindly replayed.
+        """
+        require(isinstance(expected_ledger_sha256, str) and re.fullmatch(r"[0-9a-f]{64}", expected_ledger_sha256), "expected_ledger_digest_required")
+        require(isinstance(source_revision, str) and re.fullmatch(r"[0-9a-f]{40}", source_revision), "reviewed_source_revision_required")
+        require(isinstance(approval_ref, str) and 1 <= len(approval_ref) <= 200, "model_review_reference_required")
+        require(isinstance(migration_id, str) and re.fullmatch(r"[0-9a-f]{32}", migration_id), "explicit_migration_id_required")
+        fd = self.private_fd(self.directory / "budget.lock", os.O_RDWR)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            before, metadata = self.read_raw()
+            require(hashlib.sha256(before).hexdigest() == expected_ledger_sha256, "ledger_changed_reconcile_before_model_migration")
+            state = json.loads(before)
+            phase = self.validate(state, expected_model=LEGACY_MODEL)
+            require(not phase["enabled"] and not phase["in_flight"] and phase.get("active_case") is None, "disable_and_reconcile_before_model_migration")
+            history = phase.get("model_migration_history", [])
+            require(isinstance(history, list), "model_migration_history_invalid")
+            now = self.clock()
+            require(type(now) in (int, float) and math.isfinite(now), "clock_unavailable")
+            entry = {"migration_id": migration_id, "from_model": LEGACY_MODEL, "to_model": MODEL,
+                     "approval_ref": approval_ref, "source_revision": source_revision,
+                     "before_ledger_sha256": expected_ledger_sha256, "at_utc": dt.datetime.fromtimestamp(now, dt.timezone.utc).isoformat()}
+            phase["model"] = MODEL
+            phase["model_migration_history"] = [*history, entry]
+            self.validate(state)
+            after = json.dumps(state, allow_nan=False, separators=(",", ":")).encode()
+            require(len(after) <= 8_000_000, "budget_archive_required")
+            # Prove all protected subtrees retain their exact compact-JSON bytes.
+            restored = json.loads(after)
+            restored[PHASE]["model"] = LEGACY_MODEL
+            if "model_migration_history" in json.loads(before)[PHASE]:
+                restored[PHASE]["model_migration_history"] = history
+            else:
+                del restored[PHASE]["model_migration_history"]
+            # The existing journal uses this compact encoding. Refuse an encoding
+            # drift rather than silently reformatting any protected old bytes.
+            require(json.dumps(restored, allow_nan=False, separators=(",", ":")).encode() == before, "protected_ledger_bytes_or_encoding_changed")
+            receipt = {**entry, "state": "prepared", "after_ledger_sha256": hashlib.sha256(after).hexdigest()}
+            journal = self.directory / ("model-migration-" + migration_id + ".json")
+            try:
+                with os.fdopen(os.open(journal, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600), "wb") as stream:
+                    stream.write(json.dumps(receipt, separators=(",", ":")).encode())
+                    stream.flush()
+                    os.fsync(stream.fileno())
+            except FileExistsError:
+                raise BudgetDenied("model_migration_journal_exists_reconcile_first") from None
+            self.sync_directory()
+            self.save_bytes(after, metadata)
+            observed, _ = self.read_raw()
+            require(observed == after, "model_migration_result_uncertain_reconcile_before_retry")
+            receipt["state"] = "applied"
+            tmp = self.directory / ("model-migration-" + migration_id + ".tmp")
+            with os.fdopen(os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600), "wb") as stream:
+                stream.write(json.dumps(receipt, separators=(",", ":")).encode())
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(tmp, journal)
+            self.sync_directory()
+            return receipt
+        finally:
+            os.close(fd)
+
+    def sync_directory(self):
+        directory = os.open(self.directory, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+
+    def save_bytes(self, data, metadata):
+        require(len(data) <= 8_000_000, "budget_archive_required")
+        tmp = self.directory / ("budget-public-live-" + uuid.uuid4().hex + ".tmp")
+        with os.fdopen(os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600), "wb") as stream:
+            if os.getuid() == 0:
+                os.fchown(stream.fileno(), metadata.st_uid, metadata.st_gid)
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(tmp, self.directory / "budget.json")
+        self.sync_directory()
 
     def armed_case(self):
         fd = self.private_fd(self.directory / "budget.lock", os.O_RDONLY)
@@ -208,25 +305,13 @@ class LiveBudget:
             yield state
             self.validate(state)
             data = json.dumps(state, allow_nan=False, separators=(",", ":")).encode()
-            require(len(data) <= 8_000_000, "budget_archive_required")
-            tmp = self.directory / ("budget-public-live-" + uuid.uuid4().hex + ".tmp")
-            with os.fdopen(os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600), "wb") as stream:
-                if os.getuid() == 0:
-                    os.fchown(stream.fileno(), metadata.st_uid, metadata.st_gid)
-                stream.write(data)
-                stream.flush()
-                os.fsync(stream.fileno())
-            os.replace(tmp, self.directory / "budget.json")
-            directory = os.open(self.directory, os.O_RDONLY | os.O_DIRECTORY)
-            try:
-                os.fsync(directory)
-            finally:
-                os.close(directory)
+            self.save_bytes(data, metadata)
         finally:
             os.close(fd)
 
     @staticmethod
-    def validate(state):
+    def validate(state, *, expected_model=MODEL):
+        require(expected_model in {MODEL, LEGACY_MODEL}, "fixed_migration_model_required")
         require(state.get("schema") == "pbp.inference-budget/1", "existing_budget_schema_required")
         require(money(state["cap_usd"]) == ACTIVE_CAP_USD, "explicit_two_dollar_cap_required")
         require(accounted(state) <= ACTIVE_CAP_USD, "budget_exhausted_or_inconsistent")
@@ -235,7 +320,7 @@ class LiveBudget:
         require(isinstance(phase, dict) and phase.get("schema") == "pbp.public-live-budget/1", "explicit_public_phase_required")
         require(phase.get("cap_approval_ref") == CAP_APPROVAL_REF, "explicit_cap_approval_reference_required")
         require(isinstance(phase.get("approval_ref"), str) and bool(phase["approval_ref"]), "approval_reference_required")
-        require(phase.get("model") == MODEL and type(phase.get("enabled")) is bool, "phase_configuration_invalid")
+        require(phase.get("model") == expected_model and type(phase.get("enabled")) is bool, "phase_configuration_invalid")
         require(isinstance(phase.get("case_http"), dict) and isinstance(phase.get("day_http"), dict) and isinstance(phase.get("in_flight"), dict), "phase_counters_invalid")
         require(type(phase.get("expires_at")) in (int, float) and math.isfinite(phase["expires_at"]), "phase_expiry_required")
         require(phase.get("last_http_at") is None or (type(phase["last_http_at"]) in (int, float) and math.isfinite(phase["last_http_at"])), "phase_clock_invalid")
@@ -292,10 +377,13 @@ class LiveBudget:
             archive_ok = (isinstance(archive, dict) and archive.get("call_id") == call
                           and archive.get("case_id") == case_id and archive.get("http_status") == status
                           and re.fullmatch(r"[0-9a-f]{64}", archive.get("sha256", "")))
-            accepted = (status == 200 and isinstance(data, dict) and data.get("model") == MODEL
+            returned_model = data.get("model") if isinstance(data, dict) else None
+            model_ok = isinstance(returned_model, str) and returned_model in RESPONSE_MODEL_IDS
+            accepted = (status == 200 and model_ok
                         and archive_ok and estimate is not None and estimate <= money(state["reserved"][call]))
             entry = {"call_id": call, "case_id": case_id, "phase": PHASE, "http_status": status,
                      "requested_model": MODEL, "billing_receipt_available": False,
+                     "returned_model": returned_model if model_ok else None,
                      "estimated_standard_cost_usd": str(estimate) if estimate is not None else None,
                      "estimated_cost_basis": "conservative reported usage x list tariff; not billed",
                      "reservation_disposition": "settled_provisional_estimate" if accepted else "retained_uncertain",

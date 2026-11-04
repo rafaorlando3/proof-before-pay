@@ -2,7 +2,7 @@
 /// Operator staging/enabling is explicit; normal installation does neither.
 Class pbp.Demo.Runtime Extends %RegisteredObject
 {
-Parameter MODEL = "gemini-3.8-flash";
+Parameter MODEL = "gemini-3.6-flash";
 
 ClassMethod Config() As %DynamicObject
 {
@@ -148,5 +148,36 @@ ClassMethod RebindRevision(expected As %String, revision As %String, approval As
     Set cfg."source_revision"=revision
     Set ^pbp.demoRuntime("config")=cfg.%ToJSON()
     Quit $$$OK
+}
+
+/// Explicit operator-only migration of an OFF legacy profile; no activation or reset.
+/// Config() intentionally rejects the old model after installing the new constant.
+ClassMethod MigrateDisabledModel(expectedRevision As %String, revision As %String, approval As %String) As %Status
+{
+    Set sc=$$$OK,owned=0,locked=0
+    Try {
+        If '$SYSTEM.Security.Check("%Admin_Manage","USE") Throw ##class(%Exception.General).%New("demo_operator_required")
+        If $TLEVEL'=0 Throw ##class(%Exception.General).%New("demo_outer_transaction_forbidden")
+        If '$MATCH(expectedRevision,"[0-9a-f]{40}") || '$MATCH(revision,"[0-9a-f]{40}") || (revision=expectedRevision) || (approval="") || ($LENGTH(approval)>200) Throw ##class(%Exception.General).%New("reviewed_model_migration_reference_required")
+        Lock +^pbp.demoRuntime("config"):5
+        If '$TEST Throw ##class(%Exception.General).%New("demo_profile_busy")
+        Set locked=1,cfg=##class(pbp.Util).ParseJSON($GET(^pbp.demoRuntime("config")),.reason)
+        If '$ISOBJECT(cfg) Throw ##class(%Exception.General).%New("demo_profile_missing")
+        If cfg.schema'="pbp.public-live-native/1" Throw ##class(%Exception.General).%New("demo_profile_invalid")
+        If cfg.enabled Throw ##class(%Exception.General).%New("disable_demo_before_model_migration")
+        If (cfg."source_revision"'=expectedRevision) || (cfg.model'="gemini-3.8-flash") Throw ##class(%Exception.General).%New("demo_expected_model_or_source_changed")
+        Set entry={"from_model":(cfg.model),"to_model":(..#MODEL),"from_source":(expectedRevision),"to_source":(revision),"approval_ref":(approval),"at":(##class(pbp.Util).NowISO())}
+        TSTART
+        Set owned=1,cfg.model=..#MODEL,cfg."source_revision"=revision,^pbp.demoRuntime("config")=cfg.%ToJSON()
+        If '$ISOBJECT(..Config()) Throw ##class(%Exception.General).%New("demo_migrated_profile_invalid")
+        Set index=$INCREMENT(^pbp.demoRuntime("model_history")),^pbp.demoRuntime("model_history",index)=entry.%ToJSON()
+        TCOMMIT
+        Set owned=0
+    } Catch ex {
+        If owned TROLLBACK
+        Set sc=ex.AsStatus()
+    }
+    If locked Lock -^pbp.demoRuntime("config")
+    Quit sc
 }
 }

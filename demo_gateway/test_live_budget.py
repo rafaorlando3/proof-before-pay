@@ -2,13 +2,15 @@ import copy
 import datetime as dt
 from decimal import Decimal
 import json
+import hashlib
+from unittest.mock import patch
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
 
-from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE, CAP_APPROVAL_REF
+from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE, CAP_APPROVAL_REF, LEGACY_MODEL, RESPONSE_MODEL_IDS
 
 
 class LiveBudgetTests(unittest.TestCase):
@@ -256,6 +258,191 @@ class LiveBudgetTests(unittest.TestCase):
         with self.assertRaisesRegex(BudgetDenied, "approval_reference"):
             self.budget.admit(self.body(), self.case)
         self.assertEqual(self.path.read_bytes(), before)
+
+
+    def test_old_model_is_not_an_automatic_fallback_or_new_request(self):
+        before = self.path.read_bytes()
+        with self.assertRaisesRegex(BudgetDenied, "model_or_stream_denied"):
+            self.budget.admit(dict(self.body(), model="gemini-3.8-flash"), self.case)
+        self.assertEqual(before, self.path.read_bytes())
+
+    def test_new_model_admission_keeps_original_model_history_and_holds(self):
+        state = self.read()
+        state["calls"][0]["requested_model"] = "gemini-3.8-flash"
+        self.save(state)
+        call, _ = self.budget.admit(self.body(), self.case)
+        after = self.read()
+        self.assertEqual(after["calls"], state["calls"])
+        self.assertEqual(after[PHASE]["model"], "gemini-3.6-flash")
+        for old, value in state["reserved"].items():
+            self.assertEqual(after["reserved"][old], value)
+        self.assertIn(call, after["reserved"])
+
+
+    def legacy_disabled_fixture(self):
+        state = copy.deepcopy(self.state)
+        old = "public-live:" + "x" * 32
+        call = "c" * 32
+        state[PHASE].update(model=LEGACY_MODEL, enabled=False, active_case=None,
+                            case_http={old: 1}, day_http={"2026-11-03": 1}, last_http_at=self.now - 100)
+        state["reserved"][call] = ".349237"
+        state["calls"].append({"call_id": call, "phase": PHASE, "case_id": old,
+                               "requested_model": LEGACY_MODEL, "reservation_disposition": "retained_uncertain"})
+        self.save(state)
+        self.path.write_text(json.dumps(state, separators=(",", ":")))
+        return state
+
+    def migration_args(self, **override):
+        return {"expected_ledger_sha256": hashlib.sha256(self.path.read_bytes()).hexdigest(),
+                "source_revision": "b" * 40, "approval_ref": "synthetic reviewed migration",
+                "migration_id": "d" * 32, **override}
+
+    def test_actual_legacy_phase_refused_before_explicit_migration_and_admitted_only_after_explicit_enable(self):
+        state = self.legacy_disabled_fixture()
+        before = self.path.read_bytes()
+        with self.assertRaisesRegex(BudgetDenied, "phase_configuration_invalid"):
+            self.budget.admit(self.body(), self.case)
+        self.assertEqual(self.path.read_bytes(), before)
+        receipt = self.budget.migrate_disabled_model(**self.migration_args())
+        migrated = self.read()
+        self.assertFalse(migrated[PHASE]["enabled"])
+        with self.assertRaisesRegex(BudgetDenied, "disabled"):
+            self.budget.admit(self.body(), self.case)
+        reconstructed = copy.deepcopy(migrated)
+        reconstructed[PHASE]["model"] = LEGACY_MODEL
+        del reconstructed[PHASE]["model_migration_history"]
+        self.assertEqual(json.dumps(reconstructed, separators=(",", ":")).encode(),
+                         json.dumps(state, separators=(",", ":")).encode())
+        self.assertEqual(receipt["before_ledger_sha256"], hashlib.sha256(before).hexdigest())
+        self.assertEqual(receipt["after_ledger_sha256"], hashlib.sha256(self.path.read_bytes()).hexdigest())
+        journal = self.root / ("model-migration-" + "d" * 32 + ".json")
+        self.assertEqual(json.loads(journal.read_text()), receipt)
+        self.assertEqual(journal.stat().st_mode & 0o777, 0o600)
+        with self.budget.transaction() as current:
+            current[PHASE]["enabled"] = True
+        self.budget.arm_case(self.case)
+        call, _ = self.budget.admit(self.body(), self.case)
+        after = self.read()
+        self.assertEqual(after["calls"], state["calls"])
+        for prior, value in state["reserved"].items():
+            self.assertEqual(after["reserved"][prior], value)
+        self.assertIn(call, after["reserved"])
+        self.assertEqual(after[PHASE]["case_http"]["public-live:" + "x" * 32], 1)
+
+    def test_model_migration_refuses_enabled_armed_or_inflight_legacy_state_without_writes(self):
+        for scenario in ("enabled", "armed", "inflight"):
+            state = self.legacy_disabled_fixture()
+            if scenario == "enabled":
+                state[PHASE]["enabled"] = True
+            else:
+                state[PHASE]["active_case"] = "public-live:" + "x" * 32
+                if scenario == "inflight":
+                    state["calls"] = state["calls"][:-1]
+                    state[PHASE]["in_flight"] = {"c" * 32: "public-live:" + "x" * 32}
+            self.save(state)
+            before = self.path.read_bytes()
+            with self.assertRaisesRegex(BudgetDenied, "disable_and_reconcile"):
+                self.budget.migrate_disabled_model(**self.migration_args())
+            self.assertEqual(self.path.read_bytes(), before)
+            self.assertEqual(list(self.root.glob("model-migration-*")), [])
+
+    def test_model_migration_rejects_stale_digest_or_missing_review_reference(self):
+        self.legacy_disabled_fixture()
+        before = self.path.read_bytes()
+        for change in ({"expected_ledger_sha256": "e" * 64}, {"approval_ref": ""},
+                       {"source_revision": "not-a-source"}, {"migration_id": "not-an-id"}):
+            with self.assertRaises(BudgetDenied):
+                self.budget.migrate_disabled_model(**self.migration_args(**change))
+            self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(list(self.root.glob("model-migration-*")), [])
+
+    def test_model_migration_refuses_encoding_drift_instead_of_reformatting_protected_bytes(self):
+        state = self.legacy_disabled_fixture()
+        self.save(state)
+        before = self.path.read_bytes()
+        with self.assertRaisesRegex(BudgetDenied, "protected_ledger_bytes_or_encoding_changed"):
+            self.budget.migrate_disabled_model(**self.migration_args())
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(list(self.root.glob("model-migration-*")), [])
+
+    def test_prepared_journal_after_precommit_crash_blocks_blind_replay(self):
+        self.legacy_disabled_fixture()
+        before = self.path.read_bytes()
+        args = self.migration_args()
+        with patch.object(self.budget, "save_bytes", side_effect=OSError("synthetic interrupted commit")):
+            with self.assertRaises(OSError):
+                self.budget.migrate_disabled_model(**args)
+        self.assertEqual(self.path.read_bytes(), before)
+        journal = self.root / ("model-migration-" + "d" * 32 + ".json")
+        self.assertEqual(json.loads(journal.read_text())["state"], "prepared")
+        saved = journal.read_bytes()
+        with self.assertRaisesRegex(BudgetDenied, "journal_exists_reconcile"):
+            self.budget.migrate_disabled_model(**args)
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(journal.read_bytes(), saved)
+
+    def test_postcommit_journal_failure_retains_disabled_new_model_and_exact_prepared_receipt(self):
+        self.legacy_disabled_fixture()
+        before = self.path.read_bytes()
+        args = self.migration_args()
+        original = self.budget.sync_directory
+        calls = []
+        def interrupted():
+            calls.append(1)
+            if len(calls) == 3:
+                raise OSError("synthetic directory fsync interruption")
+            original()
+        with patch.object(self.budget, "sync_directory", side_effect=interrupted):
+            with self.assertRaises(OSError):
+                self.budget.migrate_disabled_model(**args)
+        after = self.path.read_bytes()
+        self.assertNotEqual(before, after)
+        self.assertFalse(self.read()[PHASE]["enabled"])
+        journal = json.loads((self.root / ("model-migration-" + "d" * 32 + ".json")).read_text())
+        self.assertEqual(journal["after_ledger_sha256"], hashlib.sha256(after).hexdigest())
+        # The mutation is reconciled from exact hashes; another call cannot recreate it.
+        with self.assertRaises(BudgetDenied):
+            self.budget.migrate_disabled_model(**args)
+        self.assertEqual(self.path.read_bytes(), after)
+
+    def test_concurrent_operator_migrations_apply_once_without_resetting_history(self):
+        state = self.legacy_disabled_fixture()
+        args = self.migration_args()
+        code = ('import sys,json;from live_budget import LiveBudget,BudgetDenied;'
+                'b=LiveBudget(sys.argv[1],clock=lambda:float(sys.argv[3]));'
+                '\ntry:b.migrate_disabled_model(**json.loads(sys.argv[2]));print("applied")'
+                '\nexcept BudgetDenied:print("denied")')
+        processes = [subprocess.Popen([sys.executable, "-c", code, str(self.root), json.dumps(dict(args, migration_id=str(i) * 32)), str(self.now)],
+                     cwd=Path(__file__).parent, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) for i in (1, 2)]
+        results = []
+        for process in processes:
+            stdout, stderr = process.communicate(timeout=10)
+            self.assertEqual(process.returncode, 0, stderr)
+            results.append(stdout.strip())
+        self.assertEqual(sorted(results), ["applied", "denied"])
+        self.assertEqual(len(self.read()[PHASE]["model_migration_history"]), 1)
+        self.assertEqual(len(list(self.root.glob("model-migration-*.json"))), 1)
+        self.assertEqual(self.read()["calls"], state["calls"])
+        self.assertEqual(self.read()["reserved"], state["reserved"])
+
+    def test_exact_approved_response_model_aliases_settle_without_releasing_old_holds(self):
+        for alias in RESPONSE_MODEL_IDS:
+            self.save(copy.deepcopy(self.state))
+            call, _ = self.budget.admit(self.body(), self.case)
+            data = {"model": alias, "usage": {"prompt_tokens": 500, "completion_tokens": 100}}
+            self.assertTrue(self.settle(call, data=data))
+            self.assertEqual(self.read()["calls"][-1]["returned_model"], alias)
+            self.assertEqual(self.read()["reserved"], self.state["reserved"])
+
+    def test_different_or_unreviewed_model_or_malformed_model_retains_own_hold(self):
+        for alias in (LEGACY_MODEL, "gemini-3.6-flash-unreviewed", "models/gemini-3.6-flash-future", {}, [], None):
+            self.save(copy.deepcopy(self.state))
+            call, _ = self.budget.admit(self.body(), self.case)
+            data = {"model": alias, "usage": {"prompt_tokens": 500, "completion_tokens": 100}}
+            self.assertFalse(self.settle(call, data=data))
+            self.assertIn(call, self.read()["reserved"])
+            self.assertFalse(self.read()[PHASE]["enabled"])
+            self.assertIsNone(self.read()["calls"][-1]["returned_model"])
 
 
 if __name__ == "__main__":
