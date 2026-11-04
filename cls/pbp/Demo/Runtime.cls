@@ -110,6 +110,72 @@ ClassMethod Stage(bridgeURL As %String, revision As %String, expires As %String,
     Quit sc
 }
 
+/// Explicit OFF-profile recovery after a base production was reimported at boot.
+/// Call only with this production stopped. Never stage a new profile or reset history.
+/// expectedRevision compares the caller expectation to persisted config; it is not
+/// an attestation of loaded source. Before enable, the operator must verify the
+/// deployed bundle and explicitly RebindRevision. Other operator setters do not
+/// take this restore lock; coordinate them while the production is stopped.
+ClassMethod RestoreStagedActors(expectedRevision As %String) As %Status
+{
+    Set sc=$$$OK,owned=0,locked=0
+    Try {
+        If '$SYSTEM.Security.Check("%Admin_Manage","USE") Throw ##class(%Exception.General).%New("demo_operator_required")
+        If $TLEVEL'=0 Throw ##class(%Exception.General).%New("demo_outer_transaction_forbidden")
+        Lock +^pbp.demoRuntime("restore_lock"):0
+        If '$TEST Throw ##class(%Exception.General).%New("demo_restore_busy")
+        Set locked=1,cfg=..Config(),before=$GET(^pbp.demoRuntime("config"))
+        If '$ISOBJECT(cfg) Throw ##class(%Exception.General).%New("demo_profile_missing")
+        If cfg.enabled Throw ##class(%Exception.General).%New("disable_demo_before_restore")
+        If '$MATCH(expectedRevision,"[0-9a-f]{40}") || (cfg."source_revision"'=expectedRevision) Throw ##class(%Exception.General).%New("demo_source_revision_changed")
+        Set running=##class(Ens.Director).IsProductionRunning(.current)
+        If running && (current="pbp.Production") Throw ##class(%Exception.General).%New("stop_own_production_before_restore")
+        Set prod=##class(Ens.Config.Production).%OpenId("pbp.Production")
+        If '$ISOBJECT(prod) Throw ##class(%Exception.General).%New("demo_production_missing")
+        Set present=0
+        For name="pbp.Demo.Intake","pbp.Demo.Process","pbp.Demo.Operation" {
+            Set item=prod.FindItemByConfigName(name,.unused)
+            If $ISOBJECT(item) Set present=present+1
+        }
+        If present && ((present'=3) || '..ItemsReady()) Throw ##class(%Exception.General).%New("demo_actor_configuration_requires_review")
+        If present=0 {
+            TSTART
+            Set owned=1
+            If before'=$GET(^pbp.demoRuntime("config")) Throw ##class(%Exception.General).%New("demo_profile_changed_during_restore")
+        For name="pbp.Demo.Intake","pbp.Demo.Process","pbp.Demo.Operation" {
+            Set item=prod.FindItemByConfigName(name,.unused)
+            If $ISOBJECT(item) Throw ##class(%Exception.General).%New("demo_item_already_exists_reconcile")
+            Set item=##class(Ens.Config.Item).%New()
+            Set item.Name=name,item.ClassName=name,item.Enabled=1,item.Foreground=0,item.LogTraceEvents=0
+            Set item.PoolSize=$SELECT(name="pbp.Demo.Intake":0,1:1)
+            Set item.Comment="Optional fixed synthetic live demo; private budget bridge, no public review"
+            If name="pbp.Demo.Intake" Do ..Setting(item,"Host","TargetConfigName","pbp.Demo.Process")
+            If name="pbp.Demo.Process" Do ..Setting(item,"Host","AutonomousEffects","0")
+            If name="pbp.Demo.Operation" {
+                Do ..Setting(item,"Adapter","AgentClass","pbp.Demo.Agent")
+                Do ..Setting(item,"Adapter","AuthPolicy","pbp.AuthPolicy")
+                Do ..Setting(item,"Adapter","AuditPolicy","pbp.AuditPolicy")
+                Do ..Setting(item,"Host","FailureTimeout","0")
+                Do ..Setting(item,"Host","RetryInterval","0")
+            }
+            Do prod.Items.Insert(item)
+        }
+            // Write history before Save: there is no fallible history write after Save.
+            Set entry={"at":(##class(pbp.Util).NowISO()),"source_revision":(expectedRevision),"kept_disabled":true}
+            Set i=$INCREMENT(^pbp.demoRuntime("restore_history")),^pbp.demoRuntime("restore_history",i)=entry.%ToJSON()
+            Set sc=prod.%Save()
+            If $$$ISERR(sc) Throw ##class(%Exception.StatusException).CreateFromStatus(sc)
+            TCOMMIT
+            Set owned=0
+        }
+    } Catch ex {
+        If owned && $TLEVEL TROLLBACK
+        Set sc=ex.AsStatus()
+    }
+    If locked Lock -^pbp.demoRuntime("restore_lock")
+    Quit sc
+}
+
 ClassMethod Setting(item As Ens.Config.Item, target As %String, name As %String, value As %String)
 {
     Set setting=##class(Ens.Config.Setting).%New()

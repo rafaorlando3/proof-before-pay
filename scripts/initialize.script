@@ -5,6 +5,15 @@ if running,$system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
 set sc=$system.OBJ.LoadDir("/opt/pbp/cls","ck",.errors,1)
 write "PBP_INIT=",$system.Status.IsOK(sc)," ERRORS=",+$get(errors),!
 if $system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
+// OFF config and histories are not rewritten. This persisted revision is a
+// concurrency check, not a source attestation: verify deployed bundle and
+// explicitly RebindRevision before any later enable.
+set cfg=##class(pbp.Demo.Runtime).Config()
+if $isobject(cfg),cfg.enabled set sc=##class(pbp.Demo.Runtime).SetEnabled(0)
+if $isobject(cfg),$system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
+if $isobject(cfg) set sc=##class(pbp.Demo.Runtime).RestoreStagedActors(cfg."source_revision")
+if $isobject(cfg) write "PBP_DEMO_RESTORE=",$system.Status.IsOK(sc),!
+if $isobject(cfg),$system.Status.IsError(sc) do $system.Status.DisplayError(sc) halt
 set sc=##class(pbp.Setup).Install("/opt/pbp",1)
 write "PBP_INSTALL=",$system.Status.IsOK(sc),!
 if $system.Status.IsError(sc) do $system.Status.DisplayError(sc)
