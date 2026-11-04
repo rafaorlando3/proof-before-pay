@@ -18,6 +18,25 @@ class LiveProviderTests(unittest.TestCase):
     read = budget_tests.LiveBudgetTests.read
     body = budget_tests.LiveBudgetTests.body
 
+    def test_timeout_retains_hold_and_only_fixed_error_category(self):
+        def timeout(raw):
+            raise TimeoutError("arbitrary private error text must not be stored")
+        status, _ = self.provider(timeout).complete(self.body())
+        state = self.read()
+        self.assertEqual(status, 502)
+        self.assertEqual(state["calls"][-1]["transport_error_kind"], "timeout")
+        self.assertEqual(state["calls"][-1]["reservation_disposition"], "retained_uncertain")
+        self.assertNotIn("arbitrary private error", json.dumps(state))
+
+    def test_invalid_JSON_preserves_archived_HTTP_evidence_without_releasing_hold(self):
+        status, _ = self.provider(lambda raw: (200, b"not JSON")).complete(self.body())
+        entry = self.read()["calls"][-1]
+        self.assertEqual(status, 502)
+        self.assertEqual(entry["http_status"], 200)
+        self.assertEqual(entry["transport_error_kind"], "response_not_JSON")
+        self.assertEqual(entry["reservation_disposition"], "retained_uncertain")
+        self.assertEqual((self.root / entry["response_archive"]["path"]).read_bytes(), b"not JSON")
+
     def test_isolated_operator_entry_can_start_without_environment_imports(self):
         result = subprocess.run([sys.executable, "-I", "-B", str(Path(__file__).with_name("live_provider.py")), "--help"], capture_output=True, text=True, timeout=5)
         self.assertEqual(result.returncode, 0)

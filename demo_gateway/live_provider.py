@@ -11,6 +11,7 @@ import ipaddress
 import json
 import os
 import stat
+import ssl
 import sys
 import threading
 import time
@@ -76,6 +77,17 @@ class PrivateProvider:
         # Never forward exception text, keys, upstream errors or historical data.
         return status, json.dumps({"error": {"message": reason, "type": "public_live_unavailable"}}).encode()
 
+    @staticmethod
+    def error_kind(error):
+        cause = error.reason if isinstance(error, urllib.error.URLError) else error
+        if isinstance(cause, TimeoutError):
+            return "timeout"
+        if isinstance(cause, ssl.SSLError):
+            return "tls"
+        if isinstance(error, json.JSONDecodeError):
+            return "response_not_JSON"
+        return "transport_or_archive_error"
+
     def complete(self, body):
         if not self.slot.acquire(blocking=False):
             return self.failure("one_live_HTTP_at_a_time", 429)
@@ -92,12 +104,13 @@ class PrivateProvider:
                 # Pace before admission. This is NOT a retry of a provider call.
                 self.wait(15)
                 call, raw = self.budget.admit(body, case_id)
+            status, archive = None, None
             try:
                 status, response = self.send(raw)
                 archive = self.archive_response(call, case_id, status, response)
                 data = json.loads(response)
-            except Exception:
-                self.budget.settle(call)
+            except Exception as error:
+                self.budget.settle(call, status=status, archive=archive, error_kind=self.error_kind(error))
                 return self.failure("provider_result_uncertain_reservation_retained", 502)
             accepted = self.budget.settle(call, status=status, data=data, archive=archive)
             if not accepted:

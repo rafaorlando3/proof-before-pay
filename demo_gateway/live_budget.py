@@ -264,7 +264,8 @@ class LiveBudget:
             phase["in_flight"][call] = case_id
         return call, raw
 
-    def settle(self, call, *, status=None, data=None, archive=None):
+    def settle(self, call, *, status=None, data=None, archive=None, error_kind=None):
+        require(error_kind in {None, "timeout", "tls", "response_not_JSON", "transport_or_archive_error"}, "fixed_error_category_required")
         with self.transaction() as state:
             phase = self.validate(state)
             require(call in phase["in_flight"], "call_already_finished_or_unknown")
@@ -285,7 +286,7 @@ class LiveBudget:
                      "estimated_standard_cost_usd": str(estimate) if estimate is not None else None,
                      "estimated_cost_basis": "conservative reported usage x list tariff; not billed",
                      "reservation_disposition": "settled_provisional_estimate" if accepted else "retained_uncertain",
-                     "response_archive": archive if archive_ok else None}
+                     "response_archive": archive if archive_ok else None, "transport_error_kind": error_kind}
             if accepted:
                 state["estimated_spent_usd"] = str(money(state.get("estimated_spent_usd", "0")) + estimate)
                 del state["reserved"][call]

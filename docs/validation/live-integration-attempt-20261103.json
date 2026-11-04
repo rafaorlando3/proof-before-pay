@@ -1,0 +1,34 @@
+{
+  "schema": "pbp.live-integration-qualification/1",
+  "observed_utc": "2026-11-04T02:00:41.413993+00:00",
+  "status": "first_real_attempt_failed_closed_not_live_qualified",
+  "viewer": "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
+  "components": [
+    "fixed-fixture admission and persistent queue",
+    "same authoritative per-HTTP ledger",
+    "private Gemini bridge, real key outside IRIS",
+    "dedicated non-autonomous native production actors",
+    "inline status and explicit recorded fallback"
+  ],
+  "controlled_attempt": {
+    "case_id": "public-live:250d4e613f9545ed895e2ee1745f1e01",
+    "native_session": "1520",
+    "provider_HTTP_admitted": 1,
+    "provider_response_archived": false,
+    "usage_verified": false,
+    "model_proposal_refused": true,
+    "decision_commitment": "be62a5c403f0198878ae8aa4a6e752f8029562f5de88478fd7f7ce77761adeed",
+    "local_seal_intact": true,
+    "permits": 0,
+    "receipts": 0,
+    "money_effects": 0,
+    "automatic_retry": false
+  },
+  "cumulative_cap_USD": 1,
+  "uncertain_reservations_preserved": true,
+  "billing_receipt_available": false,
+  "provider_error_diagnostics_improvement": "new failures retain fixed timeout/TLS/invalid-JSON categories and any archive already written; no raw exception text",
+  "native_profile_and_provider_phase": "disabled pending qualification",
+  "frozen_r6_and_v7_evidence_untouched": true,
+  "online_demo_bonus_claimed": false
+}
