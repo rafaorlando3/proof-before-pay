@@ -136,10 +136,11 @@
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
       "delivery_status": "recorded_fallback_live_integration_deployed_first_attempt_failed_closed",
-      "note": "Authenticated running IRIS viewer with fixed-scenario live integration. First provider call expired without verifiable response or usage, no effect, no permit/receipt, reservation retained. Phase/native profile paused. No successful LIVE or eligibility claim.",
+      "note": "Authenticated IRIS-backed viewer remains recorded. Four fresh-decision attempts failed closed: one timeout and three provider503/high-demand responses, including Gemini3.6 after native recovery. US$5 ceiling expressly approved; five uncertain holds retained; no billing receipt, valid LIVE generation or online-demo bonus claimed.",
       "evidence": [
         "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
-        "docs/validation/live-integration-attempt-20261103.json"
+        "docs/validation/live-integration-attempt-20261103.json",
+        "docs/validation/live-gemini36-cap5-20261104.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },

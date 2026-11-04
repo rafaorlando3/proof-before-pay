@@ -1,0 +1,49 @@
+{
+  "schema": "pbp.live-qualification-followup/1",
+  "checked_at_utc": "2026-11-04T23:11:22.521909+00:00",
+  "prior_three_attempts": "live-integration-attempts-20261104.json",
+  "new_attempt": {
+    "model": "gemini-3.6-flash",
+    "reasoning_effort": "medium",
+    "runtime_source_at_attempt": "c2282bb315dfe0d71a2f73b1404db109e1731caa",
+    "session_id": 1546,
+    "case_id": "public-live:qual36_0dab99da440442f2b67c59268984d889",
+    "provider_http_calls": 1,
+    "http_status": 503,
+    "provider_error_status": "UNAVAILABLE",
+    "provider_error_reason": "high demand",
+    "response_archive_sha256": "302485908d0a3f54dbc236f62975283dc60500340c931075a82ed075770f1ffc",
+    "response_bytes": 200,
+    "response_JSON_shape": "one-element array containing error object",
+    "provider_reported_usage": null,
+    "native_observed_tool_calls": 0,
+    "valid_generation": false,
+    "proposal_refused": true,
+    "decision_seal_intact": true,
+    "permit_created": false,
+    "receipt_created": false,
+    "money_effect": false,
+    "automatic_retry": false
+  },
+  "subsequent_budget_authorization": {
+    "active_cap_usd": "5.00",
+    "approval_ref": "Rafael04Nov2026 explicit US$5 LIVE qualification",
+    "source_revision": "d52254b002e1ec616ff92cef58c3bf635255f2c2",
+    "CI": 41925784082,
+    "all_five_historical_holds_preserved": true,
+    "accounted_usd": "1.85912725",
+    "headroom_usd": "3.14087275",
+    "accounting_is_not_a_billing_receipt": true,
+    "old_counters_and_queue_preserved": true,
+    "new_inference_during_budget_change": false
+  },
+  "current_delivery_status": {
+    "native_and_provider_enabled": false,
+    "public_viewer": "recorded",
+    "successful_LIVE_qualification": false,
+    "online_demo_bonus_awarded_or_claimed": false,
+    "Vector_Search_LIVE_model_use": false,
+    "native_source_recovery_and_restart_qualified": true,
+    "native_implementation_source_unchanged_between_c228_and_d522": true
+  }
+}
