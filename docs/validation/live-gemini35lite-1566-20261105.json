@@ -1,0 +1,205 @@
+{
+  "at_utc": "2026-11-05T04:25:26.511503+00:00",
+  "state": "FIRST_VALID_CITED_LIVE_QUALIFICATION_ON_VPS",
+  "review": "C1264 exact7860df89",
+  "source_revision": "802ffe0dfd5dc9f28c03f21ee09a0c2989138bf9",
+  "CI": 41966725186,
+  "case_id": "public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe",
+  "session_id": 1566,
+  "scenario": "public synthetic amount_conflict fixture, no Rafael/customer data",
+  "model": "gemini-3.5-flash-lite",
+  "reasoning": "medium",
+  "output_bound": 4096,
+  "normal_protocol_HTTP": 3,
+  "retry_or_JSON_repair": false,
+  "provider_calls": [
+    {
+      "call_id": "a34f24abb01d409ba9ec47d25da64a45",
+      "http_status": 200,
+      "model": "gemini-3.5-flash-lite",
+      "finish_reasons": [
+        "tool_calls"
+      ],
+      "usage": {
+        "completion_tokens": 211,
+        "prompt_tokens": 1287,
+        "total_tokens": 1600
+      },
+      "response_SHA": "9d13d2483bd591c7e0c36866ec1f165a9f0e3cc1c7b8381e5a86acede3a3fbf2",
+      "response_bytes": 1463,
+      "estimated_standard_cost_usd": "0.00116860"
+    },
+    {
+      "call_id": "b5839a456d9a4eb099156f9fe894f8cf",
+      "http_status": 200,
+      "model": "gemini-3.5-flash-lite",
+      "finish_reasons": [
+        "tool_calls"
+      ],
+      "usage": {
+        "completion_tokens": 53,
+        "prompt_tokens": 1943,
+        "total_tokens": 2005
+      },
+      "response_SHA": "488990b942634ff4a32da04f6833a981d08d162b6d2f6767c091c898d42122ae",
+      "response_bytes": 667,
+      "estimated_standard_cost_usd": "0.00073790"
+    },
+    {
+      "call_id": "8474cad3014b4d20ba0eaa6c54ae64ae",
+      "http_status": 200,
+      "model": "gemini-3.5-flash-lite",
+      "finish_reasons": [
+        "stop"
+      ],
+      "usage": {
+        "completion_tokens": 247,
+        "prompt_tokens": 3161,
+        "total_tokens": 4786
+      },
+      "response_SHA": "9e681119eed7ff70704a2aed317a24607c4720e4146d56f3fd0e1d75272f9a0e",
+      "response_bytes": 6619,
+      "estimated_standard_cost_usd": "0.00501080"
+    }
+  ],
+  "tool_calls": [
+    "GetOrder",
+    "GetPixEvents",
+    "GetPayerHistory",
+    "GetEvidence",
+    "GetStorePolicy"
+  ],
+  "tool_outputs_equal_sealed_record": true,
+  "local_RAG_retrieval": {
+    "method": "AI Hub RAG + IRIS Vector Search",
+    "embedding_model": "AllMiniLML6V2",
+    "embedding_location": "local",
+    "policy_SHA": "9829ede8f50964d16951d3c89ef9a302367ddb72e9b25b590949eb65c45dc6a8",
+    "passages": [
+      {
+        "chunk_id": "5e2f07ee19269f805911e34e0c381e5a6e5afe2bbc80b4b0390d9eed6519fa47",
+        "section": "allowed_actions",
+        "sha256": "11327b4d2c1022a5585a771c7e3406ed8196e712e6de931a9935c165ed63f54f"
+      },
+      {
+        "chunk_id": "0c13fa28655f6fffaa13d4ea61c519017dfcce689d14067bad637e79e08e8111",
+        "section": "limits",
+        "sha256": "afae642b46d5434c489f1e557962f046d1146a7ace4b18871f91459f47ffa42a"
+      },
+      {
+        "chunk_id": "d1e91d171bac7ae6dc13a94d7720b84217e8bb0e85e540977f1bf713acdef7a3",
+        "section": "forbidden",
+        "sha256": "290e91e9857ec7b228525d1a940792ee9550697e9c7680a7dfb5ed8a433bb8ec"
+      }
+    ]
+  },
+  "cited_chunks_in_intact_seal": [
+    "5e2f07ee19269f805911e34e0c381e5a6e5afe2bbc80b4b0390d9eed6519fa47"
+  ],
+  "proposal_valid": true,
+  "action": "escalate_to_human",
+  "requires_human": true,
+  "case_status": "awaiting_human",
+  "commitment": "0d8dc54d97ae26f6fd2b89037c6432b097cde6f201cf139cb300b7fb1e5bb8ea",
+  "seal_verification": "intact/local_match_not_anchored",
+  "on_chain_verified": false,
+  "permit": false,
+  "receipt": false,
+  "financial_effect": false,
+  "native_usage": {
+    "prompt_tokens": 6391,
+    "completion_tokens": 511,
+    "duration_ms": 37284,
+    "cost_micro_usd": 3194,
+    "tool_calls": 5
+  },
+  "usage_reconciliation": {
+    "prompt_total": 6391,
+    "visible_completion_total": 511,
+    "conservative_billable_output_bound_from_total_minus_prompt": 2000,
+    "nonvisible_output_delta": 1489,
+    "native_cost_micro_usd_basis": "floor(.30*prompt+2.50*visible completion); stored SDK metadata estimate",
+    "gateway_new_estimate_usd": "0.00691730",
+    "gateway_cost_basis": "same rates; output=max(visible completion,total-prompt) includes nonvisible output conservatively",
+    "billing_receipt": false
+  },
+  "trace": {
+    "source": "persisted Ens.MessageHeader read-only export plus pbp.Data.ToolCall/sealed record",
+    "headers": [
+      {
+        "id": "1566",
+        "session_id": 1566,
+        "source": "pbp.Demo.Intake",
+        "target": "pbp.Demo.Process",
+        "body_class": "pbp.Msg.CaseRequest",
+        "body_id": "1560"
+      },
+      {
+        "id": "1567",
+        "session_id": 1566,
+        "source": "pbp.Demo.Process",
+        "target": "pbp.Demo.Operation",
+        "body_class": "pbp.Msg.DecisionRequest",
+        "body_id": "1561"
+      },
+      {
+        "id": "1568",
+        "session_id": 1566,
+        "source": "pbp.Demo.Operation",
+        "target": "pbp.Demo.Process",
+        "body_class": "pbp.Msg.DecisionResponse",
+        "body_id": "1562"
+      },
+      {
+        "id": "1569",
+        "session_id": 1566,
+        "source": "pbp.Demo.Process",
+        "target": "pbp.Operation.Witness",
+        "body_class": "pbp.Msg.SealRequest",
+        "body_id": "1563"
+      },
+      {
+        "id": "1570",
+        "session_id": 1566,
+        "source": "pbp.Operation.Witness",
+        "target": "pbp.Demo.Process",
+        "body_class": "pbp.Msg.SealResponse",
+        "body_id": "1564"
+      },
+      {
+        "id": "1571",
+        "session_id": 1566,
+        "source": "pbp.Demo.Process",
+        "target": "pbp.Workflow",
+        "body_class": "EnsLib.Workflow.TaskRequest",
+        "body_id": "1565"
+      }
+    ],
+    "native_VisualTrace_UI_screenshot_captured": false,
+    "trace_sql_harness_failure_retained": "First read used wrong SQL table Ens_MessageHeader; corrected read-only to Ens.MessageHeader. No inference/compile/migration repeated."
+  },
+  "budget_after": {
+    "SHA": "785b3cd9b3378d1e44a6409f56246f75c343eae47a9a0c155d85e1e4b22e5ec7",
+    "cap": "5.00",
+    "accounted_usd": "2.23819705",
+    "headroom_usd": "2.76180295",
+    "forwarded": 214,
+    "holds": 6,
+    "all_prior_holds_and_calls_preserved": true,
+    "new_uncertain_holds": 0,
+    "billing_receipt": false
+  },
+  "provider_native_after": "OFF, no active/inflight; public viewer remains recorded",
+  "package_text_LinkedIn": "Not yet reconciled/published for this success; beta3/r6 historical intact",
+  "not_proven": [
+    "General quality gain over rules or other models",
+    "Fresh public-registry IPM bootstrap",
+    "Current unrestricted public inference availability",
+    "An awarded bonus or win probability"
+  ],
+  "artifact_hashes": {
+    "qualification35lite-replay.private.json": "b76bea2a034820a951490e4db3f41d4c54d947cc8c889f19c0ae362adec9541a",
+    "qualification35lite-native-document-final.private.json": "777ee4e061a66255e09e49ebda7d3e5ed5d7819d821062546d9bd5ac42599bd5",
+    "qualification35lite-trace-headers.private.json": "57a5f4215235fcbf1c7e3d9cc603192fd27df518d1d69e86ed4018bd9792bd58"
+  }
+}

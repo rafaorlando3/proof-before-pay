@@ -1,105 +1,92 @@
-# Optional live demo, staged admission layer
+# Optional bounded LIVE demo
 
-The optional queue, budget, native worker and viewer integration is staged,
-disabled by default and not yet deployed as an end-to-end LIVE demo. The published
-viewer still shows recorded decisions from the real IRIS backend. Passing the
-local tests and compiling the native hooks does not establish a live-demo bonus.
+The dedicated route produced its first valid cited LIVE proposal on the VPS on
+5 November 2026. [Session1566 evidence](../docs/validation/live-gemini35lite-1566-20261105.json)
+records three normal HTTP200 protocol turns, five observed tools, an integrity-checked
+local policy passage cited inside the decision seal, native message headers and
+zero financial effect. This one case proves neither general model quality nor a
+bonus award. Fresh admission is OFF during final package and publication review;
+the authenticated viewer retains recorded examples without making a model call.
 
-The admission layer allows one queued/running decision, at least ten seconds
-between actual worker starts, and at most five admitted decisions per Pacific
-calendar day. Failed jobs consume admission. Request identifiers are idempotent
-and select only operator-configured scenario names, never user prompts. The
-worker result must identify that request's `public-live:<request_id>` case and a
-decision commitment plus native session id. Arbitrary response fields are not
-stored or exposed by the queue projection.
-Request identifiers contain 16 to 48 ASCII letters, digits, underscores or
-hyphens, keeping the prefixed case within the native 64-character CaseId limit.
-Product errors, status and confirmations must remain in the page; do not add
-native JavaScript alert/confirm/prompt calls or an HTTP authentication challenge.
+## Existing admission and accounting controls
 
-State lives in a private operator directory outside Git. A process-shared lock,
-atomic replacement and file/directory fsync protect admission across concurrent
-requests and restarts. Invalid or unreadable state fails closed without resetting
-counts. A worker interrupted while running remains in flight and is not replayed
-automatically; an operator must reconcile its native case and cost reservations.
-These controls do not protect against a privileged operator rewriting state.
+- Only the two fixed public synthetic fixtures are admitted. Case/order/payment
+  identifiers change; public fixture contents and timestamps stay pinned by hash.
+  No arbitrary prompts or customer data can be submitted through the viewer.
+- One queued/running decision; at least ten seconds between actual worker starts;
+  five queue admissions and fifteen provider HTTP requests per Pacific calendar
+  day. Failed jobs consume admission. Each case allows at most three normal
+  tool/decision protocol requests. JSON repair and automatic provider retry are
+  disabled for the dedicated demo. The original private agent retains its own
+  independently documented behavior.
+- The fixed reviewed model is `gemini-3.5-flash-lite`, medium reasoning, default and
+  upper output bound4096; a smaller explicit caller bound is preserved. Four exact
+  response IDs are allowlisted. The provider project, key and compatible transport
+  were retained. Model metadata GET is not inference or a capacity guarantee.
+- Rafael expressly approved the cumulative US$5 ceiling on4November. The existing
+  ledger/lock, earlier costs, six uncertain holds, quotas and history remain intact.
+  Nothing was reset or released to fund the new case. Each HTTP request reserves
+  before sending; the maximum reservation remains US$0.384064, based on the
+  existing conservative65536 theoretical-output allowance, not merely4096.
+- Valid matching-model usage must be archived before a provisional estimate is
+  settled. Output accounting conservatively includes `total_tokens-prompt_tokens`
+  where this exceeds visible completion tokens. Native SDK visible-token estimates
+  and gateway bounds are reported separately. Neither is a billing receipt.
+- A503/429, uncertain response, length/empty output or invalid proposal stops the
+  attempt; the phase is disabled on transport/shape failure. An uncertain reserve
+  remains held. Pacing before a first send is not a retry. The55second bridge
+  deadline includes pacing; the viewer waits at most240seconds. The consulted
+  native SDK configuration exposed no timeout setting.
+- Process locks, atomic replacement and fsync protect private state. An interrupted
+  worker remains uncertain and is reconciled against its original case; it is not
+  resubmitted under a new token. These controls do not protect against a privileged
+  operator rewriting state or calls made elsewhere with the same provider project.
 
-## Remaining integration gates
+## Native route and operator sequence
 
-1. `live_native.py` pins public fixtures0005/0006 by content hash, changes only
-   case/order/payment identifiers and retains their original synthetic data and
-   timestamps. An exclusive durable intent precedes its single native intake.
-   The worker never calls a reviewer/approval endpoint. It requires a matching
-   LIVE model decision, intact decision seal, actual native session, and no
-   money flag, permit or receipt. The service also requires a settled observed
-   provider request; a fabricated or recorded result cannot establish completion.
-2. `live_budget.py` and `live_provider.py` now implement the separate per-HTTP
-   admission and private transport. The integration is deployed but **paused after the first real provider timeout**, with its reservation retained. The subsequent US$2 cap authorization does not itself enable admission. They
-   require an explicitly approved public phase in the existing `budget.json`,
-   use its existing `budget.lock`, use the explicitly approved US$2 cumulative cap
-   (Rafael, 3 November 2026; recorded approval reference required), and preserve
-   prior costs, holds and historical phases. There is no new/reset budget.
-   Admission reserves before sending, allows three HTTP requests per case and
-   fifteen per Pacific day, and enforces fifteen seconds between starts. The
-   only upstream is Google's compatible Gemini endpoint; redirects, alternate
-   models, remote tools and unbounded input/output are refused. A successful
-   response needs an archived matching-model usage report before provisional
-   estimate settlement. Uncertain responses retain the reservation and disable
-   the public phase; there is no provider retry. A pre-admission pacing wait is
-   separate from a retry. Five queue admissions alone are not a cost control.
-   The free-tier project and its quota were checked on 3 November; preserve that binding when resuming.
-   These are limits on this bridge, not a guarantee about calls made elsewhere
-   using the same provider project. The real key is read from an operator-only
-   credential file; it is absent from native IRIS, requests, logs and public code.
-3. `pbp.Demo.*` defines a separate native intake/process/operation and a provider
-   with a non-secret local placeholder. Only enabled `public-live:` cases use
-   this route; the original process selection remains unchanged. Staging and
-   enabling require the existing operator permission; neither happens during
-   installation. The operator's existing build154 instance compiled the seven
-   changed/new classes; the profile remained absent/OFF and the retained recorded
-   case's receipt remained intact. This was not a fresh install or a LIVE run.
-   The profile contains no provider key and exposes only non-secret readiness
-   metadata. Check capacity before deployment; preserve all historical volumes
-   and services belonging to another project.
-4. `live_service.py`, `live_entry.py` and the optional `live_panel.html` connect
-   authenticated, same-origin fixed-scenario admission/status to the worker.
-   Run buttons and confirmations are in-page; fallback explicitly says recorded.
-   A completed case is admitted to the viewer only with its matching live mode
-   and commitment; the account cannot approve, intake arbitrary data or access
-   unrelated cases. Existing one-hour viewer sessions expire independently;
-   retained evidence and cost accounting are never reset to refresh a demo.
-5. Test admission through the actual browser, worker, provider bridge and native
-   production, including exhausted quota and unavailable upstream. Publish a
-   concrete deployed version and evidence before describing the demo as LIVE.
+`pbp.Demo.Intake` → `pbp.Demo.Process` → `pbp.Demo.Operation` uses the native AI Hub
+adapter and a private budget bridge. Its local placeholder is not a provider key.
+Only an explicitly enabled `public-live:` profile can use this route. A normal
+installation starts no Production and enables neither LIVE nor RAG. Autonomous
+financial effects remain disabled; the viewer cannot approve a payment or grant
+itself permission. Status, errors and confirmations stay inline.
 
-## Local verification
+A changed model/source requires exact peer review, passing CI, fresh private
+backups, an OFF native profile and idle ledger/queue, compilation of Runtime and
+both dependent Demo classes, explicit locked native/ledger migrations and external
+file/method checks. Preserve all existing holds and protected history; append only
+the reviewed migration records. Pin both bridge and viewer sources, start only the
+own Production/services, verify read-only health and recorded fallback, then admit
+only the explicitly reviewed new qualification. Do not rerun Stage, clear alerts,
+reset counters, replay uncertain cases or restart the whole instance as a shortcut.
 
-`python3 -m unittest discover -s demo_gateway -p test_live_queue.py -v`
-
-Thirteen tests cover the native case identifier boundary, concurrent threads and processes, one worker claim, restart
-and idempotency, the Pacific day boundary, delayed worker starts, failed jobs,
-in-flight crash preservation, state corruption, symlinks, unsafe configuration,
-wrong-case replies and exclusion of arbitrary runner fields. An optimized-Python
-run also checks that validation does not depend on removable `assert` statements.
-No provider request or native workflow is performed by these tests.
-
-The per-HTTP budget/transport tests use a temporary synthetic ledger and an
-injected provider, including an actual local HTTP server. They cover shared
-process admission, archived estimates, preservation of unrelated history and
-old uncertain holds, crash/restart, quota/day boundaries, denied redirects,
-secret echoes, wrong-model/missing-usage responses, scoped peers/routes and
-disabled or corrupt state. They never open the operator's real ledger or call
-Google. Passing these tests does not establish the native end-to-end LIVE path.
+Runtime config metadata pins a revision but does not attest the loaded source by
+itself. `GET /pbp/api/health` exposes the non-secret `public_live_demo` object.
+A recreated container must build the current sources; COW persistence qualifies
+only the existing container. Preserve vendor images privately and other projects'
+services and volumes.
 
 The explicit entry is `python3 -I -B demo_gateway/live_entry.py --viewer-config
 /absolute/private/viewer.json --live-config /absolute/private/live.json`. The
-operator-only live configuration must contain exactly `enabled` (Boolean),
-`budget_directory`, `queue_directory`, `native_attempt_directory`,
-`fixtures_directory`, `native_source_revision` (verified40-character SHA) and
-`native_relay` (the existing loopback HTTP relay). Enabling requires the existing
-budget phase and real native readiness, not merely a configuration flag.
+private LIVE configuration contains exactly `enabled`, `budget_directory`,
+`queue_directory`, `native_attempt_directory`, `fixtures_directory`,
+`native_source_revision` and `native_relay`. A configuration flag alone cannot
+establish native readiness or paid-call permission. Existing one-hour viewer
+sessions expire independently; accounting is never reset to refresh access.
 
-`GET /pbp/api/health.public_live_demo` is metadata, not an HTTP path: the health
-JSON's `public_live_demo` object must identify the pinned native source revision,
-Gemini model, `public-live:` prefix, `private_budget_bridge` transport and disabled
-autonomous effects. No provider key or private bridge URL is returned there.
+## Evidence and limits
+
+Session1566 ended with `escalate_to_human`, a valid proposal and an intact local
+seal, without permit/receipt/effect. Its five persisted tool outputs match the
+sealed record, and the cited chunk matches one of three returned policy passages.
+The archived HTTP response usage sums to6391prompt/511visible completion tokens;
+conservative output accounting uses2000tokens including nonvisible output. New
+provisional estimate: US$0.00691730. Six earlier uncertain holds remain preserved.
+The native SDK stored US$0.003194 from visible-token metadata; that separate
+estimate excludes the additional output bound and is not billing.
+
+Offline tests use isolated synthetic state and injected/fake providers. They are
+not fresh native generations. Earlier503/truncation failures remain historical
+failures, and the old video/recorded Visual Trace are not relabelled as this run.
+Public admission must remain bounded, explicitly enabled and reconciled with the
+current release; this document does not silently enable it.

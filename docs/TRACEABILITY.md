@@ -8,7 +8,7 @@ Proof Before Pay addresses [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-
 - A live proposal is a queued `pbp.Msg.DecisionRequest` to `pbp.Operation.Agent`, which uses the native `EnsLib.AI.Agent.OutboundAdapter` and `%AI.Agent` session.
 - `pbp.Msg.DecisionResponse` carries provider/model, mode, prompt/completion tokens, duration, estimated micro-USD and actual tool outputs. `pbp.Process.Decide` persists this response and passes its guarded decision to Witness before review or effect.
 - The five tool calls retain arguments and returned observations, constrained to the current case by authorization/audit policies. Missing evidence is sealed separately. The case API and time-machine view retain the production session id.
-- The agent source permits one corrective chat after an invalid decision reply. This is an application retry limit, not a claim that a retry occurred in every historical run. Requested temperature and effective transport limitations are documented in the article.
+- The original private agent permits one corrective chat after an invalid reply. The dedicated Demo operation overrides this to zero; session1566 used only normal tool/decision protocol turns, without JSON repair or retry.
 
 The [historical live integration report](validation/gemini-direct-smoke.json) records a real native Gemini decision: 2,557 prompt and 340 completion tokens, five tools, 4,995ms and a tariff estimate of US$0.00319275. This was a one-case integration smoke, not a model comparison or a new live demo. The [recorded video example](validation/native-recorded-demo42.json) made zero model calls; zero tokens in replay do not represent free live inference.
 
@@ -32,7 +32,7 @@ IRIS screen, not an application-drawn imitation.
 This screenshot demonstrates the recorded workflow, including its two seal steps
 and authenticated Workflow chronology. It does not show a fresh live AI Hub call.
 The separate historical live integration report above contains the model/tool and
-usage evidence; a fresh LIVE-demo trace remains part of the staged integration.
+usage evidence. The separate session1566 evidence below now provides a fresh LIVE native-header trace; it is not a new Management Portal screenshot.
 No bonus award is assumed. The operator used a private local tunnel and a temporary
 read-only trace role; its assignment and header SELECT privilege were removed after
 capture, and the original roles were verified restored. Judges are not given the
@@ -42,3 +42,36 @@ configured admission.
 ## Relation to Langfuse
 
 Langfuse provides specialized cross-application LLM observability and evaluation. This application uses the already-native IRIS message session to correlate a proposal with read-only observations, Workflow review and the synthetic effect. It does not implement Langfuse's full analytics/evaluation surface, claim to replace it, or show a measured comparative advantage. Local commitments detect changes to record copies; privileged database rewrites and independent notarization remain outside the current protection.
+
+## First valid cited LIVE session1566, 5 November
+
+[The qualification record](validation/live-gemini35lite-1566-20261105.json) and
+[read-only persisted native headers](validation/live-session1566-native-headers.json)
+identify a new VPS execution using Gemini3.5Flash-Lite. The five observed tool
+outputs equal the intact sealed record. GetStorePolicy used local FastEmbed,
+%AI.RAG and IRIS Vector Search, returning three verified policy passages; the
+valid proposal cites an actual returned chunk. Three normal HTTP200 turns ended
+with complete JSON. No retry, JSON repair, permit, receipt or effect occurred.
+
+The persisted session routes were:
+
+```mermaid
+sequenceDiagram
+    participant I as Demo.Intake
+    participant P as Demo.Process
+    participant A as Demo.Operation
+    participant W as Witness
+    participant H as Workflow
+    I->>P: 1566 CaseRequest
+    P->>A: 1567 DecisionRequest
+    A-->>P: 1568 DecisionResponse
+    P->>W: 1569 SealRequest
+    W-->>P: 1570 SealResponse
+    P->>H: 1571 TaskRequest
+```
+
+This diagram transcribes the stored native headers; it is not an IRIS Visual Trace
+UI screenshot. The case waits for human review. The linked record separates native
+SDK visible-token estimates from the gateway's conservative output accounting.
+Retained viewing/export makes no new model call. No quality ranking, full Langfuse
+replacement, independent notarization or bonus award is inferred.

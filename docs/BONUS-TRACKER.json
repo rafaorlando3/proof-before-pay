@@ -1,6 +1,6 @@
 {
   "schema": "pbp.contest-bonus-tracker/1",
-  "checked_at_utc": "2026-11-04T02:07:09.488505+00:00",
+  "checked_at_utc": "2026-11-05T04:29:08.277363+00:00",
   "contest": 49,
   "current_full_bonus_table_located": true,
   "no_points_awarded_to_project_verified": true,
@@ -10,7 +10,7 @@
   "arithmetic_sum_is_not_an_award_or_guaranteed_project_score": true,
   "official_bonus_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
   "official_bonus_page_published_at": "2026-10-26T23:14:44-04:00",
-  "official_page_verified_via": "Official bonus page and DPI-I-689 visible portal checked03Nov; publication confirmations recorded separately.",
+  "official_page_verified_via": "Official announcement/bonus page checked via integrated browser05Nov; no deadline or bonus-cap changes.",
   "official_page_snapshot_sha256": null,
   "official_sources": [
     "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
@@ -92,14 +92,15 @@
       "item": "IRIS Vector Search",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "native_retrieval_observed_in_live_tool_call_valid_cited_decision_pending",
-      "note": "AI Hub %AI.RAG, local FastEmbed and IRIS Vector Search policy KB. Native guard and passage integrity qualified. Session1552 actually retrieved three verified passages through GetStorePolicy among five tool calls, but the generated decision was truncated and refused. Valid cited LIVE decision and measured quality gain remain unproved; no awarded bonus.",
+      "delivery_status": "valid_cited_live_RAG_use_observed_not_awarded",
+      "note": "Session1566 on VPS used five real tools; GetStorePolicy returned three integrity-verified local %AI.RAG/FastEmbed/IRISVectorSearch passages. A real chunk was cited in the valid sealed human-review proposal. No measured quality gain or awarded points.",
       "evidence": [
         "cls/pbp/RAG/Policy.cls",
         "cls/pbp/Tools.cls",
         "python/pbp_guard/decision.py",
         "docs/validation/policy-rag-native-20261103.json",
-        "docs/validation/live-output4096-20261105.json"
+        "docs/validation/live-output4096-20261105.json",
+        "docs/validation/live-gemini35lite-1566-20261105.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -122,7 +123,7 @@
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
       "delivery_status": "public_registry_package_and_native_install_verified_not_awarded",
-      "note": "Public beta.2 native registry network-install history retained. Beta.3 native source/package/archive delta passed:47resources/7imports/34installed assets and10 changed Operation methods. Public beta.3 artifact HTTP200,292sourcefiles equalGit953d96d; exact host-downloaded archive installed natively offline on same isolated initialized VPS test copy with blank keys/defaultOFF. Not a native registry network fetch or fresh bootstrap. Contest listed; no points awarded.",
+      "note": "Public beta.2 native registry network-install history retained. Beta.3 native source/package/archive delta passed:47resources/7imports/34installed assets and10 changed Operation methods. Public beta.3 artifact HTTP200,292sourcefiles equalGit953d96d; exact host-downloaded archive installed natively offline on same isolated initialized VPS test copy with blank keys/defaultOFF. Not a native registry network fetch or fresh bootstrap. Contest listed; no points awarded. Beta.4 native source/package/archive delta qualified47classes/7imports/34assets and15Runtime/dependent method bodies; model3.5Lite/defaultOFF. Public beta.4 verification remains separate.",
       "evidence": [
         "module.xml",
         "IPM-OPERATOR.txt",
@@ -131,7 +132,8 @@
         "docs/validation/public-IPM-20261103.json",
         "docs/validation/IPM-public-beta2-20261103.json",
         "docs/validation/IPM-beta3-native-20261105.json",
-        "docs/validation/IPM-beta3-public-artifact-20261105.json"
+        "docs/validation/IPM-beta3-public-artifact-20261105.json",
+        "docs/validation/IPM-beta4-native-20261105.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -139,13 +141,14 @@
       "item": "Online demo",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "recorded_fallback_output4096_deployed_new_case_provider503_no_valid_LIVE",
-      "note": "Session1552 observed three HTTP200 responses, five real tools and three policy passages, but its truncated JSON was refused. Dedicated demo JSON repair disabled and output default/upper bound4096 deployed after exact review. New session1559 stopped at first provider503 before content; it did not exercise the truncation fix. Six uncertain holds retained under explicit cap5. No valid cited LIVE generation, billing receipt or awarded bonus.",
+      "delivery_status": "first_valid_cited_live1566_observed_fresh_admission_paused_not_awarded",
+      "note": "First valid cited LIVE qualification on VPS:3 normal HTTP200/toolcalls+JSON stop;5tools;policy citation in intact seal;native session1566 headers;0permit/receipt/effect. Provider/nativeOFF and viewerrecorded during final release reconciliation. Six old holds preserved; no new uncertain hold; no billing receipt or awarded bonus.",
       "evidence": [
         "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
         "docs/validation/live-integration-attempt-20261103.json",
         "docs/validation/live-gemini36-cap5-20261104.json",
-        "docs/validation/live-output4096-20261105.json"
+        "docs/validation/live-output4096-20261105.json",
+        "docs/validation/live-gemini35lite-1566-20261105.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -153,13 +156,14 @@
       "item": "Community Opportunity idea",
       "points_cap": 4,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "native_recorded_VisualTrace_capture_published_live_trace_pending_not_awarded",
-      "note": "DPI-I-689 linked on public OEX. Fresh03Nov native capture of retained recorded session1494 shows11 messages. Historical live integration is separate; not a fresh LIVE trace or awarded points.",
+      "delivery_status": "live1566_native_headers_and_sealed_tools_captured_not_awarded",
+      "note": "DPI-I-689 linked on public OEX. LIVE1566 persisted native headers and sealed tool observations captured read-only. Recorded1494 native Visual Trace screenshot remains separately historical; no new LIVE Visual Trace UI screenshot claimed.",
       "evidence": [
         "https://ideas.intersystems.com/ideas/DPI-I-689",
         "docs/TRACEABILITY.md",
         "docs/validation/native-VisualTrace-20261103.json",
-        "docs/screens/native-visual-trace-recorded-1494.jpg"
+        "docs/screens/native-visual-trace-recorded-1494.jpg",
+        "docs/validation/live-session1566-native-headers.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -248,5 +252,5 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-05T00:30:39.128263+00:00"
+  "delivery_evidence_updated_at_utc": "2026-11-05T04:29:08.277363+00:00"
 }

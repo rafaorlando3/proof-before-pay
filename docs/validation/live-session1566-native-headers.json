@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1566",
+    "session_id": 1566,
+    "source": "pbp.Demo.Intake",
+    "target": "pbp.Demo.Process",
+    "body_class": "pbp.Msg.CaseRequest",
+    "body_id": "1560"
+  },
+  {
+    "id": "1567",
+    "session_id": 1566,
+    "source": "pbp.Demo.Process",
+    "target": "pbp.Demo.Operation",
+    "body_class": "pbp.Msg.DecisionRequest",
+    "body_id": "1561"
+  },
+  {
+    "id": "1568",
+    "session_id": 1566,
+    "source": "pbp.Demo.Operation",
+    "target": "pbp.Demo.Process",
+    "body_class": "pbp.Msg.DecisionResponse",
+    "body_id": "1562"
+  },
+  {
+    "id": "1569",
+    "session_id": 1566,
+    "source": "pbp.Demo.Process",
+    "target": "pbp.Operation.Witness",
+    "body_class": "pbp.Msg.SealRequest",
+    "body_id": "1563"
+  },
+  {
+    "id": "1570",
+    "session_id": 1566,
+    "source": "pbp.Operation.Witness",
+    "target": "pbp.Demo.Process",
+    "body_class": "pbp.Msg.SealResponse",
+    "body_id": "1564"
+  },
+  {
+    "id": "1571",
+    "session_id": 1566,
+    "source": "pbp.Demo.Process",
+    "target": "pbp.Workflow",
+    "body_class": "EnsLib.Workflow.TaskRequest",
+    "body_id": "1565"
+  }
+]
