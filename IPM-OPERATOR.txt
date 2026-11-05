@@ -43,10 +43,13 @@ INSTALL
    set sc=##class(%IPM.Main).Shell("install proof-before-pay -v")
    write $system.Status.GetErrorText(sc),!
 
-   The public prerelease currently tested is0.1.0-beta.1. Native install status,
-   38 resources, six Embedded Python imports and stopped Production were checked
+   The public prerelease tested on03November is0.1.0-beta.2. Native install status,
+   47 resources, seven Embedded Python imports and stopped Production were checked
    in an isolated copy of an initialized IPM lab; no old instance was changed.
-   See docs/validation/public-IPM-20261103.json.
+   See docs/validation/IPM-public-beta2-20261103.json.
+   The beta.3 candidate adds explicit source restoration/rebinding, Gemini3.6
+   support and the dedicated demo no-repair guard. Public beta.3 registry
+   installation has not yet been qualified; do not infer it from the beta.2 proof.
 
    Alternatively, clone the source and use an interoperability-enabled namespace:
 
@@ -61,7 +64,7 @@ INSTALL
    It did not bypass Python dependency installation. The separate03November
    public-registry installation fetched rfc8785 online and imported it natively.
 5. Configure calls pbp.Setup.Install(managerDirectory_"proof-before-pay",0).
-   The0.1.0-beta.2 source declares47class resources and7Python packages.
+   The0.1.0-beta.3 source declares47class resources and7Python packages.
    Verify that Production has not started, every declared class exists,
    and all seven packages resolve from managerDirectory_"python", and policy,
    replay fixtures and UI files exist in the per-app manager directory.

@@ -1,0 +1,63 @@
+{
+  "observed_utc": "2026-11-05T00:15:54Z",
+  "runtime_source_revision": "fee1a26fc020fe03b6d5179b49f2c3bbaf3978e5",
+  "session1552": {
+    "HTTP200": 3,
+    "real_tool_calls": 5,
+    "retrieved_policy_passages": 3,
+    "decision_valid": false,
+    "refusal": "model_output_invalid:no_json_object",
+    "response_2_and_3_finish_reason": "length",
+    "output_bound": 2048,
+    "explicit_demo_JSON_repair_observed": true,
+    "seal_intact": true,
+    "permit": false,
+    "receipt": false,
+    "financial_effect": false
+  },
+  "correction": {
+    "review": "C1262 exact patch accepted",
+    "output_default_and_upper_bound": 4096,
+    "caller_smaller_explicit_bound_preserved": true,
+    "reasoning": "medium",
+    "dedicated_demo_JSON_repair_disabled": true,
+    "generic_private_agent_repair_default_preserved": true,
+    "truncated_or_empty_response_disables_case_before502": true,
+    "offline_tests_passed": 53,
+    "native_fake_invalid_JSON_one_HTTP_no_repair": true,
+    "actual_VPS_deployment_verified": true,
+    "CI": "https://github.com/rafaorlando3/proof-before-pay/actions/runs/41938886408"
+  },
+  "session1559": {
+    "one_new_4096_qualification": true,
+    "provider_HTTP": 1,
+    "HTTP_status": 503,
+    "provider_status": "UNAVAILABLE",
+    "tool_calls": 0,
+    "provider_usage_returned": false,
+    "automatic_retry": false,
+    "proposal_refused": true,
+    "seal_intact": true,
+    "permit": false,
+    "receipt": false,
+    "financial_effect": false,
+    "truncation_fix_exercised_on_real_generation": false
+  },
+  "accounting": {
+    "cap_usd": "5.00",
+    "accounted_estimate_and_retained_reservations_usd": "2.23127975",
+    "headroom_usd": "2.76872025",
+    "retained_uncertain_reservations": 6,
+    "billing_receipt": false,
+    "holds_released": false
+  },
+  "current": {
+    "provider_OFF": true,
+    "native_OFF": true,
+    "public_viewer": "recorded",
+    "valid_cited_LIVE_qualified": false,
+    "online_demo_bonus_claimed": false,
+    "quality_gain_measured": false,
+    "LinkedIn_published": false
+  }
+}

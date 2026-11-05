@@ -3,7 +3,7 @@
   <Document name="proof-before-pay.ZPM">
     <Module>
       <Name>proof-before-pay</Name>
-      <Version>0.1.0-beta.2</Version>
+      <Version>0.1.0-beta.3</Version>
       <Packaging>module</Packaging>
       <Description>Sealed AI decision evidence and authenticated review before synthetic duplicate refunds; AI Hub build154 lab only.</Description>
       <Author>
