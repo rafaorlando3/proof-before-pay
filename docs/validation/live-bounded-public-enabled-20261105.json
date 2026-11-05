@@ -1,0 +1,61 @@
+{
+  "at_utc": "2026-11-05T04:57:21.264626+00:00",
+  "review": "C1265 text/admission conditional acceptance; Rafael direct LIVE+LinkedIn cap5 authorization",
+  "state": "BOUNDED_PUBLIC_LIVE_ENABLED_GET_VERIFIED_NO_NEW_CASE",
+  "viewer_source": "bf380afb992674eaf4dffa829c7002ef89c874ba",
+  "viewer_CI": 41970467444,
+  "native_and_bridge_source": "802ffe0dfd5dc9f28c03f21ee09a0c2989138bf9",
+  "no_rebind_compile_or_IRIS_restart": true,
+  "no_operator_second_case": true,
+  "new_generation_executed_by_operator": false,
+  "budget_before_SHA": "785b3cd9b3378d1e44a6409f56246f75c343eae47a9a0c155d85e1e4b22e5ec7",
+  "queue_before_SHA": "4d6a6129783d17dbb3b68549357e06f3a46f3aaaf3d26fbaaa2785b3c41082db",
+  "retained_interruption": "Initial GET preceded viewer listen; GET-only reconciliation verified new copy and original OFF controls. No activation/compile/install/case repeated.",
+  "stage": "ON journal and SHA recorded; GET readiness available; no operator second case",
+  "native_enabled": true,
+  "provider_phase_enabled": true,
+  "viewer_config_enabled": true,
+  "public_status": {
+    "ok": true,
+    "mode": "live_available",
+    "available": true,
+    "reason": null,
+    "remaining_decisions_today": 1,
+    "scenarios": [
+      "amount_conflict",
+      "missing_evidence"
+    ],
+    "completed": [
+      {
+        "status": "complete",
+        "scenario": "amount_conflict",
+        "day": "2026-11-04",
+        "case_id": "public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe",
+        "commitment": "0d8dc54d97ae26f6fd2b89037c6432b097cde6f201cf139cb300b7fb1e5bb8ea",
+        "session_id": "1566"
+      }
+    ]
+  },
+  "native_profile": {
+    "enabled": true,
+    "model": "gemini-3.5-flash-lite",
+    "case_prefix": "public-live:",
+    "transport": "private_budget_bridge",
+    "autonomous_effects": false,
+    "source_revision": "802ffe0dfd5dc9f28c03f21ee09a0c2989138bf9"
+  },
+  "login_copy_GET_verified": true,
+  "budget_after_SHA": "e475c033ed65b4226936becea0d46a4cdb5f553e6c8eb54fa05d0d734e09e672",
+  "queue_byte_identical": true,
+  "all_other_ledger_bytes_reconstructed_equal": true,
+  "native_only_enabled_history_increment": 1,
+  "native_other_history_protected": true,
+  "holds": 6,
+  "forwarded": 214,
+  "accounted_usd": "2.23819705",
+  "cap_usd": "5.00",
+  "billing_receipt": false,
+  "automatic_OFF_scope": "Admission becomes unavailable/recorded after failed provider/invalid final proposal; ledger phase disabled or in-flight prevents admission. Native config flag is not automatically rewritten by the bridge.",
+  "automatic_OFF_evidence": "Existing exact gateway logic and retained79offline/C1262 guard qualification reused; no production error injected and no repeated generation/test. live_provider.py/live_service.py/live_budget.py byte-equal approved802 Python bundle.",
+  "operator_calls_after1566": 0
+}
