@@ -76,7 +76,7 @@ class LiveBudgetTests(unittest.TestCase):
         after = self.read()
         self.assertEqual(after["reserved"], self.state["reserved"])
         self.assertEqual(after["spent_usd"], self.state["spent_usd"])
-        self.assertEqual(Decimal(after["estimated_spent_usd"]), Decimal(".32075000"))
+        self.assertEqual(Decimal(after["estimated_spent_usd"]), Decimal(".32040000"))
         for key in ("unrelated_history", "benchmark_v7_phase"):
             self.assertEqual(after[key], self.state[key])
         self.assertEqual(after["calls"][0], self.state["calls"][0])
@@ -284,7 +284,7 @@ class LiveBudgetTests(unittest.TestCase):
         call, _ = self.budget.admit(self.body(), self.case)
         after = self.read()
         self.assertEqual(after["calls"], state["calls"])
-        self.assertEqual(after[PHASE]["model"], "gemini-3.6-flash")
+        self.assertEqual(after[PHASE]["model"], "gemini-3.5-flash-lite")
         for old, value in state["reserved"].items():
             self.assertEqual(after["reserved"][old], value)
         self.assertIn(call, after["reserved"])
@@ -445,8 +445,29 @@ class LiveBudgetTests(unittest.TestCase):
             self.assertEqual(self.read()["calls"][-1]["returned_model"], alias)
             self.assertEqual(self.read()["reserved"], self.state["reserved"])
 
+    def test_new_model_tariff_is_bounded_by_unchanged_full_reservation(self):
+        from live_budget import usage_estimate, reservation_for_bytes, MAX_REQUEST_BYTES
+        self.assertEqual(MODEL, "gemini-3.5-flash-lite")
+        self.assertEqual(usage_estimate({"prompt_tokens": 100000, "completion_tokens": 65536}), Decimal(".19384000"))
+        self.assertEqual(reservation_for_bytes(MAX_REQUEST_BYTES), Decimal(".384064"))
+        self.assertLess(usage_estimate({"prompt_tokens": 100000, "completion_tokens": 65536}), reservation_for_bytes(MAX_REQUEST_BYTES))
+
+    def test_prior_38_to_36_model_history_is_retained_by_36_to_35_migration(self):
+        self.legacy_disabled_fixture()
+        state = self.read()
+        prior = {"from_model": "gemini-3.8-flash", "to_model": LEGACY_MODEL, "opaque": {"preserved": True}}
+        state[PHASE]["model_migration_history"] = [prior]
+        self.path.write_text(json.dumps(state, separators=(",", ":")))
+        self.budget.migrate_disabled_model(**self.migration_args())
+        after = self.read()
+        self.assertEqual(after[PHASE]["model_migration_history"][0], prior)
+        self.assertEqual(after["calls"], state["calls"])
+        self.assertEqual(after["reserved"], state["reserved"])
+        self.assertFalse(after[PHASE]["enabled"])
+        self.assertIsNone(after[PHASE]["active_case"])
+
     def test_different_or_unreviewed_model_or_malformed_model_retains_own_hold(self):
-        for alias in (LEGACY_MODEL, "gemini-3.6-flash-unreviewed", "models/gemini-3.6-flash-future", {}, [], None):
+        for alias in (LEGACY_MODEL, "gemini-3.8-flash", "gemini-3.5-flash-lite-unreviewed", "models/gemini-3.5-flash-lite-future", {}, [], None):
             self.save(copy.deepcopy(self.state))
             call, _ = self.budget.admit(self.body(), self.case)
             data = {"model": alias, "usage": {"prompt_tokens": 500, "completion_tokens": 100}}

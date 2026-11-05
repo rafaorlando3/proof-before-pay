@@ -21,11 +21,11 @@ import stat
 import time
 import uuid
 
-MODEL = "gemini-3.6-flash"
-LEGACY_MODEL = "gemini-3.8-flash"
+MODEL = "gemini-3.5-flash-lite"
+LEGACY_MODEL = "gemini-3.6-flash"
 # Exact approved identities from the model metadata; never a prefix match.
-RESPONSE_MODEL_IDS = frozenset({MODEL, "models/gemini-3.6-flash",
-                               "gemini-3.6-flash-07-2026", "models/gemini-3.6-flash-07-2026"})
+RESPONSE_MODEL_IDS = frozenset({MODEL, "models/gemini-3.5-flash-lite",
+                               "gemini-3.5-flash-lite-07-2026", "models/gemini-3.5-flash-lite-07-2026"})
 PHASE = "public_live_demo"
 CASE_PATTERN = r"public-live:[A-Za-z0-9_-]{16,48}"
 MAX_REQUEST_BYTES = 40000
@@ -84,7 +84,7 @@ def usage_estimate(usage):
         output = max(output, completion + reasoning)
     if output > 65536:
         return None
-    return Decimal(prompt) * Decimal(".00000075") + Decimal(output) * Decimal(".00000375")
+    return Decimal(prompt) * Decimal(".00000030") + Decimal(output) * Decimal(".00000250")
 
 
 def prepare_request(body, case_id):
@@ -111,7 +111,7 @@ def prepare_request(body, case_id):
     cap = body.get("max_tokens", MAX_OUTPUT_TOKENS)
     require(type(cap) is int and 1 <= cap <= MAX_OUTPUT_TOKENS, "output_bound")
     forwarded = dict(body, max_tokens=cap, reasoning_effort="medium", stream=False)
-    # Google 3.6 ignores temperature; do not represent it as temperature-zero sampling.
+    # Google 3.5 Flash-Lite ignores temperature; do not represent it as temperature-zero sampling.
     forwarded.pop("temperature", None)
     raw = json.dumps(forwarded, allow_nan=False, separators=(",", ":")).encode()
     require(len(raw) <= MAX_REQUEST_BYTES and case_id.encode() in raw, "input_bound_or_case_scope")

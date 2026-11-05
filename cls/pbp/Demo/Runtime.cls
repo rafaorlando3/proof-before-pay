@@ -2,7 +2,7 @@
 /// Operator staging/enabling is explicit; normal installation does neither.
 Class pbp.Demo.Runtime Extends %RegisteredObject
 {
-Parameter MODEL = "gemini-3.6-flash";
+Parameter MODEL = "gemini-3.5-flash-lite";
 
 ClassMethod Config() As %DynamicObject
 {
@@ -231,7 +231,7 @@ ClassMethod MigrateDisabledModel(expectedRevision As %String, revision As %Strin
         If '$ISOBJECT(cfg) Throw ##class(%Exception.General).%New("demo_profile_missing")
         If cfg.schema'="pbp.public-live-native/1" Throw ##class(%Exception.General).%New("demo_profile_invalid")
         If cfg.enabled Throw ##class(%Exception.General).%New("disable_demo_before_model_migration")
-        If (cfg."source_revision"'=expectedRevision) || (cfg.model'="gemini-3.8-flash") Throw ##class(%Exception.General).%New("demo_expected_model_or_source_changed")
+        If (cfg."source_revision"'=expectedRevision) || (cfg.model'="gemini-3.6-flash") Throw ##class(%Exception.General).%New("demo_expected_model_or_source_changed")
         Set entry={"from_model":(cfg.model),"to_model":(..#MODEL),"from_source":(expectedRevision),"to_source":(revision),"approval_ref":(approval),"at":(##class(pbp.Util).NowISO())}
         TSTART
         Set owned=1,cfg.model=..#MODEL,cfg."source_revision"=revision,^pbp.demoRuntime("config")=cfg.%ToJSON()
