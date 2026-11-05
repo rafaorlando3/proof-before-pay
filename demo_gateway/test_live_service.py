@@ -30,7 +30,7 @@ class LiveServiceTests(unittest.TestCase):
 
     def fake_provider(self, body):
         self.requests.append(body)
-        return 200, json.dumps({"model": MODEL, "usage": {"prompt_tokens": 500, "completion_tokens": 100}}).encode()
+        return 200, json.dumps({"model": MODEL, "usage": {"prompt_tokens": 500, "completion_tokens": 100}, "choices": [{"message": {"content": "{}"}, "finish_reason": "stop"}]}).encode()
 
     def test_fixed_admission_budgeted_worker_and_read_only_completion(self):
         service = self.service()

@@ -19,7 +19,7 @@ import urllib.error
 import urllib.request
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from live_budget import BudgetDenied, LiveBudget, MODEL, require
+from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE, require
 
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 LOCAL_TOKEN = "pbp-public-live-local-placeholder-not-a-provider-key"
@@ -94,6 +94,25 @@ class PrivateProvider:
             return "response_not_JSON"
         return "transport_or_archive_error"
 
+    @staticmethod
+    def unusable_output_reason(data):
+        choices = data.get("choices")
+        if not isinstance(choices, list) or not choices:
+            return "provider_output_empty_no_retry"
+        for choice in choices:
+            if not isinstance(choice, dict):
+                return "provider_output_empty_no_retry"
+            if choice.get("finish_reason") == "length":
+                return "provider_output_truncated_no_retry"
+            message = choice.get("message")
+            if not isinstance(message, dict):
+                return "provider_output_empty_no_retry"
+            tools = message.get("tool_calls")
+            content = message.get("content")
+            if not (isinstance(tools, list) and tools) and not (isinstance(content, str) and content.strip()):
+                return "provider_output_empty_no_retry"
+        return None
+
     def complete(self, body):
         if not self.slot.acquire(blocking=False):
             return self.failure("one_live_HTTP_at_a_time", 429)
@@ -122,6 +141,16 @@ class PrivateProvider:
             accepted = self.budget.settle(call, status=status, data=data, archive=archive)
             if not accepted:
                 return self.failure("provider_evidence_or_usage_uncertain_reservation_retained", 502)
+            reason = self.unusable_output_reason(data)
+            if reason:
+                # Usage was valid and settled, but truncated/empty output must
+                # never reach the application's repair path. Disable before returning:
+                # even a native follow-up cannot forward another provider call.
+                with self.budget.transaction() as state:
+                    require(state[PHASE].get("active_case") == case_id, "armed_case_identity_changed")
+                    state[PHASE]["enabled"] = False
+                    state[PHASE]["stop_reason"] = reason
+                return self.failure(reason, 502)
             return 200, response
         except BudgetDenied as error:
             # All BudgetDenied reasons are local fixed constants, not provider text.

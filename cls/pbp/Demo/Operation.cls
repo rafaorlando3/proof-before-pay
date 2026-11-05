@@ -1,6 +1,9 @@
 /// Separate operation: original scoped LIVE implementation, explicit demo provenance.
 Class pbp.Demo.Operation Extends pbp.Operation.Agent
 {
+/// Public fixed-case qualification never resubmits an invalid answer for repair.
+Parameter ALLOWDECISIONREPAIR = 0;
+
 XData MessageMap
 {
 <MapItems>

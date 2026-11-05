@@ -51,6 +51,52 @@ class LiveProviderTests(unittest.TestCase):
         return 200, json.dumps({"model": MODEL, "usage": {"prompt_tokens": 500, "completion_tokens": 100},
                                "choices": [{"message": {"role": "assistant", "content": "synthetic test"}}]}).encode()
 
+    def test_length_stops_phase_before_any_SDK_followup_can_forward(self):
+        sent = []
+        def send(raw):
+            sent.append(raw)
+            status, body = self.response()
+            data = json.loads(body)
+            data["choices"][0]["finish_reason"] = "length"
+            data["choices"][0]["message"]["content"] = '{"partial":'
+            return status, json.dumps(data).encode()
+        provider = self.provider(send)
+        status, body = provider.complete(self.body())
+        self.assertEqual(status, 502)
+        self.assertIn(b"provider_output_truncated_no_retry", body)
+        after = self.read()
+        self.assertFalse(after[PHASE]["enabled"])
+        self.assertEqual(after["calls"][-1]["reservation_disposition"], "settled_provisional_estimate")
+        self.assertEqual(after["reserved"], self.state["reserved"])
+        self.assertEqual(provider.complete(self.body())[0], 503)
+        self.assertEqual(len(sent), 1)
+        self.assertEqual(self.read()["forwarded_calls"], after["forwarded_calls"])
+
+    def test_empty_output_stops_without_erasing_history_or_uncertain_holds(self):
+        for choices in ([], [{"message": {"content": "  "}, "finish_reason": "stop"}]):
+            self.save(self.state)
+            def send(raw):
+                status, body = self.response()
+                data = json.loads(body)
+                data["choices"] = choices
+                return status, json.dumps(data).encode()
+            status, body = self.provider(send).complete(self.body())
+            self.assertEqual(status, 502)
+            self.assertIn(b"provider_output_empty_no_retry", body)
+            after = self.read()
+            self.assertFalse(after[PHASE]["enabled"])
+            self.assertEqual(after["reserved"], self.state["reserved"])
+            self.assertEqual(after["calls"][0], self.state["calls"][0])
+
+    def test_tool_calls_with_null_content_are_not_empty_final_output(self):
+        def send(raw):
+            status, body = self.response()
+            data = json.loads(body)
+            data["choices"] = [{"message": {"content": None, "tool_calls": [{"id": "test-call", "type": "function", "function": {"name": "GetOrder", "arguments": "{}"}}]}, "finish_reason": "tool_calls"}]
+            return status, json.dumps(data).encode()
+        self.assertEqual(self.provider(send).complete(self.body())[0], 200)
+        self.assertTrue(self.read()[PHASE]["enabled"])
+
     def test_HTTP_admission_is_durable_before_send_and_archived_before_settlement(self):
         calls = []
         def send(raw):

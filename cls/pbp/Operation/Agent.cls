@@ -9,6 +9,9 @@ Class pbp.Operation.Agent Extends Ens.BusinessOperation
 
 Parameter ADAPTER = "EnsLib.AI.Agent.OutboundAdapter";
 
+/// Normal private-agent behavior; the fixed public demo overrides this to fail without repair.
+Parameter ALLOWDECISIONREPAIR = 1;
+
 Property Adapter As EnsLib.AI.Agent.OutboundAdapter;
 
 Parameter INVOCATION = "Queue";
@@ -86,7 +89,7 @@ Method Live(pRequest As pbp.Msg.DecisionRequest, pResponse As pbp.Msg.DecisionRe
     }
     Set text = ..ReplyText(llm)
     Set decision = ##class(pbp.Operation.Replay).ParseDecision(text, .reason)
-    If decision = "" {
+    If (decision = "") && ..#ALLOWDECISIONREPAIR {
         Do ##class(pbp.Util).Log("warn", "pbp.Operation.Agent.Live", "first reply invalid (" _ reason _ "), retrying once", caseId)
         Set sc = ..Adapter.SendChat("Your previous answer was not a valid decision (" _ reason _ "). Reply with ONLY the JSON object in the required shape, no prose.", .llm, session)
         Set text = $SELECT($$$ISOK(sc): ..ReplyText(llm), 1: "")

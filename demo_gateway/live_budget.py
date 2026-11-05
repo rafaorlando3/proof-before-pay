@@ -29,6 +29,7 @@ RESPONSE_MODEL_IDS = frozenset({MODEL, "models/gemini-3.6-flash",
 PHASE = "public_live_demo"
 CASE_PATTERN = r"public-live:[A-Za-z0-9_-]{16,48}"
 MAX_REQUEST_BYTES = 40000
+MAX_OUTPUT_TOKENS = 4096
 ACTIVE_CAP_USD = Decimal("5")
 CAP_APPROVAL_REF = "Rafael04Nov2026 explicit US$5 LIVE qualification"
 
@@ -107,8 +108,8 @@ def prepare_request(body, case_id):
         require(isinstance(name, str) and re.fullmatch(r"(?:pbp[._]Tools[._])?Get(?:Order|PixEvents|PayerHistory|Evidence|StorePolicy)", name), "unapproved_tool")
         require(name not in names, "duplicate_tool")
         names.add(name)
-    cap = body.get("max_tokens", 2048)
-    require(type(cap) is int and 1 <= cap <= 2048, "output_bound")
+    cap = body.get("max_tokens", MAX_OUTPUT_TOKENS)
+    require(type(cap) is int and 1 <= cap <= MAX_OUTPUT_TOKENS, "output_bound")
     forwarded = dict(body, max_tokens=cap, reasoning_effort="medium", stream=False)
     # Google 3.6 ignores temperature; do not represent it as temperature-zero sampling.
     forwarded.pop("temperature", None)

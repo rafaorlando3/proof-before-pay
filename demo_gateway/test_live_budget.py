@@ -10,7 +10,7 @@ import sys
 import tempfile
 import unittest
 
-from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE, CAP_APPROVAL_REF, LEGACY_MODEL, RESPONSE_MODEL_IDS
+from live_budget import BudgetDenied, LiveBudget, MODEL, PHASE, CAP_APPROVAL_REF, LEGACY_MODEL, RESPONSE_MODEL_IDS, prepare_request, MAX_OUTPUT_TOKENS
 
 
 class LiveBudgetTests(unittest.TestCase):
@@ -56,6 +56,17 @@ class LiveBudgetTests(unittest.TestCase):
                 "archive": {"call_id": call, "case_id": self.case, "sha256": "a" * 64, "http_status": 200}}
         args.update(overrides)
         return self.budget.settle(call, **args)
+
+    def test_explicit_output_bound_and_smaller_caller_bound(self):
+        raw, _ = prepare_request(self.body(), self.case)
+        self.assertEqual(json.loads(raw)["max_tokens"], 4096)
+        self.assertEqual(MAX_OUTPUT_TOKENS, 4096)
+        body = dict(self.body(), max_tokens=512)
+        raw, _ = prepare_request(body, self.case)
+        self.assertEqual(json.loads(raw)["max_tokens"], 512)
+        for value in (4097, 0, True):
+            with self.assertRaisesRegex(BudgetDenied, "output_bound"):
+                prepare_request(dict(self.body(), max_tokens=value), self.case)
 
     def test_estimate_changes_only_own_hold_and_preserves_all_history(self):
         call, raw = self.budget.admit(self.body(), self.case)
