@@ -1,5 +1,15 @@
 # Proof Before Pay: testing payment proposals inside InterSystems IRIS AI Hub
 
+## Update, 5 November 2026: first valid cited LIVE demo case
+
+A new controlled synthetic case on the VPS completed with Gemini 3.5 Flash-Lite (medium, output bound 4096): three normal HTTP 200 tool/decision turns, five actual tools and a valid human-review proposal. GetStorePolicy retrieved three integrity-checked local AI Hub RAG/FastEmbed/IRIS Vector Search passages. The proposal cites a returned chunk inside its intact decision seal. Native session 1566 retains six Interoperability message headers through Witness and Workflow. No retry, JSON repair, permit, receipt or financial effect occurred. This is one integration qualification, not a new benchmark, general quality advantage or awarded bonus.
+
+The native SDK reported 6391 prompt and 511 visible completion tokens. The private gateway conservatively accounted for 2000 output tokens using total-minus-prompt, producing an additional US$0.00691730 provisional estimate; the SDK's separate visible-token estimate is US$0.003194. Neither is a billing receipt. Earlier failures and uncertain holds remain preserved.
+
+The source and optional IPM beta.4 package now include the reviewed model profile. Native package and exact public-artifact evidence are linked in the [current README](https://github.com/rafaorlando3/proof-before-pay). These tests use an initialized isolated VPS copy, not a fresh vendor bootstrap. The video and recorded session 1494 Visual Trace screenshot keep their original historical scope; session 1566 has a separate native-header trace export. Fresh public requests use the explicitly enabled bounded route and remain subject to provider capacity, quotas and the preserved cost cap. Failed attempts disable further admission and leave recorded examples available; viewing a retained case does not call a model. [Session1566 evidence](https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/validation/live-gemini35lite-1566-20261105.json).
+
+---
+
 [Portuguese translation](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
 ## 1 November validation update, audited v7 result

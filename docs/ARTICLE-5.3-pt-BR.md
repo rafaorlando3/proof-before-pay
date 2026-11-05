@@ -1,5 +1,15 @@
 # Proof Before Pay: testando propostas de pagamento no InterSystems IRIS AI Hub
 
+## Atualização de 5 de novembro de 2026: primeiro caso LIVE válido com citação
+
+Um novo caso sintético controlado no VPS foi concluído com Gemini 3.5 Flash-Lite (medium, limite de saída 4096): três requisições HTTP 200 normais do protocolo de ferramentas e decisão, cinco ferramentas reais e uma proposta válida de revisão humana. GetStorePolicy recuperou três trechos íntegros com AI Hub RAG/FastEmbed/IRIS Vector Search local. A proposta cita um trecho retornado dentro do selo íntegro da decisão. A sessão nativa 1566 preserva seis mensagens de Interoperabilidade até Witness e Workflow. Não houve retry, reparo de JSON, permissão, recibo ou efeito financeiro. É uma qualificação de integração de um caso, sem novo benchmark, vantagem geral de qualidade ou bônus concedido.
+
+O SDK nativo informou 6391 tokens de entrada e 511 de saída visível. O gateway privado contabilizou conservadoramente 2000 tokens de saída pela diferença entre total e entrada, resultando em estimativa provisória adicional de US$0,00691730; a estimativa separada do SDK para saída visível é US$0,003194. Nenhuma é recibo de cobrança. As falhas anteriores e reservas incertas foram preservadas.
+
+A fonte e o pacote IPM opcional beta.4 incluem o perfil de modelo revisado. As provas nativas do pacote e do arquivo público estão no [README atual](https://github.com/rafaorlando3/proof-before-pay). Os testes usam uma cópia VPS isolada já inicializada, não um novo bootstrap do fornecedor. O vídeo e a captura Visual Trace da sessão gravada 1494 mantêm o escopo histórico; 1566 tem exportação separada dos cabeçalhos nativos. Novas consultas públicas usam a rota explicitamente habilitada, sujeita à capacidade do provedor, às cotas e ao teto de custo preservado. Uma tentativa com falha desativa novas admissões e mantém os exemplos retidos disponíveis; consultar um caso retido não chama um modelo. [Evidência da sessão 1566](https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/validation/live-gemini35lite-1566-20261105.json).
+
+---
+
 Versão em português do [artigo 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub), com o adendo v7 e as limitações dos resultados anteriores preservados. O projeto é mantido por Rafael Orlando Mendes, com apoio de assistentes de IA no desenvolvimento e na documentação.
 
 ## Atualização de 1º de novembro, resultado v7 auditado

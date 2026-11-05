@@ -1,0 +1,72 @@
+{
+  "at_utc": "2026-11-05T05:15:38.888796+00:00",
+  "state": "C1265_APPROVED_PUBLICATIONS_COMPLETE_READBACK_VERIFIED",
+  "review": "C1265",
+  "LinkedIn": {
+    "url": "https://www.linkedin.com/feed/update/urn:li:share:7523974927767760896/",
+    "author": "Rafael Orlando Mendes",
+    "audience": "Anyone, verified in composer before one publish click",
+    "single_publish_click": true,
+    "success_toast_observed": "Publicação efetuada",
+    "permalink_post_readback_verified": true,
+    "approved_text_sha256": "f85c785c7af8648f02b4ef71e593a8bc148b18a7415131d73c216bc41d100814",
+    "readback_scope": "Full post text and author read at permalink; LinkedIn rewrites outbound URLs to short links. OEX preview target displayed correct package.",
+    "screenshot": "LinkedIn-C1265-published-20261105.jpg",
+    "screenshot_sha256": "fcecfc4cfce8c060857f84736465cf0b253aab3e048e20f1444e3f2e19d4f7e8"
+  },
+  "DC": {
+    "EN": {
+      "node": 590712,
+      "url": "https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub",
+      "existing_article_updated_once": true,
+      "public_updated_confirmation_and_dated_heading_verified": true,
+      "approved_addendum_sha256": "a6b1110d66fea21764e7efb66e1416329d0923d1ed3f0655628575c9c6a944c0",
+      "old_article_backed_up_privately": true,
+      "historical_content_retained": true,
+      "editor_serialization_byte_equality_not_claimed": true,
+      "screenshot": "DC-EN-C1265-published-20261105.jpg",
+      "screenshot_sha256": "eac8863f5e1299d8a12d2a55c47e8150fb36271c3c29faf778f03b4b7d1c6eb3"
+    },
+    "PT": {
+      "node": 590715,
+      "url": "https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub",
+      "existing_article_updated_once": true,
+      "public_updated_confirmation_and_dated_heading_verified": true,
+      "approved_addendum_sha256": "b1b3a72db28e04869eb68edd6dd4d4413ff9875015bcb01fb28fd29e77cc4347",
+      "old_article_backed_up_privately": true,
+      "historical_content_retained": true,
+      "editor_serialization_byte_equality_not_claimed": true,
+      "screenshot": "DC-PT-C1265-public-readback-20261105.jpg",
+      "screenshot_sha256": "db2d76e735e1ffbf5693f77a409f7a114eb0b08da8fa15f2bdda3734acde6580"
+    }
+  },
+  "OEX": {
+    "url": "https://openexchange.intersystems.com/package/Proof-Before-Pay",
+    "version": "0.1.2",
+    "IPM": "0.1.0-beta.4",
+    "latest_same_number_notes_corrected_to_bounded_ON": true,
+    "public_release_count_after_update": 3,
+    "sidebar_beta4_verified": true,
+    "new_exact_public_artifact_proof_link_in_rendered_README_verified": true,
+    "contest_not_reapplied": true,
+    "AwaitingReview_separate": true,
+    "public_archive_bytes": 976567,
+    "public_archive_SHA": "bbb212897b6e1c1b2e0c1e8d1e9bce0cc8f1a5edafa41d2945b00281af03bb70",
+    "archive_unchanged_after_notes_update_proof": "OEX-012-note-update-beta4-immutable-verified-20261105.json",
+    "screenshot": "OEX-012-C1265-ON-public-readback-20261105.jpg"
+  },
+  "LIVE": {
+    "first_valid_session": 1566,
+    "model": "gemini-3.5-flash-lite",
+    "reviewed_native_source": "802ffe0dfd5dc9f28c03f21ee09a0c2989138bf9",
+    "three_normal_HTTP200_five_tools_cited_sealed_proposal": true,
+    "zero_financial_effect": true,
+    "public_route_bounded_enabled": true,
+    "no_operator_second_case": true,
+    "cap_usd": "5.00",
+    "accounting_is_not_billing": true,
+    "enabled_proof": "C1265-public-LIVE-enabled-no-new-case-20261105.json",
+    "final_GET_health": "PBP49-C1265-final-publication-health-20261105.json"
+  },
+  "harness_failure_reconciled": "Final read-only health collector first used a nonexistent bridge unit name; list-units identified the existing pbp49-public-live-bridge.service. Collector corrected, GET-only repeated. No service mutation/model/test repeated."
+}
