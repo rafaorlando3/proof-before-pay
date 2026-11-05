@@ -51,7 +51,9 @@ INSTALL
    guard. Its exact host-downloaded public archive was installed natively offline
    in an initialized isolated VPS copy (not a native registry fetch/bootstrap).
    Beta.4 updates the optional demo profile to reviewed Gemini3.5Flash-Lite;
-   preserve the separate evidence scopes for each release.
+   its exact host-downloaded public archive was installed natively offline in
+   that initialized copy. See docs/validation/IPM-beta4-public-artifact-20261105.json.
+   Preserve the separate evidence scopes for each release.
 
    Alternatively, clone the source and use an interoperability-enabled namespace:
 
