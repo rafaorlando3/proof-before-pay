@@ -122,7 +122,7 @@
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
       "delivery_status": "public_registry_package_and_native_install_verified_not_awarded",
-      "note": "Public beta.2 native registry install verified in initialized isolated lab:47 resources,seven imports,287 source files/34 installed assets matched. Beta.3 source/package/archive delta qualified on isolated initialized VPS test copy with47resources/7imports/34assets and10 changed Operation methods; offline pinned RFC8785 wheel. Beta.3 native public-registry fetch not yet established. Beta.1/r6 history retained. Contest listed; points not awarded.",
+      "note": "Public beta.2 native registry network-install history retained. Beta.3 native source/package/archive delta passed:47resources/7imports/34installed assets and10 changed Operation methods. Public beta.3 artifact HTTP200,292sourcefiles equalGit953d96d; exact host-downloaded archive installed natively offline on same isolated initialized VPS test copy with blank keys/defaultOFF. Not a native registry network fetch or fresh bootstrap. Contest listed; no points awarded.",
       "evidence": [
         "module.xml",
         "IPM-OPERATOR.txt",
@@ -130,7 +130,8 @@
         "docs/validation/native-IPM-bootstrap.json",
         "docs/validation/public-IPM-20261103.json",
         "docs/validation/IPM-public-beta2-20261103.json",
-        "docs/validation/IPM-beta3-native-20261105.json"
+        "docs/validation/IPM-beta3-native-20261105.json",
+        "docs/validation/IPM-beta3-public-artifact-20261105.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
