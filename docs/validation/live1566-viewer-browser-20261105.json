@@ -1,0 +1,23 @@
+{
+  "at_utc": "2026-11-05T04:42:10.231024+00:00",
+  "scope": "automated integrated-browser read-only inspection using existing privately supplied viewer credentials; no independent human study",
+  "URL": "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
+  "case_id": "public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe",
+  "visible_case_mode": "model/live gemini-3.5-flash-lite",
+  "status": "awaiting_human",
+  "tool_calls": 5,
+  "cited_chunk_visible": true,
+  "local_seal_intact_visible": true,
+  "no_permit_no_effect_visible": true,
+  "read_only_viewer_permission_refusal_visible": true,
+  "paused_inline_status_visible": true,
+  "fresh_decision_button_disabled": true,
+  "new_generation_or_approval_or_tamper_executed": false,
+  "login_used_existing_access": true,
+  "login_or_recovery_reset": false,
+  "browser_tabs_final": 0,
+  "screenshot": "docs/screens/live1566-public-viewer-20261105.jpg",
+  "screenshot_SHA": "cd99c6bd959aef59b0d0225b85ee86ed19ff912e54dba3e8795cb6d0f251a256",
+  "screenshot_is_not_native_IRIS_VisualTrace_UI": true,
+  "cost_display": "SDK visible-token estimate0.00319; separate gateway accounting in qualification report"
+}

@@ -75,3 +75,10 @@ UI screenshot. The case waits for human review. The linked record separates nati
 SDK visible-token estimates from the gateway's conservative output accounting.
 Retained viewing/export makes no new model call. No quality ranking, full Langfuse
 replacement, independent notarization or bonus award is inferred.
+
+The [authenticated public-viewer browser check](validation/live1566-viewer-browser-20261105.json)
+opened the retained1566 case and showed five tools, its real policy citation, intact
+seal, pending human review and no permit/effect. The [viewer screenshot](screens/live1566-public-viewer-20261105.jpg)
+is an application screen, not the IRIS Management Portal. This automated inspection
+reused existing access, made no model call and confirmed that paused fresh admission
+has inline status and a disabled Run button.
