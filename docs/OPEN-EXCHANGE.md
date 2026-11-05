@@ -1,6 +1,8 @@
 # Proof Before Pay, Open Exchange release description
 
-Publication status, 3 November: the [package](https://openexchange.intersystems.com/package/Proof-Before-Pay) is public and [contest49 registration](https://openexchange.intersystems.com/contest/49) is confirmed in the public list. The package badge still says Awaiting Review. The public viewer remains recorded; no live-demo or awarded bonus is claimed.
+Current status, 5 November: the [package](https://openexchange.intersystems.com/package/Proof-Before-Pay) is public and [contest49 registration](https://openexchange.intersystems.com/contest/49) is listed; Awaiting Review is a separate moderation badge. App 0.1.2 / IPM beta.4 includes the reviewed optional Gemini 3.5 Flash-Lite profile. [Session1566](validation/live-gemini35lite-1566-20261105.json) completed five real tools and a valid cited, sealed human-review proposal with zero financial effect. The existing bounded public route was explicitly enabled; its current availability is shown inline. Retained viewing makes no model call. No awarded bonus or general quality advantage is claimed.
+
+For hosted judging, use the [short judge path](../README.md#judge-path): dedicated HTTPS viewer → application sign-in form → private Viewer name and Access password → retained case1566 and recorded examples → optional fixed-scenario LIVE only when inline availability permits. The hosted path needs no installation, vendor IRIS account, model key or wallet. Missing invitation credentials must be requested privately from the organizers or [project owner](https://community.intersystems.com/user/rafaelorlando-mendes); never publish them. A prepared login is not evidence of invitation delivery. The historical validation and installation text below retains its dated scope.
 
 Proof Before Pay seals what an AI Hub agent observed, what evidence was missing and what it proposed before a synthetic payment effect.
 

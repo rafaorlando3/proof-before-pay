@@ -171,19 +171,39 @@ one-scenario integration test. None of these screenshots is the public viewer or
 Two paths exist with the prerequisites below. Times are not promised because the vendor image download,
 license steps and an independent new-operator walkthrough were not measured.
 
-**Path A, no installation: the authenticated read-only viewer.** Open
-[the dedicated judge viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/). It uses the application's
-sign-in form, not a browser credential prompt. Use the private access details supplied with your
-invitation; the earlier viewer address uses separate credentials. Dedicated judge access has been
-prepared and tested, but has not yet been released to judges or submitted to Open Exchange.
-You can inspect three selected synthetic cases, the evidence the agent saw, missing information, the
-sealed decision and approval, and an intact synthetic receipt. Use "Try to tamper" to edit a copy and
-verify it: the verdict turns tampered; restoring the copy turns it intact. The stored record is unchanged.
-The viewer cannot approve payments or submit arbitrary cases. An optional, explicitly labelled button admits only two fixed public synthetic fixtures through the dedicated bounded LIVE route. That route is currently paused; viewing the recorded examples never calls a model. [Qualification state](docs/validation/live-integration-attempt-20261103.json).
-The selected delivery-conflict example retains its historical rejection, made by the instance owner
-account during an automated synthetic test. Its role guide reads the
-verified decision snapshot; the historical comparison links separate recorded-refund and live-v5
-reports rather than presenting them as new executions.
+**Path A, no installation: the authenticated judge viewer.** Open
+[the dedicated judge viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/).
+No Docker, IRIS account, provider key or wallet is needed for this hosted path.
+
+1. Use the application's sign-in form with the **Viewer name** and **Access password**
+   supplied privately for this viewer. These are separate from your Open Exchange,
+   Developer Community and local IRIS credentials. If the invitation did not include
+   them, ask the contest organizers or [the project owner](https://community.intersystems.com/user/rafaelorlando-mendes)
+   for the dedicated demo access; do not post passwords in public comments.
+2. Inspect a retained example first. The completed synthetic refund shows evidence,
+   sealed approval, a single-use permit and a test receipt. The retained LIVE case
+   `public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe` (session **1566**)
+   shows five real tools, retrieved policy passages, a cited chunk and an intact
+   human-review decision, with no permit, receipt or payment effect. Opening these
+   records makes **no model call**.
+3. **Try to tamper** edits only your displayed copy: verification becomes tampered;
+   restoring the copy makes it intact. The stored record is unchanged. This viewer
+   cannot approve payments or submit arbitrary cases.
+4. A fresh request is optional. In **Try live**, read the current inline availability
+   and remaining allowance before using **Run a fresh decision**. Only two fixed
+   synthetic scenarios are admitted, subject to service health, provider capacity,
+   daily quotas and the preserved cumulative US$5 ceiling. It was explicitly enabled
+   on 5 November; availability can change. If unavailable or a request fails, inspect
+   the retained case instead; do not resubmit an uncertain request. The authenticated
+   completed-case list links back to the retained result.
+
+The [valid LIVE qualification](docs/validation/live-gemini35lite-1566-20261105.json)
+and [explicit bounded public enable](docs/validation/live-bounded-public-enabled-20261105.json)
+record their exact scopes. The video and older delivery-conflict example remain
+historical recorded demonstrations. **Lost your access details?** opens recovery,
+which needs an owner-issued single-use code valid for 15 minutes; it does not create
+an account or change a password. Access is private; an available login page does not
+by itself establish that every judge received the invitation.
 
 **Path B, private execution in recorded mode (no model key or paid inference).** Requires the AI Hub
 EAP build154 image from the vendor portal and the local-image setup described below. The default Compose
