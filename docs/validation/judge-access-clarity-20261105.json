@@ -79,5 +79,17 @@
     "Judge-access-login-help-VPS-20261105.jpg",
     "OEX-judge-access-public-corrected-20261105.jpg"
   ],
-  "retained_harness_failure": "Initial -I invocation hid sibling module access_recovery in one of27 tests; first26 passed. Explicit isolated source-directory sys.path then all27 passed, no assertion/code change and no real access recovery/model call."
+  "retained_harness_failure": "Initial -I invocation hid sibling module access_recovery in one of27 tests; first26 passed. Explicit isolated source-directory sys.path then all27 passed, no assertion/code change and no real access recovery/model call.",
+  "private_organizer_handoff": {
+    "at_utc": "2026-11-05T05:55:50.677Z",
+    "recipient": "Irène Mykhailova, Developer Community team",
+    "channel": "Private Developer Community message",
+    "specific_owner_authorization": true,
+    "single_send_verified_after_server_reload": true,
+    "existing_credentials_only": true,
+    "new_account_or_permissions": false,
+    "secret_values_or_hashes_published": false,
+    "organizer_read_or_judge_delivery_confirmed": false
+  },
+  "private_receipt_scope": "Sanitized handoff metadata recorded separately; no confidential message body or credential is distributed"
 }
