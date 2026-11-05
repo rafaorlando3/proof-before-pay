@@ -142,8 +142,8 @@
       "item": "Online demo",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "first_valid_cited_live1566_observed_fresh_admission_paused_not_awarded",
-      "note": "First valid cited LIVE qualification on VPS:3 normal HTTP200/toolcalls+JSON stop;5tools;policy citation in intact seal;native session1566 headers;0permit/receipt/effect. Provider/nativeOFF and viewerrecorded during final release reconciliation. Six old holds preserved; no new uncertain hold; no billing receipt or awarded bonus.",
+      "delivery_status": "first_valid_cited_live1566_observed_admission_explicitly_gated_not_awarded",
+      "note": "First valid cited LIVE qualification on VPS:3 normal HTTP200/toolcalls+JSON stop;5tools;policy citation in intact seal;native session1566 headers;0permit/receipt/effect. Fresh admission requires explicit operator enablement, native readiness, quotas and the preserved budget; availability is displayed inline. A failed provider attempt disables further admission. Six old holds preserved; no new uncertain hold; no billing receipt or awarded bonus.",
       "evidence": [
         "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
         "docs/validation/live-integration-attempt-20261103.json",

@@ -5,8 +5,9 @@ The dedicated route produced its first valid cited LIVE proposal on the VPS on
 records three normal HTTP200 protocol turns, five observed tools, an integrity-checked
 local policy passage cited inside the decision seal, native message headers and
 zero financial effect. This one case proves neither general model quality nor a
-bonus award. Fresh admission is OFF during final package and publication review;
-the authenticated viewer retains recorded examples without making a model call.
+bonus award. Fresh admission requires explicit operator enablement and actual native, quota
+and budget readiness. The viewer reports its current availability inline; retained
+examples can be inspected without making a model call.
 
 ## Existing admission and accounting controls
 
