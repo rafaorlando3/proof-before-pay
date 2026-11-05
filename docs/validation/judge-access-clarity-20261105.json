@@ -1,0 +1,83 @@
+{
+  "at_utc": "2026-11-05T05:50:48.071306+00:00",
+  "problem": "Judge path still said currently paused and not submitted to Open Exchange after bounded LIVE was enabled; login had no first-invitation help.",
+  "correction": "Short hosted judge steps distinguish dedicated viewer access from Open Exchange/IRIS, explain how to request an invitation privately, identify retained1566 without a model call, explain conditional fixed-scenario LIVE and15minute recovery.",
+  "public_source": "3500fcdbc6a3207318a4c368dc8dd3cb096c6692",
+  "CI": 41975204946,
+  "actual_viewer_source": "3500fcdbc6a3207318a4c368dc8dd3cb096c6692",
+  "native_bridge_source": "802ffe0dfd5dc9f28c03f21ee09a0c2989138bf9",
+  "VPS_auth_contract_tests": 27,
+  "tests_result": "PASS",
+  "scope_fake_upstream_only": true,
+  "deployment": {
+    "viewer_restart_only": true,
+    "IRIS_compile_restart_rebind": false,
+    "budget_queue_all_config_bytes_equal": true,
+    "budget_SHA": "e475c033ed65b4226936becea0d46a4cdb5f553e6c8eb54fa05d0d734e09e672",
+    "queue_SHA": "4d6a6129783d17dbb3b68549357e06f3a46f3aaaf3d26fbaaa2785b3c41082db",
+    "native_profile": {
+      "enabled": true,
+      "model": "gemini-3.5-flash-lite",
+      "case_prefix": "public-live:",
+      "transport": "private_budget_bridge",
+      "autonomous_effects": false,
+      "source_revision": "802ffe0dfd5dc9f28c03f21ee09a0c2989138bf9"
+    },
+    "public_live_status": {
+      "ok": true,
+      "mode": "live_available",
+      "available": true,
+      "reason": null,
+      "remaining_decisions_today": 1,
+      "scenarios": [
+        "amount_conflict",
+        "missing_evidence"
+      ],
+      "completed": [
+        {
+          "status": "complete",
+          "scenario": "amount_conflict",
+          "day": "2026-11-04",
+          "case_id": "public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe",
+          "commitment": "0d8dc54d97ae26f6fd2b89037c6432b097cde6f201cf139cb300b7fb1e5bb8ea",
+          "session_id": "1566"
+        }
+      ]
+    },
+    "credentials_changed_or_released": false,
+    "new_model_calls": 0
+  },
+  "OpenExchange": {
+    "URL": "https://openexchange.intersystems.com/package/Proof-Before-Pay",
+    "new_instructions_publicly_read_back": true,
+    "stale_statements_removed": true,
+    "notes_updated_same_release": "0.1.2",
+    "public_release_count": 3,
+    "contest_not_reapplied": true,
+    "first_auto_README_save_did_not_refresh_cached_body": true,
+    "explicit_description_mirrors_README3500_with_absolute_links": true,
+    "automatic_Git_README_copy_now_disabled_for_this_app": true,
+    "future_README_updates_require_explicit_description_sync": true,
+    "saved_description_then_approval_modal_closed_without_Send": true,
+    "same_version_publish_used_official_overwrite_workflow": true,
+    "archive": {
+      "at_utc": "2026-11-05T05:48:05.788958+00:00",
+      "scope": "Concrete same-version OEX metadata correction after README cache mismatch; immutable package check only, no install/test repeat",
+      "URL": "https://pm.community.intersystems.com/download/proof-before-pay/-/proof-before-pay-0.1.0-beta.4.tgz",
+      "HTTP": 200,
+      "bytes": 976567,
+      "SHA": "bbb212897b6e1c1b2e0c1e8d1e9bce0cc8f1a5edafa41d2945b00281af03bb70",
+      "same_beta4_archive": true,
+      "no_model_call": true
+    }
+  },
+  "judge_credential_handling": "Credentials are private and distinct from an IRIS or Open Exchange account. They are not embedded in public instructions or this proof. Prepared/tested access and a demo URL do not themselves prove that an invitation reached each judge.",
+  "official_organizer_access_guidance": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288507",
+  "contact_owner": "https://community.intersystems.com/user/rafaelorlando-mendes",
+  "private_access_receipt_included": false,
+  "screenshots": [
+    "Judge-access-login-help-VPS-20261105.jpg",
+    "OEX-judge-access-public-corrected-20261105.jpg"
+  ],
+  "retained_harness_failure": "Initial -I invocation hid sibling module access_recovery in one of27 tests; first26 passed. Explicit isolated source-directory sys.path then all27 passed, no assertion/code change and no real access recovery/model call."
+}
