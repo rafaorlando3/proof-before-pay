@@ -1,6 +1,12 @@
 <style>
-#pbp-live{position:fixed;right:12px;top:calc(var(--header-h,64px) + 10px);z-index:26;width:min(390px,calc(100vw - 24px));color:#e6edf5;background:#152132;border:1px solid #40556e;border-radius:12px;box-shadow:0 8px 28px #0005;font:13px/1.5 system-ui}
-#pbp-live:not([open]){width:auto;max-width:calc(100vw - 24px)}
+#pbp-live{margin-bottom:16px;color:#e6edf5;background:#152132;border:1px solid #40556e;border-radius:12px;font:13px/1.5 system-ui}
+#pbp-judge-start{margin:16px 16px 0}
+#pbp-judge-guide{margin-bottom:12px;padding:16px;color:#e6edf5;background:#101e2b;border:1px solid #40556e;border-radius:12px;font:14px/1.5 system-ui}
+#pbp-judge-guide h2{font-size:18px;margin:0 0 6px}#pbp-judge-guide p{margin:6px 0}
+#pbp-judge-guide .judge-paths{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+#pbp-judge-guide button{font:inherit;color:#e6edf5;background:#21374c;border:1px solid #56718c;border-radius:7px;padding:9px 12px;cursor:pointer;text-align:left}
+#pbp-judge-guide button:focus-visible{outline:2px solid #5dd4bf;outline-offset:3px}
+#pbp-judge-guide small{display:block;color:#bcc9d8;font-size:12px}
 #pbp-live summary{padding:10px 14px;cursor:pointer;font-weight:650;list-style-position:inside}
 #pbp-live .live-content{padding:0 14px 14px;max-height:65vh;overflow:auto}
 #pbp-live p{margin:8px 0}#pbp-live label{display:block;margin:10px 0 6px}
@@ -9,6 +15,17 @@
 #pbp-live .live-primary{background:#17635a;border-color:#388d7c}#pbp-live .live-muted{color:#bcc9d8;font-size:12px}
 #pbp-live-result{border-left:3px solid #3d8f88;padding:8px 10px;background:#0f1a28;overflow-wrap:anywhere}
 </style>
+<div id="pbp-judge-start">
+<section id="pbp-judge-guide" aria-labelledby="pbp-judge-title">
+  <h2 id="pbp-judge-title">Start with the proof</h2>
+  <p>Two retained examples show what the system can do and where it stops. Opening them makes no model call.</p>
+  <div class="judge-paths">
+    <button type="button" data-judge-case="video-demo:d83544a2">1. Completed sandbox refund<small>Recorded proposal → human approval → single-use permit → synthetic receipt</small></button>
+    <button type="button" data-judge-case="public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe">2. Retained LIVE decision<small>Session1566 · observed tools and cited local policy → human review · no effect</small></button>
+  </div>
+  <p><small>In either case, inspect the seal chain and Time Machine. “Try to tamper” checks an edited copy; the original remains intact. This viewer cannot approve a payment.</small></p>
+  <p id="pbp-judge-status" role="status" hidden></p>
+</section>
 <details id="pbp-live">
   <summary>Try a live decision</summary>
   <div class="live-content">
@@ -23,9 +40,23 @@
     <p class="live-muted">If live service is unavailable or the cap is reached, this page explicitly stays in recorded mode. Viewing a recorded case never calls the model.</p>
   </div>
 </details>
+</div>
 <script>
 (()=>{
   const panel=document.getElementById('pbp-live'),choice=document.getElementById('pbp-live-scenario');
+  const guide=document.getElementById('pbp-judge-guide'),app=document.querySelector('.app');
+  if(app)app.before(document.getElementById('pbp-judge-start'));
+  guide.querySelectorAll('[data-judge-case]').forEach(button=>button.addEventListener('click',async()=>{
+    const message=document.getElementById('pbp-judge-status');
+    try{
+      if(typeof refresh==='function')await refresh();
+      const id=button.dataset.judgeCase;
+      if(typeof state==='undefined'||!state.cases.some(c=>c.case_id===id)||typeof openCase!=='function')throw new Error('retained_case_unavailable');
+      await openCase(id,true);
+      document.getElementById('detail')?.scrollIntoView({block:'start'});
+      message.hidden=true;
+    }catch(error){message.textContent='This retained example could not be opened. Select an available case in the queue; no new decision was requested.';message.hidden=false;}
+  }));
   const run=document.getElementById('pbp-live-run'),availability=document.getElementById('pbp-live-availability');
   const result=document.getElementById('pbp-live-result'),inspect=document.getElementById('pbp-live-inspect');
   const labels={missing_evidence:'Missing delivery proof',amount_conflict:'Payment amount mismatch'};

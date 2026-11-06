@@ -5,6 +5,16 @@
 [Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub) ·
 [Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
+## Start here: judge quick path
+
+Open the [hosted review console](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/) with the dedicated viewer credentials supplied through the contest organizer. No Docker, IRIS installation, API key or wallet is needed. These are viewer credentials, separate from your Open Exchange or IRIS login; the sign-in page explains how to request an invitation.
+
+1. **Completed sandbox refund:** use the first “Start with the proof” button. Follow the recorded proposal, sealed human approval, consumed single-use permit and intact synthetic receipt.
+2. **Retained LIVE decision:** use the second button for session1566. Inspect the actual tool outputs and cited local policy in **Time Machine**, then the intact decision seal. Its outcome is human review, with no permit, receipt or financial effect.
+3. **Check the boundary:** “Try to tamper” verifies an edited copy without changing the original. This viewer cannot approve payments. Reading either retained example makes no model call.
+
+Fresh LIVE requests are optional and explicitly labelled; their current health, quota and cumulative US$5 budget gates appear in the console. The retained route remains useful without a fresh request. See the [full judge path](#judge-path) for details and limitations.
+
 Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49); the package review badge remains separate. The video predates the v7 evaluation. The authenticated online viewer serves retained examples from a running IRIS instance. The dedicated route produced its first valid cited LIVE decision on 5 November; fresh-request availability is shown inline and requires the existing health, quota and budget gates. Reading retained cases makes no model call.
 
 The optional fixed-scenario LIVE path uses native actors, a private budget bridge, a persistent queue and inline status. [Session1566 qualified on the VPS](docs/validation/live-gemini35lite-1566-20261105.json): Gemini3.5Flash-Lite, medium reasoning and a4096 output bound completed three normal tool/decision HTTP turns without retry or JSON repair. Five real tools included local policy retrieval; the valid human-review proposal cites an observed passage inside its intact seal. Six native message headers connect Intake, Process, Agent, Witness and Workflow. No permit, receipt or financial effect was created. [Earlier timeouts,503s and refused truncation](docs/validation/live-output4096-20261105.json) remain historical failures. The six uncertain reservations remain intact under the expressly approved cumulative US$5 ceiling. Token estimates and reservations are not billing receipts; this one case establishes no general quality advantage. [Operator controls](demo_gateway/LIVE-DEMO-PLAN.md).
