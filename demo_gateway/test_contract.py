@@ -52,6 +52,18 @@ class Contract(unittest.TestCase):
   status,_,raw=self.call('GET','/pbp/api/whoami');self.assertEqual(status,200);self.assertIs(json.loads(raw)['can_review'],False);self.assertEqual(self.calls,[])
  def test_HTML_is_actual_upstream_with_scope_banner(self):
   status,_,raw=self.call('GET','/pbp/ui/');self.assertEqual(status,200);self.assertIn(b'native UI',raw);self.assertIn(b'Review disabled',raw)
+ def test_hosted_viewer_does_not_invite_native_reviewer_access(self):
+  # Exercise the actual native console, not a copy of the substitution table.
+  native=(Path(__file__).parents[1]/'ui/index.html').read_bytes()
+  forbidden=(b'You are approving',b'reviewer login required',b'Sign in as a reviewer')
+  self.assertTrue(all(text in native for text in forbidden),'Native review copy changed; review the hosted facade explicitly')
+  self.g.fetch=lambda *args:(200,'text/html',native)
+  status,_,public=self.call('GET','/pbp/ui/')
+  self.assertEqual(status,200)
+  for text in forbidden:self.assertNotIn(text,public)
+  self.assertIn(b'no additional reviewer login is needed to inspect the evidence',public)
+  self.assertIn(b'Each decision labels its recorded or LIVE provenance',public)
+  self.assertFalse(json.loads(self.call('GET','/pbp/api/whoami')[2])['can_review'])
  def test_health_never_exposes_provider_key_metadata(self):
   status,_,raw=self.call('GET','/pbp/api/health');self.assertEqual(status,200);self.assertNotIn(b'NOT_PUBLIC',raw);self.assertNotIn(b'key_variable',raw)
  def test_valid_upstream_copy_error_is_preserved(self):

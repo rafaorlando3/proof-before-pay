@@ -81,6 +81,8 @@ class LiveViewerTests(unittest.TestCase):
         self.assertEqual(status, 200)
         for required in (b"pbp-live-result", b"role=\"status\"", b"Recorded mode", b"randomUUID", b"No request was replayed"):
             self.assertIn(required, raw)
+        self.assertIn(b'Live IRIS backend. Recorded examples and explicitly labelled live requests.', raw)
+        self.assertNotIn(b'Live IRIS backend. Recorded responses.', raw)
         for forbidden in (b"alert(", b"confirm(", b"prompt("):
             self.assertNotIn(forbidden, raw)
 
