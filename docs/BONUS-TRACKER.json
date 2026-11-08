@@ -35,7 +35,7 @@
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
       "delivery_status": "implemented_isolated_native_Production_source_checkout_extension_not_awarded",
-      "note": "Java PEX export transport-digest inspection:12 algorithm checks, seven native service/operation inspections and14 native headers on isolated build154. Exact own-code JAR registered and real1122-byte evidence export matched. Operator-only, networkNONE, no financial/provider calls; lab stopped exit0/noOOM. Source-checkout optional production, not hosted viewer or immutable IPMbeta4.",
+      "note": "Java PEX export transport-digest inspection:12 algorithm checks, seven native service/operation inspections and14 native headers on isolated build154. Exact own-code JAR registered and real1122-byte evidence export matched. Operator-only, networkNONE, no financial/provider calls; lab stopped exit0/noOOM. Source-checkout optional production, not hosted viewer or immutable IPMbeta4. C1270 algorithm-only status correction passed12 checks in a separate stopped compiler container; native7calls/JAR evidence is from941e929, before that correction; no final-source native rerun or public CI success claimed.",
       "evidence": [
         "pex/README.md",
         "pex/java/pbp/pex/ExportDigestOperation.java",
@@ -230,7 +230,7 @@
       "Embedded Python bugs:up to3; no qualifying report verified"
     ],
     "remaining_priority_deliverables": [
-      "Independent review of the exact PEX/doc candidate, then owner approval for its concrete publication version",
+      "C1270 source review closed after oversized-payload status fix and12 algorithm checks PASS; owner approval for concrete publication version and then public CI are pending",
       "Strengthen judge presentation only for demonstrated gaps; preserve existing retained LIVE1566 and refund proof",
       "Only submit vendor bugs genuinely encountered, isolated and reproducible; no qualifying report found in examined development failures"
     ],
@@ -274,5 +274,5 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-08T20:30:18.883700+00:00"
+  "delivery_evidence_updated_at_utc": "2026-11-08T20:45:14.998964+00:00"
 }

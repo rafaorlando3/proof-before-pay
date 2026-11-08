@@ -77,4 +77,7 @@ optional source-checkout component is separate from the immutable public IPM
 beta.4 artifact and is not enabled in the hosted viewer.
 
 The [native qualification](../docs/validation/pex-export-inspection-20261108.json) separates algorithm, build, native registration and Production checks.
-No bonus award is inferred from this implementation.
+C1270 reviewed the source without blockers. Its oversized-payload status correction
+passed all 12 algorithm checks separately; the retained native/JAR qualification
+is from the preceding `941e929` source. No final-source native rerun or public CI
+result is claimed. No bonus award is inferred from this implementation.

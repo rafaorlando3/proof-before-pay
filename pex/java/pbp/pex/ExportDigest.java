@@ -21,7 +21,7 @@ public final class ExportDigest {
     }
 
     public static Result inspect(String payload, String expected) throws Exception {
-        if (payload == null || payload.length() > MAX_BYTES)
+        if (payload == null)
             return new Result("INVALID_PAYLOAD", "", 0);
         if (expected == null || !expected.matches("[0-9a-f]{64}"))
             return new Result("INVALID_EXPECTED_DIGEST", "", 0);

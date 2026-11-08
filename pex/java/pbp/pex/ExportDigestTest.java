@@ -12,7 +12,7 @@ public final class ExportDigestTest {
         check(ExportDigest.inspect("abc", abc.toUpperCase()).status.equals("INVALID_EXPECTED_DIGEST"));
         check(ExportDigest.inspect(null, abc).status.equals("INVALID_PAYLOAD"));
         check(ExportDigest.inspect("\ud800", abc).status.equals("INVALID_UTF8"));
-        check(ExportDigest.inspect(new String(new char[65537]), abc).status.equals("INVALID_PAYLOAD"));
+        check(ExportDigest.inspect(new String(new char[65537]), abc).status.equals("PAYLOAD_TOO_LARGE"));
         String unicode = "ação 漢字 💡";
         ExportDigest.Result u = ExportDigest.inspect(unicode, abc);
         check(u.bytes == unicode.getBytes(java.nio.charset.StandardCharsets.UTF_8).length);

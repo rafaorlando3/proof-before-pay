@@ -169,5 +169,23 @@
     "A registration attempt immediately after stopping the gateway in the same console hit an old connection; a fresh console registered the exact JAR and the production call passed."
   ],
   "vendor_bug_reports_inferred": false,
-  "bonus_awarded_verified": false
+  "bonus_awarded_verified": false,
+  "native_qualification_source": "941e92934efd69a73ef2f8310179e6f7635c3252",
+  "peer_review_followup": {
+    "review": "C1270 independent source/bundle review; no blockers",
+    "at_utc": "2026-11-08T20:45:14.998964+00:00",
+    "finding": "P2-1: oversize character and UTF8-byte paths returned inconsistent statuses",
+    "correction": "Only null is INVALID_PAYLOAD; oversized valid UTF8 payloads return PAYLOAD_TOO_LARGE in one byte-length check. Test8 updated.",
+    "algorithm_checks": 12,
+    "result": "PASS",
+    "source_SHA256": {
+      "ExportDigest.java": "4879c38270615a05194b82caae4aade75963e2c5f847a112960861cb2631b00b",
+      "ExportDigestTest.java": "d838c466af165c42334ecdf3f9982345611772e6a497b8e068d6ed6c234f45d6"
+    },
+    "test_environment": "Separate networkNONE compiler-only container using cached licensed image,384MiB/0.5CPU; IRIS not started",
+    "container_exited0_noOOM": true,
+    "native_rerun": false,
+    "scope": "Native seven-call/exact-JAR evidence above belongs to941e929 before this algorithm-only status correction. PEX operation/interface/native classes unchanged; valid1122-byte algorithm check remains covered, but no final-source native rerun claimed.",
+    "public_CI": "P2-2 remains pending until exact-version publication is authorized and CI completes; no current public CI success claimed"
+  }
 }
