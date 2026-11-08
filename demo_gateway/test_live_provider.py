@@ -223,7 +223,9 @@ class LiveProviderTests(unittest.TestCase):
         def send(raw):
             sent.append(raw)
             return self.response()
-        server = create_server(self.root, credential, "127.0.0.1", 0, ["127.0.0.1"], send=send)
+        # Use the fixture clock; the synthetic authorization has a fixed expiry.
+        with patch("live_provider.LiveBudget", return_value=self.budget):
+            server = create_server(self.root, credential, "127.0.0.1", 0, ["127.0.0.1"], send=send)
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         try:
