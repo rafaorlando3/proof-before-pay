@@ -1,0 +1,173 @@
+{
+  "schema": "pbp.pex-export-inspection-qualification/1",
+  "qualified_at_utc": "2026-11-08T20:28:59.520811+00:00",
+  "runtime": "InterSystems IRIS AI Hub2026.3.0AI.154.0, Linux x64, owner cached private image in an isolated new instance; not independent vendor bootstrap.",
+  "function": "Exact UTF-8 transport digest check of a synthetic public evidence export, through a native Java PEX BusinessOperation.",
+  "source_files": [
+    "pex/README.md",
+    "pex/build.sh",
+    "pex/cls/pbp/PEX/InspectRequest.cls",
+    "pex/cls/pbp/PEX/InspectResponse.cls",
+    "pex/cls/pbp/PEX/Inspection.cls",
+    "pex/cls/pbp/PEX/Intake.cls",
+    "pex/cls/pbp/PEX/Production.cls",
+    "pex/java/pbp/pex/ExportDigest.java",
+    "pex/java/pbp/pex/ExportDigestOperation.java",
+    "pex/java/pbp/pex/ExportDigestTest.java"
+  ],
+  "algorithm_checks": 12,
+  "exact_recipe": "pex/build.sh; --release8; bundled vendor SDK libraries; no dependency downloads",
+  "own_code_JAR_SHA256": "56b720fd45a03e6b457dbfe88a946bc11274702dc184274d1fa23009139fc13a",
+  "own_code_JAR_entries": [
+    "META-INF/",
+    "META-INF/MANIFEST.MF",
+    "pbp/pex/ExportDigest.class",
+    "pbp/pex/ExportDigest$Result.class",
+    "pbp/pex/ExportDigestOperation.class"
+  ],
+  "native_registration": {
+    "framework": "com.intersystems.enslib.pex.BusinessOperation",
+    "registered_proxy": "pbp.PEX.ExportDigestOperation",
+    "server": "%Java Server",
+    "final_exact_JAR_registration_success": true
+  },
+  "native_production": "pbp.PEX.Production",
+  "native_operator_entry": "pbp.PEX.Inspection.Inspect; requires %Admin_Operate:U; no HTTP/MCP ingress",
+  "native_inspection_calls": 7,
+  "native_headers": [
+    {
+      "id": "2",
+      "session": 2,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "3",
+      "session": 2,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    },
+    {
+      "id": "4",
+      "session": 4,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "5",
+      "session": 4,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    },
+    {
+      "id": "6",
+      "session": 6,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "7",
+      "session": 6,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    },
+    {
+      "id": "8",
+      "session": 8,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "9",
+      "session": 8,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    },
+    {
+      "id": "10",
+      "session": 10,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "11",
+      "session": 10,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    },
+    {
+      "id": "13",
+      "session": 13,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "14",
+      "session": 13,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    },
+    {
+      "id": "16",
+      "session": 16,
+      "source": "pbp.PEX.Intake",
+      "target": "pbp.PEX.ExportDigest",
+      "body_class": "pbp.PEX.InspectRequest"
+    },
+    {
+      "id": "17",
+      "session": 16,
+      "source": "pbp.PEX.ExportDigest",
+      "target": "pbp.PEX.Intake",
+      "body_class": "pbp.PEX.InspectResponse"
+    }
+  ],
+  "native_checks": {
+    "abc_known_digest": "MATCH,3bytes",
+    "altered_abc": "MISMATCH",
+    "public_export": "MATCH,1122bytes",
+    "invalid_expected": "INVALID_EXPECTED_DIGEST",
+    "public_export_extra_newline": "MISMATCH",
+    "exact_built_JAR_after_fresh_gateway_connection": "MATCH,1122bytes"
+  },
+  "public_export": {
+    "path": "docs/validation/live-session1566-native-headers.json",
+    "bytes": 1122,
+    "SHA256": "c65d0b952ee44b151d4382804a694080c89c665923b894d0b15169e064075a66",
+    "historical_live_headers_read_only": true
+  },
+  "no_provider_embedding_or_financial_effect": true,
+  "network": "none",
+  "published_ports": false,
+  "container_stopped_exit0_noOOM": true,
+  "main_payment_demo_changed": false,
+  "IPM_beta4_changed": false,
+  "source_checkout_extension_only": true,
+  "limits": [
+    "MATCH verifies exact transport bytes against a separately retained expected digest; it does not verify a Witness seal, source authenticity, approval, permit or payment.",
+    "Replacing both bytes and expected digest is outside this check.",
+    "Hosted viewer and immutable IPM beta4 do not enable or include this optional source-checkout production.",
+    "12 algorithm checks do not replace native registration/Production evidence.",
+    "No broad load, independent human install or bonus award established."
+  ],
+  "failed_attempts_retained_privately": [
+    "Initial local harness used a directory with Load instead of LoadDir, terminal macros and newline classpath; corrected to LoadDir and Linux colon-separated classpath.",
+    "Diagnostic Config.Gateways.GetList call had a missing argument and its binary status broke UTF8 stdout decoding; this was an inspection-harness mistake.",
+    "Initial build-recipe invocation used a copied source folder with the wrong layout; exact checkout layout passed.",
+    "A registration attempt immediately after stopping the gateway in the same console hit an old connection; a fresh console registered the exact JAR and the production call passed."
+  ],
+  "vendor_bug_reports_inferred": false,
+  "bonus_awarded_verified": false
+}

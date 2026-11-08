@@ -1,0 +1,14 @@
+{
+  "schema": "pbp.video-download-delivery/1",
+  "delivery_at_utc": "2026-11-07T03:17:42.198190+00:00",
+  "video_version": "4.2.1",
+  "download_URL": "https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4",
+  "bytes": 23536859,
+  "SHA256": "a910bb282e408a03f2de896bef7796fde7211df34be0d199dd35c9c1b8cdd7ae",
+  "anonymous_full_download_verified": true,
+  "organizer_comment": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288538",
+  "same_previously_approved_video": true,
+  "scope": "Historical recorded proposal and synthetic financial effects; predates v7 and valid LIVE1566. No new inference or benchmark result.",
+  "bonus_awarded_verified": false,
+  "current_update": "08Nov documentation reconciles retained delivery evidence; no download, upload or organizer message repeated."
+}

@@ -2,6 +2,7 @@
 
 [Open Exchange](https://openexchange.intersystems.com/package/Proof-Before-Pay) ·
 [Video 4.2.1 with captions](https://www.youtube.com/watch?v=LX_0V4C6wLw) ·
+[Download MP4](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4) ·
 [Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub) ·
 [Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
@@ -469,7 +470,7 @@ points awarded to this application.
 
 ## Bonuses
 
-These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 5 November. Point values are possible bonuses, not awarded points.
+These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 8 November. Point values are possible bonuses, not awarded points. Thirteen items have delivery or implementation evidence, with caps totalling 29; the remaining caps total 6 (the two vendor-bug categories). This is an evidence inventory, not a confirmed score.
 
 | Item | Points | Evidence and current state |
 |---|---:|---|
@@ -478,14 +479,14 @@ These are evidence and submission states against the [official contest49 bonus r
 | Embedded Python | 3 | Implemented: [Witness bridge](cls/ProofBeforePay/Witness.cls), [Ledger bridge](cls/ProofBeforePay/Ledger.cls), [runtime evidence](docs/validation/ledger-runtime.json). |
 | Docker | 2 | Implemented: [Dockerfile](Dockerfile), [Compose](compose.yml), [qualified lifecycle evidence](docs/validation/clean-lifecycle.json). The licensed vendor image is obtained separately. |
 | Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated. [First valid cited LIVE case1566](docs/validation/live-gemini35lite-1566-20261105.json): five tools, intact seal, persisted native trace and no effect. Fresh admission requires explicit operator enablement and is bounded by health, quotas and budget; the viewer shows its actual availability inline. Retained viewing makes no model call. No bonus award inferred. |
-| ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt), [qualified local package test](docs/validation/independent-IPM-20261031.json). [Public registry install passed](docs/validation/public-IPM-20261103.json): beta.1 covered 38 resources and six native Python imports; [beta.2 now covers 47 resources and seven imports](docs/validation/IPM-public-beta2-20261103.json), in an initialized isolated IPM lab with no new model call. |
+| ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt). [Public beta.2 registry installation](docs/validation/IPM-public-beta2-20261103.json) retained. Current immutable beta.4 has [native qualification](docs/validation/IPM-beta4-native-20261105.json) and [exact public-artifact qualification](docs/validation/IPM-beta4-public-artifact-20261105.json): 47 resources, seven imports and 296 source files from Git9b2ee09. It was installed offline in an initialized isolated lab; no fresh vendor bootstrap or native registry network fetch is claimed for beta.4. Optional PEX uses the separate source-checkout recipe. |
 | Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Trace recipe and evidence](docs/TRACEABILITY.md) includes LIVE session1566 persisted headers/tool observations and the separately labelled recorded1494 Visual Trace screenshot. No new LIVE Visual Trace UI screenshot or awarded points claimed. |
 | First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
 | Second article or translation | 1 | [Portuguese translation published 3 November](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub). |
-| YouTube video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw), English, Portuguese, Spanish and Simplified Chinese captions; explicit pre-v7 disclosure. |
+| Video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw) and [anonymous MP4 download](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4), [delivered to the organizer](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288538). [Delivery evidence](docs/validation/video-download-delivery-20261107.json). Four caption languages; historical pre-v7/pre-LIVE footage. |
 | IRIS Vector Search | 2 | [Native policy KB](cls/pbp/RAG/Policy.cls): `%AI.RAG`, local FastEmbed and IRIS Vector Search. [Session1566](docs/validation/live-gemini35lite-1566-20261105.json) retrieved three verified passages and cited a real chunk in a valid sealed proposal. Full policy constraints remain authoritative; no measured quality gain or awarded bonus claimed. |
 | Custom Interoperability adapter | 2 | [Own SolanaMemo outbound adapter](cls/pbp/Adapter/SolanaMemo.cls), [native Operation](cls/pbp/Operation/SolanaMemo.cls), [confirmed devnet-only Production test](docs/validation/solana-memo-devnet-20261103.json). One Memo instruction, no transfer; disabled without explicit private configuration. This is an implementation/test claim, not an awarded bonus. |
-| PEX | 3 | Not implemented; outside the current plan. |
+| PEX | 3 | [Optional Java export inspection](pex/README.md) in a separate native Production: [12 algorithm checks, native service/operation messages and exact own-code JAR qualification](docs/validation/pex-export-inspection-20261108.json). Checks transport integrity only; no payment, seal or approval authority. Source-checkout extension, separate from hosted viewer and immutable IPM beta.4. |
 | AI Hub / Embedded Python bugs | up to 3 each | No qualifying submitted reproducible vendor bug is claimed. |
 
 See the [structured tracker](docs/BONUS-TRACKER.json) for the complete item list. New functionality is documented as delivered only after its behavior is verified.

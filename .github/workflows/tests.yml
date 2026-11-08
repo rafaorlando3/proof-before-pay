@@ -3,6 +3,18 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  pex-export-digest-algorithm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: |
+          mkdir -p "$RUNNER_TEMP/pbp-pex"
+          javac --release 8 -d "$RUNNER_TEMP/pbp-pex" pex/java/pbp/pex/ExportDigest.java pex/java/pbp/pex/ExportDigestTest.java
+          java -Xmx64m -cp "$RUNNER_TEMP/pbp-pex" pbp.pex.ExportDigestTest
   seal-typescript:
     runs-on: ubuntu-latest
     defaults:
