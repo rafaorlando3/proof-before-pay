@@ -45,7 +45,7 @@ assistants under Rafael's direction and review. MIT.
   verification checks the shown record against the retained commitment. An administrator able to replace
   the record, salt and commitment can rewrite local history. A separately configured, optional
   [`pbp.Adapter.SolanaMemo` devnet extension](../README.md#optional-policy-retrieval-and-devnet-anchoring)
-  has a qualified single-Memo Production test; it is disabled without private configuration and does not
+  has a qualified single-Memo Interoperability Production test on Solana devnet; it is disabled without private configuration and does not
   turn the default local verifier into an independent blockchain verifier. It creates no payment or transfer.
 - **Synthetic inputs only.** The guard detects common CPF, CNPJ, e-mail, phone and Pix-key formats; it is not a universal detector of personal information. Pseudonymize inputs before using this laboratory.
 

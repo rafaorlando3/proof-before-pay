@@ -1,6 +1,8 @@
 """Authenticated, case-scoped viewer for a live IRIS demo. No intake or review route.
 Run behind HTTPS; the upstream is an existing private authenticated loopback relay.
-The only permitted POST verifies an editable copy, without changing stored data.
+After sign-in, default application POSTs verify an edited seal copy.
+The optional bounded LIVE queue also accepts fixed-scenario requests; neither route
+approves a payment or changes a stored seal.
 """
 from dataclasses import dataclass, field
 from pathlib import Path

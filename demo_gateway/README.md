@@ -9,7 +9,7 @@ or an unrestricted model API.
 The default entry below serves retained inspection only. The separately configured
 [bounded LIVE entry](LIVE-DEMO-PLAN.md) can also admit two fixed synthetic scenarios,
 subject to native readiness, explicit enablement, daily quotas and the preserved
-cumulative budget. It exposes no arbitrary prompt, case submission or financial approval.
+cumulative budget. It exposes no arbitrary prompt, arbitrary case submission or financial approval.
 The public viewer shows its current availability inline; retained cases remain inspectable
 without making a fresh request.
 

@@ -150,8 +150,8 @@ and the [final descriptive report](docs/validation/paired-v6-report-B.md).
 The recorded video predates both cohorts. Dedicated reviewer access is supplied
 privately; the reviewed r6 source and media are published; contest49 registration is publicly listed. No bank settlement or independent
 external anchor is claimed; local seals detect edits to a copy and do not protect against an administrator who
-can rewrite the database, and an optional asynchronous anchor under independent custody is a declared roadmap
-item without a date. See [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
+can rewrite the database. Independent external custody remains a roadmap item without a date;
+the separately qualified optional Solana devnet Memo extension is described below. See [application design](docs/README-APP.md), [validation](docs/VALIDATION.md), and
 [provider experiment](docs/PROVIDERS.md).
 
 ## Validation summary
@@ -486,9 +486,13 @@ process-private global, enforced by both the authorization policy and the tools,
 after each run. Increasing parallelism requires separate validation; one-worker results are
 not a scalability claim.
 
-The original `pbp_seal` reference also contains chain and Solana helpers. Those are
-not invoked by the runtime or tests, which do not sign or broadcast transactions.
-The historical S0 fixture is public synthetic test evidence, not a new S1 anchor.
+The original `pbp_seal` reference contains chain and Solana helpers, separate from
+the default local verification path. The default recorded/offline path does not sign
+or broadcast transactions. The optional [SolanaMemo extension](#optional-policy-retrieval-and-devnet-anchoring)
+was separately qualified with one Memo in an Interoperability Production on Solana devnet.
+It remains disabled without private configuration, creates no transfer and does not
+turn local verification into an independent blockchain verifier. The historical S0
+fixture is public synthetic evidence, not a new S1 anchor.
 
 See [provenance](docs/PROVENANCE.json), [runtime diagnosis](docs/IRIS-154.md),
 [validation](docs/VALIDATION.md), and the [submission draft](docs/OPEN-EXCHANGE.md).
@@ -499,7 +503,7 @@ points awarded to this application.
 
 ## Bonuses
 
-These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 8 November. Point values are possible bonuses, not awarded points. Thirteen items have delivery or implementation evidence, with caps totalling 29; the remaining caps total 6 (the two vendor-bug categories). This is an evidence inventory, not a confirmed score.
+These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 9 November. Point values are possible bonuses, not awarded points. Thirteen items have delivery or implementation evidence, with caps totalling 29; the remaining caps total 6 (the two vendor-bug categories). This is an evidence inventory, not a confirmed score.
 
 | Item | Points | Evidence and current state |
 |---|---:|---|
@@ -509,13 +513,13 @@ These are evidence and submission states against the [official contest49 bonus r
 | Docker | 2 | Implemented: [Dockerfile](Dockerfile), [Compose](compose.yml), [qualified lifecycle evidence](docs/validation/clean-lifecycle.json). The licensed vendor image is obtained separately. |
 | Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated. [First valid cited LIVE case1566](docs/validation/live-gemini35lite-1566-20261105.json): five tools, intact seal, persisted native trace and no effect. Fresh admission requires explicit operator enablement and is bounded by health, quotas and budget; the viewer shows its actual availability inline. Retained viewing makes no model call. No bonus award inferred. |
 | ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt). [Public beta.2 registry installation](docs/validation/IPM-public-beta2-20261103.json) retained. Current immutable beta.4 has [native qualification](docs/validation/IPM-beta4-native-20261105.json) and [exact public-artifact qualification](docs/validation/IPM-beta4-public-artifact-20261105.json): 47 resources, seven imports and 296 source files from Git9b2ee09. It was installed offline in an initialized isolated lab; no fresh vendor bootstrap or native registry network fetch is claimed for beta.4. Optional PEX uses the separate source-checkout recipe. |
-| Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Trace recipe and evidence](docs/TRACEABILITY.md) includes LIVE session1566 persisted headers/tool observations and the separately labelled recorded1494 Visual Trace screenshot. No new LIVE Visual Trace UI screenshot or awarded points claimed. |
+| Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Trace recipe](docs/TRACEABILITY.md) and [persisted LIVE1566 native headers](docs/validation/live-session1566-native-headers.json) include actual tool observations and the separately labelled recorded1494 Visual Trace screenshot. No new LIVE Visual Trace UI screenshot or awarded points claimed. |
 | First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
 | Second article or translation | 1 | [Portuguese translation published 3 November](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub). |
 | Video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw) and [anonymous MP4 download](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4), [delivered to the organizer](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288538). [Delivery evidence](docs/validation/video-download-delivery-20261107.json). Four caption languages; historical pre-v7/pre-LIVE footage. |
 | IRIS Vector Search | 2 | [Native policy KB](cls/pbp/RAG/Policy.cls): `%AI.RAG`, local FastEmbed and IRIS Vector Search. [Session1566](docs/validation/live-gemini35lite-1566-20261105.json) retrieved three verified passages and cited a real chunk in a valid sealed proposal. Full policy constraints remain authoritative; no measured quality gain or awarded bonus claimed. |
-| Custom Interoperability adapter | 2 | [Own SolanaMemo outbound adapter](cls/pbp/Adapter/SolanaMemo.cls), [native Operation](cls/pbp/Operation/SolanaMemo.cls), [confirmed devnet-only Production test](docs/validation/solana-memo-devnet-20261103.json). One Memo instruction, no transfer; disabled without explicit private configuration. This is an implementation/test claim, not an awarded bonus. |
-| PEX | 3 | [Optional Java export inspection](pex/README.md) in a separate native Production: [12 algorithm checks, native service/operation messages and exact own-code JAR qualification](docs/validation/pex-export-inspection-20261108.json). Checks transport integrity only; no payment, seal or approval authority. Source-checkout extension, separate from hosted viewer and immutable IPM beta.4. |
+| Custom Interoperability adapter | 2 | [Own SolanaMemo outbound adapter](cls/pbp/Adapter/SolanaMemo.cls), [native Operation](cls/pbp/Operation/SolanaMemo.cls), [confirmed devnet-only Interoperability Production test](docs/validation/solana-memo-devnet-20261103.json). One Memo instruction, no transfer; disabled without explicit private configuration. This is an implementation/test claim, not an awarded bonus. |
+| PEX | 3 | [Optional Java export inspection](pex/README.md) in a separate native Production: [Seven native service/operation calls, 14 headers and the exact own-code JAR](docs/validation/pex-export-inspection-20261108.json) were qualified on `941e929`. [Twelve standalone algorithm checks and public CI](docs/validation/pex-public-ci-20261109.json) cover the subsequent status fix; no final-source native IRIS rerun is claimed. Checks transport integrity only; no payment, seal or approval authority. Source-checkout extension, separate from hosted viewer and immutable IPM beta.4. |
 | AI Hub / Embedded Python bugs | up to 3 each | No qualifying submitted reproducible vendor bug is claimed. |
 
 See the [structured tracker](docs/BONUS-TRACKER.json) for the complete item list. New functionality is documented as delivered only after its behavior is verified.
@@ -535,7 +539,7 @@ The demo prompt asks for `policy.chunk:<chunk_id>` references to passages it act
 
 Indexing is an explicit operator action: `##class(pbp.RAG.Policy).Stage(pol)` for the loaded policy, then `SetEnabled(1)` only after reviewing the proof. Installation does neither. FastEmbed's first use may download its local model; allow cache disk space and qualify on the declared build before activation. A failed retrieval is labelled unavailable and retains the full policy constraints.
 
-The optional `pbp.Operation.SolanaMemo` uses our `pbp.Adapter.SolanaMemo` to publish only `pbp1:<commitment>` to the fixed Solana devnet endpoint. It accepts an already intact local seal and never creates a payment approval or transfer. The private journal records the signed transaction's expected signature before the sole send. An uncertain result is reconciled by that signature with exact Memo readback; it is never re-signed or resent automatically. [Native Production proof](docs/validation/solana-memo-devnet-20261103.json).
+The optional `pbp.Operation.SolanaMemo` uses our `pbp.Adapter.SolanaMemo` to publish only `pbp1:<commitment>` to the fixed Solana devnet endpoint. It accepts an already intact local seal and never creates a payment approval or transfer. The private journal records the signed transaction's expected signature before the sole send. An uncertain result is reconciled by that signature with exact Memo readback; it is never re-signed or resent automatically. [Interoperability Production devnet proof](docs/validation/solana-memo-devnet-20261103.json).
 
 This optional anchor can remain pending: a crash after the durable intent but before transmission, an expired blockhash, or an unconfirmed RPC response does not trigger a replacement transaction. The local seal remains independently inspectable.
 

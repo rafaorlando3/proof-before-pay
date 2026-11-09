@@ -79,5 +79,7 @@ beta.4 artifact and is not enabled in the hosted viewer.
 The [native qualification](../docs/validation/pex-export-inspection-20261108.json) separates algorithm, build, native registration and Production checks.
 C1270 reviewed the source without blockers. Its oversized-payload status correction
 passed all 12 algorithm checks separately; the retained native/JAR qualification
-is from the preceding `941e929` source. No final-source native rerun or public CI
-result is claimed. No bonus award is inferred from this implementation.
+is from the preceding `941e929` source. The [dated public CI addendum](../docs/validation/pex-public-ci-20261109.json)
+records the completed standalone algorithm job and source publication. The historical
+qualification JSON retains its pre-publication CI-pending note; that note describes
+its capture time. No final-source native IRIS rerun or bonus award is inferred.

@@ -1,0 +1,30 @@
+{
+  "schema": "pbp.pex-public-ci-addendum/1",
+  "recorded_at_utc": "2026-11-09T04:14:20.751294+00:00",
+  "public_source": "a97a8c45d62e3083cab8fdac9f07563ee46c334f",
+  "public_workflow": {
+    "url": "https://github.com/rafaorlando3/proof-before-pay/actions/runs/42557258155",
+    "head_sha": "a97a8c45d62e3083cab8fdac9f07563ee46c334f",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      "pex-export-digest-algorithm",
+      "seal-typescript",
+      "seal-python-and-witness"
+    ],
+    "PEX_job_conclusion": "success",
+    "PEX_standalone_algorithm_checks": 12
+  },
+  "qualification_receipt": "docs/validation/pex-export-inspection-20261108.json",
+  "qualification_receipt_unchanged_SHA256": "9a4eb41a492e22e1dc8b2dcaee7a7587cc39e2528889edf456914a6818ae5246",
+  "historical_pending_CI_note_scope": "The preserved peer_review_followup.public_CI field describes its08Nov capture time, before source publication; this dated addendum records later public CI.",
+  "native_qualification_source": "941e92934efd69a73ef2f8310179e6f7635c3252",
+  "native_calls": 7,
+  "native_headers": 14,
+  "native_JAR_SHA256": "56b720fd45a03e6b457dbfe88a946bc11274702dc184274d1fa23009139fc13a",
+  "later_status_fix": "Standalone algorithm12 checks, separately validated after941e929; source operation/interface/native classes unchanged.",
+  "final_source_native_IRIS_rerun": false,
+  "private_vendor_SDK_or_image_on_public_CI": false,
+  "bonus_award_verified": false,
+  "runtime_changes_or_new_model_TX_from_this_addendum": false
+}

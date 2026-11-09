@@ -1,6 +1,6 @@
 {
   "schema": "pbp.contest-bonus-tracker/1",
-  "checked_at_utc": "2026-11-08T20:10:23.073473+00:00",
+  "checked_at_utc": "2026-11-09T04:14:20.751294+00:00",
   "contest": 49,
   "current_full_bonus_table_located": true,
   "no_points_awarded_to_project_verified": true,
@@ -10,7 +10,7 @@
   "arithmetic_sum_is_not_an_award_or_guaranteed_project_score": true,
   "official_bonus_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
   "official_bonus_page_published_at": "2026-10-26T23:14:44-04:00",
-  "official_page_verified_via": "Official contest49 bonus page checked08Nov; unchanged published caps. Downloadable-video delivery reread publicly.",
+  "official_page_verified_via": "Official contest49 rules and bonus pages checked09Nov; 15items/caps35 unchanged; candidate evidence inventory remains13items/caps29, not awardedpoints.",
   "official_page_snapshot_sha256": null,
   "official_sources": [
     "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
@@ -35,12 +35,13 @@
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
       "delivery_status": "implemented_isolated_native_Production_source_checkout_extension_not_awarded",
-      "note": "Java PEX export transport-digest inspection:12 algorithm checks, seven native service/operation inspections and14 native headers on isolated build154. Exact own-code JAR registered and real1122-byte evidence export matched. Operator-only, networkNONE, no financial/provider calls; lab stopped exit0/noOOM. Source-checkout optional production, not hosted viewer or immutable IPMbeta4. C1270 algorithm-only status correction passed12 checks in a separate stopped compiler container; native7calls/JAR evidence is from941e929, before that correction; no final-source native rerun or public CI success claimed.",
+      "note": "Java PEX export transport-digest inspection:12 algorithm checks, seven native service/operation inspections and14 native headers on isolated build154. Exact own-code JAR registered and real1122-byte evidence export matched. Operator-only, networkNONE, no financial/provider calls; lab stopped exit0/noOOM. Source-checkout optional production, not hosted viewer or immutable IPMbeta4. C1270 algorithm-only status correction passed12 checks in a separate stopped compiler container; native7calls/JAR evidence is from941e929, before that correction; no final-source native IRIS rerun claimed. Public source publication and the standalone algorithm CI job are now verified; see the dated public CI addendum. The historical qualification JSON keeps its pre-publication CI-pending note.",
       "evidence": [
         "pex/README.md",
         "pex/java/pbp/pex/ExportDigestOperation.java",
         "pex/cls/pbp/PEX/Production.cls",
-        "docs/validation/pex-export-inspection-20261108.json"
+        "docs/validation/pex-export-inspection-20261108.json",
+        "docs/validation/pex-public-ci-20261109.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -53,7 +54,8 @@
       "evidence": [
         "cls/pbp/Production.cls",
         "cls/pbp/Review.cls",
-        "docs/validation/native-ui25-browser.json"
+        "docs/validation/native-ui25-browser.json",
+        "docs/validation/http-workflow.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -230,7 +232,6 @@
       "Embedded Python bugs:up to3; no qualifying report verified"
     ],
     "remaining_priority_deliverables": [
-      "C1270 source review closed after oversized-payload status fix and12 algorithm checks PASS; owner approval for concrete publication version and then public CI are pending",
       "Strengthen judge presentation only for demonstrated gaps; preserve existing retained LIVE1566 and refund proof",
       "Only submit vendor bugs genuinely encountered, isolated and reproducible; no qualifying report found in examined development failures"
     ],
@@ -239,7 +240,8 @@
       "Bounded LIVE1566 qualification and Vector Search",
       "SolanaMemo devnet adapter transaction",
       "IPM beta4 archive installation",
-      "Approved video downloadable copy and organizer delivery"
+      "Approved video downloadable copy and organizer delivery",
+      "Source publication and public CI are complete; preserve the distinction between the941e929 native/JAR qualification and the later standalone algorithm checks. No final-source native IRIS rerun is claimed."
     ],
     "owner_request": "08Nov: improve judge experience with independent Claude review and pursue every applicable bonus."
   },
@@ -264,9 +266,10 @@
     "voting_end_EST": "2026-11-15T23:59:00-05:00",
     "equivalent_voting_end_Paraguay": "2026-11-16T01:59:00-03:00",
     "source": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows",
-    "publishing_or_submitting_still_requires_Rafael_express_OK": true,
     "publication_authorized_20261103": true,
-    "current_queue_express_OK_received": "2026-11-03; covers listed publication destinations and authorized staged improvements"
+    "current_queue_express_OK_received": "08Nov and09Nov: Rafael explicitly authorized reviewed corrections to GitHub/OEX without another generic OK; exact real reviews, affected checks and green CI remain required.",
+    "publication_requires_exact_review_affected_checks_and_green_CI": true,
+    "new_generic_Rafael_OK_required_for_authorized_corrections": false
   },
   "contest_registration": {
     "public_listing_confirmed": true,
@@ -274,5 +277,5 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-08T20:45:14.998964+00:00"
+  "delivery_evidence_updated_at_utc": "2026-11-09T04:14:20.751294+00:00"
 }
