@@ -31,6 +31,8 @@ Fresh LIVE requests are optional and explicitly labelled; their current health, 
 
 For a deeper inspection, the **Proof desk** offers Cases, Dossier, Evidence, Timeline, Seals and Evaluation navigation, Paper/Ink appearance, four visible retained-outcome cards and an interactive proof journey. A guided Previous/Next inspection separates the diagnostic proposal, verified decision, actual review and synthetic effect. The dossier shows readable sealed inputs and gaps, visible trace sessions and retained vector-policy passages; raw JSON and historical event text remain available. Evaluation includes the published v7 case outcomes and limitations without rerunning them. The [scenario and test guide](docs/JUDGE-SCENARIOS.md) explains each online outcome, the ten separate public local fixtures, copy verification, reproduction commands and the limits of those evaluations. Opening retained cases makes no model call; the guide does not add cases to the hosted allowlist or change approval rights.
 
+Selecting a retained case automatically starts the inline **AI activity** replay: the existing workflow steps highlight as recorded tools, proposal, seal, review and outcome are revealed. Pause, step controls and presentation speed remain available; reduced-motion preference disables autoplay. This illustrates stored records, not a fresh execution, private model reasoning or measured latency. Background refresh does not restart playback.
+
 ![Real IRIS console: deterministic duplicate refund with authenticated test review](docs/screens/native-refund-completed.png)
 
 Private synthetic lab: this case was decided by deterministic rule R1, followed by

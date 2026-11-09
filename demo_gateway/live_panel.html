@@ -69,6 +69,24 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
 #pbp-guided-controls{position:fixed;bottom:calc(var(--pbp-viewer-notice-height,48px) + 10px);right:16px;left:16px;z-index:7;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);box-shadow:var(--shadow);margin:0;font-size:12px}.pbp-proof-desk .tabs{display:none}.pbp-proof-desk .app{padding-bottom:calc(var(--pbp-viewer-notice-height,48px) + 170px)}#pbp-guided-controls p{font-size:12px}#pbp-guided-controls button{min-height:36px}#pbp-guided-controls[hidden]{display:none}
 @media(max-width:700px){#pbp-guided-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px}#pbp-guided-controls p{grid-row:2;grid-column:1/-1;line-height:1.35}#pbp-guided-controls [data-proof-next]{grid-column:2;grid-row:1}#pbp-guided-controls [data-proof-previous]{grid-column:1;grid-row:1}}
 @media(min-width:1320px){#pbp-guided-controls{left:218px;max-width:1000px}}
+
+/* Inline replay activity, driven only by retained case records. */
+.pbp-cinema{margin:0 16px 18px;border:1px solid var(--line-2);border-radius:9px;background:var(--surface);overflow:hidden}
+.pbp-cinema-inline-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px 18px;background:linear-gradient(115deg,var(--surface),var(--info-bg));border-bottom:1px solid var(--line)}
+.pbp-cinema-heading{display:flex;align-items:center;gap:12px}.pbp-cinema-heading h3{font:500 23px Georgia,serif;margin:0;color:var(--text)}.pbp-cinema-sub{font:11px/1.5 system-ui;color:var(--text-2);margin-top:4px;display:block}
+.pbp-cinema-agent{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border:1px solid var(--accent);border-radius:11px;color:var(--accent);background:var(--info-bg)}.pbp-cinema-agent svg,.pbp-flow-loader svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pbp-cinema-body{padding:16px 18px}.pbp-cinema-meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--text-2);font:10px/1.6 var(--mono,monospace);margin-bottom:10px}.pbp-cinema-tag{color:var(--accent);font-weight:700;letter-spacing:.8px}
+.pbp-cinema-scene{border-left:3px solid var(--accent);padding:4px 14px 10px;min-height:114px}.pbp-cinema-scene h4{font:500 23px/1.3 Georgia,serif;margin:6px 0;color:var(--text);overflow-wrap:anywhere}.pbp-cinema-scene p{font-size:12px;line-height:1.6;margin:6px 0;color:var(--text-2);overflow-wrap:anywhere}.pbp-cinema-scene[data-tone="stop"]{border-color:var(--warn)}.pbp-cinema-scene[data-tone="effect"]{border-color:var(--ok)}
+.pbp-cinema-status{font:10px var(--mono,monospace);color:var(--accent);margin:0 0 5px}.pbp-cinema-progress{height:3px;border-radius:3px;background:var(--line);margin:12px 0;overflow:hidden}.pbp-cinema-progress span{display:block;height:100%;background:var(--accent);transition:width .25s ease}
+.pbp-cinema-log{list-style:none;padding:0;margin:0 0 10px;max-height:92px;overflow:auto;border:1px solid var(--line);border-radius:5px;background:var(--surface-2)}.pbp-cinema-log li{display:flex;gap:10px;padding:7px 10px;border-bottom:1px solid var(--line);font:11px/1.5 var(--mono,monospace);color:var(--text-2);overflow-wrap:anywhere}.pbp-cinema-log li:last-child{color:var(--accent);background:var(--info-bg);border-bottom:0}.pbp-cinema-log span{color:var(--text-3);flex-shrink:0}
+.pbp-cinema-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.pbp-cinema button,.pbp-cinema select{font:600 11px system-ui;color:var(--text);background:var(--surface);border:1px solid var(--line-2);border-radius:5px;padding:8px 10px;min-height:34px;cursor:pointer}.pbp-cinema button:focus-visible,.pbp-cinema select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.pbp-cinema [data-cinema-play]{color:var(--accent-ink);background:var(--accent);border-color:var(--accent);min-width:77px}.pbp-cinema button:disabled{opacity:.5;cursor:default}.pbp-cinema-controls label{font-size:10px;color:var(--text-2)}
+.pbp-cinema-caption{font:11px/1.6 system-ui;color:var(--text-2);margin:8px 0 0}.pbp-cinema details{font-size:11px;color:var(--text-2)}.pbp-cinema pre{max-height:220px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;background:var(--surface-2);font:11px/1.6 var(--mono,monospace)}
+.pbp-proof-desk .flow .step{position:relative}.pbp-flow-loader{display:flex;gap:3px;align-items:center;position:absolute;right:7px;top:6px;color:var(--accent);opacity:0}.pbp-flow-loader i{display:block;width:3px;height:3px;background:currentColor;border-radius:50%}.pbp-proof-desk .flow .step[data-cinema-active="true"] .pbp-flow-loader{opacity:1}
+body.pbp-cinema-playing .flow .step[data-cinema-active="true"]{background:var(--info-bg);box-shadow:0 0 0 2px var(--accent),0 6px 22px color-mix(in srgb,var(--accent) 14%,transparent)}
+body.pbp-cinema-playing .flow .step[data-cinema-active="true"] .pbp-flow-loader i{animation:pbp-cinema-dot 1s ease-in-out infinite}body.pbp-cinema-playing .flow .step[data-cinema-active="true"] .pbp-flow-loader i:nth-of-type(2){animation-delay:.15s}body.pbp-cinema-playing .flow .step[data-cinema-active="true"] .pbp-flow-loader i:nth-of-type(3){animation-delay:.3s}body.pbp-cinema-playing .pbp-cinema-agent{animation:pbp-cinema-glow 1.6s ease-in-out infinite}
+@keyframes pbp-cinema-dot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}@keyframes pbp-cinema-glow{50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 14%,transparent)}}
+@media(max-width:700px){.pbp-cinema-inline-header{align-items:flex-start;padding:12px}.pbp-cinema-controls{width:100%}.pbp-cinema-body{padding:12px}.pbp-cinema-heading h3{font-size:21px}.pbp-cinema{margin:0 12px 16px}.pbp-cinema-controls button{padding:8px}.pbp-flow-loader svg{width:15px;height:15px}.pbp-flow-loader{right:3px;top:3px}.pbp-cinema-scene{padding-left:10px;min-height:140px}}
+@media(prefers-reduced-motion:reduce){.pbp-cinema *,.pbp-flow-loader *{animation:none!important;transition:none!important}}
 </style>
 <div id="pbp-judge-start">
 <nav class="pbp-desk-nav" aria-label="Proof desk">
@@ -149,6 +167,43 @@ function proofDeskFacts(d,replay){
     tools:replay?.tool_calls||[],genericReviewEvent:rejected&&events.some(e=>e.kind==='sealed'&&e.detail==='approval sealed (witness)')};
 }
 
+
+/* Recorded observations, not hidden model reasoning or a reconstruction of elapsed time. */
+function proofDeskReplayFrames(d,replay){
+  if(d?.ok!==true||replay?.ok!==true)return [];
+  const f=proofDeskFacts(d,replay);
+  if(!f.verified)return [];
+  const frames=[{node:'case',label:'01 / RETAINED CASE',title:'A case enters the workflow',text:'Case '+d.case.case_id+' · IRIS session '+(f.session??'not supplied')+'. These are stored inputs, not a new submission.',raw:{case_id:d.case.case_id,session_id:f.session,provenance:f.mode},tone:'neutral'}];
+  f.tools.forEach((tool,index)=>{
+    const output=tool.output,retrieval=output?.retrieval,passages=Array.isArray(retrieval?.passages)?retrieval.passages:[];
+    const fields=output&&typeof output==='object'&&!Array.isArray(output)?Object.keys(output).join(', '):'stored value';
+    const text=retrieval?.available===true&&passages.length?passages.length+' local policy passages returned; '+passages.filter(p=>f.refs.includes('policy.chunk:'+p.chunk_id)).length+' cited in the matching sealed decision.':Array.isArray(output)?output.length+' recorded item(s) returned. Inspect the actual retained values below.':'Recorded output fields: '+(fields||'none supplied')+'. Inspect the actual returned value below.';
+    const activity={GetOrder:'Reading order details',GetPixEvents:'Reading payment events',GetPayments:'Reading payment events',GetPayerHistory:'Reading payer history',GetEvidence:'Reading supplied evidence',GetStorePolicy:'Reading store policy'}[tool.name]||'Reading a recorded tool output';
+    frames.push({node:'tools',label:'TOOL '+(index+1)+' / '+f.tools.length+' · STORED TRACE',title:String(tool.name||'Unnamed recorded tool'),activity,text,raw:{sequence:tool.seq??null,at:tool.at??null,duration_ms:tool.duration_ms??null,arguments:tool.args??null,output:output??null},tone:'neutral'});
+  });
+  if(!f.tools.length)frames.push({node:'tools',label:'TOOLS / RECORDED BOUNDARY',title:'No tool calls in this trace',text:d.decision?.source==='rules'?'This decision used the rules path; no model call is represented.':'No tool calls were retained here. Their absence is not evidence that a tool succeeded.',raw:null,tone:'neutral'});
+  frames.push({node:'proposal',label:d.decision?.source==='rules'?'RULES / STORED DECISION':'AGENT / STORED PROPOSAL',title:f.proposed||'Separate proposal not retained',text:d.decision?.source==='rules'?'Deterministic rule output. It is not a model response.':'Diagnostic proposal only. It does not authorize a payment; this animation exposes no private model reasoning.',raw:d.decision?.proposal??null,tone:'neutral'});
+  frames.push({node:'seal',label:'SEAL / MATCHING INTACT RECORD',title:f.effective||'Action not supplied',text:'The verified record is bound to this case. Declared gaps: '+(f.declared.join(', ')||'none declared; not a guarantee of complete evidence')+'. Integrity does not prove the decision is correct.',raw:{commitment:d.decision.commitment,decision:f.record.decision,missing:f.record.missing},tone:'neutral'});
+  frames.push({node:'review',label:'HUMAN / RECORDED STATE',title:f.review,text:f.review==='Awaiting human review'?'The retained case stops here for a person. No review or financial approval is performed by playback.':'This is the historical review state. An acknowledgement is not payment authority.',raw:{status:d.case.status,review:d.review??null},tone:f.review==='Recorded approval'?'neutral':'stop'});
+  frames.push({node:'effect',label:'OUTCOME / RETAINED EVIDENCE',title:f.effect,text:d.receipt?.verification==='intact'&&d.receipt?.status==='effected'?'A historical synthetic effect has an intact receipt. Playback does not create, repeat or send this effect.':'No confirmed synthetic effect is demonstrated by this outcome. Inspect the stored permit and receipt state; playback cannot issue a permit or send a payment.',raw:{permit:d.permit??null,receipt:d.receipt??null,ledger_refusal:f.blocked||null},tone:d.receipt?.verification==='intact'&&d.receipt?.status==='effected'?'effect':'stop'});
+  return frames;
+}
+
+/* UI-only clock; all scheduling is injected so disposal and stale callbacks are testable. */
+function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
+  let index=0,playing=false,timer=null,speed=1,generation=0,disposed=false;
+  const report=()=>onState({index,playing,speed,ended:index===length-1});
+  const clear=()=>{generation++;if(timer!==null)cancel(timer);timer=null;};
+  const pause=()=>{clear();playing=false;if(!disposed)report();};
+  const later=()=>{const token=generation;timer=schedule(()=>{if(disposed||token!==generation||!playing)return;timer=null;if(!canPlay()){pause();return;}index++;onFrame(index);if(index===length-1){playing=false;report();}else{report();later();}},1800/speed);};
+  const play=()=>{if(disposed||length<2||!canPlay())return;clear();if(index===length-1){index=0;onFrame(index);}playing=true;report();later();};
+  const seek=value=>{if(disposed||!Number.isFinite(value))return;pause();index=Math.max(0,Math.min(length-1,Math.trunc(value)));onFrame(index);report();};
+  const setSpeed=value=>{if(disposed||![1,2].includes(value))return;const resume=playing;pause();speed=value;if(resume)play();else report();};
+  const dispose=()=>{pause();disposed=true;};
+  return {play,pause,seek,setSpeed,dispose};
+}
+
+
 (()=>{
   document.body.classList.add('pbp-proof-desk');
   const deskNav=document.querySelector('.pbp-desk-nav'),header=document.querySelector('.top');
@@ -169,6 +224,7 @@ function proofDeskFacts(d,replay){
   const stepHints=['Compare the returned tools with the observed inputs and explicit gaps.','Compare the diagnostic proposal with the effective sealed decision.','Inspect the intact decision and review records; copied edits do not change them.','Read the actual review outcome; acknowledgement cannot authorize a payment.','Check the permit and receipt separately; absence means no demonstrated effect.'];
   const proofDestinations=()=>['evidence','proposal','seals',document.querySelector('#review')?'review':'timeline','effect'];
   function selectProofStep(index,scroll=true){
+    if(scroll)caseCinema?.clock.pause();
     proofStep=Math.max(0,Math.min(4,index));
     document.querySelectorAll('.flow .step').forEach((step,i)=>{if(i===proofStep)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');});
     const controls=document.getElementById('pbp-guided-controls');if(!controls)return;
@@ -177,7 +233,69 @@ function proofDeskFacts(d,replay){
     controls.querySelector('[data-proof-next]').disabled=proofStep===4;
     if(scroll)jumpTo(proofDestinations()[proofStep]);
   }
-  function decorateProof(id){
+
+  let caseCinema=null;
+  const cinemaMotion=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'):null;
+  function stopCaseCinema(){
+    if(caseCinema){caseCinema.clock.dispose();caseCinema=null;}
+    document.body.classList.remove('pbp-cinema-playing');
+  }
+  document.addEventListener?.('visibilitychange',()=>{if(document.hidden)caseCinema?.clock.pause();});
+  cinemaMotion?.addEventListener?.('change',()=>{caseCinema?.clock.pause();caseCinema?.sync();});
+  function mountCaseCinema(summary,id,d,r,key,autoStart){
+    if(caseCinema?.root.isConnected&&caseCinema.root===summary.previousElementSibling&&caseCinema.key===key){
+      if(autoStart){caseCinema.clock.seek(0);caseCinema.clock.play();}
+      return;
+    }
+    stopCaseCinema();document.getElementById('pbp-case-cinema')?.remove();
+    const frames=proofDeskReplayFrames(d,r);if(!frames.length)return;
+    const root=document.createElement('section');root.id='pbp-case-cinema';root.className='pbp-cinema';
+    const agentIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4M10 10h4v4h-4z"/></svg>';
+    root.innerHTML=`<header class="pbp-cinema-inline-header"><div class="pbp-cinema-heading"><span class="pbp-cinema-agent">${agentIcon}</span><div><h3>AI activity</h3><span class="pbp-cinema-sub">Retained trace · illustrated replay, no new model call</span></div></div>
+      <div class="pbp-cinema-controls"><button type="button" data-cinema-play>Play</button><button type="button" data-cinema-back aria-label="Previous recorded stage">←</button><button type="button" data-cinema-next aria-label="Next recorded stage">→</button><button type="button" data-cinema-reset>Restart</button><label>Speed <select data-cinema-speed aria-label="Presentation speed"><option value="1">1×</option><option value="2">2×</option></select></label></div></header>
+      <div class="pbp-cinema-body"><div class="pbp-cinema-meta"><span class="pbp-cinema-tag">RECORDED REPLAY</span><span>Session ${esc(d.case.session_id??'not supplied')} · ${esc(proofDeskFacts(d,r).mode)} provenance</span></div>
+      <div class="pbp-cinema-scene"><div class="pbp-cinema-status"></div><div data-cinema-announcement aria-live="polite" aria-atomic="true"><div class="pbp-desk-label" data-cinema-label></div><h4 data-cinema-title></h4><p data-cinema-description></p></div></div>
+      <div class="pbp-cinema-progress" aria-hidden="true"><span></span></div><ol class="pbp-cinema-log" aria-label="Retained actions revealed so far"></ol><details data-cinema-raw><summary>Inspect this stage’s retained source</summary><pre></pre></details>
+      <p class="pbp-cinema-caption">Illustrated record sequence, not live execution, private reasoning or model latency. Choosing a case starts playback; background refresh does not restart it. The result shown is historical.</p><p class="pbp-cinema-caption" data-cinema-motion hidden>Reduced motion is enabled. Use the arrows to inspect static stages.</p></div>`;
+    summary.before(root);
+    let selected=0,clockState={playing:false};
+    const play=root.querySelector('[data-cinema-play]'),back=root.querySelector('[data-cinema-back]'),next=root.querySelector('[data-cinema-next]');
+    const nodeStep={case:0,tools:0,proposal:1,seal:2,review:3,effect:4};
+    const actions=frame=>frame.node==='tools'?'Read '+frame.title+' · retained output':frame.node==='proposal'?'Recorded proposal · '+frame.title:frame.node==='seal'?'Matching seal · '+frame.title:frame.node==='review'?'Review state · '+frame.title:frame.node==='effect'?'Retained result · '+frame.title:'Case selected · retained inputs';
+    const sync=()=>{
+      root.dataset.playing=String(clockState.playing);document.body.classList.toggle('pbp-cinema-playing',clockState.playing);
+      play.textContent=cinemaMotion?.matches?'Motion off':clockState.playing?'Pause':selected===frames.length-1?'Replay':'Play';
+      play.disabled=!!cinemaMotion?.matches;back.disabled=selected===0;next.disabled=selected===frames.length-1;
+      root.querySelector('[data-cinema-motion]').hidden=!cinemaMotion?.matches;
+    };
+    const render=index=>{
+      selected=index;const frame=frames[index];
+      document.querySelectorAll('.flow .step').forEach((step,i)=>{
+        step.dataset.cinemaActive=String(i===nodeStep[frame.node]);
+        let loader=step.querySelector('.pbp-flow-loader');
+        if(!loader){loader=document.createElement('span');loader.className='pbp-flow-loader';loader.setAttribute('aria-hidden','true');loader.innerHTML=(i===0||i===1?agentIcon:'')+'<i></i><i></i><i></i>';step.append(loader);}
+      });
+      selectProofStep(nodeStep[frame.node],false);
+      root.querySelector('[data-cinema-label]').textContent=frame.label+(frame.node==='tools'?' · '+frame.title:'');
+      root.querySelector('[data-cinema-title]').textContent=frame.activity||frame.title;
+      root.querySelector('[data-cinema-description]').textContent=frame.text;
+      root.querySelector('.pbp-cinema-status').textContent='Stage '+(index+1)+' / '+frames.length+(index===frames.length-1?' · End of retained record':'');
+      root.querySelector('.pbp-cinema-scene').dataset.tone=frame.tone;
+      const raw=root.querySelector('[data-cinema-raw]');raw.hidden=frame.raw===null;
+      raw.querySelector('pre').textContent=frame.raw===null?'':JSON.stringify(frame.raw,null,2);raw.open=false;
+      root.querySelector('.pbp-cinema-progress span').style.width=((index+1)/frames.length*100)+'%';
+      const log=root.querySelector('.pbp-cinema-log');log.innerHTML=frames.slice(0,index+1).map((item,i)=>'<li><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(actions(item))+'</li>').join('');log.scrollTop=log.scrollHeight;
+      sync();
+    };
+    const clock=proofDeskReplayClock({length:frames.length,onFrame:render,onState:value=>{clockState=value;sync();},schedule:(fn,delay)=>setTimeout(fn,delay),cancel:handle=>clearTimeout(handle),canPlay:()=>root.isConnected&&!document.hidden&&!cinemaMotion?.matches&&state.current===id});
+    caseCinema={root,key,clock,sync};render(0);
+    play.addEventListener('click',()=>clockState.playing?clock.pause():clock.play());
+    back.addEventListener('click',()=>clock.seek(selected-1));next.addEventListener('click',()=>clock.seek(selected+1));
+    root.querySelector('[data-cinema-reset]').addEventListener('click',()=>clock.seek(0));
+    root.querySelector('[data-cinema-speed]').addEventListener('change',event=>clock.setSpeed(Number(event.target.value)));
+    if(autoStart)clock.play();
+  }
+  function decorateProof(id,autoStart=false){
     if(typeof state==='undefined'||state.current!==id)return;
     const reads=proofReads.get(id);if(!reads?.detail?.ok||!reads.replay?.ok)return;
     const d=reads.detail,r=reads.replay,f=proofDeskFacts(d,r),detail=document.getElementById('detail');
@@ -201,6 +319,7 @@ function proofDeskFacts(d,replay){
         ${passages.length?`<details open><summary>Policy retrieval · ${passages.length} local vector passages</summary><p>${esc(retrieval.method)} · ${esc(retrieval.embedding_model)} · ${esc(retrieval.embedding_location)} embeddings. Retrieval output is recorded evidence; a sealed citation does not prove the model interpreted it correctly.</p>${passages.map(p=>`<article><p><b>${esc(p.section)}</b> · similarity ${esc(p.similarity_decimal)}${f.refs.includes('policy.chunk:'+p.chunk_id)?' · <b>Cited in sealed decision</b>':''}</p><p>${esc(p.text)}</p><details><summary>Passage identifier and source</summary><p class="mono">${esc(p.chunk_id)}<br>${esc(p.source)}</p></details></article>`).join('')}</details>`:''}
         <p class="small muted">Presentation derived from the matching verified record. Original rationale, raw JSON, events and hashes remain below unchanged. Confidence ${esc(f.confidence??'not supplied')} is a recorded, uncalibrated score, not a probability of correctness. Refund targets are derived by the server; a declared missing target does not mean the model observed one.</p>`;
     }
+    mountCaseCinema(summary,id,d,r,key,autoStart);
     const reviewStep=detail.querySelectorAll('.flow .step')[3];
     if(reviewStep){reviewStep.querySelector('.d').textContent=f.review;reviewStep.setAttribute('aria-label','Inspect: Review · '+f.review);reviewStep.classList.toggle('done',f.review==='Recorded approval');reviewStep.classList.toggle('now',f.review==='Awaiting human review');}
     if(f.genericReviewEvent){
@@ -232,7 +351,7 @@ function proofDeskFacts(d,replay){
   if(typeof api==='function'&&typeof openCase==='function'){
     const nativeApi=api,nativeOpenCase=openCase;
     api=async function(path,opts){const request=state.detailRequest;const data=await nativeApi(path,opts);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&request===state.detailRequest&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]);if(state.current===id){const reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}}return data;};
-    openCase=async function(id,...rest){const pending=nativeOpenCase(id,...rest),request=state.detailRequest;const result=await pending;if(request===state.detailRequest)decorateProof(id);return result;};
+    openCase=async function(id,...rest){if(state.current!==id&&typeof stopCaseCinema==='function')stopCaseCinema();const pending=nativeOpenCase(id,...rest),request=state.detailRequest;const result=await pending;if(request===state.detailRequest)decorateProof(id,rest[0]===true);return result;};
     if(typeof FILTERS!=='undefined'){FILTERS.find(([key])=>key==='blocked')[1]='Stopped / rejected';FILTERS.find(([key])=>key==='done')[1]='Closed / effected';}
   }
 
