@@ -15,17 +15,79 @@
 #pbp-live select{width:100%}#pbp-live button{cursor:pointer;margin:8px 5px 0 0}#pbp-live button:disabled{opacity:.55;cursor:default}
 #pbp-live .live-primary{background:#17635a;border-color:#388d7c}#pbp-live .live-muted{color:#bcc9d8;font-size:12px}
 #pbp-live-result{border-left:3px solid #3d8f88;padding:8px 10px;background:#0f1a28;overflow-wrap:anywhere}
+/* Proof desk: a document workspace, scoped to the hosted inspection facade. */
+body.pbp-proof-desk{height:auto;min-height:100%;--bg:#f4f1ea;--surface:#fffefa;--surface-2:#eeece5;--surface-3:#e6e2d9;--text:#242735;--text-2:#4e5364;--text-3:#626779;--line:#dcd7cc;--line-2:#c5bfb2;--accent:#5745a8;--accent-ink:#fff;--ok:#226447;--bad:#ad293f;--warn:#88520e;--info:#51429c;--ok-bg:#e2efe7;--bad-bg:#f9e4e7;--warn-bg:#f8ecd6;--info-bg:#ebe7f7;--radius:9px;--radius-s:6px;--shadow:0 2px 6px #252a3510;--queue-w:280px;color-scheme:light}
+body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;--surface-3:#30364c;--text:#f0eef7;--text-2:#c2bfd2;--text-3:#b1adc5;--line:#3a4055;--line-2:#555c75;--accent:#c2b1ff;--accent-ink:#231d3a;--ok:#87d5aa;--bad:#ff9cac;--warn:#f3ca89;--info:#c2b1ff;--ok-bg:#203e35;--bad-bg:#492933;--warn-bg:#453921;--info-bg:#342e4a;color-scheme:dark}
+.pbp-proof-desk .top{background:var(--surface);backdrop-filter:none;border-top:3px solid var(--accent)}
+.pbp-proof-desk .brand .mark{filter:none}.pbp-proof-desk .brand h1{font-family:Georgia,serif;font-size:18px}
+.pbp-proof-desk #pbp-judge-start{max-width:1560px;margin:20px auto 0;padding:0 16px}
+.pbp-proof-desk #pbp-judge-guide{background:var(--surface);color:var(--text);border-color:var(--line);border-top:4px solid var(--accent);box-shadow:var(--shadow);padding:22px}
+.pbp-proof-desk #pbp-judge-guide h2{font-family:Georgia,serif;font-size:28px;font-weight:500;letter-spacing:-.5px}
+.pbp-proof-desk #pbp-judge-guide small{color:var(--text-2)}
+.pbp-proof-desk #pbp-judge-guide button{color:var(--text);background:var(--surface);border-color:var(--line-2);border-radius:6px}
+.pbp-proof-desk #pbp-judge-guide button:hover{border-color:var(--accent);background:var(--info-bg)}
+.pbp-proof-desk #pbp-judge-guide .judge-paths>button{flex:1 1 250px;border-left:4px solid var(--accent);padding:14px}
+.pbp-proof-desk #pbp-live{background:var(--surface);color:var(--text);border-color:var(--line)}
+.pbp-proof-desk #pbp-live select,.pbp-proof-desk #pbp-live button{background:var(--surface-2);border-color:var(--line-2);color:var(--text)}
+.pbp-proof-desk #pbp-live .live-muted{color:var(--text-2)}.pbp-proof-desk #pbp-live-result{background:var(--surface-2);border-color:var(--accent)}
+.pbp-desk-label{font:700 11px var(--mono,monospace);text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px}
+.pbp-desk-context{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.pbp-desk-context span{font-size:11px;border:1px solid var(--line);padding:3px 8px;border-radius:4px;background:var(--surface-2)}
+.pbp-desk-nav{position:sticky;top:var(--header-h,56px);z-index:6;display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 16px 14px;padding:10px 0;background:var(--bg)}
+.pbp-desk-nav button,.pbp-desk-nav a{display:inline-flex;align-items:center;gap:8px;padding:9px 11px;border:1px solid var(--line);border-radius:6px;color:var(--text-2);background:var(--surface);font:600 12px system-ui;text-decoration:none;cursor:pointer}
+.pbp-desk-nav button:hover,.pbp-desk-nav a:hover{color:var(--accent);border-color:var(--accent)}
+.pbp-desk-nav button:disabled{opacity:.5;cursor:default}.pbp-desk-nav [aria-current="location"]{border-color:var(--accent);color:var(--accent);background:var(--info-bg)}
+#pbp-desk-current{width:100%;margin:0;color:var(--text-2);font:11px var(--mono,monospace);overflow-wrap:anywhere}
+.pbp-desk-nav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.pbp-desk-nav .pbp-theme{margin-left:auto}.pbp-proof-desk .pill{border-radius:4px}.pbp-proof-desk .step{border-radius:4px}
+.pbp-proof-desk .kpi .v{font-family:Georgia,serif;font-weight:500}.pbp-proof-desk .card>.hd{background:var(--surface-2);border-radius:8px 8px 0 0}
+.pbp-proof-desk{--pbp-nav-offset:var(--pbp-desk-nav-height,0px)}
+.pbp-proof-desk #detail,.pbp-proof-desk .queue,.pbp-proof-desk #replay,.pbp-proof-desk .tl,.pbp-proof-desk .seal,.pbp-proof-desk .decision,.pbp-proof-desk .decision + .card,.pbp-proof-desk #review{scroll-margin-top:calc(var(--header-h,56px) + var(--pbp-nav-offset) + 12px)}
+@keyframes pbp-proof-reveal{from{opacity:.35;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.pbp-proof-desk .flow .step,.pbp-proof-desk .guide-body{animation:pbp-proof-reveal .18s ease-out}
+.pbp-proof-desk .flow .step[role="button"]{cursor:pointer}.pbp-proof-desk .flow .step[role="button"]:hover{border-color:var(--accent)}
+.pbp-proof-desk #pbp-case-catalog{background:var(--surface);border-color:var(--line);margin-top:16px}
+#pbp-case-catalog>summary{font-size:14px;color:var(--accent);padding:12px 0;display:list-item;list-style:disclosure-closed inside}
+#pbp-case-catalog[open]>summary{list-style-type:disclosure-open}
+.pbp-outcome-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:4px 0 12px}
+.pbp-outcome-grid article{padding:16px;border:1px solid var(--line);border-radius:6px;min-width:0}
+.pbp-outcome-grid h3{font-size:15px;margin:8px 0}.pbp-outcome-grid p{font-size:13px;line-height:1.6}.pbp-outcome-grid .pbp-outcome-code{font:700 11px var(--mono,monospace);color:var(--accent)}
+.pbp-outcome-grid button{margin-top:8px;width:100%}.pbp-outcome-grid a{color:var(--accent)}
+#pbp-desk-status{font-size:13px;margin:0 0 10px;color:var(--text-2)}
+#pbp-desk-status:empty{margin:0}#pbp-evaluation{padding:0 16px 12px;background:var(--surface);border-color:var(--line);color:var(--text);scroll-margin-top:calc(var(--header-h,56px) + var(--pbp-nav-offset) + 12px)}
+#pbp-evaluation table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}#pbp-evaluation th,#pbp-evaluation td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}#pbp-evaluation th{color:var(--text-2)}#pbp-evaluation a{color:var(--accent)}
+#pbp-evaluation p{max-width:85ch;font-size:13px;line-height:1.6}
+@media(min-width:1320px){.pbp-proof-desk{--pbp-nav-offset:0px}.pbp-proof-desk #pbp-judge-start,.pbp-proof-desk .app{margin-left:202px;margin-right:16px;max-width:none}.pbp-desk-nav{position:fixed;left:16px;top:80px;bottom:90px;width:170px;margin:0;padding:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;overflow-y:auto}.pbp-desk-nav .pbp-theme{margin-left:0;margin-top:auto}.pbp-desk-nav button,.pbp-desk-nav a{padding:12px}}
+@media(max-width:600px){.pbp-outcome-grid{grid-template-columns:1fr}.pbp-proof-desk #pbp-judge-start{padding:0 12px;margin-top:12px}.pbp-proof-desk #pbp-judge-guide{padding:16px}.pbp-proof-desk #pbp-judge-guide h2{font-size:24px}.pbp-desk-nav{gap:5px}.pbp-desk-nav button,.pbp-desk-nav a{padding:8px;font-size:11px}.pbp-desk-nav .pbp-theme{margin-left:0}.pbp-proof-desk .brand h1{display:block;font-size:15px}}
 </style>
 <div id="pbp-judge-start">
+<nav class="pbp-desk-nav" aria-label="Proof desk">
+  <p id="pbp-desk-current" aria-live="polite">Choose a retained case</p>
+  <button type="button" data-proof-target="queue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Cases</button>
+  <button type="button" data-proof-target="dossier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 3h9v10H3zM3 7V4h7l2 3h9v3"/></svg>Dossier</button>
+  <button type="button" data-proof-target="evidence"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM15 3v5h4M8 12h8M8 16h5"/></svg>Evidence</button>
+  <button type="button" data-proof-target="timeline"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v18M10 5h10M10 12h7M10 19h10"/><circle cx="6" cy="5" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="6" cy="19" r="2"/></svg>Timeline</button>
+  <button type="button" data-proof-target="seals"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 8 3v6c0 5-4 8-8 11-4-3-8-6-8-11V5zM8 12l3 3 5-6"/></svg>Seals</button>
+  <button type="button" data-proof-target="evaluation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v18h17M8 17v-4M13 17V9M18 17V5"/></svg>Evaluation</button>
+  <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6l2 2 2-2h6v16h-6l-2 2-2-2H4zM12 6v16M7 9h2M15 9h2M7 13h2M15 13h2"/></svg>Test guide</a>
+  <button class="pbp-theme" type="button" id="pbp-desk-theme" aria-pressed="false">Ink appearance</button>
+</nav>
+<p id="pbp-desk-status" role="status" aria-live="polite"></p>
 <section id="pbp-judge-guide" aria-labelledby="pbp-judge-title">
+  <div class="pbp-desk-label">Proof desk / synthetic payment review</div>
   <h2 id="pbp-judge-title">Start with the proof</h2>
-  <p>Two retained examples show what the system can do and where it stops. Opening them makes no model call.</p>
-  <div class="judge-paths">
-    <button type="button" data-judge-case="video-demo:d83544a2">1. Completed sandbox refund<small>Recorded proposal → human approval → single-use permit → synthetic receipt</small></button>
-    <button type="button" data-judge-case="public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe">2. Retained LIVE decision<small>Session1566 · observed tools and cited local policy → human review · no effect</small></button>
-  </div>
-  <p><small>In either case, inspect the seal chain and Time Machine. “Try to tamper” checks an edited copy; the original remains intact. This viewer cannot approve a payment.</small></p>
-  <p id="pbp-judge-status" role="status" hidden></p>
+  <p>Four retained outcomes show what the system can do and where it stops. Start with the completed refund, then compare a refusal. Opening them makes no model call.</p>
+  <div class="pbp-desk-context"><span>Observed evidence</span><span>Explicit gaps</span><span>Sealed decision</span><span>Bounded effect</span></div>
+  <section id="pbp-case-catalog" aria-label="Four retained outcomes">
+    <div class="pbp-outcome-grid">
+      <article><div class="pbp-outcome-code">01 / COMPLETED</div><h3>A duplicate was refunded once</h3><p>Inspect the recorded proposal, exact historical human approval, consumed permit and intact <b>84.00 BRL synthetic receipt</b>.</p><small>Check: the approval and permit bind the seal. This is a retained test effect, not a new payment.</small><button type="button" data-judge-case="video-demo:d83544a2">1. Completed sandbox refund</button></article>
+      <article><div class="pbp-outcome-code">02 / HELD FOR A PERSON</div><h3>Real tools, a cited policy, no effect</h3><p>Session1566 retains five real tool calls, three local policy passages and a cited chunk inside an intact human-review decision.</p><small>Check: retained LIVE provenance, observed outputs and the cited passage. One qualification does not establish general model quality.</small><button type="button" data-judge-case="public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe">2. Retained LIVE decision</button></article>
+      <article><div class="pbp-outcome-code">03 / LEDGER REFUSED</div><h3>Acknowledged is not paid</h3><p>The recorded refund proposal had no usable test destination. A historical acknowledgement closed the case, while the test ledger refused the effect.</p><small>Check: <code>test_recipient_required</code>, intact decision and approval, and no permit or receipt. Human review cannot supply missing payment authority.</small><button type="button" data-judge-case="recipient-flow:absent:bfe5c8fd">Inspect missing destination</button></article>
+      <article><div class="pbp-outcome-code">04 / EVIDENCE CONFLICT</div><h3>A delivery scan is not the missing signature</h3><p>The recorded proposal names the absent carrier signature despite a delivery scan and a contradictory customer claim. The historical reviewer rejected the case.</p><small>Check: sealed <code>evidence.carrier_signature</code>, the review event and zero effect. Replay does not call a model or prove a gain over rules.</small><button type="button" data-judge-case="pix-0006:70dc920238">Inspect evidence conflict</button></article>
+    </div>
+    <p><small>These are the four cases in the hosted allowlist, not four new tests. The <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener">test guide</a> maps the ten public local fixtures, reproduction commands, expected boundaries and historical evaluation reports separately.</small></p>
+  </section>
+  <p><small>Inspect the seal chain and Time Machine. “Try to tamper” checks an edited copy; the original remains intact. This viewer cannot approve a payment.</small></p>
+  <p id="pbp-judge-status" role="status" aria-live="polite"></p>
 </section>
 <details id="pbp-live">
   <summary>Try a live decision</summary>
@@ -41,9 +103,62 @@
     <p class="live-muted">If live service is unavailable or the cap is reached, this page explicitly stays in recorded mode. Viewing a recorded case never calls the model.</p>
   </div>
 </details>
+<details id="pbp-evaluation">
+  <summary>Evaluation · published historical evidence</summary>
+  <div class="pbp-desk-label">One informed set / 12 cases / no new run</div>
+  <p>The v7 evaluation compared these approaches on the same pre-frozen, informed twelve cases. Raw means the proposal; effective means the result after application constraints. The published errors remain counted.</p>
+  <table><thead><tr><th scope="col">Approach</th><th scope="col">Raw correct</th><th scope="col">Effective correct</th></tr></thead><tbody><tr><th scope="row">Conservative rules R7</th><td>7 / 12</td><td>7 / 12</td></tr><tr><th scope="row">Deterministic triage D7</th><td>8 / 12</td><td>8 / 12</td></tr><tr><th scope="row">Agent G</th><td>11 / 12</td><td>10 / 12</td></tr></tbody></table>
+  <p>The difference describes these cases. It is not a blind sample, population accuracy, comparison with other projects or probability of winning. All effects were synthetic; usage costs are estimates, not billing receipts.</p>
+  <p><a href="https://github.com/rafaorlando3/proof-before-pay/blob/a57e0031491ffa00715223087d94466b1c1809c0/docs/validation/paired-v7-20261101.md" target="_blank" rel="noopener">Read the audited v7 report and its two errors</a> · <a href="https://github.com/rafaorlando3/proof-before-pay/blob/a57e0031491ffa00715223087d94466b1c1809c0/docs/validation/paired-v7-20261101.json" target="_blank" rel="noopener">Inspect the structured counts</a></p>
+  <p><b>Separate layers:</b> LIVE1566 is one cited hosted qualification with no effect. The eight-case v5 cohort and the v6 attempts have different scopes; the required autonomy gain was not demonstrated in v6. The <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener">test guide</a> links each original report and the ten local fixtures separately.</p>
+</details>
 </div>
 <script>
 (()=>{
+  document.body.classList.add('pbp-proof-desk');
+  const deskNav=document.querySelector('.pbp-desk-nav'),header=document.querySelector('.top');
+  const fitNavigation=()=>{if(deskNav)document.body.style.setProperty('--pbp-desk-nav-height',Math.ceil(deskNav.getBoundingClientRect().height)+'px');};
+  if(deskNav&&header){
+    header.after(deskNav);
+    fitNavigation();window.addEventListener('resize',fitNavigation,{passive:true});
+    if(typeof ResizeObserver==='function')new ResizeObserver(fitNavigation).observe(deskNav);
+  }
+  const theme=document.getElementById('pbp-desk-theme');
+  let savedTheme=null;try{savedTheme=localStorage.getItem('pbp49-proof-theme');}catch(error){}
+  const applyTheme=ink=>{document.body.classList.toggle('pbp-ink',ink);theme.setAttribute('aria-pressed',String(ink));};
+  applyTheme(savedTheme==='ink'||(savedTheme!=='paper'&&typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches));
+  theme.addEventListener('click',()=>{const ink=!document.body.classList.contains('pbp-ink');applyTheme(ink);try{localStorage.setItem('pbp49-proof-theme',ink?'ink':'paper');}catch(error){}});
+  const navigation=[...document.querySelectorAll('[data-proof-target]')];let lastCase=null;
+  function jumpTo(destination){
+    const message=document.getElementById('pbp-desk-status');
+    const selectors={queue:'.queue',dossier:'#detail',evidence:'#replay',proposal:'.decision',timeline:'.tl',review:'#review',effect:'.decision + .card',seals:'.seal',evaluation:'#pbp-evaluation'};
+    const target=document.querySelector(selectors[destination]);
+    if(!target||(!['queue','evaluation'].includes(destination)&&(typeof state==='undefined'||!state.current))){message.textContent='Open a retained case first, then choose an available part of its proof to inspect.';return;}
+    if(destination==='evaluation')target.open=true;
+    else if(typeof setView==='function')setView(destination==='queue'?'queue':'case');
+    navigation.forEach(button=>{if(button.dataset.proofTarget===destination)button.setAttribute('aria-current','location');else button.removeAttribute('aria-current');});
+    target.scrollIntoView({block:'start'});message.textContent='';
+  }
+  function updateNavigation(){
+    const current=typeof state==='undefined'?null:state.current;
+    navigation.forEach(button=>{const unavailable=!['queue','evaluation'].includes(button.dataset.proofTarget)&&!current;button.disabled=unavailable;button.setAttribute('aria-disabled',String(unavailable));});
+    document.getElementById('pbp-desk-current').textContent=current?'Case: '+current:'Choose a retained case';
+    fitNavigation();
+    if(current!==lastCase){
+      document.getElementById('pbp-desk-status').textContent='';lastCase=current;
+      navigation.forEach(button=>{if(current&&button.dataset.proofTarget==='dossier')button.setAttribute('aria-current','location');else button.removeAttribute('aria-current');});
+    }
+    const destinations=['evidence','proposal','seals',document.querySelector('#review')?'review':'timeline','effect'];
+    document.querySelectorAll('.flow .step').forEach((step,index)=>{
+      if(step.dataset.proofBound||!destinations[index])return;
+      step.dataset.proofBound='1';step.setAttribute('role','button');step.setAttribute('tabindex','0');step.setAttribute('aria-label','Inspect: '+step.textContent.trim().replace(/\s+/g,' '));
+      step.addEventListener('click',()=>jumpTo(destinations[index]));
+      step.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();jumpTo(destinations[index]);}});
+    });
+  }
+  navigation.forEach(button=>button.addEventListener('click',()=>jumpTo(button.dataset.proofTarget)));
+  updateNavigation();
+  if(typeof MutationObserver==='function')new MutationObserver(updateNavigation).observe(document.getElementById('detail'),{childList:true});
   const panel=document.getElementById('pbp-live'),choice=document.getElementById('pbp-live-scenario');
   const guide=document.getElementById('pbp-judge-guide'),app=document.querySelector('.app');
   if(app)app.before(document.getElementById('pbp-judge-start'));
@@ -54,9 +169,8 @@
       const id=button.dataset.judgeCase;
       if(typeof state==='undefined'||!state.cases.some(c=>c.case_id===id)||typeof openCase!=='function')throw new Error('retained_case_unavailable');
       await openCase(id,true);
-      document.getElementById('detail')?.scrollIntoView({block:'start'});
-      message.hidden=true;
-    }catch(error){message.textContent='This retained example could not be opened. Select an available case in the queue; no new decision was requested.';message.hidden=false;}
+      updateNavigation();jumpTo('dossier');message.textContent='';
+    }catch(error){message.textContent='This retained example could not be opened. Select an available case in the queue; no new decision was requested.';}
   }));
   const run=document.getElementById('pbp-live-run'),availability=document.getElementById('pbp-live-availability');
   const result=document.getElementById('pbp-live-result'),inspect=document.getElementById('pbp-live-inspect');

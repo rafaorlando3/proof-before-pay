@@ -29,6 +29,8 @@ Open the [hosted review console](https://review.pbp49.78-17-93-244.sslip.io/pbp/
 
 Fresh LIVE requests are optional and explicitly labelled; their current health, quota and cumulative US$5 budget gates appear in the console. The retained route remains useful without a fresh request. See the [full judge path](#judge-path) for details and limitations.
 
+For a deeper inspection, the **Proof desk** offers Cases, Dossier, Evidence, Timeline, Seals and Evaluation navigation, Paper/Ink appearance, four visible retained-outcome cards and an interactive proof journey. Evaluation displays the published historical results without rerunning them. The [scenario and test guide](docs/JUDGE-SCENARIOS.md) explains each online outcome, the ten separate public local fixtures, copy verification, reproduction commands and the limits of those evaluations. Opening retained cases makes no model call; the guide does not add cases to the hosted allowlist or change approval rights.
+
 ![Real IRIS console: deterministic duplicate refund with authenticated test review](docs/screens/native-refund-completed.png)
 
 Private synthetic lab: this case was decided by deterministic rule R1, followed by
