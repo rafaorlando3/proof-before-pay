@@ -73,3 +73,11 @@ For source-only checks without the licensed runtime, follow [Test the language c
 | [LIVE1566](validation/live-gemini35lite-1566-20261105.json) | One successful cited hosted qualification. No effect and no general quality-gain claim. |
 
 More examples make boundaries easier to inspect. They do not, by themselves, establish higher accuracy, awarded bonus points or a probability of winning.
+
+## Guided proof inspection
+
+After opening a retained case, use **Previous / Next step** to inspect evidence, proposal, seals, review and test effect. This moves focus through the loaded record; it does not replay an agent, authorize a payment or create a new trace. The dossier separates the unsealed diagnostic proposal from the verified effective decision and the actual outcome. “Acknowledged” does not mean payment approved, and the historical generic event “approval sealed (witness)” is qualified when the actual review was a rejection.
+
+Readable order/payment amounts and explicit gaps come from the matching intact decision record. If verification or case binding fails, that view stays unavailable. Original rationale, normalized JSON, hashes and events are preserved. Model confidence is uncalibrated; visible-token cost estimates are distinct from conservative budget accounting and billing. Stored zero tool timings are not a fresh latency measurement.
+
+The retained LIVE1566 dossier highlights three local vector-policy passages and the passage cited in the sealed decision. Opening it does not generate embeddings or call a model. A citation proves the reference was retained; it does not establish correct interpretation. The **Evaluation** panel shows four v7 controls and eight residues from the public report, including r4's ledger/gold limitation, r8's missing-evidence omission and D7's unsafe synthetic second refund. These historical informed cases do not estimate general accuracy or contest results.

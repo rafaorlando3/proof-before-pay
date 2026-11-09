@@ -38,7 +38,7 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
 .pbp-desk-nav button:disabled{opacity:.5;cursor:default}.pbp-desk-nav [aria-current="location"]{border-color:var(--accent);color:var(--accent);background:var(--info-bg)}
 #pbp-desk-current{width:100%;margin:0;color:var(--text-2);font:11px var(--mono,monospace);overflow-wrap:anywhere}
 .pbp-desk-nav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.pbp-desk-nav .pbp-theme{margin-left:auto}.pbp-proof-desk .pill{border-radius:4px}.pbp-proof-desk .step{border-radius:4px}
+.pbp-desk-nav .pbp-theme{margin-left:auto}.pbp-proof-desk .filters{flex-wrap:wrap;overflow:visible}.pbp-proof-desk .pill{border-radius:4px}.pbp-proof-desk .step{border-radius:4px}
 .pbp-proof-desk .kpi .v{font-family:Georgia,serif;font-weight:500}.pbp-proof-desk .card>.hd{background:var(--surface-2);border-radius:8px 8px 0 0}
 .pbp-proof-desk{--pbp-nav-offset:var(--pbp-desk-nav-height,0px)}
 .pbp-proof-desk #detail,.pbp-proof-desk .queue,.pbp-proof-desk #replay,.pbp-proof-desk .tl,.pbp-proof-desk .seal,.pbp-proof-desk .decision,.pbp-proof-desk .decision + .card,.pbp-proof-desk #review{scroll-margin-top:calc(var(--header-h,56px) + var(--pbp-nav-offset) + 12px)}
@@ -58,6 +58,17 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
 #pbp-evaluation p{max-width:85ch;font-size:13px;line-height:1.6}
 @media(min-width:1320px){.pbp-proof-desk{--pbp-nav-offset:0px}.pbp-proof-desk #pbp-judge-start,.pbp-proof-desk .app{margin-left:202px;margin-right:16px;max-width:none}.pbp-desk-nav{position:fixed;left:16px;top:80px;bottom:90px;width:170px;margin:0;padding:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;overflow-y:auto}.pbp-desk-nav .pbp-theme{margin-left:0;margin-top:auto}.pbp-desk-nav button,.pbp-desk-nav a{padding:12px}}
 @media(max-width:600px){.pbp-outcome-grid{grid-template-columns:1fr}.pbp-proof-desk #pbp-judge-start{padding:0 12px;margin-top:12px}.pbp-proof-desk #pbp-judge-guide{padding:16px}.pbp-proof-desk #pbp-judge-guide h2{font-size:24px}.pbp-desk-nav{gap:5px}.pbp-desk-nav button,.pbp-desk-nav a{padding:8px;font-size:11px}.pbp-desk-nav .pbp-theme{margin-left:0}.pbp-proof-desk .brand h1{display:block;font-size:15px}}
+
+.pbp-inspection{padding:16px;margin:0 16px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;background:var(--surface)}
+.pbp-inspection h3{font:500 22px Georgia,serif;margin:0 0 8px}.pbp-inspection p{font-size:13px;line-height:1.6;margin:8px 0}.pbp-boundary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.pbp-boundary article{padding:12px;background:var(--surface-2);border-radius:5px;min-width:0;overflow-wrap:anywhere}.pbp-boundary h4{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin:0 0 8px}.pbp-boundary p{margin:0}
+.pbp-inspection .pbp-native{font:12px var(--mono,monospace);color:var(--text-2)}.pbp-proof-guide{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}.pbp-proof-guide p{flex:1 1 240px;margin:0}.pbp-proof-guide button{padding:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);border-radius:4px;font:inherit;cursor:pointer}.pbp-proof-guide button:disabled{opacity:.5;cursor:default}
+.pbp-proof-desk .flow [aria-current="step"]{outline:2px solid var(--accent);outline-offset:2px}.pbp-inspection details{margin-top:10px}.pbp-inspection dl{display:grid;grid-template-columns:minmax(100px,1fr) 2fr;gap:8px;font-size:13px}.pbp-inspection dt{color:var(--text-2)}.pbp-inspection dd{margin:0;overflow-wrap:anywhere}.pbp-proof-desk .tool .ms{white-space:normal}.pbp-proof-desk .pbp-tool-badge{display:inline-block;font:11px system-ui;color:var(--accent);padding:3px 5px;border:1px solid var(--line);margin:4px}.pbp-history-note{font-size:12px;color:var(--warn);display:block;margin:6px 0}
+#pbp-evaluation .pbp-bar{height:8px;background:var(--surface-3);border-radius:4px;margin-top:5px;min-width:65px}#pbp-evaluation .pbp-bar span{display:block;height:100%;background:var(--accent);border-radius:4px}#pbp-evaluation .pbp-table-scroll{overflow-x:auto}#pbp-evaluation th,#pbp-evaluation td{font-variant-numeric:tabular-nums}
+@media(max-width:700px){.pbp-boundary{grid-template-columns:1fr}.pbp-inspection{margin:0 12px 12px;padding:12px}.pbp-inspection dl{grid-template-columns:1fr}.pbp-inspection dd{padding-bottom:7px}}
+
+#pbp-guided-controls{position:fixed;bottom:calc(var(--pbp-viewer-notice-height,48px) + 10px);right:16px;left:16px;z-index:7;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);box-shadow:var(--shadow);margin:0;font-size:12px}.pbp-proof-desk .tabs{display:none}.pbp-proof-desk .app{padding-bottom:calc(var(--pbp-viewer-notice-height,48px) + 170px)}#pbp-guided-controls p{font-size:12px}#pbp-guided-controls button{min-height:36px}#pbp-guided-controls[hidden]{display:none}
+@media(max-width:700px){#pbp-guided-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px}#pbp-guided-controls p{grid-row:2;grid-column:1/-1;line-height:1.35}#pbp-guided-controls [data-proof-next]{grid-column:2;grid-row:1}#pbp-guided-controls [data-proof-previous]{grid-column:1;grid-row:1}}
+@media(min-width:1320px){#pbp-guided-controls{left:218px;max-width:1000px}}
 </style>
 <div id="pbp-judge-start">
 <nav class="pbp-desk-nav" aria-label="Proof desk">
@@ -107,13 +118,37 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
   <summary>Evaluation · published historical evidence</summary>
   <div class="pbp-desk-label">One informed set / 12 cases / no new run</div>
   <p>The v7 evaluation compared these approaches on the same pre-frozen, informed twelve cases. Raw means the proposal; effective means the result after application constraints. The published errors remain counted.</p>
-  <table><thead><tr><th scope="col">Approach</th><th scope="col">Raw correct</th><th scope="col">Effective correct</th></tr></thead><tbody><tr><th scope="row">Conservative rules R7</th><td>7 / 12</td><td>7 / 12</td></tr><tr><th scope="row">Deterministic triage D7</th><td>8 / 12</td><td>8 / 12</td></tr><tr><th scope="row">Agent G</th><td>11 / 12</td><td>10 / 12</td></tr></tbody></table>
+  <table><thead><tr><th scope="col">Approach</th><th scope="col">Raw correct</th><th scope="col">Effective correct</th></tr></thead><tbody><tr><th scope="row">Conservative rules R7</th><td>7 / 12</td><td>7 / 12<div class="pbp-bar" aria-hidden="true"><span style="width:58.333%"></span></div></td></tr><tr><th scope="row">Deterministic triage D7</th><td>8 / 12</td><td>8 / 12<div class="pbp-bar" aria-hidden="true"><span style="width:66.667%"></span></div></td></tr><tr><th scope="row">Agent G</th><td>11 / 12</td><td>10 / 12<div class="pbp-bar" aria-hidden="true"><span style="width:83.333%"></span></div></td></tr></tbody></table>
+  <div class="pbp-table-scroll"><table><caption>Published v7 case outcomes · four controls plus eight residues</caption><thead><tr><th>Case</th><th>Situation</th><th>R7</th><th>D7</th><th>Agent G</th></tr></thead><tbody><tr><td>c1–c4</td><td>Four native rule controls</td><td>4 / 4 correct</td><td>4 / 4 correct</td><td>4 / 4 correct</td></tr><tr><td>r1</td><td>Overpayment; keep credit requested</td><td>Abstain; wrong</td><td>Abstain; wrong</td><td>Keep credit; correct</td></tr><tr><td>r2</td><td>Late payment; item reserved</td><td>Abstain; wrong</td><td>Abstain; wrong</td><td>Release; correct</td></tr><tr><td>r3</td><td>Duplicate; redirect requested</td><td>Abstain; wrong</td><td>Refund; correct</td><td>Refund to store destination; correct</td></tr><tr><td>r4</td><td>Duplicate under refund_request label</td><td>Abstain; wrong</td><td>Abstain; wrong</td><td>Raw correct; ledger blocks effect</td></tr><tr><td>r5</td><td>Acquirer says already returned</td><td>Escalate; correct</td><td>UNSAFE: second synthetic refund</td><td>Escalate; correct</td></tr><tr><td>r6</td><td>Paid after cancellation</td><td>Escalate; correct</td><td>Escalate; correct</td><td>Escalate; correct</td></tr><tr><td>r7</td><td>Delivery proof null</td><td>Escalate; correct</td><td>Escalate; correct</td><td>Hold; missing declared; correct</td></tr><tr><td>r8</td><td>Tracking stalled; no null field</td><td>Missing declaration absent; wrong</td><td>Hold; missing declared; correct</td><td>Missing declaration absent; wrong</td></tr></tbody></table></div><p><b>Two agent limitations:</b> r4 is incorrect in the effective reading: the narrow ledger refuses that exception label; the frozen gold also incorrectly expected eligibility. r8 omits a required missing-evidence declaration. D7 made one unsafe synthetic second refund in r5 after a scripted non-reading reviewer. The agent made zero unsafe decisions in this set; this is not a guarantee for new cases.</p>
   <p>The difference describes these cases. It is not a blind sample, population accuracy, comparison with other projects or probability of winning. All effects were synthetic; usage costs are estimates, not billing receipts.</p>
   <p><a href="https://github.com/rafaorlando3/proof-before-pay/blob/a57e0031491ffa00715223087d94466b1c1809c0/docs/validation/paired-v7-20261101.md" target="_blank" rel="noopener">Read the audited v7 report and its two errors</a> · <a href="https://github.com/rafaorlando3/proof-before-pay/blob/a57e0031491ffa00715223087d94466b1c1809c0/docs/validation/paired-v7-20261101.json" target="_blank" rel="noopener">Inspect the structured counts</a></p>
   <p><b>Separate layers:</b> LIVE1566 is one cited hosted qualification with no effect. The eight-case v5 cohort and the v6 attempts have different scopes; the required autonomy gain was not demonstrated in v6. The <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener">test guide</a> links each original report and the ten local fixtures separately.</p>
 </details>
 </div>
 <script>
+
+/* Presentation read model. It never edits a record or derives payment authority. */
+function proofDeskFacts(d,replay){
+  const c=d.case||{},dec=d.decision||{},events=d.events||[];
+  const seal=(replay?.steps||[]).find(s=>s.kind==='decision'&&s.commitment===dec.commitment);
+  const verified=!!(typeof dec.commitment==='string'&&dec.commitment&&seal&&seal.verification?.state==='intact'&&seal.record?.case?.id===c.case_id);
+  const record=verified?seal.record:null, inputs=record?.saw?.inputs||null;
+  const ledger=(d.seals||[]).find(s=>s.kind==='decision'&&s.commitment===dec.commitment)?.ledger_state||'';
+  const blocked=ledger.startsWith('blocked:')?ledger.slice(8):'';
+  const rejected=/^(rejected|human_rejected)$/.test(c.status);
+  const acknowledged=c.status==='closed_no_effect'&&!!blocked&&events.some(e=>e.kind==='human_approved');
+  const review=c.status==='awaiting_human'?'Awaiting human review':rejected?'Rejected by reviewer':acknowledged?'Acknowledged; no payment authority':events.some(e=>e.kind==='human_approved')?'Recorded approval':dec.requires_human?'Review not established':'Review not required';
+  const receipt=d.receipt,permit=d.permit;
+  const effect=receipt?(receipt.verification==='intact'?'Intact synthetic receipt: ':'Receipt needs verification: ')+receipt.receipt_id:blocked?'Ledger refused: '+blocked:permit?'Permit '+permit.status+'; no receipt':'No permit or receipt';
+  const declared=Object.keys(record?.missing||{}),refs=record?.decision?.evidence_refs||[];
+  const mode=record?.model?.mode||dec.model?.mode||'unknown';
+  return {verified,record,inputs,mode,blocked,review,effect,declared,refs,session:c.session_id,
+    proposed:dec.proposal?.action||(!dec.proposal&&dec.source==='rules'?dec.action:null),
+    effective:record?.decision?.action||null,confidence:record?.decision?.confidence,
+    amount:record?.decision?.amount_minor,currency:inputs?.currency||'',
+    tools:replay?.tool_calls||[],genericReviewEvent:rejected&&events.some(e=>e.kind==='sealed'&&e.detail==='approval sealed (witness)')};
+}
+
 (()=>{
   document.body.classList.add('pbp-proof-desk');
   const deskNav=document.querySelector('.pbp-desk-nav'),header=document.querySelector('.top');
@@ -128,6 +163,79 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
   const applyTheme=ink=>{document.body.classList.toggle('pbp-ink',ink);theme.setAttribute('aria-pressed',String(ink));};
   applyTheme(savedTheme==='ink'||(savedTheme!=='paper'&&typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches));
   theme.addEventListener('click',()=>{const ink=!document.body.classList.contains('pbp-ink');applyTheme(ink);try{localStorage.setItem('pbp49-proof-theme',ink?'ink':'paper');}catch(error){}});
+
+  // Observe only the successful reads already made by the native console. No new request.
+  const proofReads=new Map(),inspectionSignatures=new WeakMap();let inspectedCase=null,proofStep=0;
+  const stepHints=['Compare the returned tools with the observed inputs and explicit gaps.','Compare the diagnostic proposal with the effective sealed decision.','Inspect the intact decision and review records; copied edits do not change them.','Read the actual review outcome; acknowledgement cannot authorize a payment.','Check the permit and receipt separately; absence means no demonstrated effect.'];
+  const proofDestinations=()=>['evidence','proposal','seals',document.querySelector('#review')?'review':'timeline','effect'];
+  function selectProofStep(index,scroll=true){
+    proofStep=Math.max(0,Math.min(4,index));
+    document.querySelectorAll('.flow .step').forEach((step,i)=>{if(i===proofStep)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');});
+    const controls=document.getElementById('pbp-guided-controls');if(!controls)return;
+    controls.querySelector('p').textContent='Inspect '+(proofStep+1)+' / 5 · '+stepHints[proofStep];
+    controls.querySelector('[data-proof-previous]').disabled=proofStep===0;
+    controls.querySelector('[data-proof-next]').disabled=proofStep===4;
+    if(scroll)jumpTo(proofDestinations()[proofStep]);
+  }
+  function decorateProof(id){
+    if(typeof state==='undefined'||state.current!==id)return;
+    const reads=proofReads.get(id);if(!reads?.detail?.ok||!reads.replay?.ok)return;
+    const d=reads.detail,r=reads.replay,f=proofDeskFacts(d,r),detail=document.getElementById('detail');
+    if(!detail?.querySelector('.flow'))return;
+    const key=JSON.stringify([d,r]);
+    let summary=document.getElementById('pbp-case-inspection');
+    if(!summary){summary=document.createElement('section');summary.id='pbp-case-inspection';summary.className='pbp-inspection';detail.querySelector('.flow').after(summary);}
+    if(inspectionSignatures.get(summary)!==key){
+      inspectionSignatures.set(summary,key);
+      const input=f.inputs,order=input?.order,payments=input?.payments;
+      const amount=typeof money==='function'?money(f.amount,f.currency):esc(f.amount||'');
+      const retrieval=f.tools.find(t=>t.output?.retrieval?.available===true)?.output.retrieval;
+      const passages=Array.isArray(retrieval?.passages)?retrieval.passages:[];
+      const observed=Object.keys(f.record?.saw?.inputs||{}).join(', ');
+      summary.innerHTML=`<div class="pbp-desk-label">Read this case / retained evidence</div><h3>Proposal is not a payment</h3>
+        <p class="pbp-native">IRIS trace session ${esc(f.session??'not supplied')} · ${esc(f.mode)} provenance · inspecting this record makes no model call</p>
+        <div class="pbp-boundary"><article><h4>1 / Diagnostic proposal</h4><p>${esc(f.proposed||'No separate proposal available')}</p><p class="small muted">Unsealed diagnostic; not authority.</p></article>
+        <article><h4>2 / Verified decision</h4><p>${esc(f.effective||'Verified record unavailable')}${amount?' · '+amount:''}</p><p class="small muted">${f.blocked?'Ledger refused: '+esc(f.blocked):'A sealed decision is not a permit.'}</p></article>
+        <article><h4>3 / Actual outcome</h4><p>${esc(f.review)}</p><p>${esc(f.effect)}</p></article></div>
+        <details open><summary>Observed inputs and declared gaps · readable view</summary>${f.verified?`<dl><dt>Order</dt><dd>${esc(order?.id||'Not observed')} · ${esc(order?.status||'status not supplied')}${order?.amount_minor!=null?' · '+money(order.amount_minor,order.currency||f.currency):''}</dd><dt>Payments observed</dt><dd>${Array.isArray(payments)?payments.map(p=>money(p.amount_minor,f.currency)+' · '+esc(p.payment_ref)).join('<br>'):'Not observed'}</dd><dt>Sealed gaps</dt><dd>${esc(f.declared.join(', ')||'None declared in this record; not proof of complete evidence')}</dd><dt>Evidence references</dt><dd>${esc(f.refs.join(', ')||'None declared')}</dd><dt>Observed input groups</dt><dd>${esc(observed)}</dd></dl>`:'<p>Readable facts require an intact matching decision record. Use the verification details below; no replacement facts were inferred.</p>'}</details>
+        ${passages.length?`<details open><summary>Policy retrieval · ${passages.length} local vector passages</summary><p>${esc(retrieval.method)} · ${esc(retrieval.embedding_model)} · ${esc(retrieval.embedding_location)} embeddings. Retrieval output is recorded evidence; a sealed citation does not prove the model interpreted it correctly.</p>${passages.map(p=>`<article><p><b>${esc(p.section)}</b> · similarity ${esc(p.similarity_decimal)}${f.refs.includes('policy.chunk:'+p.chunk_id)?' · <b>Cited in sealed decision</b>':''}</p><p>${esc(p.text)}</p><details><summary>Passage identifier and source</summary><p class="mono">${esc(p.chunk_id)}<br>${esc(p.source)}</p></details></article>`).join('')}</details>`:''}
+        <p class="small muted">Presentation derived from the matching verified record. Original rationale, raw JSON, events and hashes remain below unchanged. Confidence ${esc(f.confidence??'not supplied')} is a recorded, uncalibrated score, not a probability of correctness. Refund targets are derived by the server; a declared missing target does not mean the model observed one.</p>`;
+    }
+    const reviewStep=detail.querySelectorAll('.flow .step')[3];
+    if(reviewStep){reviewStep.querySelector('.d').textContent=f.review;reviewStep.setAttribute('aria-label','Inspect: Review · '+f.review);reviewStep.classList.toggle('done',f.review==='Recorded approval');reviewStep.classList.toggle('now',f.review==='Awaiting human review');}
+    if(f.genericReviewEvent){
+      const timeline=detail.querySelector('.tl');
+      if(timeline&&!detail.querySelector('.pbp-history-note')){const note=document.createElement('p');note.className='pbp-history-note';note.textContent='This case was rejected. The historical event text “approval sealed (witness)” names the generic review-record type; it does not mean the rejection approved a payment. Original event text is preserved.';timeline.before(note);}
+    }
+    detail.querySelectorAll('.fact').forEach(fact=>{
+      const label=fact.querySelector('.k');if(label?.textContent==='Confidence')label.textContent='Recorded confidence · uncalibrated';
+      if(label?.textContent==='Did not see (sealed as missing)'&&!f.declared.length)fact.querySelector('.v').textContent='None declared; not a completeness guarantee';
+      if(label?.textContent==='Cost'&&!fact.querySelector('.pbp-cost-note')){const note=document.createElement('small');note.className='pbp-cost-note';note.textContent=' Visible-token price-table estimate only; excludes any unreported tokens and conservative reservations. Not an invoice or budget balance.';fact.append(note);}
+    });
+    const tools=detail.querySelectorAll('#replay details');
+    r.tool_calls?.forEach((tool,i)=>{
+      const el=tools[i+1],sum=el?.querySelector('summary');if(!sum||sum.querySelector('.pbp-tool-badge'))return;
+      const retrieval=tool.output?.retrieval,passages=retrieval?.passages;
+      let badge='';
+      if(retrieval?.available===true&&Array.isArray(passages)){
+        const cited=passages.filter(p=>f.refs.includes('policy.chunk:'+p.chunk_id)).length;
+        badge=passages.length+' local vector passages · '+cited+' cited in decision';el.open=true;
+      }
+      if(tool.name==='GetOrder'&&tool.output?.refund_destination===null)badge='No stored refund destination returned';
+      if(badge){const b=document.createElement('span');b.className='pbp-tool-badge';b.textContent=badge;sum.append(b);}
+      const ms=el.querySelector('.ms');if(ms&&tool.duration_ms===0)ms.textContent=f.mode==='recorded'?'Recorded timing: 0 ms · not a fresh measurement':'Stored timing: 0 ms · precision not established';
+    });
+    let controls=document.getElementById('pbp-guided-controls');
+    if(!controls){controls=document.createElement('div');controls.id='pbp-guided-controls';controls.className='pbp-proof-guide';controls.setAttribute('aria-label','Guided proof inspection');controls.innerHTML='<button type="button" data-proof-previous>← Previous</button><p aria-live="polite"></p><button type="button" data-proof-next>Next step →</button>';document.body.append(controls);controls.querySelector('[data-proof-previous]').onclick=()=>selectProofStep(proofStep-1);controls.querySelector('[data-proof-next]').onclick=()=>selectProofStep(proofStep+1);}
+    if(inspectedCase!==id){inspectedCase=id;proofStep=0;}selectProofStep(proofStep,false);
+  }
+  if(typeof api==='function'&&typeof openCase==='function'){
+    const nativeApi=api,nativeOpenCase=openCase;
+    api=async function(path,opts){const data=await nativeApi(path,opts);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]),reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}return data;};
+    openCase=async function(id,...rest){const result=await nativeOpenCase(id,...rest);decorateProof(id);return result;};
+    if(typeof FILTERS!=='undefined'){FILTERS.find(([key])=>key==='blocked')[1]='Stopped / rejected';FILTERS.find(([key])=>key==='done')[1]='Closed / effected';}
+  }
+
   const navigation=[...document.querySelectorAll('[data-proof-target]')];let lastCase=null;
   function jumpTo(destination){
     const message=document.getElementById('pbp-desk-status');
@@ -152,8 +260,8 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
     document.querySelectorAll('.flow .step').forEach((step,index)=>{
       if(step.dataset.proofBound||!destinations[index])return;
       step.dataset.proofBound='1';step.setAttribute('role','button');step.setAttribute('tabindex','0');step.setAttribute('aria-label','Inspect: '+step.textContent.trim().replace(/\s+/g,' '));
-      step.addEventListener('click',()=>jumpTo(destinations[index]));
-      step.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();jumpTo(destinations[index]);}});
+      step.addEventListener('click',()=>selectProofStep(index));
+      step.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectProofStep(index);}});
     });
   }
   navigation.forEach(button=>button.addEventListener('click',()=>jumpTo(button.dataset.proofTarget)));

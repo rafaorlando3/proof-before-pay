@@ -24,6 +24,31 @@ class Controls(HTMLParser):
 
 @unittest.skipUnless(shutil.which("node"), "Node is needed for the shipped UI script contract")
 class ProofDeskTests(unittest.TestCase):
+    def test_read_model_requires_matching_verified_seal_and_keeps_outcomes_separate(self):
+        panel = Path(__file__).with_name("live_panel.html").read_text()
+        script, = re.findall(r"<script>(.*?)</script>", panel, re.S)
+        pure = script.split("(()=>{", 1)[0]
+        harness = r"""
+const assert=require('node:assert/strict'),vm=require('node:vm');
+const ctx={};vm.runInNewContext(JSON.parse(require('node:fs').readFileSync(0,'utf8')),ctx);
+const d={ok:true,case:{case_id:'fixture:1',status:'closed_no_effect',session_id:12},decision:{commitment:'seal1',proposal:{action:'refund_duplicate'},requires_human:true,model:{mode:'recorded'}},
+ events:[{kind:'human_approved'}],seals:[{kind:'decision',commitment:'seal1',ledger_state:'blocked:test_recipient_required'}]};
+const record={case:{id:'fixture:1'},saw:{inputs:{currency:'BRL',order:{amount_minor:'8400'},payments:[]}},decision:{action:'refund_duplicate',confidence:.9},missing:{refund_target:null},model:{mode:'recorded'}};
+const r={steps:[{kind:'decision',commitment:'seal1',verification:{state:'intact'},record}],tool_calls:[]};
+const original=JSON.stringify([d,r]);let f=ctx.proofDeskFacts(d,r);
+assert(f.verified);assert.equal(f.review,'Acknowledged; no payment authority');assert.equal(f.effect,'Ledger refused: test_recipient_required');assert.equal(f.proposed,'refund_duplicate');assert.equal(f.effective,'refund_duplicate');assert.equal(f.declared.join(','),'refund_target');assert.equal(JSON.stringify([d,r]),original);
+// Neither payload fields nor a different case seal can supply verified facts.
+r.steps[0].record.case.id='other-case';f=ctx.proofDeskFacts(d,r);assert.equal(f.verified,false);assert.equal(f.inputs,null);assert.equal(f.effective,null);
+r.steps[0].record.case.id='fixture:1';r.steps[0].verification.state='tampered';assert.equal(ctx.proofDeskFacts(d,r).verified,false);
+r.steps[0].verification.state='intact';d.case.status='awaiting_human';d.events=[];assert.equal(ctx.proofDeskFacts(d,r).review,'Awaiting human review');
+d.case.status='rejected';d.events=[{kind:'human_rejected'},{kind:'sealed',detail:'approval sealed (witness)'}];f=ctx.proofDeskFacts(d,r);assert.equal(f.review,'Rejected by reviewer');assert(f.genericReviewEvent);assert.equal(d.events[1].detail,'approval sealed (witness)');
+d.receipt={receipt_id:'test:receipt',verification:'tampered'};assert.match(ctx.proofDeskFacts(d,r).effect,/needs verification/);
+d.receipt.verification='intact';assert.match(ctx.proofDeskFacts(d,r).effect,/Intact synthetic receipt/);
+console.log('verified presentation boundaries pass');
+"""
+        result = subprocess.run([shutil.which("node"), "-e", harness], input=json.dumps(pure), text=True, capture_output=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_navigation_all_outcomes_and_missing_cases_never_request_a_decision(self):
         panel = Path(__file__).with_name("live_panel.html").read_text()
         controls = Controls()
@@ -40,6 +65,7 @@ class Element {
   removeAttribute(name) { delete this.attrs[name]; }
   scrollIntoView() { this.scrolled++; }
   before() {}
+  querySelector(s) { this.children ||= new Map(); if(!this.children.has(s))this.children.set(s,new Element()); return this.children.get(s); }
   replaceChildren() { this.options=[]; }
   append(option) { this.options.push(option); }
 }
