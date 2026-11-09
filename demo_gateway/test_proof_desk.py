@@ -24,6 +24,32 @@ class Controls(HTMLParser):
 
 @unittest.skipUnless(shutil.which("node"), "Node is needed for the shipped UI script contract")
 class ProofDeskTests(unittest.TestCase):
+    def test_out_of_order_native_reads_cannot_replace_newer_proof_or_selection(self):
+        panel = Path(__file__).with_name("live_panel.html").read_text()
+        start = panel.index("  if(typeof api==='function'&&typeof openCase==='function'){")
+        end = panel.index("  const navigation=", start)
+        wrapper = panel[start:end]
+        harness = r"""
+const assert=require('node:assert/strict'),vm=require('node:vm');
+const pending=[],decorated=[],reads=new Map();
+const ctx={state:{current:null,detailRequest:0},proofReads:reads,decorateProof:id=>decorated.push({id,data:reads.get(id)?.detail})};
+ctx.api=()=>new Promise(resolve=>pending.push(resolve));
+ctx.openCase=async id=>{ctx.state.current=id;ctx.state.detailRequest++;return await ctx.api('/cases/'+encodeURIComponent(id));};
+vm.runInNewContext(JSON.parse(require('node:fs').readFileSync(0,'utf8')),ctx);
+(async()=>{
+ const old=ctx.openCase('same-case'),fresh=ctx.openCase('same-case');
+ pending[1]({ok:true,version:2});await fresh;
+ pending[0]({ok:true,version:1});await old;
+ assert.equal(reads.get('same-case').detail.version,2);assert.equal(decorated.length,1);assert.equal(decorated[0].data.version,2);
+ const previous=ctx.openCase('case-A'),current=ctx.openCase('case-B');
+ pending[3]({ok:true,version:4});await current;pending[2]({ok:true,version:3});await previous;
+ assert.equal(reads.has('case-A'),false);assert.equal(ctx.state.current,'case-B');assert.equal(decorated.at(-1).id,'case-B');assert.equal(pending.length,4);
+ console.log('out-of-order native responses preserve latest proof');
+})().catch(e=>{console.error(e);process.exitCode=1;});
+"""
+        result = subprocess.run([shutil.which("node"), "-e", harness], input=json.dumps(wrapper), text=True, capture_output=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_read_model_requires_matching_verified_seal_and_keeps_outcomes_separate(self):
         panel = Path(__file__).with_name("live_panel.html").read_text()
         script, = re.findall(r"<script>(.*?)</script>", panel, re.S)

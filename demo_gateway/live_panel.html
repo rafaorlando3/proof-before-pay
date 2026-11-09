@@ -231,8 +231,8 @@ function proofDeskFacts(d,replay){
   }
   if(typeof api==='function'&&typeof openCase==='function'){
     const nativeApi=api,nativeOpenCase=openCase;
-    api=async function(path,opts){const data=await nativeApi(path,opts);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]),reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}return data;};
-    openCase=async function(id,...rest){const result=await nativeOpenCase(id,...rest);decorateProof(id);return result;};
+    api=async function(path,opts){const request=state.detailRequest;const data=await nativeApi(path,opts);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&request===state.detailRequest&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]);if(state.current===id){const reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}}return data;};
+    openCase=async function(id,...rest){const pending=nativeOpenCase(id,...rest),request=state.detailRequest;const result=await pending;if(request===state.detailRequest)decorateProof(id);return result;};
     if(typeof FILTERS!=='undefined'){FILTERS.find(([key])=>key==='blocked')[1]='Stopped / rejected';FILTERS.find(([key])=>key==='done')[1]='Closed / effected';}
   }
 
