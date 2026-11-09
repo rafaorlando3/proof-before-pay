@@ -2,9 +2,18 @@
 
 This optional gateway presents a small, explicitly selected set of synthetic cases
 from a running private IRIS instance. It is separate from the native application
-image and its IPM module. It is not a static simulation or a live-model API.
+image and its IPM module. Inspecting a retained case makes no model call. Each
+decision labels its recorded or LIVE provenance; the gateway is not a static simulation
+or an unrestricted model API.
 
-It binds only to `127.0.0.1:18879`. Put a HTTPS reverse proxy in front of it before
+The default entry below serves retained inspection only. The separately configured
+[bounded LIVE entry](LIVE-DEMO-PLAN.md) can also admit two fixed synthetic scenarios,
+subject to native readiness, explicit enablement, daily quotas and the preserved
+cumulative budget. It exposes no arbitrary prompt, case submission or financial approval.
+The public viewer shows its current availability inline; retained cases remain inspectable
+without making a fresh request.
+
+The default server command below binds only to `127.0.0.1:18879`. Put a HTTPS reverse proxy in front of it before
 remote access. The login page is public. Case data and all API routes require dedicated random demo credentials. Browser login sets an opaque, one-hour Secure/HttpOnly/SameSite=Strict cookie; sessions remain in memory. HTTP Basic remains available to API clients. Login is same-origin, bounded and rate limited per client address. API401 responses never send an HTTP authentication challenge; the browser returns to the application login page when its viewer session ends. Failed form submissions use POST/Redirect/GET with in-page feedback, avoiding native credential or form-resubmission dialogs.
 The JSON config file must have mode0600 and stays outside Git:
 
@@ -30,11 +39,16 @@ python3 -m unittest discover -s demo_gateway -p 'test_*.py'
 
 The viewer can inspect the selected cases, their seals, receipts and actual tool
 outputs. Counters cover only that subset. Case identity, sandbox environment and
-recorded model mode are checked against IRIS responses. Other cases and commitments
+recorded provenance are checked against IRIS responses for the configured recorded cases.
+When LIVE is configured, completed jobs are additionally bound to their exact stored
+case, commitment, model provenance and intact decision seal. Other cases and commitments
 are refused. Intake and review routes are blocked, regardless of frontend controls.
-After login, the only allowed application POST is verification of an edited copy of an allowlisted seal;
-it requires the configured HTTPS origin, the same-origin header and bounded JSON.
-The native verifier does not change the stored record or issue an effect.
+After login, the default inspection route allows an application POST only to verify an
+edited copy of an allowlisted seal. A configured LIVE entry additionally allows
+`POST /pbp/api/live` for its fixed-scenario queue; job/status inspection uses GET.
+These application POSTs require the configured HTTPS origin, the same-origin request
+header and bounded JSON. Copy verification does not change the stored record or issue
+an effect; the LIVE route also has no authority to approve a payment or issue an effect.
 
 The page identifies this limited viewer mode and does not claim reviewer privileges.
 The public TLS proxy, private config and service lifecycle are operator responsibilities.

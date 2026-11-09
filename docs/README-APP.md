@@ -5,6 +5,9 @@ decision is sealed before anything moves.** What the agent saw, what it did *not
 to do and what it decided are committed to a salted hash before a human approves, before a permit exists and
 before the test ledger acts. Change anything afterwards and the seal turns red.
 
+The executable financial scope in v1 is a **synthetic duplicate refund**. Other payment-exception
+requests can be investigated and escalated; their presence in the intake does not make them executable.
+
 Built for the InterSystems Programming Contest "AI Agents in Interoperability Workflows" (build 154, AI Hub EAP).
 Maintainer: Rafael Orlando Mendes (Developer Community profile in the repository README). Code written with AI
 assistants under Rafael's direction and review. MIT.
@@ -38,9 +41,12 @@ assistants under Rafael's direction and review. MIT.
   record and in the console. Live mode needs your own key and an explicit model (see below); nothing in this
   repository claims a live call succeeded unless the record says `mode: live`.
 - **The ledger is a test ledger.** No bank, no settlement, no external network. Recipients are `test:` accounts.
-- **Seals are local.** A commitment is a salted hash kept with the record inside IRIS; verification proves that a
-  shown record is (or is not) the one that was sealed. No external anchoring is claimed. (A Solana Memo anchor
-  exists in the reference library and is not used by the application.)
+- **Default verification is local.** A commitment is a salted hash kept with the record inside IRIS;
+  verification checks the shown record against the retained commitment. An administrator able to replace
+  the record, salt and commitment can rewrite local history. A separately configured, optional
+  [`pbp.Adapter.SolanaMemo` devnet extension](../README.md#optional-policy-retrieval-and-devnet-anchoring)
+  has a qualified single-Memo Production test; it is disabled without private configuration and does not
+  turn the default local verifier into an independent blockchain verifier. It creates no payment or transfer.
 - **Synthetic inputs only.** The guard detects common CPF, CNPJ, e-mail, phone and Pix-key formats; it is not a universal detector of personal information. Pseudonymize inputs before using this laboratory.
 
 ## Run it
@@ -86,7 +92,9 @@ Any Business Process can seal a decision with `pbp.Msg.SealRequest` to `pbp.Oper
 `python/pbp_s0_core/record.py`. (The ergonomics of this integration are still being measured; do not expect a
 one-liner yet.)
 
-A local administrator able to replace the stored record, salt and commitment can rewrite local history. No independent timestamp, external anchor or protection from a malicious IRIS administrator is claimed.
+A local administrator able to replace the stored record, salt and commitment can rewrite local history.
+This default integration establishes no independent timestamp or protection from a malicious IRIS
+administrator. The optional devnet extension described above is separate from this local verification path.
 
 ## Context validation after model output
 
