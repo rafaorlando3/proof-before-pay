@@ -10,8 +10,8 @@
   "artifacts": [
     {
       "file": "Proof-Before-Pay-v5-en.mp4",
-      "bytes": 7481332,
-      "SHA256": "a415ce0eb722ea454dcb842607ad0ef81866fb21889410f4fe964ec030cd60ff",
+      "bytes": 7481308,
+      "SHA256": "73c6aac2c2d25751b67360389e344801ac6b55c8fb946a26be5eba9b6eb0a2b4",
       "duration": "171.000000",
       "video": "H2641920x1080/30fps",
       "audio": "en",
@@ -25,8 +25,8 @@
     },
     {
       "file": "Proof-Before-Pay-v5-pt-BR.mp4",
-      "bytes": 7164342,
-      "SHA256": "c2f69b3fe333990f82fc8543b75b37edd473952d78d404191834850f03ae9b52",
+      "bytes": 7164358,
+      "SHA256": "e60b747ff08493ed8efb6cc21732b490aa543f0409e4f928066fb6f88fd9f378",
       "duration": "171.000000",
       "video": "H2641920x1080/30fps",
       "audio": "pt-BR",
@@ -78,5 +78,5 @@
       "SHA256": "e546d460a0db3e2c23c0acaf2c18e2584e7471b6bee41bebe4c649235e085a44"
     }
   ],
-  "sidecar_format": "CJK sidecar line-end spaces were trimmed for source hygiene. Timings and visible caption text are unchanged; MP4 hashes are unchanged."
+  "sidecar_format": "Chinese captions wrap at CJK or whitespace boundaries without splitting Latin terms or numbers; sentence punctuation remains with text. Both MP4s remuxed with corrected ZH track only; compressed video/audio streams SHA256-identical to reviewed cut. YouTube uses the same unchanged AV with separately uploaded corrected Chinese CC."
 }
