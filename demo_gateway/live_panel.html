@@ -51,7 +51,7 @@ body.pbp-proof-desk.pbp-ink{--bg:#141722;--surface:#1c2030;--surface-2:#252a3c;-
 .pbp-outcome-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:4px 0 12px}
 .pbp-outcome-grid article{padding:16px;border:1px solid var(--line);border-radius:6px;min-width:0}
 .pbp-outcome-grid h3{font-size:15px;margin:8px 0}.pbp-outcome-grid p{font-size:13px;line-height:1.6}.pbp-outcome-grid .pbp-outcome-code{font:700 11px var(--mono,monospace);color:var(--accent)}
-.pbp-outcome-grid button{margin-top:8px;width:100%}.pbp-outcome-grid a{color:var(--accent)}
+.pbp-outcome-grid button{margin-top:8px;width:100%}.pbp-outcome-grid [aria-pressed="true"]{outline:2px solid var(--accent)}.pbp-catalog-filters{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}.pbp-catalog-filters label{display:grid;gap:5px;font-size:12px;flex:1 1 200px}.pbp-catalog-filters select,.pbp-catalog-filters input{font:inherit;padding:9px;min-width:0;max-width:100%;color:var(--text);background:var(--surface);border:1px solid var(--line-2);border-radius:5px}.pbp-checklist{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.pbp-checklist label{display:block;font-size:13px;margin:8px 0}.pbp-checklist button{font:inherit;padding:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);border-radius:5px}.pbp-checklist p{font-size:12px}.pbp-outcome-grid a{color:var(--accent)}
 #pbp-desk-status{font-size:13px;margin:0 0 10px;color:var(--text-2)}
 #pbp-desk-status:empty{margin:0}#pbp-evaluation{padding:0 16px 12px;background:var(--surface);border-color:var(--line);color:var(--text);scroll-margin-top:calc(var(--header-h,56px) + var(--pbp-nav-offset) + 12px)}
 #pbp-evaluation table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}#pbp-evaluation th,#pbp-evaluation td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}#pbp-evaluation th{color:var(--text-2)}#pbp-evaluation a{color:var(--accent)}
@@ -104,16 +104,18 @@ body.pbp-cinema-playing .flow .step[data-cinema-active="true"] .pbp-flow-loader 
 <section id="pbp-judge-guide" aria-labelledby="pbp-judge-title">
   <div class="pbp-desk-label">Proof desk / synthetic payment review</div>
   <h2 id="pbp-judge-title">Start with the proof</h2>
-  <p>Four retained outcomes show what the system can do and where it stops. Start with the completed refund, then compare a refusal. Opening them makes no model call.</p>
-  <div class="pbp-desk-context"><span>Observed evidence</span><span>Explicit gaps</span><span>Sealed decision</span><span>Bounded effect</span></div>
-  <section id="pbp-case-catalog" aria-label="Four retained outcomes">
-    <div class="pbp-outcome-grid">
-      <article><div class="pbp-outcome-code">01 / COMPLETED</div><h3>A duplicate was refunded once</h3><p>Inspect the recorded proposal, exact historical human approval, consumed permit and intact <b>84.00 BRL synthetic receipt</b>.</p><small>Check: the approval and permit bind the seal. This is a retained test effect, not a new payment.</small><button type="button" data-judge-case="video-demo:d83544a2">1. Completed sandbox refund</button></article>
-      <article><div class="pbp-outcome-code">02 / HELD FOR A PERSON</div><h3>Real tools, a cited policy, no effect</h3><p>Session1566 retains five real tool calls, three local policy passages and a cited chunk inside an intact human-review decision.</p><small>Check: retained LIVE provenance, observed outputs and the cited passage. One qualification does not establish general model quality.</small><button type="button" data-judge-case="public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe">2. Retained LIVE decision</button></article>
-      <article><div class="pbp-outcome-code">03 / LEDGER REFUSED</div><h3>Acknowledged is not paid</h3><p>The recorded refund proposal had no usable test destination. A historical acknowledgement closed the case, while the test ledger refused the effect.</p><small>Check: <code>test_recipient_required</code>, intact decision and approval, and no permit or receipt. Human review cannot supply missing payment authority.</small><button type="button" data-judge-case="recipient-flow:absent:bfe5c8fd">Inspect missing destination</button></article>
-      <article><div class="pbp-outcome-code">04 / EVIDENCE CONFLICT</div><h3>A delivery scan is not the missing signature</h3><p>The recorded proposal names the absent carrier signature despite a delivery scan and a contradictory customer claim. The historical reviewer rejected the case.</p><small>Check: sealed <code>evidence.carrier_signature</code>, the review event and zero effect. Replay does not call a model or prove a gain over rules.</small><button type="button" data-judge-case="pix-0006:70dc920238">Inspect evidence conflict</button></article>
-    </div>
-    <p><small>These are the four cases in the hosted allowlist, not four new tests. The <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener">test guide</a> maps the ten public local fixtures, reproduction commands, expected boundaries and historical evaluation reports separately.</small></p>
+  <p>Open a retained example, compare the proposal with the sealed decision, and inspect any actual test effect. Browsing these records makes no model call.</p>
+  <div class="judge-paths" aria-label="Three inspection routes">
+    <button type="button" data-judge-case="video-demo:d83544a2">1. Completed sandbox refund<small>Inspect the consumed permit and synthetic receipt.</small></button>
+    <button type="button" data-judge-case="public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe">2. Retained LIVE decision<small>Inspect the tools, local policy citation and no effect.</small></button>
+    <button type="button" data-judge-case="adversarial:4ae70281:missing_gate">3. Constructed missing-evidence input<small>Inspect the refused proposal and effective escalation.</small></button>
+  </div>
+  <section id="pbp-case-catalog" aria-labelledby="pbp-catalog-title">
+    <h3 id="pbp-catalog-title">Browse retained examples</h3>
+    <p id="pbp-catalog-count">Waiting for the authenticated case list.</p>
+    <div class="pbp-catalog-filters"><label>Group <select id="pbp-catalog-group"><option value="all">All available</option><option value="effect">Synthetic effect</option><option value="stopped">Refused or no effect</option><option value="human">Human escalation</option><option value="live">Retained LIVE</option></select></label><label>Find an example <input id="pbp-catalog-search" type="search" placeholder="Situation or case ID"></label></div>
+    <div class="pbp-outcome-grid" id="pbp-catalog-rows"></div>
+    <p><small>Only cases returned by the server appear here. The retained LIVE window can change with legitimate use; a missing example is not replaced by a fresh run. Installation-specific IDs differ from the <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener">ten public local fixtures</a>. Recorded fixture replays and constructed inputs are not new model tests.</small></p>
   </section>
   <p><small>Inspect the seal chain and Time Machine. “Try to tamper” checks an edited copy; the original remains intact. This viewer cannot approve a payment.</small></p>
   <p id="pbp-judge-status" role="status" aria-live="polite"></p>
@@ -154,19 +156,43 @@ function proofDeskFacts(d,replay){
   const ledger=(d.seals||[]).find(s=>s.kind==='decision'&&s.commitment===dec.commitment)?.ledger_state||'';
   const blocked=ledger.startsWith('blocked:')?ledger.slice(8):'';
   const rejected=/^(rejected|human_rejected)$/.test(c.status);
-  const acknowledged=c.status==='closed_no_effect'&&!!blocked&&events.some(e=>e.kind==='human_approved');
-  const review=c.status==='awaiting_human'?'Awaiting human review':rejected?'Rejected by reviewer':acknowledged?'Acknowledged; no payment authority':events.some(e=>e.kind==='human_approved')?'Recorded approval':dec.requires_human?'Review not established':'Review not required';
+  const acknowledged=verified&&events.some(e=>e.kind==='human_approved')&&((c.status==='closed_no_effect'&&!!blocked)||(record.decision?.moves_money===false&&!d.permit&&!d.receipt));
+  const approval=(replay?.steps||[]).find(s=>s.kind==='approval'&&s.verification?.state==='intact'&&s.record?.case?.id===c.case_id&&s.record?.human?.approves===dec.commitment);
+  const reviewNote=approval?.record?.human?.note||'';
+  const review=c.status==='awaiting_human'?'Awaiting human review':rejected?'Rejected by reviewer':acknowledged?'Acknowledged; no payment authority':events.some(e=>e.kind==='human_approved')?(verified?'Recorded approval':'Review not established from verified record'):dec.requires_human?'Review not established':'Review not required';
   const receipt=d.receipt,permit=d.permit;
   const effect=receipt?(receipt.verification==='intact'?'Intact synthetic receipt: ':'Receipt needs verification: ')+receipt.receipt_id:blocked?'Ledger refused: '+blocked:permit?'Permit '+permit.status+'; no receipt':'No permit or receipt';
   const declared=Object.keys(record?.missing||{}),refs=record?.decision?.evidence_refs||[];
   const mode=record?.model?.mode||dec.model?.mode||'unknown';
-  return {verified,record,inputs,mode,blocked,review,effect,declared,refs,session:c.session_id,
+  return {verified,record,inputs,mode,blocked,review,reviewNote,effect,declared,refs,session:c.session_id,
     proposed:dec.proposal?.action||(!dec.proposal&&dec.source==='rules'?dec.action:null),
     effective:record?.decision?.action||null,confidence:record?.decision?.confidence,
     amount:record?.decision?.amount_minor,currency:inputs?.currency||'',
     tools:replay?.tool_calls||[],genericReviewEvent:rejected&&events.some(e=>e.kind==='sealed'&&e.detail==='approval sealed (witness)')};
 }
 
+
+/* Prepared questions are presentation metadata, never case availability or a verdict. */
+const PROOF_DESK_CATALOGUE = Object.freeze({"video-demo:d83544a2":["effect","A duplicate was refunded once","Was the synthetic refund sent once?","Compare the approval, consumed permit and intact 84.00 BRL test receipt."],"public-live:lite35_f3ac72b4c4b9412b9d664e0f73e38ebe":["live","Retained LIVE policy citation","Did the model cite a passage it observed?","Inspect five real tools, three local policy passages and the cited chunk; no permit or effect."],"recipient-flow:absent:bfe5c8fd":["stopped","Acknowledged is not paid","Can an acknowledgement supply a missing destination?","Inspect test_recipient_required and the absence of permit or receipt."],"pix-0006:70dc920238":["stopped","A scan is not a signature","Which evidence was still missing?","Compare carrier_signature, the contradictory claim and the historical rejection."],"pix-0005:70dc920238":["human","Overpayment; partial refund requested","Is a partial refund executable here?","Compare 129.00 BRL paid with an 89.00 BRL order and the effective escalation."],"pix-0007:70dc920238":["human","MED dispute with missing evidence","What evidence would a person still need?","Inspect absent delivery proof and customer message; no dispute refund was executed."],"pix-0008:70dc920238":["stopped","Withdrawal to a closed account","Can the proposed withdrawal retry execute?","Inspect withdrawal wd_2001, empty payments and the unsupported retry proposal."],"recipient-flow:mismatch:bfe5c8fd":["stopped","Destination binding not established","Did closing this record move money?","Compare refund_duplicate with escalation, the automated regression note, and no permit or receipt."],"adversarial:4ae70281:missing_gate":["stopped","Constructed input: missing signature","Can the proposal bypass missing evidence?","Compare refused accept_order with sealed escalation; this is a constructed input.",true],"adversarial:4ae70281:invented_ref":["stopped","Constructed input: unobserved reference","Was the cited evidence actually observed?","Inspect the diagnostic refusal and the effective sealed rationale.",true],"adversarial:4ae70281:refund_flag":["stopped","Constructed input: unsupported refund","Does a proposed refund flag authorize an effect?","Compare the unsupported refund_full proposal with escalation and no effect.",true]});
+function proofDeskCatalogue(cases,group='all',query=''){
+  const seen=new Set(),needle=String(query).trim().toLowerCase();
+  return (Array.isArray(cases)?cases:[]).flatMap(c=>{
+    const id=c?.case_id;if(typeof id!=='string'||!id||seen.has(id))return [];seen.add(id);
+    const prepared=Object.prototype.hasOwnProperty.call(PROOF_DESK_CATALOGUE,id)?PROOF_DESK_CATALOGUE[id]:null;
+    const m=prepared||[id.startsWith('public-live:')?'live':'human','Retained example','What does the retained record establish?','Inspect the verified decision, review and actual receipt state; no prepared context is available.'];
+    const row={id,group:m[0],title:m[1],question:m[2],check:m[3],constructed:m[4]===true,status:c.status||''};
+    return (group==='all'||group===row.group)&&(!needle||[id,row.title,row.question,row.check].join(' ').toLowerCase().includes(needle))?[row]:[];
+  });
+}
+function proofDeskChecklist(storage,id,value){
+  const key='pbp49-inspection:'+id;
+  try{
+    if(value===null){storage.removeItem(key);return [false,false,false,false,false];}
+    if(Array.isArray(value))storage.setItem(key,JSON.stringify(value.slice(0,5).map(v=>v===true)));
+    const raw=Array.isArray(value)?value:JSON.parse(storage.getItem(key)||'[]');
+    return Array.from({length:5},(_,i)=>Array.isArray(raw)&&raw[i]===true);
+  }catch(error){return Array.from({length:5},(_,i)=>Array.isArray(value)&&value[i]===true);}
+}
 
 /* Recorded observations, not hidden model reasoning or a reconstruction of elapsed time. */
 function proofDeskReplayFrames(d,replay){
@@ -184,7 +210,7 @@ function proofDeskReplayFrames(d,replay){
   if(!f.tools.length)frames.push({node:'tools',label:'TOOLS / RECORDED BOUNDARY',title:'No tool calls in this trace',text:d.decision?.source==='rules'?'This decision used the rules path; no model call is represented.':'No tool calls were retained here. Their absence is not evidence that a tool succeeded.',raw:null,tone:'neutral'});
   frames.push({node:'proposal',label:d.decision?.source==='rules'?'RULES / STORED DECISION':'AGENT / STORED PROPOSAL',title:f.proposed||'Separate proposal not retained',text:d.decision?.source==='rules'?'Deterministic rule output. It is not a model response.':'Diagnostic proposal only. It does not authorize a payment; this animation exposes no private model reasoning.',raw:d.decision?.proposal??null,tone:'neutral'});
   frames.push({node:'seal',label:'SEAL / MATCHING INTACT RECORD',title:f.effective||'Action not supplied',text:'The verified record is bound to this case. Declared gaps: '+(f.declared.join(', ')||'none declared; not a guarantee of complete evidence')+'. Integrity does not prove the decision is correct.',raw:{commitment:d.decision.commitment,decision:f.record.decision,missing:f.record.missing},tone:'neutral'});
-  frames.push({node:'review',label:'HUMAN / RECORDED STATE',title:f.review,text:f.review==='Awaiting human review'?'The retained case stops here for a person. No review or financial approval is performed by playback.':'This is the historical review state. An acknowledgement is not payment authority.',raw:{status:d.case.status,review:d.review??null},tone:f.review==='Recorded approval'?'neutral':'stop'});
+  frames.push({node:'review',label:'HUMAN / RECORDED STATE',title:f.review,text:f.review==='Awaiting human review'?'The retained case stops here for a person. No review or financial approval is performed by playback.':'This is the historical review state. An acknowledgement is not payment authority.',raw:{status:d.case.status,review:d.review??null,verified_review_note:f.reviewNote||null},tone:f.review==='Recorded approval'?'neutral':'stop'});
   frames.push({node:'effect',label:'OUTCOME / RETAINED EVIDENCE',title:f.effect,text:d.receipt?.verification==='intact'&&d.receipt?.status==='effected'?'A historical synthetic effect has an intact receipt. Playback does not create, repeat or send this effect.':'No confirmed synthetic effect is demonstrated by this outcome. Inspect the stored permit and receipt state; playback cannot issue a permit or send a payment.',raw:{permit:d.permit??null,receipt:d.receipt??null,ledger_refusal:f.blocked||null},tone:d.receipt?.verification==='intact'&&d.receipt?.status==='effected'?'effect':'stop'});
   return frames;
 }
@@ -299,6 +325,7 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
     if(typeof state==='undefined'||state.current!==id)return;
     const reads=proofReads.get(id);if(!reads?.detail?.ok||!reads.replay?.ok)return;
     const d=reads.detail,r=reads.replay,f=proofDeskFacts(d,r),detail=document.getElementById('detail');
+    const constructed=Object.prototype.hasOwnProperty.call(PROOF_DESK_CATALOGUE,id)&&PROOF_DESK_CATALOGUE[id][4]===true;
     if(!detail?.querySelector('.flow'))return;
     const key=JSON.stringify([d,r]);
     let summary=document.getElementById('pbp-case-inspection');
@@ -311,15 +338,17 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
       const passages=Array.isArray(retrieval?.passages)?retrieval.passages:[];
       const observed=Object.keys(f.record?.saw?.inputs||{}).join(', ');
       summary.innerHTML=`<div class="pbp-desk-label">Read this case / retained evidence</div><h3>Proposal is not a payment</h3>
-        <p class="pbp-native">IRIS trace session ${esc(f.session??'not supplied')} · ${esc(f.mode)} provenance · inspecting this record makes no model call</p>
-        <div class="pbp-boundary"><article><h4>1 / Diagnostic proposal</h4><p>${esc(f.proposed||'No separate proposal available')}</p><p class="small muted">Unsealed diagnostic; not authority.</p></article>
+        ${constructed?'<p class="pbp-history-note">Constructed synthetic input with a refused proposal. This retained fixture is not a sample of real-world traffic or a successful model run.</p>':''}
+        <p class="pbp-native">IRIS trace session ${esc(f.session??'not supplied')} · ${esc(f.mode)} provenance · inspecting this record makes no model call${f.record?.model?.provider==='replay'?' · Recorded fixture replay, not a fresh model response':''}</p>
+        <div class="pbp-boundary"><article><h4>1 / Diagnostic proposal</h4><p>${esc(f.proposed||'No separate proposal available')}</p><p class="small muted">Unsealed diagnostic; not authority. Recorded confidence ${esc(d.decision?.proposal?.confidence??'not supplied')} is uncalibrated, not a probability.</p>${d.decision?.proposal_refused?`<p>Proposal refused · unsealed diagnostic: ${esc(d.decision.proposal_reason||'reason not supplied')}</p>`:''}</article>
         <article><h4>2 / Verified decision</h4><p>${esc(f.effective||'Verified record unavailable')}${amount?' · '+amount:''}</p><p class="small muted">${f.blocked?'Ledger refused: '+esc(f.blocked):'A sealed decision is not a permit.'}</p></article>
-        <article><h4>3 / Actual outcome</h4><p>${esc(f.review)}</p><p>${esc(f.effect)}</p></article></div>
-        <details open><summary>Observed inputs and declared gaps · readable view</summary>${f.verified?`<dl><dt>Order</dt><dd>${esc(order?.id||'Not observed')} · ${esc(order?.status||'status not supplied')}${order?.amount_minor!=null?' · '+money(order.amount_minor,order.currency||f.currency):''}</dd><dt>Payments observed</dt><dd>${Array.isArray(payments)?payments.map(p=>money(p.amount_minor,f.currency)+' · '+esc(p.payment_ref)).join('<br>'):'Not observed'}</dd><dt>Sealed gaps</dt><dd>${esc(f.declared.join(', ')||'None declared in this record; not proof of complete evidence')}</dd><dt>Evidence references</dt><dd>${esc(f.refs.join(', ')||'None declared')}</dd><dt>Observed input groups</dt><dd>${esc(observed)}</dd></dl>`:'<p>Readable facts require an intact matching decision record. Use the verification details below; no replacement facts were inferred.</p>'}</details>
+        <article><h4>3 / Actual outcome</h4><p>${esc(f.review)}</p><p>${esc(f.effect)}</p>${f.reviewNote?`<small>Verified historical review note: ${esc(f.reviewNote)}</small>`:''}</article></div>
+        <details open><summary>Observed inputs and declared gaps · readable view</summary>${f.verified?`<dl><dt>${f.record?.case?.exception==='failed_withdrawal'?'Withdrawal reference':'Order'}</dt><dd>${esc(order?.id||'Not observed')} · ${esc(order?.status||'status not supplied')}${order?.amount_minor!=null?' · '+money(order.amount_minor,order.currency||f.currency):''}</dd><dt>Payments observed</dt><dd>${Array.isArray(payments)?(payments.length?payments.map(p=>money(p.amount_minor,f.currency)+' · '+esc(p.payment_ref)).join('<br>'):'No payments in the sealed inputs'):'Not observed'}</dd><dt>Sealed gaps</dt><dd>${esc(f.declared.join(', ')||'None declared in this record; not proof of complete evidence')}</dd><dt>Evidence references</dt><dd>${esc(f.refs.join(', ')||'None declared')}</dd><dt>Observed input groups</dt><dd>${esc(observed)}</dd></dl>`:'<p>Readable facts require an intact matching decision record. Use the verification details below; no replacement facts were inferred.</p>'}</details>
         ${passages.length?`<details open><summary>Policy retrieval · ${passages.length} local vector passages</summary><p>${esc(retrieval.method)} · ${esc(retrieval.embedding_model)} · ${esc(retrieval.embedding_location)} embeddings. Retrieval output is recorded evidence; a sealed citation does not prove the model interpreted it correctly.</p>${passages.map(p=>`<article><p><b>${esc(p.section)}</b> · similarity ${esc(p.similarity_decimal)}${f.refs.includes('policy.chunk:'+p.chunk_id)?' · <b>Cited in sealed decision</b>':''}</p><p>${esc(p.text)}</p><details><summary>Passage identifier and source</summary><p class="mono">${esc(p.chunk_id)}<br>${esc(p.source)}</p></details></article>`).join('')}</details>`:''}
         <p class="small muted">Presentation derived from the matching verified record. Original rationale, raw JSON, events and hashes remain below unchanged. Confidence ${esc(f.confidence??'not supplied')} is a recorded, uncalibrated score, not a probability of correctness. Refund targets are derived by the server; a declared missing target does not mean the model observed one.</p>`;
     }
     mountCaseCinema(summary,id,d,r,key,autoStart);
+    mountCaseChecklist(summary,id);
     const reviewStep=detail.querySelectorAll('.flow .step')[3];
     if(reviewStep){reviewStep.querySelector('.d').textContent=f.review;reviewStep.setAttribute('aria-label','Inspect: Review · '+f.review);reviewStep.classList.toggle('done',f.review==='Recorded approval');reviewStep.classList.toggle('now',f.review==='Awaiting human review');}
     if(f.genericReviewEvent){
@@ -349,9 +378,9 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
     if(inspectedCase!==id){inspectedCase=id;proofStep=0;}selectProofStep(proofStep,false);
   }
   if(typeof api==='function'&&typeof openCase==='function'){
-    const nativeApi=api,nativeOpenCase=openCase;
-    api=async function(path,opts){const request=state.detailRequest;const data=await nativeApi(path,opts);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&request===state.detailRequest&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]);if(state.current===id){const reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}}return data;};
-    openCase=async function(id,...rest){if(state.current!==id&&typeof stopCaseCinema==='function')stopCaseCinema();const pending=nativeOpenCase(id,...rest),request=state.detailRequest;const result=await pending;if(request===state.detailRequest)decorateProof(id,rest[0]===true);return result;};
+    const nativeApi=api,nativeOpenCase=openCase;let catalogueRead=0;
+    api=async function(path,opts){const request=state.detailRequest,listRead=path==='/cases'?++catalogueRead:null;const data=await nativeApi(path,opts);if(listRead!==null&&listRead===catalogueRead&&data?.ok&&(!opts?.method||opts.method==='GET')&&typeof updateCaseCatalogue==='function')updateCaseCatalogue(data.cases);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&request===state.detailRequest&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]);if(state.current===id){const reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}}return data;};
+    openCase=async function(id,...rest){if(state.current!==id&&typeof stopCaseCinema==='function')stopCaseCinema();const pending=nativeOpenCase(id,...rest),request=state.detailRequest;const result=await pending;if(request===state.detailRequest){decorateProof(id,rest[0]===true);if(typeof updateCaseCatalogue==='function')updateCaseCatalogue();}return result;};
     if(typeof FILTERS!=='undefined'){FILTERS.find(([key])=>key==='blocked')[1]='Stopped / rejected';FILTERS.find(([key])=>key==='done')[1]='Closed / effected';}
   }
 
@@ -389,16 +418,46 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
   const panel=document.getElementById('pbp-live'),choice=document.getElementById('pbp-live-scenario');
   const guide=document.getElementById('pbp-judge-guide'),app=document.querySelector('.app');
   if(app)app.before(document.getElementById('pbp-judge-start'));
-  guide.querySelectorAll('[data-judge-case]').forEach(button=>button.addEventListener('click',async()=>{
+  let catalogueCases=typeof state!=='undefined'&&Array.isArray(state.cases)?state.cases:[],catalogueSignature='';
+  const catalogueGroup=document.getElementById('pbp-catalog-group'),catalogueSearch=document.getElementById('pbp-catalog-search');
+  try{const saved=JSON.parse(localStorage.getItem('pbp49-catalog-filter')||'null');if(saved&&['all','effect','stopped','human','live'].includes(saved.group)){catalogueGroup.value=saved.group;catalogueSearch.value=typeof saved.query==='string'?saved.query.slice(0,160):'';}}catch(error){}
+  function updateCaseCatalogue(cases){
+    if(Array.isArray(cases))catalogueCases=cases;
+    const current=typeof state==='undefined'?null:state.current,group=catalogueGroup.value||'all',query=catalogueSearch.value||'';
+    const all=proofDeskCatalogue(catalogueCases),rows=proofDeskCatalogue(catalogueCases,group,query);
+    const signature=JSON.stringify([all,current,group,query]);if(signature===catalogueSignature)return;catalogueSignature=signature;
+    const root=document.getElementById('pbp-catalog-rows'),focused=document.activeElement?.dataset?.judgeCase;
+    root.innerHTML=rows.length?rows.map(row=>`<article><div class="pbp-outcome-code">${esc(row.constructed?'CONSTRUCTED INPUT · RECORDED FIXTURE':row.group==='live'?'RETAINED LIVE':'RETAINED RECORDED EXAMPLE')}</div><h3>${esc(row.title)}</h3><p>${esc(row.question)}</p><small>Check: ${esc(row.check)}</small><p class="mono">${esc(row.id)}</p><button type="button" data-judge-case="${esc(row.id)}" aria-pressed="${row.id===current}">Inspect this retained case</button></article>`).join(''):'<p>No available examples match this selection. No new case or model run was requested.</p>';
+    document.getElementById('pbp-catalog-count').textContent=rows.length+' shown / '+all.length+' cases returned by the server. Availability is a current snapshot.';
+    guide.querySelectorAll('.judge-paths [data-judge-case]').forEach(button=>{button.disabled=!all.some(row=>row.id===button.dataset.judgeCase);});
+    const nextInspection=document.querySelector('[data-inspection-next]');if(nextInspection)nextInspection.disabled=rows.length<2;
+    if(focused)[...root.querySelectorAll('[data-judge-case]')].find(button=>button.dataset.judgeCase===focused)?.focus();
+  }
+  function changeCatalogue(){try{localStorage.setItem('pbp49-catalog-filter',JSON.stringify({group:catalogueGroup.value,query:catalogueSearch.value.slice(0,160)}));}catch(error){}updateCaseCatalogue();}
+  catalogueGroup.addEventListener('change',changeCatalogue);catalogueSearch.addEventListener('input',changeCatalogue);
+  async function inspectCatalogueCase(id){
     const message=document.getElementById('pbp-judge-status');
     try{
       if(typeof refresh==='function')await refresh();
-      const id=button.dataset.judgeCase;
       if(typeof state==='undefined'||!state.cases.some(c=>c.case_id===id)||typeof openCase!=='function')throw new Error('retained_case_unavailable');
-      await openCase(id,true);
-      updateNavigation();jumpTo('dossier');message.textContent='';
-    }catch(error){message.textContent='This retained example could not be opened. Select an available case in the queue; no new decision was requested.';}
-  }));
+      await openCase(id,true);updateNavigation();updateCaseCatalogue();jumpTo('dossier');message.textContent='';
+    }catch(error){message.textContent='This retained example is unavailable. Choose a case returned by the server; no new decision was requested.';}
+  }
+  guide.addEventListener('click',event=>{const button=event.target.closest?.('[data-judge-case]');if(button&&!button.disabled&&guide.contains(button))return inspectCatalogueCase(button.dataset.judgeCase);});
+  function mountCaseChecklist(summary,id){
+    if(summary.querySelector('.pbp-checklist'))return;
+    const root=document.createElement('section');root.className='pbp-checklist';root.setAttribute('aria-label','Local inspection checklist');
+    root.innerHTML='<h4>Your local inspection guide</h4><p>Not an evaluation or a pass result. These marks stay in this browser, per case; nothing is sent to the server.</p>'+['Read the retained inputs and evidence','Compare proposal with effective decision','Inspect the matching seal','Read the actual review and its provenance','Check permit and receipt separately'].map((label,i)=>'<label><input type="checkbox" data-inspection-item="'+i+'"> '+label+'</label>').join('')+'<p data-inspection-complete role="status" aria-live="polite"></p><button type="button" data-inspection-clear>Clear local marks</button> <button type="button" data-inspection-next>Next available case →</button>';
+    summary.append(root);let storage=null;try{storage=localStorage;}catch(error){}
+    let checked=proofDeskChecklist(storage,id),complete=false;
+    const sync=announce=>{root.querySelectorAll('[data-inspection-item]').forEach((input,i)=>{input.checked=checked[i];});const now=checked.every(Boolean);if(announce&&now&&!complete)root.querySelector('[data-inspection-complete]').textContent='Local inspection checklist completed. This is not a correctness result or an evaluation.';else if(!now)root.querySelector('[data-inspection-complete]').textContent='';complete=now;const candidates=proofDeskCatalogue(catalogueCases,catalogueGroup.value||'all',catalogueSearch.value||'');root.querySelector('[data-inspection-next]').disabled=candidates.length<2;};
+    root.querySelectorAll('[data-inspection-item]').forEach((input,i)=>input.addEventListener('change',()=>{checked[i]=input.checked;proofDeskChecklist(storage,id,checked);sync(true);}));
+    root.querySelector('[data-inspection-clear]').addEventListener('click',()=>{checked=proofDeskChecklist(storage,id,null);sync(false);});
+    root.querySelector('[data-inspection-next]').addEventListener('click',()=>{const rows=proofDeskCatalogue(catalogueCases,catalogueGroup.value||'all',catalogueSearch.value||'');if(rows.length<2)return;const index=rows.findIndex(row=>row.id===id);inspectCatalogueCase(rows[(index+1)%rows.length].id);});sync(false);
+  }
+  const nativeList=document.getElementById('list');
+  if(nativeList&&typeof MutationObserver==='function')new MutationObserver(()=>{if(typeof state!=='undefined')updateCaseCatalogue(state.cases);}).observe(nativeList,{childList:true});
+  updateCaseCatalogue();
   const run=document.getElementById('pbp-live-run'),availability=document.getElementById('pbp-live-availability');
   const result=document.getElementById('pbp-live-result'),inspect=document.getElementById('pbp-live-inspect');
   const labels={missing_evidence:'Missing delivery proof',amount_conflict:'Payment amount mismatch'};

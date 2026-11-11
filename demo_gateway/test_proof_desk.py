@@ -77,7 +77,7 @@ console.log('verified presentation boundaries pass');
         result = subprocess.run([shutil.which("node"), "-e", harness], input=json.dumps(pure), text=True, capture_output=True, timeout=15)
         self.assertEqual(result.returncode, 0, result.stderr)
 
-    def test_navigation_all_outcomes_and_missing_cases_never_request_a_decision(self):
+    def test_starter_routes_and_missing_cases_never_request_a_decision(self):
         panel = Path(__file__).with_name("live_panel.html").read_text()
         controls = Controls()
         controls.feed(panel)
@@ -94,6 +94,9 @@ class Element {
   scrollIntoView() { this.scrolled++; }
   before() {}
   querySelector(s) { this.children ||= new Map(); if(!this.children.has(s))this.children.set(s,new Element()); return this.children.get(s); }
+  querySelectorAll() { return []; }
+  contains() { return true; }
+  closest() { return this; }
   replaceChildren() { this.options=[]; }
   append(option) { this.options.push(option); }
 }
@@ -106,6 +109,7 @@ get('pbp-judge-guide').querySelectorAll=()=>caseButtons;
 const classes=new Set(), views=[], opened=[], requests=[], saved=new Map(input.savedTheme?[['pbp49-proof-theme',input.savedTheme]]:[]);
 const targets=Object.fromEntries(['.app','.queue','#detail','#replay','.tl','.seal','.decision','.decision + .card','#pbp-evaluation'].map(s=>[s,new Element()]));
 const context={
+ esc:value=>String(value??'').replace(/[&<>\"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[ch])),
  document:{hidden:false,body:{classList:{add:c=>classes.add(c),contains:c=>classes.has(c),toggle:(c,force)=>{if(force!==undefined){if(force)classes.add(c);else classes.delete(c);return force;}if(classes.has(c)){classes.delete(c);return false;}classes.add(c);return true;}}},
    getElementById:get,querySelector:s=>targets[s]||null,querySelectorAll:s=>s==='[data-proof-target]'?navButtons:s==='.flow .step'?flowSteps:[],createElement:()=>new Element()},
  state:{current:null,cases:[...new Set(input.cases)].map(case_id=>({case_id}))},
@@ -128,16 +132,16 @@ async function main(){
  // An empty selection must not pretend an evidence panel exists.
  await navButtons.find(b=>b.dataset.proofTarget==='evidence').handlers.click();
  assert.match(get('pbp-desk-status').textContent,/Open a retained case first/); assert.equal(views.length,0);
- // Exercise every rendered case button, including both catalogue-only outcomes.
+ // Exercise all three starter routes through the delegated catalogue handler.
  for(const button of caseButtons){
-   await button.handlers.click();
+   await get('pbp-judge-guide').handlers.click({target:button});
    assert.equal(opened.at(-1).id,button.dataset.judgeCase);
    assert.equal(opened.at(-1).explicit,true);
    assert.equal(get('pbp-desk-status').textContent,'');
    assert.equal(get('pbp-desk-current').textContent,'Case: '+button.dataset.judgeCase);
    assert.equal(navButtons.find(b=>b.dataset.proofTarget==='dossier').attrs['aria-current'],'location');
  }
- assert.equal(new Set(opened.map(c=>c.id)).size,4);
+ assert.equal(new Set(opened.map(c=>c.id)).size,3);
  for(const button of navButtons){ await button.handlers.click(); }
  assert(views.includes('queue')); assert(views.includes('case'));
  assert.equal(targets['#pbp-evaluation'].open,true);
@@ -146,14 +150,14 @@ async function main(){
  for(const selector of ['.queue','#detail','#replay','.tl','.seal']) assert(targets[selector].scrolled>0,selector);
  // An unavailable historical ID must not open another record or create a replacement run.
  context.state.cases=[]; const count=opened.length;
- await caseButtons.at(-1).handlers.click();
+ await get('pbp-judge-guide').handlers.click({target:caseButtons.at(-1)});
  assert.equal(opened.length,count); assert.match(get('pbp-judge-status').textContent,/no new decision was requested/);
  // Missing DOM sections must fail visibly, including after a view changes.
  delete targets['.seal']; await navButtons.find(b=>b.dataset.proofTarget==='seals').handlers.click();
  assert.equal(get('pbp-desk-status').hidden,false);
  assert(requests.length>0); assert(requests.every(r=>r.path==='/pbp/api/live'&&r.method==='GET'));
  assert.equal(get('pbp-live-run').disabled,true); assert.equal(get('pbp-live-scenario').disabled,true);
- console.log(JSON.stringify({ok:true,retained_outcomes:4,scenario_submissions:0,financial_actions:0,theme_roundtrip:true,missing_case_fails_closed:true}));
+ console.log(JSON.stringify({ok:true,starter_routes:3,scenario_submissions:0,financial_actions:0,theme_roundtrip:true,missing_case_fails_closed:true}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
 """
@@ -166,7 +170,7 @@ main().catch(e=>{console.error(e);process.exitCode=1;});
                     text=True, capture_output=True, timeout=15,
                 )
                 self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertEqual(json.loads(result.stdout)["retained_outcomes"], 4)
+                self.assertEqual(json.loads(result.stdout)["starter_routes"], 3)
                 self.assertEqual(json.loads(result.stdout)["scenario_submissions"], 0)
 
 
