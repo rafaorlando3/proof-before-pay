@@ -27,8 +27,17 @@ assert.equal(ctx.proofDeskCatalogue(input,'all','closed account')[0].id,'pix-000
 assert.equal(ctx.proofDeskCatalogue(input.slice(0,2)).length,2);assert.equal(ctx.proofDeskCatalogue([]).length,0);
 assert.equal(ctx.proofDeskCatalogue([...input,input[0],null,{case_id:12}]).length,11);
 const unknown=ctx.proofDeskCatalogue([{case_id:'adversarial:new-install:missing_gate'},{case_id:'public-live:new-legitimate'},{case_id:'__proto__'}]);
-assert(unknown.every(r=>r.constructed===false));assert.equal(unknown[1].group,'live');assert.equal(unknown[0].title,'Retained example');
+assert(unknown.every(r=>r.constructed===false));assert(unknown.every(r=>r.group==='other'));assert.equal(unknown[0].title,'Retained example');
 assert.equal(JSON.stringify(input),original); // Neither metadata nor filtering can alter server data.
+""")
+
+    def test_case_counts_distinguish_waiting_failure_empty_success_and_cached_records(self):
+        self.run_js(r"""
+assert.match(ctx.proofDeskCatalogueMessage('waiting',0,0),/Waiting.*no case count confirmed/);
+assert.match(ctx.proofDeskCatalogueMessage('unavailable',0,0),/unavailable.*no case count confirmed/);
+assert.match(ctx.proofDeskCatalogueMessage('unavailable',0,11),/11 last confirmed records/);
+assert.match(ctx.proofDeskCatalogueMessage('ready',0,0),/0 shown \/ 0 cases returned/);
+assert.match(ctx.proofDeskCatalogueMessage('ready',1,11),/1 shown \/ 11 cases returned/);
 """)
 
     def test_checklist_has_per_case_persistence_reset_and_storage_failure_fallback(self):

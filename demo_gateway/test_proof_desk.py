@@ -31,8 +31,8 @@ class ProofDeskTests(unittest.TestCase):
         wrapper = panel[start:end]
         harness = r"""
 const assert=require('node:assert/strict'),vm=require('node:vm');
-const pending=[],decorated=[],reads=new Map();
-const ctx={state:{current:null,detailRequest:0},proofReads:reads,decorateProof:(id,autoStart)=>decorated.push({id,autoStart,data:reads.get(id)?.detail})};
+const pending=[],decorated=[],reads=new Map(),catalogue=[];
+const ctx={receiveCaseCatalogue:data=>catalogue.push(data),state:{current:null,detailRequest:0},proofReads:reads,decorateProof:(id,autoStart)=>decorated.push({id,autoStart,data:reads.get(id)?.detail})};
 ctx.api=()=>new Promise(resolve=>pending.push(resolve));
 ctx.openCase=async id=>{ctx.state.current=id;ctx.state.detailRequest++;return await ctx.api('/cases/'+encodeURIComponent(id));};
 vm.runInNewContext(JSON.parse(require('node:fs').readFileSync(0,'utf8')),ctx);
@@ -46,7 +46,11 @@ vm.runInNewContext(JSON.parse(require('node:fs').readFileSync(0,'utf8')),ctx);
  assert.equal(reads.has('case-A'),false);assert.equal(ctx.state.current,'case-B');assert.equal(decorated.at(-1).id,'case-B');assert.equal(pending.length,4);
  const explicit=ctx.openCase('case-B',true);pending[4]({ok:true,version:5});await explicit;assert.equal(decorated.at(-1).autoStart,true);
  const background=ctx.openCase('case-B');pending[5]({ok:true,version:5});await background;assert.equal(decorated.at(-1).autoStart,false);
- console.log('out-of-order native responses preserve latest proof');
+ const oldList=ctx.api('/cases?limit=200'),newList=ctx.api('/cases?limit=200');
+ pending[7]({ok:true,cases:[{case_id:'new'}]});await newList;pending[6]({ok:true,cases:[{case_id:'old'}]});await oldList;
+ assert.equal(catalogue.length,1);assert.equal(catalogue[0].cases[0].case_id,'new');
+ const failed=ctx.api('/cases?limit=200');pending[8]({ok:false,reason:'upstream_unavailable'});await failed;assert.equal(catalogue.length,2);assert.equal(catalogue[1].ok,false);
+ console.log('out-of-order native responses preserve latest proof and real query-bearing catalogue reads');
 })().catch(e=>{console.error(e);process.exitCode=1;});
 """
         result = subprocess.run([shutil.which("node"), "-e", harness], input=json.dumps(wrapper), text=True, capture_output=True, timeout=15)
@@ -105,7 +109,7 @@ const get = id => { if(!elements.has(id)) elements.set(id,new Element()); return
 const caseButtons=input.cases.map(judgeCase=>new Element({judgeCase}));
 const navButtons=input.targets.map(proofTarget=>new Element({proofTarget}));
 const flowSteps=Array.from({length:5},()=>new Element());
-get('pbp-judge-guide').querySelectorAll=()=>caseButtons;
+get('pbp-judge-guide').querySelectorAll=()=>caseButtons;get('count').textContent=String(input.cases.length);
 const classes=new Set(), views=[], opened=[], requests=[], saved=new Map(input.savedTheme?[['pbp49-proof-theme',input.savedTheme]]:[]);
 const targets=Object.fromEntries(['.app','.queue','#detail','#replay','.tl','.seal','.decision','.decision + .card','#pbp-evaluation'].map(s=>[s,new Element()]));
 const context={

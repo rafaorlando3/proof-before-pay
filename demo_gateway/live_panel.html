@@ -113,7 +113,7 @@ body.pbp-cinema-playing .flow .step[data-cinema-active="true"] .pbp-flow-loader 
   <section id="pbp-case-catalog" aria-labelledby="pbp-catalog-title">
     <h3 id="pbp-catalog-title">Browse retained examples</h3>
     <p id="pbp-catalog-count">Waiting for the authenticated case list.</p>
-    <div class="pbp-catalog-filters"><label>Group <select id="pbp-catalog-group"><option value="all">All available</option><option value="effect">Synthetic effect</option><option value="stopped">Refused or no effect</option><option value="human">Human escalation</option><option value="live">Retained LIVE</option></select></label><label>Find an example <input id="pbp-catalog-search" type="search" placeholder="Situation or case ID"></label></div>
+    <div class="pbp-catalog-filters"><label>Group <select id="pbp-catalog-group"><option value="all">All available</option><option value="effect">Synthetic effect</option><option value="stopped">Refused or no effect</option><option value="human">Human escalation</option><option value="live">Retained LIVE</option><option value="other">Other retained</option></select></label><label>Find an example <input id="pbp-catalog-search" type="search" placeholder="Situation or case ID"></label></div>
     <div class="pbp-outcome-grid" id="pbp-catalog-rows"></div>
     <p><small>Only cases returned by the server appear here. The retained LIVE window can change with legitimate use; a missing example is not replaced by a fresh run. Installation-specific IDs differ from the <a href="https://github.com/rafaorlando3/proof-before-pay/blob/main/docs/JUDGE-SCENARIOS.md" target="_blank" rel="noopener">ten public local fixtures</a>. Recorded fixture replays and constructed inputs are not new model tests.</small></p>
   </section>
@@ -179,10 +179,15 @@ function proofDeskCatalogue(cases,group='all',query=''){
   return (Array.isArray(cases)?cases:[]).flatMap(c=>{
     const id=c?.case_id;if(typeof id!=='string'||!id||seen.has(id))return [];seen.add(id);
     const prepared=Object.prototype.hasOwnProperty.call(PROOF_DESK_CATALOGUE,id)?PROOF_DESK_CATALOGUE[id]:null;
-    const m=prepared||[id.startsWith('public-live:')?'live':'human','Retained example','What does the retained record establish?','Inspect the verified decision, review and actual receipt state; no prepared context is available.'];
+    const m=prepared||['other','Retained example','What does the retained record establish?','Inspect the verified decision, review and actual receipt state; no prepared context is available.'];
     const row={id,group:m[0],title:m[1],question:m[2],check:m[3],constructed:m[4]===true,status:c.status||''};
     return (group==='all'||group===row.group)&&(!needle||[id,row.title,row.question,row.check].join(' ').toLowerCase().includes(needle))?[row]:[];
   });
+}
+function proofDeskCatalogueMessage(status,shown,total){
+  if(status==='ready')return shown+' shown / '+total+' cases returned by the server. Availability is a current snapshot.';
+  if(status==='unavailable')return 'Case list unavailable; '+(total?'showing '+total+' last confirmed records.':'no case count confirmed.')+' No new run was requested.';
+  return 'Waiting for the authenticated case list; no case count confirmed.';
 }
 function proofDeskChecklist(storage,id,value){
   const key='pbp49-inspection:'+id;
@@ -345,7 +350,7 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
         <article><h4>3 / Actual outcome</h4><p>${esc(f.review)}</p><p>${esc(f.effect)}</p>${f.reviewNote?`<small>Verified historical review note: ${esc(f.reviewNote)}</small>`:''}</article></div>
         <details open><summary>Observed inputs and declared gaps · readable view</summary>${f.verified?`<dl><dt>${f.record?.case?.exception==='failed_withdrawal'?'Withdrawal reference':'Order'}</dt><dd>${esc(order?.id||'Not observed')} · ${esc(order?.status||'status not supplied')}${order?.amount_minor!=null?' · '+money(order.amount_minor,order.currency||f.currency):''}</dd><dt>Payments observed</dt><dd>${Array.isArray(payments)?(payments.length?payments.map(p=>money(p.amount_minor,f.currency)+' · '+esc(p.payment_ref)).join('<br>'):'No payments in the sealed inputs'):'Not observed'}</dd><dt>Sealed gaps</dt><dd>${esc(f.declared.join(', ')||'None declared in this record; not proof of complete evidence')}</dd><dt>Evidence references</dt><dd>${esc(f.refs.join(', ')||'None declared')}</dd><dt>Observed input groups</dt><dd>${esc(observed)}</dd></dl>`:'<p>Readable facts require an intact matching decision record. Use the verification details below; no replacement facts were inferred.</p>'}</details>
         ${passages.length?`<details open><summary>Policy retrieval · ${passages.length} local vector passages</summary><p>${esc(retrieval.method)} · ${esc(retrieval.embedding_model)} · ${esc(retrieval.embedding_location)} embeddings. Retrieval output is recorded evidence; a sealed citation does not prove the model interpreted it correctly.</p>${passages.map(p=>`<article><p><b>${esc(p.section)}</b> · similarity ${esc(p.similarity_decimal)}${f.refs.includes('policy.chunk:'+p.chunk_id)?' · <b>Cited in sealed decision</b>':''}</p><p>${esc(p.text)}</p><details><summary>Passage identifier and source</summary><p class="mono">${esc(p.chunk_id)}<br>${esc(p.source)}</p></details></article>`).join('')}</details>`:''}
-        <p class="small muted">Presentation derived from the matching verified record. Original rationale, raw JSON, events and hashes remain below unchanged. Confidence ${esc(f.confidence??'not supplied')} is a recorded, uncalibrated score, not a probability of correctness. Refund targets are derived by the server; a declared missing target does not mean the model observed one.</p>`;
+        <p class="small muted">Presentation derived from the matching verified record. Original rationale, raw JSON, events and hashes remain below unchanged. Sealed decision confidence ${esc(f.confidence??'not supplied')} is a recorded, uncalibrated score, not a probability of correctness. Refund targets are derived by the server; a declared missing target does not mean the model observed one.</p>`;
     }
     mountCaseCinema(summary,id,d,r,key,autoStart);
     mountCaseChecklist(summary,id);
@@ -379,7 +384,17 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
   }
   if(typeof api==='function'&&typeof openCase==='function'){
     const nativeApi=api,nativeOpenCase=openCase;let catalogueRead=0;
-    api=async function(path,opts){const request=state.detailRequest,listRead=path==='/cases'?++catalogueRead:null;const data=await nativeApi(path,opts);if(listRead!==null&&listRead===catalogueRead&&data?.ok&&(!opts?.method||opts.method==='GET')&&typeof updateCaseCatalogue==='function')updateCaseCatalogue(data.cases);const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);if(match&&request===state.detailRequest&&(!opts?.method||opts.method==='GET')&&data?.ok){const id=decodeURIComponent(match[1]);if(state.current===id){const reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}}return data;};
+    api=async function(path,opts){
+      const request=state.detailRequest;
+      const listRead=/^\/cases(?:\?|$)/.test(path)&&(!opts?.method||opts.method==='GET')?++catalogueRead:null;
+      const data=await nativeApi(path,opts);
+      if(listRead!==null&&listRead===catalogueRead&&typeof receiveCaseCatalogue==='function')receiveCaseCatalogue(data);
+      const match=/^\/cases\/([^/?]+)(\/replay)?$/.exec(path);
+      if(match&&request===state.detailRequest&&(!opts?.method||opts.method==='GET')&&data?.ok){
+        const id=decodeURIComponent(match[1]);if(state.current===id){const reads=proofReads.get(id)||{};reads[match[2]?'replay':'detail']=data;proofReads.set(id,reads);}
+      }
+      return data;
+    };
     openCase=async function(id,...rest){if(state.current!==id&&typeof stopCaseCinema==='function')stopCaseCinema();const pending=nativeOpenCase(id,...rest),request=state.detailRequest;const result=await pending;if(request===state.detailRequest){decorateProof(id,rest[0]===true);if(typeof updateCaseCatalogue==='function')updateCaseCatalogue();}return result;};
     if(typeof FILTERS!=='undefined'){FILTERS.find(([key])=>key==='blocked')[1]='Stopped / rejected';FILTERS.find(([key])=>key==='done')[1]='Closed / effected';}
   }
@@ -418,17 +433,21 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
   const panel=document.getElementById('pbp-live'),choice=document.getElementById('pbp-live-scenario');
   const guide=document.getElementById('pbp-judge-guide'),app=document.querySelector('.app');
   if(app)app.before(document.getElementById('pbp-judge-start'));
-  let catalogueCases=typeof state!=='undefined'&&Array.isArray(state.cases)?state.cases:[],catalogueSignature='';
+  let catalogueCases=[],catalogueSignature='',catalogueStatus='waiting',catalogueWrappedList=false;
   const catalogueGroup=document.getElementById('pbp-catalog-group'),catalogueSearch=document.getElementById('pbp-catalog-search');
-  try{const saved=JSON.parse(localStorage.getItem('pbp49-catalog-filter')||'null');if(saved&&['all','effect','stopped','human','live'].includes(saved.group)){catalogueGroup.value=saved.group;catalogueSearch.value=typeof saved.query==='string'?saved.query.slice(0,160):'';}}catch(error){}
-  function updateCaseCatalogue(cases){
+  try{const saved=JSON.parse(localStorage.getItem('pbp49-catalog-filter')||'null');if(saved&&['all','effect','stopped','human','live','other'].includes(saved.group)){catalogueGroup.value=saved.group;catalogueSearch.value=typeof saved.query==='string'?saved.query.slice(0,160):'';}}catch(error){}
+  function receiveCaseCatalogue(data){
+    catalogueWrappedList=true;updateCaseCatalogue(data?.ok&&Array.isArray(data.cases)?data.cases:null,data?.ok&&Array.isArray(data.cases)?'ready':'unavailable');
+  }
+  function updateCaseCatalogue(cases,status){
     if(Array.isArray(cases))catalogueCases=cases;
+    if(status)catalogueStatus=status;
     const current=typeof state==='undefined'?null:state.current,group=catalogueGroup.value||'all',query=catalogueSearch.value||'';
     const all=proofDeskCatalogue(catalogueCases),rows=proofDeskCatalogue(catalogueCases,group,query);
-    const signature=JSON.stringify([all,current,group,query]);if(signature===catalogueSignature)return;catalogueSignature=signature;
+    const signature=JSON.stringify([all,current,group,query,catalogueStatus]);if(signature===catalogueSignature)return;catalogueSignature=signature;
     const root=document.getElementById('pbp-catalog-rows'),focused=document.activeElement?.dataset?.judgeCase;
-    root.innerHTML=rows.length?rows.map(row=>`<article><div class="pbp-outcome-code">${esc(row.constructed?'CONSTRUCTED INPUT · RECORDED FIXTURE':row.group==='live'?'RETAINED LIVE':'RETAINED RECORDED EXAMPLE')}</div><h3>${esc(row.title)}</h3><p>${esc(row.question)}</p><small>Check: ${esc(row.check)}</small><p class="mono">${esc(row.id)}</p><button type="button" data-judge-case="${esc(row.id)}" aria-pressed="${row.id===current}">Inspect this retained case</button></article>`).join(''):'<p>No available examples match this selection. No new case or model run was requested.</p>';
-    document.getElementById('pbp-catalog-count').textContent=rows.length+' shown / '+all.length+' cases returned by the server. Availability is a current snapshot.';
+    root.innerHTML=rows.length?rows.map(row=>`<article><div class="pbp-outcome-code">${esc(row.constructed?'CONSTRUCTED INPUT · RECORDED FIXTURE':row.group==='live'?'RETAINED LIVE':row.group==='other'?'RETAINED EXAMPLE · PROVENANCE SHOWN IN DOSSIER':'RETAINED RECORDED EXAMPLE')}</div><h3>${esc(row.title)}</h3><p>${esc(row.question)}</p><small>Check: ${esc(row.check)}</small><p class="mono">${esc(row.id)}</p><button type="button" data-judge-case="${esc(row.id)}" aria-pressed="${row.id===current}">Inspect this retained case</button></article>`).join(''):(catalogueStatus==='ready'?'<p>No available examples match this selection. No new case or model run was requested.</p>':'<p>No confirmed case list is available. No example was generated.</p>');
+    document.getElementById('pbp-catalog-count').textContent=proofDeskCatalogueMessage(catalogueStatus,rows.length,all.length);
     guide.querySelectorAll('.judge-paths [data-judge-case]').forEach(button=>{button.disabled=!all.some(row=>row.id===button.dataset.judgeCase);});
     const nextInspection=document.querySelector('[data-inspection-next]');if(nextInspection)nextInspection.disabled=rows.length<2;
     if(focused)[...root.querySelectorAll('[data-judge-case]')].find(button=>button.dataset.judgeCase===focused)?.focus();
@@ -456,8 +475,14 @@ function proofDeskReplayClock({length,onFrame,onState,schedule,cancel,canPlay}){
     root.querySelector('[data-inspection-next]').addEventListener('click',()=>{const rows=proofDeskCatalogue(catalogueCases,catalogueGroup.value||'all',catalogueSearch.value||'');if(rows.length<2)return;const index=rows.findIndex(row=>row.id===id);inspectCatalogueCase(rows[(index+1)%rows.length].id);});sync(false);
   }
   const nativeList=document.getElementById('list');
-  if(nativeList&&typeof MutationObserver==='function')new MutationObserver(()=>{if(typeof state!=='undefined')updateCaseCatalogue(state.cases);}).observe(nativeList,{childList:true});
-  updateCaseCatalogue();
+  function readNativeCatalogue(){
+    if(catalogueWrappedList)return;
+    const count=document.getElementById('count')?.textContent?.trim()||'';
+    if(count==='unavailable')updateCaseCatalogue(null,'unavailable');
+    else if(/^\d+(?: of \d+)?$/.test(count)&&typeof state!=='undefined'&&Array.isArray(state.cases))updateCaseCatalogue(state.cases,'ready');
+  }
+  if(nativeList&&typeof MutationObserver==='function')new MutationObserver(readNativeCatalogue).observe(nativeList,{childList:true});
+  readNativeCatalogue();updateCaseCatalogue();
   const run=document.getElementById('pbp-live-run'),availability=document.getElementById('pbp-live-availability');
   const result=document.getElementById('pbp-live-result'),inspect=document.getElementById('pbp-live-inspect');
   const labels={missing_evidence:'Missing delivery proof',amount_conflict:'Payment amount mismatch'};
