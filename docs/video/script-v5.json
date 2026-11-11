@@ -1,0 +1,167 @@
+{
+  "schema": "pbp.media-refresh-script/5",
+  "version": "5.0.0",
+  "base_source": "bce3476603581b2ee097c6486631a2f6b3650859",
+  "duration_seconds": 158,
+  "audio_languages": [
+    "en",
+    "pt-BR"
+  ],
+  "caption_languages": [
+    "en",
+    "pt-BR",
+    "es",
+    "zh-CN"
+  ],
+  "provenance": "Actualcurrentauthenticatedhostedread-onlyviewer;illustratedstoredreplay;no newdecision/review/payment/model/embedding/TX",
+  "narration_disclosure": "LocalKokoro syntheticvoice, notRafael. Captionsmachine-translated,notcertified;noSpanish/Chineseaudio claimed.",
+  "scenes": [
+    {
+      "id": "S01",
+      "start": 0,
+      "end": 18,
+      "visual": "Actualcurrent11catalogue/filter/search/3starters",
+      "narration": {
+        "en": "This is the current Proof Before Pay review console, backed by a running InterSystems IRIS workflow. Eleven retained examples are available in this snapshot. Search, filter, or use the three starting routes. Browsing these records makes no model call.",
+        "pt-BR": "Este é o console atual do Proof Before Pay, conectado a um fluxo em execução no InterSystems IRIS. Nesta fotografia, há onze exemplos retidos. Use a busca, os filtros ou os três roteiros iniciais. Consultar esses registros não chama um modelo."
+      },
+      "captions": {
+        "en": "This is the current Proof Before Pay review console, backed by a running InterSystems IRIS workflow. Eleven retained examples are available in this snapshot. Search, filter, or use the three starting routes. Browsing these records makes no model call.",
+        "pt-BR": "Este é o console atual do Proof Before Pay, conectado a um fluxo em execução no InterSystems IRIS. Nesta fotografia, há onze exemplos retidos. Use a busca, os filtros ou os três roteiros iniciais. Consultar esses registros não chama um modelo.",
+        "es": "Este es el panel actual de Proof Before Pay, conectado a un flujo de InterSystems IRIS en ejecución. En esta instantánea hay once ejemplos conservados. Use la búsqueda, los filtros o las tres rutas iniciales. Consultar estos registros no llama a un modelo.",
+        "zh-CN": "这是当前的 Proof Before Pay 审阅界面，连接到正在运行的 InterSystems IRIS 工作流。本次快照包含十一个保留示例。可以搜索、筛选，或选择三条入门路线。查看这些记录不会调用模型。"
+      }
+    },
+    {
+      "id": "S02",
+      "start": 18,
+      "end": 42,
+      "visual": "Actualcompletedvideo-demo:proposal/verifieddecision/historicaltestreview/consumedpermit/receipt456",
+      "narration": {
+        "en": "Start with the completed duplicate refund. The dossier separates the diagnostic proposal, verified decision and actual outcome. Inspect the historical test review, consumed single-use permit and an intact synthetic receipt for eighty-four B R L. This hosted viewer has no approval controls. Opening the record creates no new payment.",
+        "pt-BR": "Comece pelo reembolso duplicado concluído. O dossiê separa a proposta diagnóstica, a decisão verificada e o resultado. Confira a revisão histórica de teste, a permissão de uso único consumida e o recibo sintético íntegro de oitenta e quatro reais. Este viewer não oferece controles de aprovação. Abrir o registro não cria outro pagamento."
+      },
+      "captions": {
+        "en": "Start with the completed duplicate refund. The dossier separates the diagnostic proposal, verified decision and actual outcome. Inspect the historical test review, consumed single-use permit and intact synthetic receipt for 84 BRL. This hosted viewer has no approval controls. Opening the record creates no new payment.",
+        "pt-BR": "Comece pelo reembolso duplicado concluído. O dossiê separa a proposta diagnóstica, a decisão verificada e o resultado. Confira a revisão histórica de teste, a permissão de uso único consumida e o recibo sintético íntegro de 84 BRL. Este viewer não oferece controles de aprovação. Abrir o registro não cria outro pagamento.",
+        "es": "Empiece por el reembolso duplicado completado. El expediente separa la propuesta diagnóstica, la decisión verificada y el resultado. Revise la revisión histórica de prueba, el permiso de un solo uso consumido y el recibo sintético íntegro de 84 BRL. Este visor no tiene controles de aprobación. Abrir el registro no crea otro pago.",
+        "zh-CN": "先打开已完成的重复付款退款。档案分别显示诊断建议、已验证决策和实际结果。检查历史测试审阅、已消耗的一次性许可和84 BRL的完整合成收据。这个托管查看器没有批准操作的控件。打开记录不会产生新付款。"
+      }
+    },
+    {
+      "id": "S03",
+      "start": 42,
+      "end": 64,
+      "visual": "ActualTimeMachine5tools/inputgaps/sealchain",
+      "narration": {
+        "en": "The evidence view keeps the returned tools, observed inputs and declared gaps together. Inspect the decision and approval seals, then the retained tool outputs in Time Machine. An intact local seal detects changes against its stored commitment. It does not protect against a privileged administrator rewriting the database.",
+        "pt-BR": "A visão de evidências reúne as ferramentas consultadas, os dados observados e as lacunas declaradas. Confira os selos da decisão e da aprovação e as respostas das ferramentas no Time Machine. O selo local detecta alterações em relação ao compromisso armazenado. Ele não impede um administrador privilegiado de reescrever o banco."
+      },
+      "captions": {
+        "en": "The evidence view keeps the returned tools, observed inputs and declared gaps together. Inspect the decision and approval seals, then the retained tool outputs in Time Machine. An intact local seal detects changes against its stored commitment. It does not protect against a privileged administrator rewriting the database.",
+        "pt-BR": "A visão de evidências reúne as ferramentas consultadas, os dados observados e as lacunas declaradas. Confira os selos da decisão e da aprovação e as respostas das ferramentas no Time Machine. O selo local detecta alterações em relação ao compromisso armazenado. Ele não impede um administrador privilegiado de reescrever o banco.",
+        "es": "La vista de pruebas reúne las herramientas consultadas, los datos observados y las ausencias declaradas. Revise los sellos de decisión y aprobación y las respuestas conservadas en Time Machine. El sello local detecta cambios respecto al compromiso almacenado. No impide que un administrador privilegiado reescriba la base de datos.",
+        "zh-CN": "证据视图将工具返回值、观察到的输入和已声明的缺失信息放在一起。检查决策与批准的封存记录，以及 Time Machine 中保留的工具输出。本地封存校验能发现相对于已存承诺的修改，但不能阻止特权管理员重写数据库。"
+      }
+    },
+    {
+      "id": "S04",
+      "start": 64,
+      "end": 88,
+      "visual": "Actualrecipientmismatchclosedescalation/noeffect+constructmissinggateproposalrefused",
+      "narration": {
+        "en": "Closed does not mean paid. This destination-mismatch record ended in escalation, with no permit or receipt. Its review note identifies an automated regression, not a manual approval by the project owner. The three constructed inputs are labelled synthetic. Their refused diagnostic proposals remain separate from the effective sealed escalation.",
+        "pt-BR": "Fechado não significa pago. Este caso de divergência de destino terminou em encaminhamento, sem permissão ou recibo. A nota identifica uma regressão automatizada, não uma aprovação do Rafael. As três entradas construídas são identificadas como sintéticas. As propostas diagnósticas recusadas ficam separadas da decisão efetiva selada."
+      },
+      "captions": {
+        "en": "Closed does not mean paid. This destination-mismatch record ended in escalation, with no permit or receipt. Its review note identifies an automated regression, not a manual approval by the project owner. The three constructed inputs are labelled synthetic. Their refused diagnostic proposals remain separate from the effective sealed escalation.",
+        "pt-BR": "Fechado não significa pago. Este caso de divergência de destino terminou em encaminhamento, sem permissão ou recibo. A nota identifica uma regressão automatizada, não uma aprovação do Rafael. As três entradas construídas são identificadas como sintéticas. As propostas diagnósticas recusadas ficam separadas da decisão efetiva selada.",
+        "es": "Cerrado no significa pagado. Este caso de discrepancia de destino terminó en escalamiento, sin permiso ni recibo. La nota identifica una regresión automatizada, no una aprobación manual del autor. Las tres entradas construidas están marcadas como sintéticas. Sus propuestas diagnósticas rechazadas están separadas de la decisión efectiva sellada.",
+        "zh-CN": "已关闭不代表已付款。这个收款目标不匹配的记录最终转交处理，没有许可或收据。备注明确说明这是自动化回归测试，不是项目作者的人工批准。三项人为构造的输入均标为合成示例。被拒绝的诊断建议与实际封存的升级处理决策分开显示。"
+      }
+    },
+    {
+      "id": "S05",
+      "start": 88,
+      "end": 114,
+      "visual": "ActualretainedLIVE1566citedlocalpolicy/intactseal/5tools",
+      "narration": {
+        "en": "Retained LIVE session fifteen sixty-six shows five actual tools and a policy passage cited inside the intact decision seal. This is one past integration qualification, not a fresh model request or a general accuracy result. Its outcome requires human review, with no permit, receipt or payment effect.",
+        "pt-BR": "A sessão LIVE retida mil quinhentos e sessenta e seis mostra cinco ferramentas reais e um trecho de política citado no selo íntegro. É uma qualificação de integração passada, não uma consulta nova nem um resultado geral de precisão. O desfecho exige revisão humana, sem permissão, recibo ou efeito financeiro."
+      },
+      "captions": {
+        "en": "Retained LIVE session 1566 shows five actual tools and a policy passage cited inside the intact decision seal. This is one past integration qualification, not a fresh model request or a general accuracy result. Its outcome requires human review, with no permit, receipt or payment effect.",
+        "pt-BR": "A sessão LIVE retida 1566 mostra cinco ferramentas reais e um trecho de política citado no selo íntegro. É uma qualificação de integração passada, não uma consulta nova nem um resultado geral de precisão. O desfecho exige revisão humana, sem permissão, recibo ou efeito financeiro.",
+        "es": "La sesión LIVE conservada 1566 muestra cinco herramientas reales y un fragmento de política citado en el sello íntegro. Es una calificación de integración anterior, no una nueva consulta ni una medida general de precisión. El resultado requiere revisión humana, sin permiso, recibo ni efecto financiero.",
+        "zh-CN": "保留的 LIVE 会话1566展示五个实际工具，以及完整决策封存记录中引用的政策片段。这是一次过去的集成验证，不是新的模型请求，也不是总体准确率评估。结果仍需人工审阅，没有许可、收据或付款效果。"
+      }
+    },
+    {
+      "id": "S06",
+      "start": 114,
+      "end": 136,
+      "visual": "Actualchecklistmark/clear/next plusactualmobileinspection;twoidentifiedtakesinsidechapter",
+      "narration": {
+        "en": "The five-item checklist is only a local navigation aid. Its marks stay in your browser and are not a score or submitted review. Clear the marks, move to another retained case, or inspect the same evidence in an emulated mobile viewport, three ninety by eight forty-four.",
+        "pt-BR": "O checklist de cinco itens é apenas um guia local de navegação. As marcas ficam no seu navegador e não são uma nota nem uma revisão enviada. Limpe as marcas, abra outro caso retido ou consulte as evidências em um viewport móvel emulado de trezentos e noventa por oitocentos e quarenta e quatro."
+      },
+      "captions": {
+        "en": "The five-item checklist is only a local navigation aid. Its marks stay in your browser and are not a score or submitted review. Clear the marks, move to another retained case, or inspect the same evidence in an emulated mobile viewport, 390 × 844.",
+        "pt-BR": "O checklist de cinco itens é apenas um guia local de navegação. As marcas ficam no seu navegador e não são uma nota nem uma revisão enviada. Limpe as marcas, abra outro caso retido ou consulte as evidências em um viewport móvel emulado de 390 × 844.",
+        "es": "La lista de cinco elementos es solo una guía local. Las marcas quedan en su navegador; no son una puntuación ni una revisión enviada. Borre las marcas, abra otro caso conservado o consulte las mismas pruebas en un viewport móvil emulado de 390 × 844.",
+        "zh-CN": "五项检查清单只是本地导航指南。标记保留在当前浏览器中，不是评分，也不是提交的审阅。可以清除标记、打开下一个保留案例，或在 390 × 844 的模拟移动视口中查看相同证据。"
+      }
+    },
+    {
+      "id": "S07",
+      "start": 136,
+      "end": 158,
+      "visual": "Editorialendcardsource/demo/credits/limitations;notproductscreen ornewruntimeevidence",
+      "narration": {
+        "en": "Open the authenticated demo with the access details supplied for judging. Judges need no installation: the hosted viewer is enough. Optional local reproduction uses public code and a separately licensed vendor image. This tour uses retained records, synthetic funds and synthetic narration. Captions are machine-translated, not certified.",
+        "pt-BR": "Acesse a demo com os dados fornecidos para avaliação. Jurados não precisam instalar nada: basta o viewer hospedado. A reprodução local opcional usa código público e uma imagem licenciada separadamente. Este passeio usa registros retidos, valores e narração sintéticos. As legendas são traduzidas por máquina, sem certificação."
+      },
+      "captions": {
+        "en": "Open the authenticated demo with the access details supplied for judging. Judges need no installation: the hosted viewer is enough. Optional local reproduction uses public code and a separately licensed vendor image. This tour uses retained records, synthetic funds and synthetic narration. Captions are machine-translated, not certified.",
+        "pt-BR": "Acesse a demo com os dados fornecidos para avaliação. Jurados não precisam instalar nada: basta o viewer hospedado. A reprodução local opcional usa código público e uma imagem licenciada separadamente. Este passeio usa registros retidos, valores e narração sintéticos. As legendas são traduzidas por máquina, sem certificação.",
+        "es": "Acceda a la demo autenticada con los datos facilitados para la evaluación. Los jurados no necesitan instalar nada: basta el visor alojado. La reproducción local opcional usa código público y una imagen con licencia separada. Este recorrido usa registros conservados, fondos sintéticos y narración sintética. Los subtítulos son traducidos por máquina, sin certificación.",
+        "zh-CN": "请使用评审访问资料登录演示。评委无需安装软件，托管查看器即可使用。可选的本地复现使用公开代码和单独许可的供应商镜像。本导览使用保留记录、合成资金和合成语音。字幕由机器翻译，未经认证。"
+      }
+    }
+  ],
+  "rules": [
+    "Nativecaptureaspectandwalltimestampspreserved;noinventedUI/decorativepanzoom/timewarp",
+    "Noapproval/Run/reset/newcase/inference/embedding/TX",
+    "Cases/valuesonlyfrommatchingqualifiedretainedsource;11dynamicbaseline",
+    "Historicalvideo4.2.1andorganizerembedpreservedlabelledhistorical",
+    "No credentials/recovery/controlplane/vendorimage/privategold shown",
+    "Finalsource/mediahashreviewdistinctfromactualAVreview,ASRnotcertifiedsemanticproof"
+  ],
+  "glossary": {
+    "permit": {
+      "en": "single-use permit",
+      "pt-BR": "permissão de uso único",
+      "es": "permiso de un solo uso",
+      "zh-CN": "一次性许可"
+    },
+    "seal": {
+      "en": "seal",
+      "pt-BR": "selo",
+      "es": "sello",
+      "zh-CN": "封存记录"
+    },
+    "receipt": {
+      "en": "receipt",
+      "pt-BR": "recibo",
+      "es": "recibo",
+      "zh-CN": "收据"
+    },
+    "commitment": {
+      "en": "cryptographic commitment",
+      "pt-BR": "compromisso criptográfico",
+      "es": "compromiso criptográfico",
+      "zh-CN": "承诺值"
+    }
+  },
+  "timing_rule": "Nominal scene lengths only; extend actual unwarped visual capture if either natural narration exceeds slot; no audio time-stretch."
+}

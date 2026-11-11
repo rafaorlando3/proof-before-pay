@@ -1,5 +1,23 @@
 # Proof Before Pay: testando propostas de pagamento no InterSystems IRIS AI Hub
 
+## Atualização visual de 11 de novembro de 2026: o Proof Desk atual
+
+As capturas e o vídeo v5 abaixo mostram o console hospedado atual. Durante a gravação, o servidor retornou **11 exemplos retidos**: dez exemplos gravados e o registro LIVE então disponível. Essa disponibilidade pode mudar com o uso legítimo. Três entradas são identificadas como construídas; elas não são novos testes bem-sucedidos de modelo.
+
+Comece pelos três roteiros de **Start with the proof**: reembolso sintético concluído, sessão LIVE retida 1566 ou entrada construída com evidência ausente. A busca e os filtros de grupo facilitam a escolha. O checklist local de cinco itens e **Next available case** ajudam a seguir as evidências; as marcas ficam naquele navegador e não são nota, revisão enviada ou aprovação. O acesso hospedado usa apenas o convite específico do viewer, sem instalação. [Abra o console de revisão](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/); consultar registros retidos não chama um modelo.
+
+![Proof Desk atual: três roteiros iniciais e catálogo de registros retidos](https://raw.githubusercontent.com/rafaorlando3/proof-before-pay/main/docs/screens/proofdesk-catalogue-20261111.jpg)
+
+Captura real do console hospedado em 11 de novembro de 2026. O replay ilustra registros armazenados, não pensamento privado do modelo, latência medida ou execução nova. Este viewer não oferece controles de aprovação de pagamento.
+
+[Assista ao novo passeio pelo Proof Desk v5](https://www.youtube.com/watch?v=GTaQR-LZLKk) · [MP4 narrado em português brasileiro](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v5.0.0/Proof-Before-Pay-v5-pt-BR.mp4) · [MP4 em inglês](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v5.0.0/Proof-Before-Pay-v5-en.mp4).
+
+https://www.youtube.com/watch?v=GTaQR-LZLKk
+
+O corte-fonte tem 171 segundos e narração sintética em inglês e português brasileiro, não a voz do Rafael. Há legendas em inglês, português, espanhol e chinês simplificado, com tradução assistida por máquina e sem certificação profissional. Este corte não oferece narração em espanhol ou chinês. [Hashes dos arquivos, roteiro e limites da revisão](https://github.com/rafaorlando3/proof-before-pay/tree/main/docs/video). O passeio consulta registros retidos e efeitos sintéticos, sem repetir a avaliação v7. O caso de divergência de destino foi fechado sem permissão, recibo ou efeito financeiro; a nota é de uma regressão automatizada, não de uma aprovação do Rafael.
+
+O [vídeo anterior 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw) e o [espelho da organização](https://www.youtube.com/watch?v=WSbJZUMqbns) permanecem históricos, com o layout anterior e seu escopo original. Os relatórios de teste, a versão 0.1.2 da aplicação e o arquivo IPM beta.4 imutável não mudaram. O histórico abaixo preserva suas datas e limites.
+
 ## Atualização de 5 de novembro de 2026: primeiro caso LIVE válido com citação
 
 Um novo caso sintético controlado no VPS foi concluído com Gemini 3.5 Flash-Lite (medium, limite de saída 4096): três requisições HTTP 200 normais do protocolo de ferramentas e decisão, cinco ferramentas reais e uma proposta válida de revisão humana. GetStorePolicy recuperou três trechos íntegros com AI Hub RAG/FastEmbed/IRIS Vector Search local. A proposta cita um trecho retornado dentro do selo íntegro da decisão. A sessão nativa 1566 preserva seis mensagens de Interoperabilidade até Witness e Workflow. Não houve retry, reparo de JSON, permissão, recibo ou efeito financeiro. É uma qualificação de integração de um caso, sem novo benchmark, vantagem geral de qualidade ou bônus concedido.

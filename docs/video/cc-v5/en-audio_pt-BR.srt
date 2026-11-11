@@ -1,0 +1,177 @@
+1
+00:00:00,350 --> 00:00:05,266
+Este é o console atual do Proof Before
+Pay, conectado a um fluxo em execução no
+
+2
+00:00:05,266 --> 00:00:06,500
+InterSystems IRIS.
+
+3
+00:00:06,500 --> 00:00:10,000
+Nesta fotografia, há onze exemplos
+retidos.
+
+4
+00:00:10,000 --> 00:00:13,500
+Use a busca, os filtros ou os três
+roteiros iniciais.
+
+5
+00:00:13,500 --> 00:00:16,445
+Consultar esses registros não chama um
+modelo.
+
+6
+00:00:20,350 --> 00:00:23,000
+Comece pelo reembolso duplicado concluído.
+
+7
+00:00:23,000 --> 00:00:28,500
+O dossiê separa a proposta diagnóstica, a
+decisão verificada e o resultado.
+
+8
+00:00:28,500 --> 00:00:33,313
+Confira a revisão histórica de teste, a
+permissão de uso único consumida e o
+
+9
+00:00:33,313 --> 00:00:35,559
+recibo sintético íntegro de 84 BRL.
+
+10
+00:00:35,559 --> 00:00:39,500
+Este viewer não oferece controles de
+aprovação.
+
+11
+00:00:39,500 --> 00:00:42,419
+Abrir o registro não cria outro pagamento.
+
+12
+00:00:46,350 --> 00:00:50,455
+A visão de evidências reúne as ferramentas
+consultadas, os dados observados e as
+
+13
+00:00:50,455 --> 00:00:51,500
+lacunas declaradas.
+
+14
+00:00:51,500 --> 00:00:56,485
+Confira os selos da decisão e da aprovação
+e as respostas das ferramentas no Time
+
+15
+00:00:56,485 --> 00:00:57,500
+Machine.
+
+16
+00:00:57,500 --> 00:01:01,500
+O selo local detecta alterações em relação
+ao compromisso armazenado.
+
+17
+00:01:01,500 --> 00:01:06,593
+Ele não impede um administrador
+privilegiado de reescrever o banco.
+
+18
+00:01:10,350 --> 00:01:11,500
+Fechado não significa pago.
+
+19
+00:01:11,500 --> 00:01:16,419
+Este caso de divergência de destino
+terminou em encaminhamento, sem permissão
+
+20
+00:01:16,419 --> 00:01:17,500
+ou recibo.
+
+21
+00:01:17,500 --> 00:01:23,500
+A nota identifica uma regressão
+automatizada, não uma aprovação do Rafael.
+
+22
+00:01:23,500 --> 00:01:27,500
+As três entradas construídas são
+identificadas como sintéticas.
+
+23
+00:01:27,500 --> 00:01:33,245
+As propostas diagnósticas recusadas ficam
+separadas da decisão efetiva selada.
+
+24
+00:01:37,350 --> 00:01:43,662
+A sessão LIVE retida 1566 mostra cinco
+ferramentas reais e um trecho de política
+
+25
+00:01:43,662 --> 00:01:45,500
+citado no selo íntegro.
+
+26
+00:01:45,500 --> 00:01:51,120
+É uma qualificação de integração passada,
+não uma consulta nova nem um resultado
+
+27
+00:01:51,120 --> 00:01:52,500
+geral de precisão.
+
+28
+00:01:52,500 --> 00:01:58,353
+O desfecho exige revisão humana, sem
+permissão, recibo ou efeito financeiro.
+
+29
+00:02:02,350 --> 00:02:05,500
+O checklist de cinco itens é apenas um
+guia local de navegação.
+
+30
+00:02:05,500 --> 00:02:09,500
+As marcas ficam no seu navegador e não são
+uma nota nem uma revisão enviada.
+
+31
+00:02:09,500 --> 00:02:16,763
+Limpe as marcas, abra outro caso retido ou
+consulte as evidências em um viewport
+
+32
+00:02:16,763 --> 00:02:19,245
+móvel emulado de 390 × 844.
+
+33
+00:02:26,350 --> 00:02:30,500
+Acesse a demo com os dados fornecidos para
+avaliação.
+
+34
+00:02:30,500 --> 00:02:34,500
+Jurados não precisam instalar nada: basta
+o viewer hospedado.
+
+35
+00:02:34,500 --> 00:02:38,435
+A reprodução local opcional usa código
+público e uma imagem licenciada
+
+36
+00:02:38,435 --> 00:02:39,500
+separadamente.
+
+37
+00:02:39,500 --> 00:02:44,500
+Este passeio usa registros retidos,
+valores e narração sintéticos.
+
+38
+00:02:44,500 --> 00:02:48,695
+As legendas são traduzidas por máquina,
+sem certificação.

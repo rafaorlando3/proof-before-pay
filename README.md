@@ -1,8 +1,8 @@
 # Proof Before Pay
 
 [Open Exchange](https://openexchange.intersystems.com/package/Proof-Before-Pay) ·
-[Video 4.2.1 with captions](https://www.youtube.com/watch?v=LX_0V4C6wLw) ·
-[Download MP4](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4) ·
+[Current Proof Desk tour v5 with captions](https://www.youtube.com/watch?v=GTaQR-LZLKk) ·
+[Download MP4: EN](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v5.0.0/Proof-Before-Pay-v5-en.mp4) / [PT-BR](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v5.0.0/Proof-Before-Pay-v5-pt-BR.mp4) ·
 [Developer Community article 5.3](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub) ·
 [Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
@@ -36,6 +36,28 @@ A five-item **Local inspection checklist** helps a juror follow the evidence, pr
 
 Selecting a retained case automatically starts the inline **AI activity** replay: the existing workflow steps highlight as recorded tools, proposal, seal, review and outcome are revealed. Pause, step controls and presentation speed remain available; reduced-motion preference disables autoplay. This illustrates stored records, not a fresh execution, private model reasoning or measured latency. Background refresh does not restart playback.
 
+![Current hosted Proof Desk: three inspection routes and the retained-case catalogue](docs/screens/proofdesk-catalogue-20261111.jpg)
+
+Actual hosted console, captured on 11 November 2026. The catalogue returned **11 retained examples** in this snapshot; that count can change. The three starting routes, filters and local checklist help a juror inspect existing evidence without making a model call. This viewer cannot approve payments.
+
+The [current v5 tour](https://www.youtube.com/watch?v=GTaQR-LZLKk) shows this layout, a completed **84.00 BRL synthetic refund**, a closed destination-mismatch record with no effect, labelled constructed inputs, and retained LIVE session1566. It is a tour of retained records, not a new benchmark or footage of the v7 evaluation. English and Brazilian Portuguese narration are synthetic, not Rafael's voice; four caption languages are machine-assisted and not certified. [Media sources, exact MP4 hashes and review limits](docs/video/README.md).
+
+<details>
+<summary>More current Proof Desk views</summary>
+
+![Current dossier separates the recorded proposal, sealed decision and actual historical test outcome](docs/screens/proofdesk-refund-20261111.jpg)
+
+Recorded fixture replay, session1483. The verified review note identifies synthetic test approval, not Rafael approval; receipt test-refund:456 is historical and synthetic.
+
+![Retained LIVE session1566 requires human review, with no permit or receipt](docs/screens/proofdesk-retained-live-20261111.jpg)
+
+This is one past integration qualification. Opening it does not call the model again or establish general accuracy. [Emulated mobile view, with its original portrait aspect](docs/screens/proofdesk-mobile-20261111.jpg).
+
+</details>
+
+<details>
+<summary>Historical native-console evidence, earlier layout</summary>
+
 ![Real IRIS console: deterministic duplicate refund with authenticated test review](docs/screens/native-refund-completed.png)
 
 Private synthetic lab: this case was decided by deterministic rule R1, followed by
@@ -46,10 +68,15 @@ shows the consumed permit and intact historical receipt. A separate
 The [live agent-to-refund evidence](docs/validation/gemini-direct-smoke.json) is a different,
 one-scenario integration test. None of these screenshots is the public viewer or the independent v5 cohort.
 
+
+Historical video [4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw), its [immutable MP4 delivery](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4) and the [organizer's mirror](https://www.youtube.com/watch?v=WSbJZUMqbns) remain preserved. They show the earlier layout and retain their original test scope.
+
+</details>
+
 <details>
 <summary>Hosted LIVE qualification, historical failures and budget scope</summary>
 
-Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49); the package review badge remains separate. The video predates the v7 evaluation. The authenticated online viewer serves retained examples from a running IRIS instance. The dedicated route produced its first valid cited LIVE decision on 5 November; fresh-request availability is shown inline and requires the existing health, quota and budget gates. Reading retained cases makes no model call.
+Published on 3 November 2026. [Contest49 registration is publicly listed](https://openexchange.intersystems.com/contest/49); the package review badge remains separate. The historical video 4.2.1 predates the v7 evaluation; the current v5 layout tour is also not footage of that run. The authenticated online viewer serves retained examples from a running IRIS instance. The dedicated route produced its first valid cited LIVE decision on 5 November; fresh-request availability is shown inline and requires the existing health, quota and budget gates. Reading retained cases makes no model call.
 
 The optional fixed-scenario LIVE path uses native actors, a private budget bridge, a persistent queue and inline status. [Session1566 qualified on the VPS](docs/validation/live-gemini35lite-1566-20261105.json): Gemini3.5Flash-Lite, medium reasoning and a4096 output bound completed three normal tool/decision HTTP turns without retry or JSON repair. Five real tools included local policy retrieval; the valid human-review proposal cites an observed passage inside its intact seal. Six native message headers connect Intake, Process, Agent, Witness and Workflow. No permit, receipt or financial effect was created. [Earlier timeouts,503s and refused truncation](docs/validation/live-output4096-20261105.json) remain historical failures. The six uncertain reservations remain intact under the expressly approved cumulative US$5 ceiling. Token estimates and reservations are not billing receipts; this one case establishes no general quality advantage. [Operator controls](demo_gateway/LIVE-DEMO-PLAN.md).
 
@@ -520,7 +547,7 @@ These are evidence and submission states against the [official contest49 bonus r
 | Docker | 2 | Implemented: [Dockerfile](Dockerfile), [Compose](compose.yml), [qualified lifecycle evidence](docs/validation/clean-lifecycle.json). The licensed vendor image is obtained separately. |
 | Online demo | 2 | [Running IRIS-backed viewer](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/), authenticated. [First valid cited LIVE case1566](docs/validation/live-gemini35lite-1566-20261105.json): five tools, intact seal, persisted native trace and no effect. Fresh admission requires explicit operator enablement and is bounded by health, quotas and budget; the viewer shows its actual availability inline. Retained viewing makes no model call. No bonus award inferred. |
 | ZPM/IPM | 2 | [Module](module.xml), [operator guide](IPM-OPERATOR.txt). [Public beta.2 registry installation](docs/validation/IPM-public-beta2-20261103.json) retained. Current immutable beta.4 has [native qualification](docs/validation/IPM-beta4-native-20261105.json) and [exact public-artifact qualification](docs/validation/IPM-beta4-public-artifact-20261105.json): 47 resources, seven imports and 296 source files from Git9b2ee09. It was installed offline in an initialized isolated lab; no fresh vendor bootstrap or native registry network fetch is claimed for beta.4. Optional PEX uses the separate source-checkout recipe. |
-| Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Trace recipe](docs/TRACEABILITY.md) includes the separately labelled recorded1494 Visual Trace screenshot. Inspect the [persisted LIVE1566 native headers](docs/validation/live-session1566-native-headers.json) and the [session1566 record](docs/validation/live-gemini35lite-1566-20261105.json) with its actual tool observations. No new LIVE Visual Trace UI screenshot or awarded points claimed. |
+| Community Opportunity idea | 4 | [DPI-I-689](https://ideas.intersystems.com/ideas/DPI-I-689): native LLM pipeline tracing. [Trace recipe](docs/TRACEABILITY.md) includes the separately labelled recorded1494 Visual Trace screenshot. Inspect the [persisted LIVE 1566 native headers](docs/validation/live-session1566-native-headers.json) and the [session1566 record](docs/validation/live-gemini35lite-1566-20261105.json) with its actual tool observations. No new LIVE Visual Trace UI screenshot or awarded points claimed. |
 | First DC article | 2 | [Article 5.3, published 3 November](https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub). |
 | Second article or translation | 1 | [Portuguese translation published 3 November](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub). |
 | Video | 3 | [Published video 4.2.1](https://www.youtube.com/watch?v=LX_0V4C6wLw) and [anonymous MP4 download](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4), [delivered to the organizer](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288538). [Delivery evidence](docs/validation/video-download-delivery-20261107.json). Four caption languages; historical pre-v7/pre-LIVE footage. |

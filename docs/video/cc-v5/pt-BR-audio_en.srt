@@ -1,0 +1,185 @@
+1
+00:00:00,350 --> 00:00:04,168
+This is the current Proof Before Pay
+review console, backed by a running
+
+2
+00:00:04,168 --> 00:00:05,620
+InterSystems IRIS workflow.
+
+3
+00:00:05,620 --> 00:00:07,982
+Eleven retained examples are available in
+this snapshot.
+
+4
+00:00:07,982 --> 00:00:11,920
+Search, filter, or use the three starting
+routes.
+
+5
+00:00:11,920 --> 00:00:14,704
+Browsing these records makes no model
+call.
+
+6
+00:00:20,350 --> 00:00:22,800
+Start with the completed duplicate refund.
+
+7
+00:00:22,800 --> 00:00:26,268
+The dossier separates the diagnostic
+proposal, verified decision and actual
+
+8
+00:00:26,268 --> 00:00:27,160
+outcome.
+
+9
+00:00:27,160 --> 00:00:32,392
+Inspect the historical test review,
+consumed single-use permit and intact
+
+10
+00:00:32,392 --> 00:00:34,500
+synthetic receipt for 84 BRL.
+
+11
+00:00:34,500 --> 00:00:37,412
+This hosted viewer has no approval
+controls.
+
+12
+00:00:37,412 --> 00:00:39,961
+Opening the record creates no new payment.
+
+13
+00:00:46,350 --> 00:00:51,227
+The evidence view keeps the returned
+tools, observed inputs and declared gaps
+
+14
+00:00:51,227 --> 00:00:52,280
+together.
+
+15
+00:00:52,280 --> 00:00:56,491
+Inspect the decision and approval seals,
+then the retained tool outputs in Time
+
+16
+00:00:56,491 --> 00:00:57,440
+Machine.
+
+17
+00:00:57,440 --> 00:01:01,560
+An intact local seal detects changes
+against its stored commitment.
+
+18
+00:01:01,560 --> 00:01:05,411
+It does not protect against a privileged
+administrator rewriting the database.
+
+19
+00:01:10,350 --> 00:01:12,080
+Closed does not mean paid.
+
+20
+00:01:12,080 --> 00:01:16,695
+This destination-mismatch record ended in
+escalation, with no permit or receipt.
+
+21
+00:01:16,695 --> 00:01:20,499
+Its review note identifies an automated
+regression, not a manual approval by the
+
+22
+00:01:20,499 --> 00:01:21,440
+project owner.
+
+23
+00:01:21,440 --> 00:01:25,120
+The three constructed inputs are labelled
+synthetic.
+
+24
+00:01:25,120 --> 00:01:29,104
+Their refused diagnostic proposals remain
+separate from the effective sealed
+
+25
+00:01:29,104 --> 00:01:30,080
+escalation.
+
+26
+00:01:37,350 --> 00:01:42,311
+Retained LIVE session 1566 shows five
+actual tools and a policy passage cited
+
+27
+00:01:42,311 --> 00:01:44,400
+inside the intact decision seal.
+
+28
+00:01:44,400 --> 00:01:48,242
+This is one past integration
+qualification, not a fresh model request
+
+29
+00:01:48,242 --> 00:01:49,880
+or a general accuracy result.
+
+30
+00:01:49,880 --> 00:01:54,971
+Its outcome requires human review, with no
+permit, receipt or payment effect.
+
+31
+00:02:02,350 --> 00:02:05,880
+The five-item checklist is only a local
+navigation aid.
+
+32
+00:02:05,880 --> 00:02:10,080
+Its marks stay in your browser and are not
+a score or submitted review.
+
+33
+00:02:10,080 --> 00:02:16,454
+Clear the marks, move to another retained
+case, or inspect the same evidence in an
+
+34
+00:02:16,454 --> 00:02:19,287
+emulated mobile viewport, 390 × 844.
+
+35
+00:02:26,350 --> 00:02:29,350
+Open the authenticated demo with the
+access details supplied for judging.
+
+36
+00:02:29,350 --> 00:02:34,306
+Judges need no installation: the hosted
+viewer is enough.
+
+37
+00:02:34,306 --> 00:02:39,003
+Optional local reproduction uses public
+code and a separately licensed vendor
+
+38
+00:02:39,003 --> 00:02:39,974
+image.
+
+39
+00:02:39,974 --> 00:02:44,054
+This tour uses retained records, synthetic
+funds and synthetic narration.
+
+40
+00:02:44,054 --> 00:02:47,561
+Captions are machine-translated, not
+certified.

@@ -1,0 +1,190 @@
+1
+00:00:00,350 --> 00:00:05,289
+Este es el panel actual de Proof Before
+Pay, conectado a un flujo de InterSystems
+
+2
+00:00:05,289 --> 00:00:06,500
+IRIS en ejecución.
+
+3
+00:00:06,500 --> 00:00:10,000
+En esta instantánea hay once ejemplos
+conservados.
+
+4
+00:00:10,000 --> 00:00:13,500
+Use la búsqueda, los filtros o las tres
+rutas iniciales.
+
+5
+00:00:13,500 --> 00:00:16,445
+Consultar estos registros no llama a un
+modelo.
+
+6
+00:00:20,350 --> 00:00:23,000
+Empiece por el reembolso duplicado
+completado.
+
+7
+00:00:23,000 --> 00:00:27,456
+El expediente separa la propuesta
+diagnóstica, la decisión verificada y el
+
+8
+00:00:27,456 --> 00:00:28,500
+resultado.
+
+9
+00:00:28,500 --> 00:00:33,392
+Revise la revisión histórica de prueba, el
+permiso de un solo uso consumido y el
+
+10
+00:00:33,392 --> 00:00:35,559
+recibo sintético íntegro de 84 BRL.
+
+11
+00:00:35,559 --> 00:00:39,500
+Este visor no tiene controles de
+aprobación.
+
+12
+00:00:39,500 --> 00:00:42,419
+Abrir el registro no crea otro pago.
+
+13
+00:00:46,350 --> 00:00:50,440
+La vista de pruebas reúne las herramientas
+consultadas, los datos observados y las
+
+14
+00:00:50,440 --> 00:00:51,500
+ausencias declaradas.
+
+15
+00:00:51,500 --> 00:00:56,473
+Revise los sellos de decisión y aprobación
+y las respuestas conservadas en Time
+
+16
+00:00:56,473 --> 00:00:57,500
+Machine.
+
+17
+00:00:57,500 --> 00:01:01,500
+El sello local detecta cambios respecto al
+compromiso almacenado.
+
+18
+00:01:01,500 --> 00:01:06,593
+No impide que un administrador
+privilegiado reescriba la base de datos.
+
+19
+00:01:10,350 --> 00:01:11,517
+Cerrado no significa pagado.
+
+20
+00:01:11,517 --> 00:01:16,494
+Este caso de discrepancia de destino
+terminó en escalamiento, sin permiso ni
+
+21
+00:01:16,494 --> 00:01:17,517
+recibo.
+
+22
+00:01:17,517 --> 00:01:22,512
+La nota identifica una regresión
+automatizada, no una aprobación manual del
+
+23
+00:01:22,512 --> 00:01:23,517
+autor.
+
+24
+00:01:23,517 --> 00:01:27,517
+Las tres entradas construidas están
+marcadas como sintéticas.
+
+25
+00:01:27,517 --> 00:01:32,253
+Sus propuestas diagnósticas rechazadas
+están separadas de la decisión efectiva
+
+26
+00:01:32,253 --> 00:01:33,261
+sellada.
+
+27
+00:01:37,350 --> 00:01:42,783
+La sesión LIVE conservada 1566 muestra
+cinco herramientas reales y un fragmento
+
+28
+00:01:42,783 --> 00:01:45,500
+de política citado en el sello íntegro.
+
+29
+00:01:45,500 --> 00:01:50,540
+Es una calificación de integración
+anterior, no una nueva consulta ni una
+
+30
+00:01:50,540 --> 00:01:52,500
+medida general de precisión.
+
+31
+00:01:52,500 --> 00:01:58,353
+El resultado requiere revisión humana, sin
+permiso, recibo ni efecto financiero.
+
+32
+00:02:02,350 --> 00:02:05,500
+La lista de cinco elementos es solo una
+guía local.
+
+33
+00:02:05,500 --> 00:02:09,500
+Las marcas quedan en su navegador; no son
+una puntuación ni una revisión enviada.
+
+34
+00:02:09,500 --> 00:02:15,655
+Borre las marcas, abra otro caso
+conservado o consulte las mismas pruebas
+
+35
+00:02:15,655 --> 00:02:19,245
+en un viewport móvil emulado de 390 × 844.
+
+36
+00:02:26,350 --> 00:02:30,500
+Acceda a la demo autenticada con los datos
+facilitados para la evaluación.
+
+37
+00:02:30,500 --> 00:02:34,500
+Los jurados no necesitan instalar nada:
+basta el visor alojado.
+
+38
+00:02:34,500 --> 00:02:38,534
+La reproducción local opcional usa código
+público y una imagen con licencia
+
+39
+00:02:38,534 --> 00:02:39,500
+separada.
+
+40
+00:02:39,500 --> 00:02:44,500
+Este recorrido usa registros conservados,
+fondos sintéticos y narración sintética.
+
+41
+00:02:44,500 --> 00:02:48,695
+Los subtítulos son traducidos por máquina,
+sin certificación.

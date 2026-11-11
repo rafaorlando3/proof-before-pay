@@ -1,0 +1,82 @@
+{
+  "schema": "pbp.media/5",
+  "version": "5.0.0",
+  "captured_UTC_date": "2026-11-11",
+  "application_source": "bce3476603581b2ee097c6486631a2f6b3650859",
+  "product_asset_source": "2b65d54d4488844b472a5722269201a98c1a349f",
+  "YouTube": "https://www.youtube.com/watch?v=GTaQR-LZLKk",
+  "artifact_release": "media-v5.0.0",
+  "duration_seconds": 171,
+  "artifacts": [
+    {
+      "file": "Proof-Before-Pay-v5-en.mp4",
+      "bytes": 7481332,
+      "SHA256": "a415ce0eb722ea454dcb842607ad0ef81866fb21889410f4fe964ec030cd60ff",
+      "duration": "171.000000",
+      "video": "H2641920x1080/30fps",
+      "audio": "en",
+      "CC": [
+        "en",
+        "pt-BR",
+        "es",
+        "zh-CN"
+      ],
+      "full_decode": "PASS"
+    },
+    {
+      "file": "Proof-Before-Pay-v5-pt-BR.mp4",
+      "bytes": 7164342,
+      "SHA256": "c2f69b3fe333990f82fc8543b75b37edd473952d78d404191834850f03ae9b52",
+      "duration": "171.000000",
+      "video": "H2641920x1080/30fps",
+      "audio": "pt-BR",
+      "CC": [
+        "en",
+        "pt-BR",
+        "es",
+        "zh-CN"
+      ],
+      "full_decode": "PASS"
+    }
+  ],
+  "source_script_SHA256": "78e6f57cce1f16db651e35920eb8b56f94f7701a8c1db7fd220e9470b6cb8dee",
+  "footage": "Actual authenticated hosted read-only viewer. Desktop 1440 x 810; S03 native narrow 504 x 934 (CSS 489 x 934); S06 emulated mobile 390 x 844. Original aspect is preserved in the 1920 x 1080 export. Original timestamps are retained within takes; cuts join separate takes. No invented UI, pan, zoom or time warp.",
+  "scope": "Retained historical and explicitly labelled constructed records. The 11-case snapshot can change. No new product model request, embedding, transaction, payment, review, reset, case or runtime change.",
+  "audio": "Local Kokoro synthetic narration in English and Brazilian Portuguese, not Rafael. No music. Four machine-assisted caption languages, not certified. No new Spanish or Chinese narration in this cut.",
+  "checks": {
+    "ffprobe_full_decode": "PASS both exact MP4s",
+    "captions": "8 SRTs;4embeddedCCforeachaudio;nooverlap,<=2lines,Latin<=24cps,CJK<=14cps",
+    "ASR": "Local Whisperbase transcript comparison of final EN/PTnarration; proper-name/technicalword uncertainty persists inPT. No human-ear/naturality certification claimed.",
+    "AAC_match": "Decoded finalAAC correlation with finalWAV>0.9999; no earlisteningclaim.",
+    "silence": "167..171sec PTWAV+exportedAAC96000samples/nonzero0/RMS0; ASRmusic token was hallucination."
+  },
+  "reviews": {
+    "Codex": "actualsource/exportframes,captionchecks,ffprobe/decode/ASRcomparison;noearlistening",
+    "Claude": "actualsuppliedframesviaofficialCLIimages,script/ASR/metadata;notfullvideowatch/audiohearing",
+    "Argon": "script/ASR/text/metadata/pins;noimageview orAVplayback"
+  },
+  "historical_preserved": [
+    "media-v4.2.1",
+    "https://www.youtube.com/watch?v=LX_0V4C6wLw",
+    "https://www.youtube.com/watch?v=WSbJZUMqbns"
+  ],
+  "files": [
+    {
+      "path": "docs/screens/proofdesk-catalogue-20261111.jpg",
+      "SHA256": "465cf98dbd29e0a57ed3bde1cb28faf0a89f00060981053df0a449f4cc969f95"
+    },
+    {
+      "path": "docs/screens/proofdesk-refund-20261111.jpg",
+      "SHA256": "d082a8388477fb4d5b4647cbbc37844c3aa11d4659002cb4919cd350f8584569"
+    },
+    {
+      "path": "docs/screens/proofdesk-retained-live-20261111.jpg",
+      "SHA256": "7c06fb0b68b764f464cb3d9c8422a0cce344faffb52f98a6e69cd52f73e3678c"
+    },
+    {
+      "path": "docs/screens/proofdesk-mobile-20261111.jpg",
+      "SHA256": "e546d460a0db3e2c23c0acaf2c18e2584e7471b6bee41bebe4c649235e085a44"
+    }
+  ],
+  "sidecar_format": "CJK sidecar line-end spaces were trimmed for source hygiene. Timings and visible caption text are unchanged; MP4 hashes are unchanged."
+}

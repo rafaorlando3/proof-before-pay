@@ -1,5 +1,23 @@
 # Proof Before Pay: testing payment proposals inside InterSystems IRIS AI Hub
 
+## Visual update, 11 November 2026: the current Proof Desk
+
+The screenshots and v5 tour below show the current hosted review console. The server returned **11 retained examples** during capture: ten recorded examples plus the currently retained LIVE record. Availability can change with legitimate use. Three inputs are explicitly labelled constructed; they are not additional successful model tests.
+
+Start with the three **Start with the proof** routes: a completed synthetic refund, retained LIVE session1566, or a constructed missing-evidence input. Search and group filters narrow the catalogue. A five-item local checklist and **Next available case** help follow the evidence; the marks stay in that browser and are not a score, submitted review or approval. The hosted path needs only the dedicated viewer invitation, with no installation. [Open the review console](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/); browsing retained records makes no model call.
+
+![Current Proof Desk: three starting routes and the retained-case catalogue](https://raw.githubusercontent.com/rafaorlando3/proof-before-pay/main/docs/screens/proofdesk-catalogue-20261111.jpg)
+
+Actual hosted-console capture, 11 November 2026. The illustrated replay presents stored records, not private model reasoning, measured latency or a fresh execution. This viewer has no payment-approval controls.
+
+[Watch the current Proof Desk tour v5](https://www.youtube.com/watch?v=GTaQR-LZLKk) · [English MP4](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v5.0.0/Proof-Before-Pay-v5-en.mp4) · [Brazilian Portuguese MP4](https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v5.0.0/Proof-Before-Pay-v5-pt-BR.mp4).
+
+https://www.youtube.com/watch?v=GTaQR-LZLKk
+
+The 171-second source cut uses synthetic English and Brazilian Portuguese narration, not Rafael's voice, with English, Portuguese, Spanish and Simplified Chinese captions. Caption translations are machine-assisted, not certified; no Spanish or Chinese narration is claimed for this cut. [Exact media hashes, script and review limits](https://github.com/rafaorlando3/proof-before-pay/tree/main/docs/video). The tour inspects retained records and synthetic effects; it does not rerun the v7 evaluation. The destination-mismatch record is closed without a permit, receipt or payment effect; its review is an automated regression, not Rafael approval.
+
+The [earlier 4.2.1 video](https://www.youtube.com/watch?v=LX_0V4C6wLw) and [organizer's mirror](https://www.youtube.com/watch?v=WSbJZUMqbns) remain historical, with the earlier layout and their original test scope. Existing test reports, the 0.1.2 application version and the immutable IPM beta.4 archive are unchanged. The development history below keeps its dated scope.
+
 ## Update, 5 November 2026: first valid cited LIVE demo case
 
 A new controlled synthetic case on the VPS completed with Gemini 3.5 Flash-Lite (medium, output bound 4096): three normal HTTP 200 tool/decision turns, five actual tools and a valid human-review proposal. GetStorePolicy retrieved three integrity-checked local AI Hub RAG/FastEmbed/IRIS Vector Search passages. The proposal cites a returned chunk inside its intact decision seal. Native session 1566 retains six Interoperability message headers through Witness and Workflow. No retry, JSON repair, permit, receipt or financial effect occurred. This is one integration qualification, not a new benchmark, general quality advantage or awarded bonus.
