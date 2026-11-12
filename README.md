@@ -537,7 +537,7 @@ points awarded to this application.
 
 ## Bonuses
 
-These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 9 November. Point values are possible bonuses, not awarded points. Thirteen items have delivery or implementation evidence, with caps totalling 29; the remaining caps total 6 (the two vendor-bug categories). This is an evidence inventory, not a confirmed score.
+These are evidence and submission states against the [official contest49 bonus rules](https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows), checked on 9 November. Point values are possible bonuses, not awarded points. Thirteen non-bug items have delivery or implementation evidence, with caps totalling 29. One reproducible Embedded Python report was submitted on 12 November and awaits vendor triage; the two vendor-bug categories have combined caps of 6, with no award or eligibility decision verified. This is an evidence inventory, not a confirmed score.
 
 | Item | Points | Evidence and current state |
 |---|---:|---|
@@ -554,7 +554,8 @@ These are evidence and submission states against the [official contest49 bonus r
 | IRIS Vector Search | 2 | [Native policy KB](cls/pbp/RAG/Policy.cls): `%AI.RAG`, local FastEmbed and IRIS Vector Search. [Session1566](docs/validation/live-gemini35lite-1566-20261105.json) retrieved three verified passages and cited a real chunk in a valid sealed proposal. Full policy constraints remain authoritative; no measured quality gain or awarded bonus claimed. |
 | Custom Interoperability adapter | 2 | [Own SolanaMemo outbound adapter](cls/pbp/Adapter/SolanaMemo.cls), [native Operation](cls/pbp/Operation/SolanaMemo.cls), [confirmed devnet-only Interoperability Production test](docs/validation/solana-memo-devnet-20261103.json). One Memo instruction, no transfer; disabled without explicit private configuration. This is an implementation/test claim, not an awarded bonus. |
 | PEX | 3 | [Optional Java export inspection](pex/README.md) in a separate native Production: [Seven native service/operation calls, 14 headers and the exact own-code JAR](docs/validation/pex-export-inspection-20261108.json) were qualified on `941e929`. [Twelve standalone algorithm checks and public CI](docs/validation/pex-public-ci-20261109.json) cover the subsequent status fix; no final-source native IRIS rerun is claimed. Checks transport integrity only; no payment, seal or approval authority. Source-checkout extension, separate from hosted viewer and immutable IPM beta.4. |
-| AI Hub / Embedded Python bugs | up to 3 each | No qualifying submitted reproducible vendor bug is claimed. |
+| AI Hub bugs | up to 3 | No confirmed reproducible vendor bug submitted. |
+| Embedded Python bugs | up to 3 | [Report #34](https://github.com/intersystems-community/python-bugreports/issues/34), submitted 12 November: `dataframe()` fails for a `UNIQUEIDENTIFIER` result column. Reproduced in two fresh stock build154 containers and reviewed by Codex, Claude and Argon. Vendor triage, contest eligibility and any bonus remain pending. |
 
 See the [structured tracker](docs/BONUS-TRACKER.json) for the complete item list. New functionality is documented as delivered only after its behavior is verified.
 

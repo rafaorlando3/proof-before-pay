@@ -179,9 +179,11 @@
       "item": "Find a bug in Embedded Python",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "no_eligible_report_verified",
-      "note": "First reproducible bug2;second+1;maximum3. Application defects do not count.",
-      "evidence": [],
+      "delivery_status": "reproducible_report_submitted_vendor_triage_pending_not_awarded",
+      "note": "Report #34 submitted 12Nov2026: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11). Identical public reproduction in two fresh stock IRIS2026.3.0AI build154U containers; row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. Codex, Claude and Argon reviewed the same evidence and issue body. Vendor acceptance, contest eligibility and bonus points remain pending. The skipped-default candidate was discarded as a documented limitation; no AI Hub bug is confirmed.",
+      "evidence": [
+        "https://github.com/intersystems-community/python-bugreports/issues/34"
+      ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -228,12 +230,12 @@
     "candidate_sum_is_not_awarded_points": true,
     "unfulfilled_item_caps_sum": 6,
     "unfulfilled_items": [
-      "AI Hub bugs:up to3; no qualifying report verified",
-      "Embedded Python bugs:up to3; no qualifying report verified"
+      "AI Hub bugs:up to3; no confirmed reproducible report submitted",
+      "Embedded Python bugs:up to3; first reproducible report #34 submitted, vendor triage and eligibility pending"
     ],
     "remaining_priority_deliverables": [
       "Strengthen judge presentation only for demonstrated gaps; preserve existing retained LIVE1566 and refund proof",
-      "Only submit vendor bugs genuinely encountered, isolated and reproducible; no qualifying report found in examined development failures"
+      "Follow vendor triage of Embedded Python report #34; submit additional vendor bugs only when genuinely encountered, isolated, reproducible and nonduplicate"
     ],
     "completed_deliverables_do_not_repeat": [
       "Questionnaire submission",
@@ -243,7 +245,9 @@
       "Approved video downloadable copy and organizer delivery",
       "Source publication and public CI are complete; preserve the distinction between the941e929 native/JAR qualification and the later standalone algorithm checks. No final-source native IRIS rerun is claimed."
     ],
-    "owner_request": "08Nov: improve judge experience with independent Claude review and pursue every applicable bonus."
+    "owner_request": "08Nov: improve judge experience with independent Claude review and pursue every applicable bonus.",
+    "submitted_vendor_bug_report_count": 1,
+    "submitted_vendor_bug_report_vendor_triage_pending": true
   },
   "update_consistency": [
     "release SHA and source archive",
@@ -277,5 +281,5 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-09T04:14:20.751294+00:00"
+  "delivery_evidence_updated_at_utc": "2026-11-12T10:00:11.488554+00:00"
 }
