@@ -179,10 +179,11 @@
       "item": "Find a bug in Embedded Python",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "reproducible_report_submitted_vendor_triage_pending_not_awarded",
-      "note": "Report #34 submitted 12Nov2026: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11). Identical public reproduction in two fresh stock IRIS2026.3.0AI build154U containers; row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. Codex, Claude and Argon reviewed the same evidence and issue body. Vendor acceptance, contest eligibility and bonus points remain pending. The skipped-default candidate was discarded as a documented limitation; no AI Hub bug is confirmed.",
+      "delivery_status": "two_reproducible_reports_submitted_vendor_triage_pending_not_awarded",
+      "note": "Reports #34 and #39 submitted 12Nov2026. #34: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11); row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. #39: iris.sql.exec() row iteration and direct object-property reads reject a valid VECTOR(DOUBLE,3); ObjectScript logical/ODBC reads and all five Python scalar/object/ODBC controls pass. Each report was reproduced in two separate fresh stock IRIS2026.3.0AI build154U containers; Codex, Claude and Argon reviewed the respective evidence and exact issue body. Separate observable cases are reported without asserting independently proven internal root causes. Vendor acceptance, contest eligibility and bonus points remain pending. The skipped-default candidate was discarded as a documented limitation; no AI Hub bug is confirmed.",
       "evidence": [
-        "https://github.com/intersystems-community/python-bugreports/issues/34"
+        "https://github.com/intersystems-community/python-bugreports/issues/34",
+        "https://github.com/intersystems-community/python-bugreports/issues/39"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
@@ -231,11 +232,11 @@
     "unfulfilled_item_caps_sum": 6,
     "unfulfilled_items": [
       "AI Hub bugs:up to3; no confirmed reproducible report submitted",
-      "Embedded Python bugs:up to3; first reproducible report #34 submitted, vendor triage and eligibility pending"
+      "Embedded Python bugs:up to3; two reproducible reports #34 and #39 submitted, vendor triage and eligibility pending"
     ],
     "remaining_priority_deliverables": [
       "Strengthen judge presentation only for demonstrated gaps; preserve existing retained LIVE1566 and refund proof",
-      "Follow vendor triage of Embedded Python report #34; submit additional vendor bugs only when genuinely encountered, isolated, reproducible and nonduplicate"
+      "Follow vendor triage of Embedded Python reports #34 and #39; submit additional vendor bugs only when genuinely encountered, isolated, reproducible and nonduplicate"
     ],
     "completed_deliverables_do_not_repeat": [
       "Questionnaire submission",
@@ -246,7 +247,7 @@
       "Source publication and public CI are complete; preserve the distinction between the941e929 native/JAR qualification and the later standalone algorithm checks. No final-source native IRIS rerun is claimed."
     ],
     "owner_request": "08Nov: improve judge experience with independent Claude review and pursue every applicable bonus.",
-    "submitted_vendor_bug_report_count": 1,
+    "submitted_vendor_bug_report_count": 2,
     "submitted_vendor_bug_report_vendor_triage_pending": true
   },
   "update_consistency": [
@@ -281,5 +282,5 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-12T10:00:11.488554+00:00"
+  "delivery_evidence_updated_at_utc": "2026-11-12T18:56:35.935772+00:00"
 }
