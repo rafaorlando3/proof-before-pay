@@ -24,6 +24,23 @@ For each route, distinguish the proposed action, the effective sealed decision, 
 
 The seven added entries reuse existing recorded sandbox records and intact seals. No new case, model call, embedding or transaction was run to expand the catalogue. Constructed inputs are not a sample of real-world traffic or successful model runs. Proposed actions and diagnostic confidence are distinct from the verified effective decision; confidence is not calibrated accuracy.
 
+## Why one refund had an effect and two closed cases did not
+
+Search each exact ID in the catalogue's **Find an example** field, then choose **Inspect this retained case**. These are three different historical recorded cases, all with a diagnostic `refund_duplicate` proposal; they are not a controlled experiment. Each column below refers only to that case's retained record, inspected in the 11 November baseline.
+
+| Evidence to compare | `video-demo:d83544a2` | `recipient-flow:absent:bfe5c8fd` | `recipient-flow:mismatch:bfe5c8fd` |
+|---|---|---|---|
+| Proposed action — **Dossier**, diagnostic proposal | `refund_duplicate` (unsealed). | `refund_duplicate` (unsealed). | `refund_duplicate` (unsealed); the diagnostic panel and Timeline retain it, while the case-flow step shows the effective `escalate_to_human`. |
+| Destination evidence — **Time Machine**, sealed inputs | Stored `recipient_ref` is `test:video-demo`; the server-bound refund target is `pix:video:B:d83544a2`. | No top-level stored `recipient_ref`; `GetOrder` reports no stored refund destination. Nested shadow destinations and customer prose do not supply it. | Stored `recipient_ref` is `test:different-recipient`, while both observed payments have payer `test:recorded-recipient`. The effective rationale records `recipient_mismatch`. |
+| Effective decision — **Dossier / Seals** | Sealed `refund_duplicate`, 84.00 BRL, awaiting review before an effect. | Sealed `refund_duplicate`, but the ledger refuses it with `blocked:test_recipient_required`. | Sealed `escalate_to_human`; `refund_target` remains a sealed gap. |
+| Actual review — **Dossier / Timeline** | Historical synthetic reviewer approval for the recorded video demonstration; explicitly not Rafael approval. | Historical acknowledgement, with the note “Automated recorded recipient regression; not Rafael approval.” It supplies no payment authority. | Historical acknowledgement with the same automated-regression provenance in this record; no payment authority. |
+| Permit, receipt and effect — **Permit and test effect** | Single-use permit **consumed**, bound to the decision and approval seals; intact receipt `test-refund:456`, **84.00 BRL synthetic effect**. | **No permit or receipt**; status `closed_no_effect`, with the ledger refusal retained in Timeline. | **No permit or receipt**; status `closed`, with Timeline explicitly recording no money movement for `escalate_to_human`. |
+| Decision commitment — **Seals** | `ac21881f…afc3b377` | `cf1994eb…f2a61f85` | `063b6ac5…abc3457e` |
+
+Only the first case has the full approval → consumed permit → intact test-receipt chain. “Closed”, a review acknowledgement and a money-moving proposal each need their own inspection; none establishes an effect by itself. The two no-effect outcomes have different reasons: the absent destination blocks ledger staging, while the mismatch produces an effective escalation. The record's sections and commitment identify the source of each cell; this comparison adds no new run, review or effect. The [11 November console capture](screens/proofdesk-refund-20261111.jpg) and [v5 tour](video/README.md) are historical supporting views.
+
+**Retained LIVE1566 answers a separate question:** whether a model's policy citation refers to an observed passage. Inspect its five tools, three retrieved passages and matching decision seal using the [public qualification](validation/live-gemini35lite-1566-20261105.json). It ended in human review without a permit, receipt or financial effect; it is not a fourth refund-comparison case or a general accuracy result.
+
 ### Use the local inspection checklist
 
 In a loaded dossier, mark the five inspection items as you examine evidence, proposal, seals, review and effect. **Next available case →** follows the current search/filter; unavailable next routes are disabled. **Clear local marks** clears only that case. Marks and filters persist only in this browser; no identity, score or review is submitted. Checklist completion is not a correctness or payment-approval result.
@@ -60,7 +77,7 @@ Rules R1–R3, recorded proposals and server validation have different responsib
 
 The [root installation recipe](../README.md#start-the-isolated-iris-lab) covers the separately licensed build154 image, platform, dependencies, private credentials and resource prerequisites. No EAP image, model key or reviewer password is distributed here. Use a dedicated synthetic recorded-mode lab; these commands execute tests and can create historical test cases and effects there.
 
-After installing that lab:
+From the source checkout root, after starting that dedicated Compose lab in recorded mode:
 
 ```sh
 python3 scripts/test_iris.py
@@ -75,6 +92,8 @@ Check the JSON assertions and reported case IDs, rather than treating an IRIS te
 For the ten original fixtures, `Do ##class(pbp.Setup).FeedCases()` in the lab's USER terminal feeds the public inputs. It does not create the workflow gate's suffixed adversarial examples. Follow the [authenticated HTTP recipe](../README.md#judge-path) for end-to-end test review, consumed permit, copy verification and refusal paths. That recipe requires private reviewer credentials and a loopback URL; it is not an instruction to submit HTTP approvals to the hosted viewer.
 
 For source-only checks without the licensed runtime, follow [Test the language components](../README.md#test-the-language-components). Public CI covers TypeScript, Python and the standalone optional PEX algorithm; it does not establish a native IRIS integration pass. Fresh paid inference is a separate opt-in under existing cost controls, unnecessary for these retained examples.
+
+The paths, helper entry points and README anchors above were checked statically on 13 November 2026. That check ran no IRIS command, container, model or effect and does not extend the dated installation or native-runtime qualifications. The [artifact identities](../README.md#source-package-and-demonstration-versions) separate the source tree, hosted publication, IPM archive, PEX and media.
 
 ## Published evaluations are a separate layer
 

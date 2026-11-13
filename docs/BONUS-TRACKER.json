@@ -3,14 +3,14 @@
   "checked_at_utc": "2026-11-09T04:14:20.751294+00:00",
   "contest": 49,
   "current_full_bonus_table_located": true,
-  "no_points_awarded_to_project_verified": true,
+  "no_points_awarded_to_project_verified": false,
   "bonus_list_subject_to_change": true,
   "maximum_total_not_assumed": true,
   "arithmetic_sum_of_published_item_caps": 35,
   "arithmetic_sum_is_not_an_award_or_guaranteed_project_score": true,
   "official_bonus_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
   "official_bonus_page_published_at": "2026-10-26T23:14:44-04:00",
-  "official_page_verified_via": "Official contest49 rules and bonus pages checked09Nov; 15items/caps35 unchanged; candidate evidence inventory remains13items/caps29, not awardedpoints.",
+  "official_page_verified_via": "Official category rules checked09Nov; official results table separately observed13Nov. Rule caps are distinct from credited project points and individual report acceptance.",
   "official_page_snapshot_sha256": null,
   "official_sources": [
     "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
@@ -23,18 +23,20 @@
       "item": "Questionnaire",
       "points_cap": 1,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "submitted_UI_confirmed_not_awarded",
+      "delivery_status": "submitted_UI_confirmed",
       "note": "Official response submitted03Nov; confirmation retained. No marketing case-study or presentation consent granted.",
       "evidence": [
         "docs/validation/questionnaire-20261103.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 1,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Production Extension (PEX)",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "implemented_isolated_native_Production_source_checkout_extension_not_awarded",
+      "delivery_status": "implemented_isolated_native_Production_source_checkout_extension",
       "note": "Java PEX export transport-digest inspection:12 algorithm checks, seven native service/operation inspections and14 native headers on isolated build154. Exact own-code JAR registered and real1122-byte evidence export matched. Operator-only, networkNONE, no financial/provider calls; lab stopped exit0/noOOM. Source-checkout optional production, not hosted viewer or immutable IPMbeta4. C1270 algorithm-only status correction passed12 checks in a separate stopped compiler container; native7calls/JAR evidence is from941e929, before that correction; no final-source native IRIS rerun claimed. Public source publication and the standalone algorithm CI job are now verified; see the dated public CI addendum. The historical qualification JSON keeps its pre-publication CI-pending note.",
       "evidence": [
         "pex/README.md",
@@ -43,13 +45,15 @@
         "docs/validation/pex-export-inspection-20261108.json",
         "docs/validation/pex-public-ci-20261109.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 3,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Workflow Engine",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "implemented_evidence_candidate_not_awarded",
+      "delivery_status": "implemented_evidence_candidate",
       "note": "Native Workflow tasks and authenticated review are exercised.",
       "evidence": [
         "cls/pbp/Production.cls",
@@ -57,38 +61,44 @@
         "docs/validation/native-ui25-browser.json",
         "docs/validation/http-workflow.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Custom adapter",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "implemented_native_Production_devnet_test_confirmed_not_awarded",
+      "delivery_status": "implemented_native_Production_devnet_test_confirmed",
       "note": "Own outbound SolanaMemo adapter and Operation, fixed devnet Memo only. One real synthetic devnet transaction confirmed by exact Memo readback. Default disabled without private operator configuration; qualification host disabled afterwards. No transfer, real money, key or salt published.",
       "evidence": [
         "cls/pbp/Adapter/SolanaMemo.cls",
         "cls/pbp/Operation/SolanaMemo.cls",
         "docs/validation/solana-memo-devnet-20261103.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Find a bug in AI Hub",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "two_reproducible_reports_submitted_vendor_triage_pending_not_awarded",
-      "note": "Reports #29 and #30 submitted 12Nov2026. #29: a ToolSet with two Includes resolving to Ping compiles successfully and advertises only the first class entry. #30: RegisterToolSet()/manager %Discover() on a %AI.Tool subclass omits inherited BaseTool even with no DISCOVERYLIMIT. Both cases were observed in two original fresh stock IRIS2026.3.0AI build154U battery runs and reproduced together with the literal public commands in one additional fresh container containing only the six source classes. Codex, Claude and Argon reviewed the evidence and exact issue bodies. No ExecuteTool behavior or independently proven internal root causes are claimed. Vendor acceptance, contest eligibility and bonus points remain pending. AIH-C (%Binary schema) remains unpublished; first reproducible bug2, second+1, maximum3 are possible bonus rules, not awarded points.",
+      "delivery_status": "two_reproducible_reports_submitted_vendor_triage_pending",
+      "note": "Reports #29 and #30 submitted 12Nov2026. #29: a ToolSet with two Includes resolving to Ping compiles successfully and advertises only the first class entry. #30: RegisterToolSet()/manager %Discover() on a %AI.Tool subclass omits inherited BaseTool even with no DISCOVERYLIMIT. Both cases were observed in two original fresh stock IRIS2026.3.0AI build154U battery runs and reproduced together with the literal public commands in one additional fresh container containing only the six source classes. Codex, Claude and Argon reviewed the evidence and exact issue bodies. No ExecuteTool behavior or independently proven internal root causes are claimed. Individual vendor acceptance and contest eligibility of #29/#30 remain unconfirmed. The official results table separately credits the AI Hub bug category with3 points; its12Nov reply concerns earlier supplements to existing #1/#26, not individual acceptance of #29/#30. AIH-C (%Binary schema) remains unpublished; first reproducible bug2, second+1, maximum3 describe the rule cap, separate from the observed category credit and any individual report acceptance.",
       "evidence": [
         "https://github.com/intersystems-community/ai-hub-eap-bugreports/issues/29",
         "https://github.com/intersystems-community/ai-hub-eap-bugreports/issues/30"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 3,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Embedded Python",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "implemented_evidence_candidate_not_awarded",
+      "delivery_status": "implemented_evidence_candidate",
       "note": "Witness and effect contract run through embedded Python.",
       "evidence": [
         "cls/ProofBeforePay/Witness.cls",
@@ -96,14 +106,16 @@
         "docs/validation/native-units.json",
         "docs/validation/ledger-runtime.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 3,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "IRIS Vector Search",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "valid_cited_live_RAG_use_observed_not_awarded",
-      "note": "Session1566 on VPS used five real tools; GetStorePolicy returned three integrity-verified local %AI.RAG/FastEmbed/IRISVectorSearch passages. A real chunk was cited in the valid sealed human-review proposal. No measured quality gain or awarded points.",
+      "delivery_status": "valid_cited_live_RAG_use_observed",
+      "note": "Session1566 on VPS used five real tools; GetStorePolicy returned three integrity-verified local %AI.RAG/FastEmbed/IRISVectorSearch passages. A real chunk was cited in the valid sealed human-review proposal. No measured quality gain claimed; official category credit is recorded separately.",
       "evidence": [
         "cls/pbp/RAG/Policy.cls",
         "cls/pbp/Tools.cls",
@@ -112,13 +124,15 @@
         "docs/validation/live-output4096-20261105.json",
         "docs/validation/live-gemini35lite-1566-20261105.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Docker container",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "implemented_evidence_candidate_not_awarded",
+      "delivery_status": "implemented_evidence_candidate",
       "note": "Private licensed IRIS image with source-only Docker/Compose recipe.",
       "evidence": [
         "Dockerfile",
@@ -126,14 +140,16 @@
         "docs/IRIS-154.md",
         "docs/validation/clean-lifecycle.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "ZPM package deployment",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "public_registry_package_and_native_install_verified_not_awarded",
-      "note": "Public beta.2 native registry network-install history retained. Beta.3 native source/package/archive delta passed:47resources/7imports/34installed assets and10 changed Operation methods. Public beta.3 artifact HTTP200,292sourcefiles equalGit953d96d; exact host-downloaded archive installed natively offline on same isolated initialized VPS test copy with blank keys/defaultOFF. Not a native registry network fetch or fresh bootstrap. Contest listed; no points awarded. Beta.4 native source/package/archive delta qualified47classes/7imports/34assets and15Runtime/dependent method bodies; model3.5Lite/defaultOFF. Public beta.4 HTTP200 archive,296files equalGit9b2ee09; exact bytes installed natively offline in the isolated initialized VPS copy. No native network fetch/bootstrap.",
+      "delivery_status": "public_registry_package_and_native_install_verified",
+      "note": "Public beta.2 native registry network-install history retained. Beta.3 native source/package/archive delta passed:47resources/7imports/34installed assets and10 changed Operation methods. Public beta.3 artifact HTTP200,292sourcefiles equalGit953d96d; exact host-downloaded archive installed natively offline on same isolated initialized VPS test copy with blank keys/defaultOFF. Not a native registry network fetch or fresh bootstrap. Contest listed; official category credit is recorded separately. Beta.4 native source/package/archive delta qualified47classes/7imports/34assets and15Runtime/dependent method bodies; model3.5Lite/defaultOFF. Public beta.4 HTTP200 archive,296files equalGit9b2ee09; exact bytes installed natively offline in the isolated initialized VPS copy. No native network fetch/bootstrap.",
       "evidence": [
         "module.xml",
         "IPM-OPERATOR.txt",
@@ -146,14 +162,16 @@
         "docs/validation/IPM-beta4-native-20261105.json",
         "docs/validation/IPM-beta4-public-artifact-20261105.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Online demo",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "first_valid_cited_live1566_observed_admission_explicitly_gated_not_awarded",
-      "note": "First valid cited LIVE qualification on VPS:3 normal HTTP200/toolcalls+JSON stop;5tools;policy citation in intact seal;native session1566 headers;0permit/receipt/effect. Fresh admission requires explicit operator enablement, native readiness, quotas and the preserved budget; availability is displayed inline. A failed provider attempt disables further admission. Six old holds preserved; no new uncertain hold; no billing receipt or awarded bonus.",
+      "delivery_status": "first_valid_cited_live1566_observed_admission_explicitly_gated",
+      "note": "First valid cited LIVE qualification on VPS:3 normal HTTP200/toolcalls+JSON stop;5tools;policy citation in intact seal;native session1566 headers;0permit/receipt/effect. Fresh admission requires explicit operator enablement, native readiness, quotas and the preserved budget; availability is displayed inline. A failed provider attempt disables further admission. Six old holds preserved; no new uncertain hold; no billing receipt; official category credit is recorded separately.",
       "evidence": [
         "https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/",
         "docs/validation/live-integration-attempt-20261103.json",
@@ -161,13 +179,15 @@
         "docs/validation/live-output4096-20261105.json",
         "docs/validation/live-gemini35lite-1566-20261105.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Community Opportunity idea",
       "points_cap": 4,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "live1566_native_headers_and_sealed_tools_captured_not_awarded",
+      "delivery_status": "live1566_native_headers_and_sealed_tools_captured",
       "note": "DPI-I-689 linked on public OEX. LIVE1566 persisted native headers and sealed tool observations captured read-only. Recorded1494 native Visual Trace screenshot remains separately historical; no new LIVE Visual Trace UI screenshot claimed.",
       "evidence": [
         "https://ideas.intersystems.com/ideas/DPI-I-689",
@@ -176,66 +196,76 @@
         "docs/screens/native-visual-trace-recorded-1494.jpg",
         "docs/validation/live-session1566-native-headers.json"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 4,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Find a bug in Embedded Python",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "two_reproducible_reports_submitted_vendor_triage_pending_not_awarded",
-      "note": "Reports #34 and #39 submitted 12Nov2026. #34: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11); row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. #39: iris.sql.exec() row iteration and direct object-property reads reject a valid VECTOR(DOUBLE,3); ObjectScript logical/ODBC reads and all five Python scalar/object/ODBC controls pass. Each report was reproduced in two separate fresh stock IRIS2026.3.0AI build154U containers; Codex, Claude and Argon reviewed the respective evidence and exact issue body. Separate observable cases are reported without asserting independently proven internal root causes. Vendor acceptance, contest eligibility and bonus points remain pending. The skipped-default candidate was discarded as a documented limitation.",
+      "delivery_status": "two_reproducible_reports_submitted_vendor_triage_pending",
+      "note": "Reports #34 and #39 submitted 12Nov2026. #34: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11); row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. #39: iris.sql.exec() row iteration and direct object-property reads reject a valid VECTOR(DOUBLE,3); ObjectScript logical/ODBC reads and all five Python scalar/object/ODBC controls pass. Each report was reproduced in two separate fresh stock IRIS2026.3.0AI build154U containers; Codex, Claude and Argon reviewed the respective evidence and exact issue body. Separate observable cases are reported without asserting independently proven internal root causes. Individual vendor acceptance and contest eligibility remain unconfirmed. The official results cell is blank as of13Nov, so no Embedded Python bug credit is shown; no rejection is inferred. The skipped-default candidate was discarded as a documented limitation.",
       "evidence": [
         "https://github.com/intersystems-community/python-bugreports/issues/34",
         "https://github.com/intersystems-community/python-bugreports/issues/39"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": null,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "First Developer Community article",
       "points_cap": 2,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "published_UI_confirmed_not_awarded",
+      "delivery_status": "published_UI_confirmed",
       "note": "Article5.3 with v7 qualifications published03Nov.",
       "evidence": [
         "https://community.intersystems.com/post/proof-pay-testing-payment-proposals-inside-intersystems-iris-ai-hub"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 2,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Second article or translation",
       "points_cap": 1,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "Portuguese_translation_published_UI_confirmed_not_awarded",
+      "delivery_status": "Portuguese_translation_published_UI_confirmed",
       "note": "Article5.3 Portuguese translation published03Nov, original link and historical/v7 limitations retained.",
       "evidence": [
         "https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub",
         "docs/ARTICLE-5.3-pt-BR.md"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 1,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
       "item": "Video",
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
-      "delivery_status": "published_video_and_downloadable_MP4_delivered_to_organizer_not_awarded",
-      "note": "Same approved historical4.2.1 video: YouTube03Nov and anonymous MP4 verified/delivered to organizer07Nov. Four audio/caption languages are accessibility, not extra points. Predates v7 and LIVE1566; no new inference.",
+      "delivery_status": "published_video_and_downloadable_MP4_delivered_to_organizer",
+      "note": "Same approved historical4.2.1 video: YouTube03Nov and anonymous MP4 verified/delivered to organizer07Nov. Four audio/caption languages are accessibility, not extra points. Predates v7 and LIVE1566; no new inference. Current media is separately media-v5.0.0, the171-second retained-record tour published11Nov; docs/video/README.md pins its hashes and review scope. The4.2.1 delivery receipt remains historical.",
       "evidence": [
         "https://www.youtube.com/watch?v=LX_0V4C6wLw",
         "https://github.com/rafaorlando3/proof-before-pay/releases/download/media-v4.2.1/Proof-Before-Pay-en.mp4",
         "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288538",
-        "docs/validation/video-download-delivery-20261107.json"
+        "docs/validation/video-download-delivery-20261107.json",
+        "docs/video/README.md"
       ],
-      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows"
+      "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "official_credited_points_at_snapshot": 3,
+      "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     }
   ],
   "prioritization": {
     "evidence_backed_candidate_item_count": 13,
     "evidence_backed_candidate_caps_sum": 29,
     "candidate_sum_is_not_awarded_points": true,
-    "unfulfilled_item_caps_sum": 6,
+    "unfulfilled_item_caps_sum": 3,
     "unfulfilled_items": [
-      "AI Hub bugs:up to3; two reproducible reports #29 and #30 submitted, vendor triage and eligibility pending",
-      "Embedded Python bugs:up to3; two reproducible reports #34 and #39 submitted, vendor triage and eligibility pending"
+      "Embedded Python bug category: up to3 not credited in the13Nov official snapshot; reports #34/#39 submitted, individual vendor acceptance and eligibility unconfirmed."
     ],
     "remaining_priority_deliverables": [
       "Strengthen judge presentation only for demonstrated gaps; preserve existing retained LIVE1566 and refund proof",
@@ -251,7 +281,10 @@
     ],
     "owner_request": "08Nov: improve judge experience with independent Claude review and pursue every applicable bonus.",
     "submitted_vendor_bug_report_count": 4,
-    "submitted_vendor_bug_report_vendor_triage_pending": true
+    "submitted_vendor_bug_report_vendor_triage_pending": true,
+    "candidate_sum_scope": "Historical non-bug delivery inventory only; not the current official total.",
+    "official_credited_item_count": 14,
+    "official_credited_total_at_snapshot": 32
   },
   "update_consistency": [
     "release SHA and source archive",
@@ -271,8 +304,8 @@
     "equivalent_Paraguay": "2026-11-09T01:59:59-03:00",
     "internal_submission_ceiling_Paraguay": "2026-11-08T18:00:00-03:00",
     "updates_allowed_during_submission_and_voting": true,
-    "voting_end_EST": "2026-11-15T23:59:00-05:00",
-    "equivalent_voting_end_Paraguay": "2026-11-16T01:59:00-03:00",
+    "voting_end_EST": "2026-11-15T23:59:59-05:00",
+    "equivalent_voting_end_Paraguay": "2026-11-16T01:59:59-03:00",
     "source": "https://community.intersystems.com/post/intersystems-programming-contest-ai-agents-interoperability-workflows",
     "publication_authorized_20261103": true,
     "current_queue_express_OK_received": "08Nov and09Nov: Rafael explicitly authorized reviewed corrections to GitHub/OEX without another generic OK; exact real reviews, affected checks and green CI remain required.",
@@ -285,5 +318,87 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-12T21:11:10.173768+00:00"
+  "delivery_evidence_updated_at_utc": "2026-11-13T23:56:59.468294+00:00",
+  "official_results_snapshot": {
+    "observed_at_utc": "2026-11-13T23:56:06+00:00",
+    "source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows",
+    "method": "Official page read through web tool; normalized selected observations, not downloaded HTML",
+    "project": "Proof Before Pay",
+    "nominal_total": 35,
+    "categories": [
+      {
+        "item": "Questionnaire",
+        "points": 1
+      },
+      {
+        "item": "Production Extension (PEX)",
+        "points": 3
+      },
+      {
+        "item": "Workflow Engine",
+        "points": 2
+      },
+      {
+        "item": "Custom adapter",
+        "points": 2
+      },
+      {
+        "item": "Find a bug in AI Hub",
+        "points": 3
+      },
+      {
+        "item": "Embedded Python",
+        "points": 3
+      },
+      {
+        "item": "IRIS Vector Search",
+        "points": 2
+      },
+      {
+        "item": "Docker container",
+        "points": 2
+      },
+      {
+        "item": "ZPM package deployment",
+        "points": 2
+      },
+      {
+        "item": "Online demo",
+        "points": 2
+      },
+      {
+        "item": "Community Opportunity idea",
+        "points": 4
+      },
+      {
+        "item": "Find a bug in Embedded Python",
+        "points": null
+      },
+      {
+        "item": "First Developer Community article",
+        "points": 2
+      },
+      {
+        "item": "Second article or translation",
+        "points": 1
+      },
+      {
+        "item": "Video",
+        "points": 3
+      }
+    ],
+    "official_total": 32,
+    "organizer_comment_context": "12 November reply to the earlier 11 November question about supplemental observations on existing AI Hub reports #1/#26. Does not identify acceptance of #29/#30.",
+    "embedded_python_blank_meaning": "No points shown in this category at observation time; no rejection inferred.",
+    "observation_window_utc": {
+      "start": "2026-11-13T23:56:04+00:00",
+      "end": "2026-11-13T23:56:06+00:00"
+    },
+    "recorded_at_utc": "2026-11-13T23:56:59.465363+00:00",
+    "timestamp_scope": "observed_at_utc marks completion of the fresh web-tool read bracketed by clock reads; recorded_at_utc is this artifact write.",
+    "normalized_observation_sha256": "396f395c0a58eba43a5bd5b27bbc3d97d90acfaae5e7004338241fc1c2cafd48",
+    "hash_scope": "SHA256 of the normalized selected-observation JSON retained by the operator; not a hash of the source HTML",
+    "vendor_report_acceptance_individually_confirmed": false,
+    "overall_rank_or_prize_inferred": false
+  }
 }
