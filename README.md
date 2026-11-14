@@ -23,7 +23,7 @@ guard constrain it before sealing.
 
 Open the [hosted review console](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/) with the dedicated viewer credentials supplied through the contest organizer. No Docker, IRIS installation, API key or wallet is needed. These are viewer credentials, separate from your Open Exchange or IRIS login; the sign-in page explains how to request an invitation.
 
-1. **Completed sandbox refund:** use the first “Start with the proof” button. Follow the recorded proposal, sealed human approval, consumed single-use permit and intact synthetic receipt.
+1. **Completed sandbox refund:** use the first “Start with the proof” button. Follow the recorded proposal, sealed test-reviewer approval, consumed single-use permit and intact synthetic receipt.
 2. **Retained LIVE decision:** use the second button for session1566. Inspect the actual tool outputs and cited local policy in **Time Machine**, then the intact decision seal. Its outcome is human review, with no permit, receipt or financial effect.
 3. **Constructed missing-evidence input:** use the third button to compare a refused `accept_order` proposal with the effective sealed escalation. This is a labelled synthetic fixture, not a successful model run.
 4. **Check the boundary:** “Try to tamper” verifies an edited copy without changing the original. This viewer cannot approve payments. Opening any retained example makes no model call.
