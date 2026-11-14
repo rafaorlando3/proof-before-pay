@@ -30,6 +30,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run typecheck
+      - run: |
+          npx --no-install tsx test/sample.ts > "$RUNNER_TEMP/pbp-seal-sample.json"
+          diff -u ../docs/validation/seal-offline-sample-20261114.json "$RUNNER_TEMP/pbp-seal-sample.json"
   seal-python-and-witness:
     runs-on: ubuntu-latest
     steps:

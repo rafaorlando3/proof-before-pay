@@ -7,6 +7,28 @@
 [Artigo em português](https://pt.community.intersystems.com/post/proof-pay-testando-propostas-de-pagamento-no-intersystems-iris-ai-hub)
 
 Seal what an AI agent saw, what was missing and what it decided **before** an action.
+Proof Before Pay investigates payment exceptions inside InterSystems IRIS AI Hub and
+binds an executable duplicate refund to a sealed decision, authenticated human review
+and a single-use permit. The demonstration uses synthetic effects; the model proposes,
+application policy constrains the proposal and a person authorizes the refund.
+
+## Three ways to inspect the proof
+
+- **Watch, no login:** the [171-second Proof Desk tour](https://www.youtube.com/watch?v=GTaQR-LZLKk) walks a completed synthetic refund, a closed case with no effect and retained LIVE session1566. It shows stored records, not a fresh run or a benchmark; narration is synthetic. [Media hashes and limits](docs/video/README.md).
+- **Check a public seal, no viewer invitation:** [read the sample output](docs/validation/seal-offline-sample-20261114.json), or [run the offline sample](#public-synthetic-seal-sample) with Node22 and npm. The existing TypeScript verifier recomputes commitments from public synthetic test vectors, detects an edited copy and checks that the original stays unchanged. This is a local integrity example, not a native IRIS execution, approval, receipt or chain anchor.
+- **Inspect the running IRIS viewer, invitation required:** open the [hosted review console](https://review.pbp49.78-17-93-244.sslip.io/pbp/ui/) with its dedicated viewer invitation, separate from Open Exchange or IRIS credentials. Follow retained evidence, proposal, seal, authenticated review and synthetic effect. Opening a retained example makes no model call; this viewer cannot approve payments.
+
+**Execution boundary:** only duplicate refunds are executable in v1; unsupported financial
+actions go to a person. A matching seal does not establish that the decision is correct.
+**Installation boundary:** the 14 November cold offline source install compiled and initialized
+52 classes, but its additional recorded-case smoke stopped with a decoding exception whose
+cause remains unproven. A later private harness passed one recorded non-money case;
+that does not qualify the unmodified repository smoke script.
+[Dated evidence and exact scopes](#source-package-and-demonstration-versions) · [Full judge path](#judge-path).
+
+<details>
+<summary>Architecture and decision boundaries</summary>
+
 The application runs on InterSystems IRIS AI Hub EAP build 154: native Interoperability
 intake/process/operations, deterministic policy, scoped read-only tools, authenticated
 Workflow review, a sealed approval, a single-use permit and one confirmed sandbox effect.
@@ -18,6 +40,8 @@ actions go to a person; only duplicate refunds are executable in v1.
 Simple cases use deterministic rules without a model call. When no rule matches, the
 AI Hub agent reads the five scoped tools and proposes a decision; policy and the context
 guard constrain it before sealing.
+
+</details>
 
 ## Start here: judge quick path
 
@@ -240,7 +264,8 @@ The vendor EAP image is separately licensed and is not distributed here.
 
 ## Judge path
 
-Two paths exist with the prerequisites below. Times are not promised because the vendor image download,
+The public [offline seal sample](#public-synthetic-seal-sample) needs no viewer invitation or IRIS.
+For native IRIS evidence, two paths exist with the prerequisites below. Times are not promised because the vendor image download,
 license steps and an independent new-operator walkthrough were not measured.
 
 **Path A, no installation: the authenticated judge viewer.** Open
@@ -495,6 +520,36 @@ add `-f compose.live.yml`. That profile enables outbound networking and loads cr
 it is an intentional cost-bearing opt-in. Always specify the provider and model. See
 [provider scope and comparison](docs/PROVIDERS.md). Never put keys in a Compose argument,
 a command line, Git, a screenshot or a public image.
+
+## Public synthetic seal sample
+
+[Read the deterministic output](docs/validation/seal-offline-sample-20261114.json) without installing anything.
+To reproduce it from this checkout, use Node22 and npm:
+
+```sh
+cd seal
+npm ci
+npx --no-install tsx test/sample.ts
+```
+
+`npm ci` downloads the locked dependencies. The sample code makes no network,
+model, IRIS, RPC or payment call and writes no files; its TypeScript runner may keep its own cache. It imports the existing
+[TypeScript verifier](seal/src/seal.ts), checks the pinned bytes of the
+[public cross-language vectors](https://github.com/rafaorlando3/proof-before-pay/blob/a36a922d9e8f292aef0a034af541f7fe06d14d5e/seal/test/vectors.json)
+and recomputes all five valid-vector commitments. These are synthetic unit-test data with
+fixed salts committed on 26 October, not exports from the hosted viewer.
+
+For `decision_duplicate`, it removes `missing.payer_message` from an in-memory copy while
+leaving `missing.delivery_photo` explicitly null. The edited copy no longer matches the
+original commitment; the original record and vector file stay unchanged. Any unexpected
+result or changed fixture bytes produces a nonzero exit.
+
+The `sealed`, `tampered`, `pending` and `unverifiable` results in the output use **locally
+supplied simulated memo references**. No chain is queried and no blockchain anchor,
+signer identity, event time, business correctness, native approval or payment receipt is
+established. The separately documented native viewer and installation qualifications keep
+their original scopes. CI compares the sample output byte for byte while retaining the
+existing Python/TypeScript parity tests.
 
 ## Test the language components
 

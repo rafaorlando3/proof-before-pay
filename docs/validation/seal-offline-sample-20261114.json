@@ -1,0 +1,46 @@
+{
+  "schema": "pbp.seal.offline-sample/1",
+  "scope": "Public synthetic test vectors; local commitment recomputation and comparison only.",
+  "provenance": {
+    "path": "seal/test/vectors.json",
+    "published_commit": "a36a922d9e8f292aef0a034af541f7fe06d14d5e",
+    "file_sha256": "4db680b42b8a133867fc90e5a91cee74f959fa23e78852cdb581a9a2d5d5583f",
+    "salt": "Long-public synthetic fixed test salt; not a private export."
+  },
+  "vectors_checked": 5,
+  "selected_vector": "decision_duplicate",
+  "expected_commitment": "c7726428a121c86a4c60e701f159c886fa93c337360743db46e25b57afb008ff",
+  "edited_copy_commitment": "e6878524ee1ac965eb84ec5994c71717c0777634460a17d71d79b01b21a1c982",
+  "edit": "Removed missing.payer_message from a copy; missing.delivery_photo stays null.",
+  "checks": {
+    "original_commitment_matches": true,
+    "edited_copy_matches": false,
+    "original_record_unchanged": true,
+    "vector_file_unchanged": true
+  },
+  "simulated_reference_results": {
+    "warning": "All memo references below are supplied locally, not read from a chain.",
+    "original_with_matching_memo": {
+      "state": "sealed",
+      "reason": "ok"
+    },
+    "edited_copy_with_original_memo": {
+      "state": "tampered",
+      "reason": "commitment_mismatch"
+    },
+    "original_without_reference": {
+      "state": "pending",
+      "reason": "not_anchored"
+    },
+    "original_with_unreadable_memo": {
+      "state": "unverifiable",
+      "reason": "anchor_memo_not_pbp"
+    }
+  },
+  "limits": [
+    "Not a native IRIS execution, human approval, permit or payment receipt.",
+    "No model, IRIS, RPC, payment or other network call is made by this sample.",
+    "No blockchain anchor, signer identity or event time is independently established.",
+    "A matching commitment does not establish that a decision is correct."
+  ]
+}
