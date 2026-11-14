@@ -1,0 +1,131 @@
+{
+  "schema": "pbp.validation.cold-source-install/1",
+  "observed_utc": "2026-11-14T06:05:42.402710Z/2026-11-14T06:06:49.633010Z",
+  "target_commit": "677092fdbfc5183796b2cf2ab65038c14168aa17",
+  "scope": "Offline application source installation on an original cached vendor stock154U image, in one fresh disposable container. Dockerfile COPY inputs were placed into the created container before start; dependency and initialize steps ran inside the running stock instance.",
+  "not_qualified": [
+    "Fresh vendor-portal download",
+    "Literal docker build or Docker Compose installation",
+    "IPM registry package installation",
+    "The hosted Proof Desk overlay or HTTP/browser flow",
+    "Complete recorded-fixture workflow",
+    "Any new model inference, accuracy benchmark, financial execution or independent human installation"
+  ],
+  "iris_version": "IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2026.3.0AI (Build 154U) Thu Sep 24 2026 10:04:49 EDT",
+  "python_version": "3.12.3",
+  "vendor_image_config_id": "sha256:1d3d52bf15f4f69efb7b5d5e857382099694817132ed00aa989aa158adcedf74",
+  "architecture": "linux/amd64",
+  "source": {
+    "archive_sha256": "9e5033ce32be1d17fda5cb7470a18f459e188227530e42e8f802ed5d39d8b07c",
+    "archive_bytes": 645120,
+    "tracked_files": 128,
+    "paths": [
+      "requirements.lock",
+      "python/",
+      "cls/",
+      "tests/",
+      "fixtures/",
+      "policy/",
+      "ui/",
+      "scripts/",
+      "merge.cpf"
+    ],
+    "all_source_hashes_and_owner_read_modes_verified_before_start": true,
+    "post_fixture_source_hash_check_completed": false
+  },
+  "dependency": {
+    "name": "rfc8785-0.1.4-py3-none-any.whl",
+    "sha256": "520d690b448ecf0703691c76e1a34a24ddcd4fc5bc41d589cb7c58ec651bcd48",
+    "offline_install": true,
+    "pip_flags": [
+      "--no-index",
+      "--no-deps",
+      "--require-hashes",
+      "--no-cache-dir"
+    ]
+  },
+  "isolation": {
+    "network": "none",
+    "published_ports": 0,
+    "binds_or_volumes": 0,
+    "memory_bytes": 2147483648,
+    "cpu_limit": 0.75,
+    "pids_limit": 256,
+    "fresh_private_database": true,
+    "vendor_entrypoint_preserved": true,
+    "merge_cpf_from_target_commit": true,
+    "LLM_mode": "recorded",
+    "provider_keys": "empty",
+    "model_inference_invoked": false,
+    "approval_or_financial_execution_invoked": false,
+    "model_inference_basis": "Recorded mode, empty provider keys, network none, and the unchanged Setup recorded-mode configuration. Completion of the additional Agent-message-header check in the fixture was not established."
+  },
+  "installation": {
+    "ok": true,
+    "phase0_application_classes_and_globals": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "classes_compiled": 52,
+    "initialize_script": "scripts/initialize.sh unchanged from target commit",
+    "initialize_script_sha256": "ac2cf6cbe0ff087f1c06f4eb4a59047fc8f470023a19e312ba03ea7563f49f55",
+    "compile_marker": "PBP_INIT=1 ERRORS=0",
+    "installation_marker": "PBP_INSTALL=1",
+    "production_started": "pbp.Production",
+    "installed_health_exit_code": 0
+  },
+  "functional_smoke": {
+    "ok": false,
+    "status": "INCOMPLETE_EXCEPTION",
+    "fixture": "fixtures/cases/pix-0006.json",
+    "controller_error": "fixture_result_missing",
+    "raw_terminal_error": "<THROW>^%SYS.Python.SQLResultSet.1 *%Exception.PythonException <NOLINE> 8 <class 'UnicodeDecodeError'>: 'utf-8' codec can't decode byte 0xf7 in position 2: invalid start byte",
+    "secondary_terminal_error": "<UNDEFINED>^%SYS.Python.SQLResultSet.1 *result",
+    "result_JSON_emitted": false,
+    "last_global_markers": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "step_progress_not_localized": true,
+    "cause": "Undiagnosed. This receipt does not establish a PBP or IRIS product defect.",
+    "combined_install_and_fixture_qualification": false,
+    "intended_entry": "native Intake with a recorded decision; no HTTP call",
+    "intake_reached": "not_established"
+  },
+  "prior_attempt": {
+    "outcome": "Container created but never started; no installation executed",
+    "cause": "The outer docker exec omitted -i, so tar stdin was dropped; source readback stopped before boot. Transport was corrected and reviewed before the separate second reservation.",
+    "product_bug": false,
+    "container_removed_and_reservation_closed": true,
+    "preserved_private_closure_sha256": "7f032df7c3b97862f73ea8c94262302a42d0f5d6533487f28ea222a7bd096407"
+  },
+  "closure": {
+    "worker_completed_utc": "2026-11-14T06:06:30.154843+00:00",
+    "independently_observed_utc": "2026-11-14T06:06:49.633010+00:00",
+    "container_absent": true,
+    "unit_inactive_and_PIDs_zero": true,
+    "both_shared_locks_free_at_observation": true,
+    "published_ID_image_boot_health_unchanged": true,
+    "published_health": "healthy",
+    "within_finite_reservation": true,
+    "reservation_closed_early": true,
+    "private_independent_observation_sha256": "db687c131fca42fabd5b872ce957f40b0d09f701a43dba34ea30785fd84758e6"
+  },
+  "evidence_sha256": {
+    "phase0.stdout": "40653870b4c8188e7131cb26ea6a09ab26143c78c1b10bc5be260ecc8c5bda5a",
+    "offline-pip.stdout": "8f992cf9a9e2bf7e745f433b8ffbcc2ae87d41292c0c9c9959205ea2dff83e04",
+    "initialize-exact.stdout": "357e65ad0f79f3d21dfc137d16e6b826ece643eed1e91eef77ce29d0d42de26f",
+    "initialize-exact.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-health.json": "f22a55deb00d5299fe0e17e18432e51074ac84b26f4da740417e809b76bc3b1e",
+    "fixture.stdout": "fba4d3b41f34c36358461a99aa9ad200249868f0cfacbfbb63224c6154b76329",
+    "fixture.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "RESULT.json": "8c30d1e65a2d488d835e74a0f227f23ed8cffd3793426cbc5b0b7f08bb1c6aa4",
+    "COPIED-SOURCE-VERIFIED.json": "acd9581f5fea42fdd3e4516b6d2e095e5cf8d1613a7e070748d600e07702a056"
+  },
+  "review_boundary": "The exact executor was approved by Claude before execution. Codex, Claude, Argon and Grok received the same plan; Argon/Grok were consultative. This receipt must retain the incomplete functional outcome."
+}
