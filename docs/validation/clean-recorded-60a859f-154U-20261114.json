@@ -1,0 +1,207 @@
+{
+  "schema": "pbp.validation.cold-recorded-case/1",
+  "date": "2026-11-14",
+  "run_completed_utc": "2026-11-14T10:41:34.103573+00:00",
+  "independent_closure_observed_utc": "2026-11-14T17:07:14.726476+00:00",
+  "scope": "Offline installation of the 60a859f product sources (128 selected files byte-identical to that commit, delivered in the original 677092f Git archive) on one fresh, disposable, network-isolated cached stock154U container, followed by one recorded non-money case in a private diagnostic harness.",
+  "source": {
+    "product_commit": "60a859ffb065df498500e5aa5687fa92d0ab8676",
+    "original_archive_commit": "677092fdbfc5183796b2cf2ab65038c14168aa17",
+    "archive_sha256": "9e5033ce32be1d17fda5cb7470a18f459e188227530e42e8f802ed5d39d8b07c",
+    "archive_bytes": 645120,
+    "original_Git_headers_retained": true,
+    "selected_product_files": 128,
+    "all_source_hashes_and_owner_read_modes_verified_before_start": true,
+    "all_source_hashes_match_after_fixture": true
+  },
+  "iris_version": "IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2026.3.0AI (Build 154U) Thu Sep 24 2026 10:04:49 EDT",
+  "python_version": "3.12.3",
+  "vendor_image_config_id": "sha256:1d3d52bf15f4f69efb7b5d5e857382099694817132ed00aa989aa158adcedf74",
+  "isolation": {
+    "network": "none",
+    "published_ports": 0,
+    "binds_or_volumes": 0,
+    "fresh_private_database": true,
+    "vendor_entrypoint_preserved": true,
+    "source_merge_cpf_used": true,
+    "memory_bytes": 2147483648,
+    "CPU_limit": 0.75,
+    "PIDs_limit": 256,
+    "LLM_mode": "recorded",
+    "provider_keys": "empty",
+    "dependency_install": "Pinned rfc8785 wheel, --no-index --no-deps --require-hashes --no-cache-dir"
+  },
+  "installation": {
+    "ok": true,
+    "pristine_application_class_and_global_markers": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "product_classes_compiled": 52,
+    "private_diagnostic_class_additional": 1,
+    "initialize_script_unchanged": true,
+    "compile_marker": "PBP_INIT=1 ERRORS=0",
+    "installation_marker": "PBP_INSTALL=1",
+    "final_health_exit_code": 0,
+    "final_health_basis": "The reviewed controller requires health.sh exit code 0. Its stdout is empty; stdout content is not used as proof."
+  },
+  "controls": {
+    "native_SQL_passed": 8,
+    "Python_fresh_process_SQL_passed": 8,
+    "Python_after_recorded_prelude_SQL_passed": 8,
+    "reference_controls_passed": 7,
+    "all_passed": true
+  },
+  "private_harness": {
+    "public_reproduction_script": false,
+    "explicit_presence": "Native _IsA checks on concrete expected classes; no implicit object truth-value in business gates",
+    "paired_SQL_and_object_polling": true,
+    "polls": 3,
+    "conditional_object_reloads": 1,
+    "reload_guard": "At most one Case._Reload(), only when fresh SQL already has awaiting_human with a nonempty head and the held object is not ready; success status required",
+    "business_check_call_sites_preserved": 28,
+    "executed_checks_including_loop": 33,
+    "reviewed_manifest_sha256": "acb34822840dc22e0154a3a9870f62f19f48e119e08d3f39772cb8f75b49ca2f"
+  },
+  "recorded_case": {
+    "ok": true,
+    "fixture": "fixtures/cases/pix-0006.json",
+    "final_status": "awaiting_human",
+    "action": "hold_for_evidence",
+    "seal_commitment": "5a3f30c10b33604d60fe9143036a852c12aac06fab8df96ed764090210fc0c6a",
+    "seal_verification": "Local match only; pending and not anchored, authorizes_payment=false",
+    "case_count": 1,
+    "decision_count": 1,
+    "seal_count": 1,
+    "readonly_tool_rows": 5,
+    "pending_human_tasks": 1,
+    "permits": 0,
+    "receipts": 0,
+    "Agent_message_headers": 0,
+    "model_inference": false,
+    "HTTP_exercised": false,
+    "financial_effect": false,
+    "test_approval_performed": false
+  },
+  "measured_poll_difference": {
+    "poll": 3,
+    "fresh_SQL_status": "awaiting_human",
+    "fresh_SQL_head_nonempty": true,
+    "held_object_status": "agent_decided",
+    "held_object_head": "",
+    "one_reload_success": true,
+    "object_status_after_reload": "awaiting_human",
+    "interpretation": "Supports a stale in-process object view in this run. It does not establish native OREF identity, the cause of any prior failure, or a vendor defect."
+  },
+  "post_run_native_snapshot": {
+    "fresh_process": true,
+    "queries": 11,
+    "all_SQL_codes_zero": true,
+    "events": 5,
+    "session_headers": 6,
+    "filtered_application_log_rows": 5,
+    "case_decision_seal_tools_permit_receipt_task_counts": [
+      1,
+      1,
+      1,
+      5,
+      0,
+      0,
+      1
+    ]
+  },
+  "retained_non_gating_observations": {
+    "implicit_bool_probe": "After all 33 business checks, one bool(case) diagnostic still raised UnicodeDecodeError with raw __bool__ not found bytes. It was non-gating and is not claimed fixed.",
+    "CompiledClass_counts": {
+      "native": 6928,
+      "Python_P1_and_P2": 6934,
+      "interpretation": "Retained without causal or bug interpretation."
+    },
+    "SSH": "Three read-only collectors timed out after worker completion. Access and results were recovered later without SSH/firewall/reboot changes; outage cause and duration are undetermined."
+  },
+  "closure": {
+    "worker_removed_utc": "2026-11-14T10:41:33.993576+00:00",
+    "post_cleanup_confirmed_utc": "2026-11-14T10:41:34.772208+00:00",
+    "container_absent_independently_observed": true,
+    "exact_run_label_listing_empty": true,
+    "unit_inactive_and_PIDs_zero": true,
+    "both_shared_locks_free_at_observation": true,
+    "published_ID_image_start_health_unchanged": true,
+    "published_health": "healthy",
+    "inside_original_finite_reservation": true,
+    "resources_held": false,
+    "recovery_server_mutations": 0
+  },
+  "not_qualified": [
+    "Fresh vendor-portal download",
+    "Literal docker build or Docker Compose installation",
+    "IPM registry installation",
+    "The repository smoke script without the private explicit-presence and conditional-reload adaptations",
+    "HTTP/browser or hosted-overlay workflow",
+    "LIVE provider/model inference or a new accuracy benchmark",
+    "Human approval/rejection or financial execution",
+    "Full-product, independent-human-installation, award or vendor-bug claims"
+  ],
+  "historical_receipt": {
+    "file": "clean-source-677092f-154U-20261114.json",
+    "sha256": "343206cac97f4df3a6a118f382b42b5653e1817d5df400db3f6965241c828e91",
+    "preserved_unchanged": true,
+    "earlier_incomplete_smoke_not_reclassified": true
+  },
+  "intervening_and_prior_attempts_preserved": [
+    {
+      "attempt": 1,
+      "outcome": "Created but never started: outer docker exec lacked -i, so tar stdin was lost. Source readback stopped the attempt before IRIS boot.",
+      "private_closure_sha256": "7f032df7c3b97862f73ea8c94262302a42d0f5d6533487f28ea222a7bd096407"
+    },
+    {
+      "attempt": 2,
+      "outcome": "Install passed; fixture emitted no result JSON after a SQL/Python UnicodeDecodeError. Progress and cause remain unlocalized; original public receipt is unchanged.",
+      "private_closure_sha256": "a08180c68db08cb5ac01a87007bd6d049b72215abc33d6ca6ca70afc5351a014"
+    },
+    {
+      "attempt": 3,
+      "outcome": "Install passed; private interactive ObjectScript TRY/CATCH syntax failed before SQL controls or Intake.",
+      "private_closure_sha256": "8ff9b8ddd8173454b425631ba583643807945f453cb4a2b4776c78fe17c3ec96"
+    },
+    {
+      "attempt": 4,
+      "outcome": "Install passed; private SQL-control compilation failed on unquoted underscore properties, before queries or Intake.",
+      "private_closure_sha256": "19f8ce8ea51baee48cf75edef900637ce74bb4f9ddb8aa7e32a55c31060fb04c"
+    },
+    {
+      "attempt": 5,
+      "outcome": "Install and 24 SQL controls passed; Intake was accepted and 15 fixture checks passed before an implicit Case truth-value exception. The earlier undecoded failure is not retrospectively given the same cause.",
+      "private_closure_sha256": "41abaf7264542a2cbddd2902df3b7b4d9629803178a9d2353884c2b3694c5bab"
+    },
+    {
+      "attempt": 6,
+      "outcome": "Install and 24 SQL controls passed; the private reference-control call had ObjectScript syntax failure before Python or Intake.",
+      "private_closure_sha256": "ec000dabde715561a371b17be37b020291b1f8cc5579a2c827255a8339d56812"
+    },
+    {
+      "attempt": 7,
+      "outcome": "Install and 31 controls passed; Intake was accepted and 15 fixture checks passed. awaiting_human was not observed within 75 seconds; stored SQL status was not captured, so the cause is unproven.",
+      "private_closure_sha256": "8839ccb6845eaee85091da45dbd4bad19f6c7353ec3097e3933c1364cd9b36fd"
+    },
+    {
+      "attempt": 8,
+      "outcome": "Request freshness guard refused before host admission, locks, staging or container. No installation or native test ran; total RPC latency does not prove one-way transfer time or clock skew.",
+      "private_closure_sha256": "c41fe3ce159ffde58113e6ff97e41fdeaacebd15dc287a71f2802651df1a6cc9"
+    }
+  ],
+  "private_evidence_sha256": {
+    "RESULT.json": "295f597db203ecb0aa3759559cb687cb5aea41ff42fa4236c0030b9235eb77e0",
+    "initialize-exact.stdout": "a4849f2b6f39286ef87511b64df12f4d6715c8f21a140590177fbdb9755a50a5",
+    "final-health.json": "84f0ca793d590eebd2e38154d9a1d96c3bd3d003d07c6a73ae355893a9efeb51",
+    "fixture.stdout": "eb0f606c4fda001a92a00e81c96a79d6e56fe4b4e8bc4f2a2ea3333f57712473",
+    "post-snapshot.stdout": "f6cea16446e30325adc1607b400d8b727420c9974a54b1e849d77b0ef8ac0f09",
+    "source-hashes-after.stdout": "4abb60f4701faa31669143b454d9cda9ef70b1a90770fd9657ee7d61b7d78a94"
+  },
+  "private_independent_closure_sha256": "9612c5c4c4f301af62423c08b06c1759a62f005703dc48f9d779673deee7c5dc",
+  "private_independent_observation_sha256": "64b3f239e30e72ea372ddd93af8c44f21b7a11d13e64176b2c758aa7312da892",
+  "review_boundary": "Codex verified the recovered artifacts; Claude accepted the actual result and independent closure within this scope, and Argon acknowledged the same evidence. This receipt does not replace the earlier public receipt or establish a new product bug. Raw private vendor/license logs are not published."
+}
