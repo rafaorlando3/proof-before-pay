@@ -1,0 +1,188 @@
+{
+  "schema": "pbp.validation.public-cold-nonmoney-smoke/1",
+  "date_local_Paraguay": "2026-11-14",
+  "run_completed_utc": "2026-11-15T01:54:59.825636+00:00",
+  "independent_closure_observed_utc": "2026-11-15T01:55:08.848165+00:00",
+  "scope": "One fresh disposable cached stock154U source installation, followed by one recorded non-money case through the new repository smoke module and exact public stdin-script bytes, plus bounded private diagnostics. No native product class changed.",
+  "test_source": {
+    "candidate_commit": "986a6d5eec6d7fa81dbc7affc29758301e5f0ba8",
+    "files": {
+      "tests/iris/cold_install_smoke.py": "6a43ab8d8e7f06af9689855e8302e9e6a192b234d34167fd938c9acf5ccb6296",
+      "scripts/cold-install-smoke.script": "7a80e91b4fbf6ea420537306675b0afc3426422245272dd533e161cf70a287f9"
+    },
+    "product_files": 128,
+    "cached_product_archive_commit": "677092fdbfc5183796b2cf2ab65038c14168aa17",
+    "product_files_equal_base_commit": "b3f6f5fc774fa0d69ba1b148c10c1976c66ba936",
+    "archive_sha256": "9e5033ce32be1d17fda5cb7470a18f459e188227530e42e8f802ed5d39d8b07c",
+    "new_test_overlays": 2,
+    "all130files_verified_before_boot_and_after_smoke": true
+  },
+  "runtime": {
+    "iris_version": "IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2026.3.0AI (Build 154U) Thu Sep 24 2026 10:04:49 EDT",
+    "Python": "3.12.3",
+    "image_config_id": "sha256:1d3d52bf15f4f69efb7b5d5e857382099694817132ed00aa989aa158adcedf74",
+    "namespace": "USER",
+    "network": "none",
+    "published_ports": 0,
+    "mounts": 0,
+    "RAM_bytes": 2147483648,
+    "CPU": 0.75,
+    "PIDs": 256,
+    "provider_keys": "empty",
+    "mode": "recorded",
+    "vendor_entrypoint_preserved": true
+  },
+  "installation": {
+    "ok": true,
+    "pristine_application_markers": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "classes_compiled": 52,
+    "compile_marker": "PBP_INIT=1 ERRORS=0",
+    "install_marker": "PBP_INSTALL=1",
+    "initial_and_final_health_exit0": true,
+    "offline_dependency": "Pinned rfc8785 wheel, no-index/no-deps/require-hashes/no-cache-dir"
+  },
+  "controls": {
+    "native_SQL": 8,
+    "Python_fresh_SQL": 8,
+    "Python_after_recorded_prelude_SQL": 8,
+    "reference_controls": 7,
+    "all31passed": true,
+    "private_SQL_helper_class_additional": 1,
+    "not_full_repository_unit_suite": true
+  },
+  "public_case_smoke": {
+    "ok": true,
+    "fixture": "pix-0006",
+    "executed_business_checks": 33,
+    "business_check_call_sites": 28,
+    "original_28_call_AST_unchanged": true,
+    "status": "awaiting_human",
+    "action": "hold_for_evidence",
+    "session_id": "2",
+    "seal_commitment": "dd478539ee86e64bf7bde53dcf3c6603cf5332fa805101929c9546050e4732af",
+    "checks": [
+      "recorded_environment",
+      "no_provider_key",
+      "empty_before_pbp_Data.\"Case\"",
+      "empty_before_pbp_Data.Decision",
+      "empty_before_pbp_Data.Seal",
+      "empty_before_pbp_Data.Permit",
+      "empty_before_pbp_Data.Receipt",
+      "empty_before_EnsLib_Workflow.TaskResponse",
+      "live_item_disabled",
+      "replay_item_enabled",
+      "no_staged_demo",
+      "production_running",
+      "fixed_fixture_identity",
+      "native_intake_created",
+      "native_intake_accepted",
+      "awaiting_human",
+      "one_pending_task",
+      "one_decision",
+      "recorded_decision_row",
+      "one_decision_seal",
+      "witness_nonmoney_path",
+      "seal_intact",
+      "sealed_recorded_model",
+      "sealed_nonmoney_action",
+      "declared_missing_signature",
+      "five_sealed_readonly_tools",
+      "no_RAG_retrieval",
+      "five_tool_rows",
+      "zero_permits",
+      "zero_receipts",
+      "zero_agent_messages",
+      "ledger_not_staged",
+      "one_case_total"
+    ],
+    "SQL_polls": 3,
+    "object_opened_after_SQL_ready": true,
+    "object_reload": {
+      "after": {
+        "head": "dd478539ee86e64bf7bde53dcf3c6603cf5332fa805101929c9546050e4732af",
+        "status": "awaiting_human"
+      },
+      "before": {
+        "head": "dd478539ee86e64bf7bde53dcf3c6603cf5332fa805101929c9546050e4732af",
+        "status": "awaiting_human"
+      },
+      "changed": false,
+      "reloads": 1
+    },
+    "case_count": 1,
+    "decisions": 1,
+    "seals": 1,
+    "tool_rows": 5,
+    "pending_tasks": 1,
+    "permits": 0,
+    "receipts": 0,
+    "Agent_message_headers": 0,
+    "model_inference": false,
+    "test_approval": false,
+    "financial_effect": false,
+    "HTTP_test": false
+  },
+  "post_snapshot": {
+    "fresh_ObjectScript_process": true,
+    "queries": 11,
+    "all_SQL_codes_zero": true,
+    "case_decision_seal_tool_permit_receipt_task_counts": [
+      1,
+      1,
+      1,
+      5,
+      0,
+      0,
+      1
+    ],
+    "events": 5,
+    "session_headers": 6
+  },
+  "invocation_boundary": "The private controller prefixed a session sentinel line and wrapped the unchanged public stdin script with timeout 90. It executed the public module from /opt/pbp/tests/iris. No separate public host runner is claimed.",
+  "retained_diagnostic": {
+    "implicit_bool_after_all_checks": "bool(case) again raised UnicodeDecodeError with missing __bool__ text; recorded after all 33 checks, non-gating. The helper avoids this unsupported proxy truth-value path.",
+    "object_reload_changed_values": false,
+    "original_first_exception_cause": "Not proven retroactively; the earlier failed private fixture remains an incomplete attempt. No vendor defect or full-product fix is asserted."
+  },
+  "closure": {
+    "container_removed": true,
+    "own_label_listing_empty": true,
+    "unit_inactive_PIDs_zero": true,
+    "shared_locks_free": true,
+    "inside_finite_lease": true,
+    "protected_published_ID_image_start_health_unchanged": true,
+    "public_viewer_login_HTTP_before": 200,
+    "public_viewer_login_HTTP_after": 200,
+    "authenticated_viewer_reverified": false,
+    "resources_held": false
+  },
+  "not_qualified": [
+    "Fresh vendor-portal download",
+    "Literal Dockerfile/Compose install or IPM registry install",
+    "Full tests/iris/production_smoke.py or scripts/test_workflow.py in a cold instance",
+    "Hosted authenticated HTTP/browser workflow",
+    "New model inference or accuracy benchmark",
+    "Human approval, rejection or financial execution"
+  ],
+  "historical_receipts_unchanged": {
+    "clean-source-677092f-154U-20261114.json": "343206cac97f4df3a6a118f382b42b5653e1817d5df400db3f6965241c828e91",
+    "clean-recorded-60a859f-154U-20261114.json": "0c422fe087cfae5ed387de9af31b28a303dbe2bba1927e218d4cf0174bb4ef06"
+  },
+  "evidence_sha256": {
+    "RESULT.json": "ea152060c6402721fc2138f3c3eaa5f85b317f5a028763abe66eb3854a95a0c1",
+    "phase0.stdout": "a60f4fb4e7d16d047c166b09060026799e81775d9685e5664ccaa6005ab2931a",
+    "initialize-exact.stdout": "3f318053790813f55c3606f638403f4f7793796d7df1a874fdcd161c318fb5f1",
+    "fixture.stdout": "65d1705f36932263308c4e439b119f59c18f190b7872c7d605a83b99e8bedfd4",
+    "post-snapshot.stdout": "077ae94ba19105d1c0241efe3549b049ebd8c1121dfa4cd0ae82c1e15766fb09",
+    "source-hashes-after.stdout": "4abb60f4701faa31669143b454d9cda9ef70b1a90770fd9657ee7d61b7d78a94",
+    "final-health.json": "66f43e0e8152ba5d5293b34683767db1f3d40cfeac53f80c4ad54d0ba2bd65ef"
+  },
+  "independent_closure_sha256": "f18face5080cde9cd1d05c47135d4b290fca6ec3011e74526b376da0bfe92e75",
+  "review_boundary": "Exact source was approved by Claude before the one execution. Actual result and this publication text require separate Claude review. No raw private vendor/license logs are published."
+}

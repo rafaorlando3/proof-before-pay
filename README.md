@@ -20,10 +20,12 @@ application policy constrains the proposal and a person authorizes the refund.
 
 **Execution boundary:** only duplicate refunds are executable in v1; unsupported financial
 actions go to a person. A matching seal does not establish that the decision is correct.
-**Installation boundary:** the 14 November cold offline source install compiled and initialized
-52 classes, but its additional recorded-case smoke stopped with a decoding exception whose
-cause remains unproven. A later private harness passed one recorded non-money case;
-that does not qualify the unmodified repository smoke script.
+**Installation boundary:** the historical 14 November cold offline source install compiled and
+initialized 52 classes, but its additional private fixture failed with a decoding exception.
+A [new public one-case check](#cold-recorded-case-check) subsequently passed in a fresh
+stock154U container: 33 checks, no model call or payment. It avoids implicit IRIS-object
+truth tests and waits for committed SQL state. The first exception's exact cause remains
+unproven; the full repository workflow smoke remains unqualified in a cold instance.
 [Dated evidence and exact scopes](#source-package-and-demonstration-versions) · [Full judge path](#judge-path).
 
 <details>
@@ -121,7 +123,7 @@ These identities describe different artifacts; a documentation update does not r
 | Optional native Java PEX | `941e929` qualification | [Native calls and JAR](docs/validation/pex-export-inspection-20261108.json); [later standalone algorithm CI](docs/validation/pex-public-ci-20261109.json) has a separate scope. |
 | Current media | `media-v5.0.0` | [171-second tour, exact MP4 hashes and review limits](docs/video/README.md). Earlier videos remain historical. |
 
-The later addendum qualifies that one offline case in a private harness. It does not qualify the unmodified repository smoke script, Compose/IPM installation, HTTP, LIVE inference or payment approval/execution. The SQL/object mismatch was captured in that run; the causes of the earlier failed smoke and the SSH outage remain unproven. The original receipt and intervening failed attempts are preserved.
+The earlier addendum qualifies one offline case in a private harness. The [new public one-case smoke](docs/validation/cold-onecase-public-986a6d5-20261114.json) passed separately after a fresh stock154U install with 52 classes compiled. Its module and stdin script are pinned to candidate `986a6d5`; the 128 product files stayed identical to the cached `677092f` archive and base `b3f6f5f`. This qualifies neither the full `production_smoke.py` workflow, literal Compose/IPM installation, authenticated HTTP, LIVE inference nor payment approval/execution. The old SQL/object mismatch remains a measured historical observation; this new SQL-only wait opened the object after readiness, and one explicit reload changed no values. The first private fixture exception and earlier SSH interruption still have no established root cause. Original receipts and intervening failed attempts are preserved.
 
 ## Audited v7 result, 1 November 2026
 
@@ -352,6 +354,40 @@ HTTP port only to loopback. The public viewer and this private IRIS authenticati
 
 Live inference (a real model deciding a duplicate charge that moves test money) needs your own provider key
 and the `compose.live.yml` profile described below; it is a cost-bearing opt-in and is not part of this path.
+
+## Cold recorded-case check
+
+For a **fresh, disposable, network-isolated recorded-mode instance** with the source at
+`/opt/pbp` and `scripts/initialize.sh` already completed, run the new bounded check through
+stdin (replace `YOUR_DISPOSABLE_CONTAINER` with your own lab container):
+
+```sh
+docker exec -i YOUR_DISPOSABLE_CONTAINER iris session IRIS -U USER < scripts/cold-install-smoke.script
+```
+
+Do not point this at the hosted viewer or a database containing application cases. It
+requires empty application tables, recorded mode, no provider key, the live Agent item
+disabled and the Replay item enabled before submitting exactly `pix-0006`. Expect one
+`PBP_COLD_INSTALL_SMOKE|` JSON record with `ok: true` and 33 business checks. A terminal
+exit code alone is not a pass. The case must reach `awaiting_human` with one decision,
+one seal, five tool rows and one pending task; permits and receipts must stay zero.
+It does not approve, reject or execute a payment.
+
+The [public test module](tests/iris/cold_install_smoke.py) uses explicit class-presence
+checks, polls SQL scalars without holding a case object, and opens then reloads the object
+once after readiness. The before/after values are retained. After all business assertions,
+a non-gating `bool(case)` diagnostic still raised `UnicodeDecodeError` in the measured
+run; the test does not depend on that proxy truth-value operation. This is not a new
+vendor bug claim or proof of the first private fixture failure's internal cause.
+
+The [dated native receipt](docs/validation/cold-onecase-public-986a6d5-20261114.json) records
+one clean stock154U install, all 33 case checks and an independent 11-query post-snapshot.
+The private controller used these exact script bytes, prefixed a session sentinel and
+applied a 90-second timeout. The disposable container was independently confirmed removed;
+the published viewer's container identity, boot time and health stayed unchanged, and its
+public login returned HTTP 200 before and after (no authenticated journey was rechecked).
+The full `scripts/test_workflow.py` / `production_smoke.py` sequence remains a separate,
+unqualified cold-install path; this smaller check does not replace it.
 
 ## IPM installation option
 
