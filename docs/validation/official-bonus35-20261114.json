@@ -1,0 +1,117 @@
+{
+  "schema": "pbp.official-bonus-snapshot/1",
+  "collection_completed_at_utc": "2026-11-15T01:17:39Z",
+  "local_observation_date": "2026-11-14 America/Asuncion",
+  "source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows",
+  "method": "Normalized observations from the official results page and GitHub issue metadata; not source HTML.",
+  "project": "Proof Before Pay",
+  "official_total": 35,
+  "previous_official_total": 32,
+  "categories": [
+    {
+      "item": "Questionnaire",
+      "points": 1
+    },
+    {
+      "item": "Production Extension (PEX)",
+      "points": 3
+    },
+    {
+      "item": "Workflow Engine",
+      "points": 2
+    },
+    {
+      "item": "Custom adapter",
+      "points": 2
+    },
+    {
+      "item": "Find a bug in AI Hub",
+      "points": 3
+    },
+    {
+      "item": "Embedded Python",
+      "points": 3
+    },
+    {
+      "item": "IRIS Vector Search",
+      "points": 2
+    },
+    {
+      "item": "Docker container",
+      "points": 2
+    },
+    {
+      "item": "ZPM package deployment",
+      "points": 2
+    },
+    {
+      "item": "Online demo",
+      "points": 2
+    },
+    {
+      "item": "Community Opportunity idea",
+      "points": 4
+    },
+    {
+      "item": "Find a bug in Embedded Python",
+      "points": 3
+    },
+    {
+      "item": "First Developer Community article",
+      "points": 2
+    },
+    {
+      "item": "Second article or translation",
+      "points": 1
+    },
+    {
+      "item": "Video",
+      "points": 3
+    }
+  ],
+  "organizer_reply": {
+    "comment_id": 288763,
+    "url": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows#comment-288763",
+    "author": "Semion Makarov",
+    "text": "Hi! Bonus was added",
+    "context": "Reply to Rafael's comment288755 requesting Embedded Python bug-category review of reports34/39."
+  },
+  "issues": [
+    {
+      "id": "EP34",
+      "url": "https://github.com/intersystems-community/python-bugreports/issues/34",
+      "state": "open",
+      "comments": 0,
+      "updated_at": "2026-11-12T09:58:03Z",
+      "labels": null
+    },
+    {
+      "id": "EP39",
+      "url": "https://github.com/intersystems-community/python-bugreports/issues/39",
+      "state": "open",
+      "comments": 0,
+      "updated_at": "2026-11-12T18:51:19Z",
+      "labels": null
+    },
+    {
+      "id": "AIH29",
+      "url": "https://github.com/intersystems-community/ai-hub-eap-bugreports/issues/29",
+      "state": "open",
+      "comments": 0,
+      "updated_at": "2026-11-12T21:09:46Z",
+      "labels": null
+    },
+    {
+      "id": "AIH30",
+      "url": "https://github.com/intersystems-community/ai-hub-eap-bugreports/issues/30",
+      "state": "open",
+      "comments": 0,
+      "updated_at": "2026-11-12T21:10:14Z",
+      "labels": null
+    }
+  ],
+  "contest_credit_confirmed": true,
+  "individual_vendor_technical_acceptance_confirmed": false,
+  "overall_rank_or_prize_inferred": false,
+  "new_native_or_model_execution": false
+}

@@ -10,7 +10,7 @@
   "arithmetic_sum_is_not_an_award_or_guaranteed_project_score": true,
   "official_bonus_source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
   "official_bonus_page_published_at": "2026-10-26T23:14:44-04:00",
-  "official_page_verified_via": "Official category rules checked09Nov; official results table separately observed13Nov. Rule caps are distinct from credited project points and individual report acceptance.",
+  "official_page_verified_via": "Official category rules checked09Nov; official results table and organizer reply separately observed14Nov America/Asuncion (15NovUTC). Rule caps, credited points and individual technical acceptance are distinct.",
   "official_page_snapshot_sha256": null,
   "official_sources": [
     "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
@@ -205,13 +205,14 @@
       "points_cap": 3,
       "rule_status": "verified_official_contest49",
       "delivery_status": "two_reproducible_reports_submitted_vendor_triage_pending",
-      "note": "Reports #34 and #39 submitted 12Nov2026. #34: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11); row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. #39: iris.sql.exec() row iteration and direct object-property reads reject a valid VECTOR(DOUBLE,3); ObjectScript logical/ODBC reads and all five Python scalar/object/ODBC controls pass. Each report was reproduced in two separate fresh stock IRIS2026.3.0AI build154U containers; Codex, Claude and Argon reviewed the respective evidence and exact issue body. Separate observable cases are reported without asserting independently proven internal root causes. Individual vendor acceptance and contest eligibility remain unconfirmed. The official results cell is blank as of13Nov, so no Embedded Python bug credit is shown; no rejection is inferred. The skipped-default candidate was discarded as a documented limitation.",
+      "note": "Reports #34 and #39 submitted 12Nov2026. #34: iris.sql.exec().dataframe() fails for a valid UNIQUEIDENTIFIER result column (ODBC -11); row iteration, direct pandas, Name-only and VARCHAR-cast controls pass. #39: iris.sql.exec() row iteration and direct object-property reads reject a valid VECTOR(DOUBLE,3); ObjectScript logical/ODBC reads and all five Python scalar/object/ODBC controls pass. Each report was reproduced in two separate fresh stock IRIS2026.3.0AI build154U containers; Codex, Claude and Argon reviewed the respective evidence and exact issue body. Separate observable cases are reported without asserting independently proven internal root causes. The14Nov official results credit this category with3 points after organizer Semion Makarov replied to the request citing #34/#39. Individual vendor technical acceptance remains unconfirmed; all four project reports were still open with0 comments at the separate GitHub check. The prior blank13Nov snapshot is retained in official_results_history. The skipped-default candidate was discarded as a documented limitation.",
       "evidence": [
         "https://github.com/intersystems-community/python-bugreports/issues/34",
-        "https://github.com/intersystems-community/python-bugreports/issues/39"
+        "https://github.com/intersystems-community/python-bugreports/issues/39",
+        "docs/validation/official-bonus35-20261114.json"
       ],
       "source": "https://community.intersystems.com/post/technology-bonuses-intersystems-programming-contest-ai-agents-interoperability-workflows",
-      "official_credited_points_at_snapshot": null,
+      "official_credited_points_at_snapshot": 3,
       "official_credit_source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows"
     },
     {
@@ -263,10 +264,8 @@
     "evidence_backed_candidate_item_count": 13,
     "evidence_backed_candidate_caps_sum": 29,
     "candidate_sum_is_not_awarded_points": true,
-    "unfulfilled_item_caps_sum": 3,
-    "unfulfilled_items": [
-      "Embedded Python bug category: up to3 not credited in the13Nov official snapshot; reports #34/#39 submitted, individual vendor acceptance and eligibility unconfirmed."
-    ],
+    "unfulfilled_item_caps_sum": 0,
+    "unfulfilled_items": [],
     "remaining_priority_deliverables": [
       "Strengthen judge presentation only for demonstrated gaps; preserve existing retained LIVE1566 and refund proof",
       "Follow vendor triage of Embedded Python reports #34/#39 and AI Hub reports #29/#30; no new execution under consumed reservations; AIH-C stays unpublished"
@@ -283,8 +282,8 @@
     "submitted_vendor_bug_report_count": 4,
     "submitted_vendor_bug_report_vendor_triage_pending": true,
     "candidate_sum_scope": "Historical non-bug delivery inventory only; not the current official total.",
-    "official_credited_item_count": 14,
-    "official_credited_total_at_snapshot": 32
+    "official_credited_item_count": 15,
+    "official_credited_total_at_snapshot": 35
   },
   "update_consistency": [
     "release SHA and source archive",
@@ -318,11 +317,11 @@
     "evidence": "docs/validation/contest49-public-listing-20261103.json",
     "not_bonus_award_confirmation": true
   },
-  "delivery_evidence_updated_at_utc": "2026-11-13T23:56:59.468294+00:00",
+  "delivery_evidence_updated_at_utc": "2026-11-15T01:17:39Z",
   "official_results_snapshot": {
-    "observed_at_utc": "2026-11-13T23:56:06+00:00",
+    "observed_at_utc": "2026-11-15T01:17:39Z",
     "source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows",
-    "method": "Official page read through web tool; normalized selected observations, not downloaded HTML",
+    "method": "Normalized observations from the official results page and GitHub issue metadata; not source HTML.",
     "project": "Proof Before Pay",
     "nominal_total": 35,
     "categories": [
@@ -372,7 +371,7 @@
       },
       {
         "item": "Find a bug in Embedded Python",
-        "points": null
+        "points": 3
       },
       {
         "item": "First Developer Community article",
@@ -387,18 +386,98 @@
         "points": 3
       }
     ],
-    "official_total": 32,
-    "organizer_comment_context": "12 November reply to the earlier 11 November question about supplemental observations on existing AI Hub reports #1/#26. Does not identify acceptance of #29/#30.",
-    "embedded_python_blank_meaning": "No points shown in this category at observation time; no rejection inferred.",
-    "observation_window_utc": {
-      "start": "2026-11-13T23:56:04+00:00",
-      "end": "2026-11-13T23:56:06+00:00"
-    },
-    "recorded_at_utc": "2026-11-13T23:56:59.465363+00:00",
-    "timestamp_scope": "observed_at_utc marks completion of the fresh web-tool read bracketed by clock reads; recorded_at_utc is this artifact write.",
-    "normalized_observation_sha256": "396f395c0a58eba43a5bd5b27bbc3d97d90acfaae5e7004338241fc1c2cafd48",
-    "hash_scope": "SHA256 of the normalized selected-observation JSON retained by the operator; not a hash of the source HTML",
+    "official_total": 35,
+    "organizer_comment_context": "14Nov reply288763 to Rafael request288755 citing Embedded Python reports34/39 confirms contest-category credit. The earlier12Nov AI Hub reply concerns supplements to #1/#26, not individual acceptance of #29/#30.",
+    "evidence": "docs/validation/official-bonus35-20261114.json",
+    "normalized_observation_sha256": "28062dd7a0367602761aa3b81a7393376b64d4ed5dfc35eb8177aacd2b74d5f8",
+    "hash_scope": "SHA256 of the linked normalized selected-observation JSON, not source HTML.",
+    "timestamp_scope": "Completion of the collection of official-page observations and fresh GitHub metadata; local observation date14Nov America/Asuncion.",
     "vendor_report_acceptance_individually_confirmed": false,
     "overall_rank_or_prize_inferred": false
-  }
+  },
+  "official_results_history": [
+    {
+      "observed_at_utc": "2026-11-13T23:56:06+00:00",
+      "source": "https://community.intersystems.com/post/technology-bonus-results-intersystems-programming-contest-ai-agents-interoperability-workflows",
+      "method": "Official page read through web tool; normalized selected observations, not downloaded HTML",
+      "project": "Proof Before Pay",
+      "nominal_total": 35,
+      "categories": [
+        {
+          "item": "Questionnaire",
+          "points": 1
+        },
+        {
+          "item": "Production Extension (PEX)",
+          "points": 3
+        },
+        {
+          "item": "Workflow Engine",
+          "points": 2
+        },
+        {
+          "item": "Custom adapter",
+          "points": 2
+        },
+        {
+          "item": "Find a bug in AI Hub",
+          "points": 3
+        },
+        {
+          "item": "Embedded Python",
+          "points": 3
+        },
+        {
+          "item": "IRIS Vector Search",
+          "points": 2
+        },
+        {
+          "item": "Docker container",
+          "points": 2
+        },
+        {
+          "item": "ZPM package deployment",
+          "points": 2
+        },
+        {
+          "item": "Online demo",
+          "points": 2
+        },
+        {
+          "item": "Community Opportunity idea",
+          "points": 4
+        },
+        {
+          "item": "Find a bug in Embedded Python",
+          "points": null
+        },
+        {
+          "item": "First Developer Community article",
+          "points": 2
+        },
+        {
+          "item": "Second article or translation",
+          "points": 1
+        },
+        {
+          "item": "Video",
+          "points": 3
+        }
+      ],
+      "official_total": 32,
+      "organizer_comment_context": "12 November reply to the earlier 11 November question about supplemental observations on existing AI Hub reports #1/#26. Does not identify acceptance of #29/#30.",
+      "embedded_python_blank_meaning": "No points shown in this category at observation time; no rejection inferred.",
+      "observation_window_utc": {
+        "start": "2026-11-13T23:56:04+00:00",
+        "end": "2026-11-13T23:56:06+00:00"
+      },
+      "recorded_at_utc": "2026-11-13T23:56:59.465363+00:00",
+      "timestamp_scope": "observed_at_utc marks completion of the fresh web-tool read bracketed by clock reads; recorded_at_utc is this artifact write.",
+      "normalized_observation_sha256": "396f395c0a58eba43a5bd5b27bbc3d97d90acfaae5e7004338241fc1c2cafd48",
+      "hash_scope": "SHA256 of the normalized selected-observation JSON retained by the operator; not a hash of the source HTML",
+      "vendor_report_acceptance_individually_confirmed": false,
+      "overall_rank_or_prize_inferred": false
+    }
+  ],
+  "checked_at_utc_scope": "Official category-rule check; the later results collection time is in official_results_snapshot."
 }
