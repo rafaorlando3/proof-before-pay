@@ -1,0 +1,9 @@
+set ident={"kind":"identity"},ident.user=$USERNAME,ident.roles=$ROLES,ident.namespace=$NAMESPACE,ident.job=+$JOB
+write "PBP_SQL_IDENTITY|",ident.%ToJSON(),!
+set sys=##class(%SYS.Python).Import("sys")
+do sys.path.insert(0,"/opt/pbp/tests/iris")
+set m=##class(%SYS.Python).Import("cold_install_smoke")
+set result=m.run()
+write "PBP_COLD_INSTALL_SMOKE|",result,!
+write "PBP_COLD_GLOBALS|",$data(^PBP49Ledger("decision")),"|",$data(^PBP49Ledger("effect")),"|",$data(^pbp.policyRAG),"|",$data(^pbp.demoRuntime),!
+halt
