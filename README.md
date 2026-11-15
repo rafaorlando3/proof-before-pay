@@ -20,12 +20,13 @@ application policy constrains the proposal and a person authorizes the refund.
 
 **Execution boundary:** only duplicate refunds are executable in v1; unsupported financial
 actions go to a person. A matching seal does not establish that the decision is correct.
-**Installation evidence:** on 15 November, [all five public native test commands](#full-recorded-native-suite)
-passed after a fresh offline source-copy install on stock154U, including the full workflow,
-concurrent ledger tests and recorded recipient checks. The authenticated HTTP test also
-passed inside the disposable container. This run qualifies the tests on that clean copy;
-the standard Dockerfile/Compose installer and host HTTP route were not qualified by this run. Earlier
-failed attempts and the [33-check one-case run](#cold-recorded-case-check) retain their original scopes.
+**Installation evidence:** on 15 November, the [public Dockerfile and Compose service](#standard-dockerfile-and-compose-qualification)
+passed an isolated installation from the cached original 154U image, including its real
+hash-locked dependency download, all five public native commands and 34 authenticated
+in-container HTTP checks. A stop/remove/up cycle retained the selected confirmed receipt,
+case and exactly one synthetic effect. Scoped project/image/build-network labels and the
+two-phase build/up are disclosed; this is not a deployment or a hosted HTTP requalification.
+Earlier copy-install attempts and the [33-check one-case run](#cold-recorded-case-check) retain their original scopes.
 [Dated evidence and exact scopes](#source-package-and-demonstration-versions) · [Full judge path](#judge-path).
 
 <details>
@@ -120,6 +121,7 @@ These identities describe different artifacts; a documentation update does not r
 | Offline source install, 14 November | `677092f`, cached original stock154U | [Offline source-install receipt](docs/validation/clean-source-677092f-154U-20261114.json): 52 classes compiled, initializer and health passed in an empty disposable instance. Its additional recorded-case smoke stopped with a decoding exception; this historical receipt remains unchanged. |
 | Recorded-case addendum, 14 November | `60a859f` product file bytes, delivered in the original `677092f` archive; cached stock154U | [Later scoped receipt](docs/validation/clean-recorded-60a859f-154U-20261114.json): 31 controls and 33 checks passed for one recorded, non-money `pix-0006` case reaching `awaiting_human`. The private harness used explicit object-presence checks, paired SQL/object reads and exactly one conditional object reload; 11 fresh native queries confirmed the final state. |
 | Full public native suite, 15 November | `f689429`, fresh offline source copy on cached stock154U | [Full results and scope](docs/validation/full-public-native-f689429-154U-20261115.json): all five unchanged public native commands passed, including 35 native unit methods, 48 workflow checks and the concurrency/recipient gates. A separate in-container authenticated HTTP run passed 34 checks. No model call or real payment; the disposable container's removal was independently confirmed. This does not qualify the Dockerfile/Compose installer or deploy new code to the hosted viewer. |
+| Standard Dockerfile/Compose, 15 November | `dd47f52`, cached original 154U host image, new isolated project and empty durable volume | [Build, full tests and durability receipt](docs/validation/standard-compose-dd47f52-154U-20261115.json): original Dockerfile downloaded its hash-locked dependency; all five native commands and 34 in-container HTTP checks passed. Stop/remove/up retained the selected case and one-effect receipt. All own resources were removed and the full host baseline matched independently; the published viewer was preserved. |
 | IPM package | `0.1.0-beta.4`, distributed source `9b2ee09` | [Exact public archive and offline native installation](docs/validation/IPM-beta4-public-artifact-20261105.json), in an initialized isolated build154 lab; this IPM qualification is not a cold install of the current source tree; see the separate 14 November source-install receipt. |
 | Optional native Java PEX | `941e929` qualification | [Native calls and JAR](docs/validation/pex-export-inspection-20261108.json); [later standalone algorithm CI](docs/validation/pex-public-ci-20261109.json) has a separate scope. |
 | Current media | `media-v5.0.0` | [171-second tour, exact MP4 hashes and review limits](docs/video/README.md). Earlier videos remain historical. |
@@ -427,6 +429,41 @@ download. Its network settings were preserved. The source copy used the pinned d
 wheel offline and the exact public initializer. IPM, LIVE inference, devnet, the hosted
 authenticated journey and the durable-volume lifecycle were not rerun.
 
+## Standard Dockerfile and Compose qualification
+
+A later isolated run on **15 November 2026** qualified the original Dockerfile and Compose
+service at source `dd47f52`, with the same five native commands and results shown above,
+**34 authenticated HTTP checks**, and a durable-volume readback after replacing the app
+container. [Build logs, results, hashes and exact limits](docs/validation/standard-compose-dd47f52-154U-20261115.json).
+
+This run used the host's cached original vendor 154U image at the documented manifest
+`8fc1e5c6…`, then built the unchanged Dockerfile with a real PyPI download of the
+hash-locked `rfc8785==0.1.4` dependency. The isolated project used a private scoping
+override for its app-image name, build bridge and ownership labels. Build and startup
+ran separately with the existing classic builder; the public Compose service otherwise
+kept its normal user, caps, 2 GiB/0.75 CPU limits, network `none`, zero published ports and
+a new, initially empty durable volume. The vendor entrypoint ran the public initializer;
+52 classes compiled and both installation markers, recorded mode and health passed.
+
+All 342 frozen checkout files matched before each unchanged public host command; all 130
+Dockerfile-copied files matched before boot, after tests and after recreation. The guarded
+transport forced every native session to the exact app container. HTTP ran inside the
+container against loopback with an ephemeral documented test-reviewer account.
+
+The first app container stopped with the normal 60-second grace and was removed. Compose
+started a new container on the same own volume. Fresh read-only queries returned the same
+selected confirmed ledger receipt, case status/head and one effect; its audit stayed
+intact. Final source, health and OOM checks passed. Independent SSH observation retained
+its own full host snapshot and confirmed that both app containers, all own derived images,
+volume and build network were gone, both shared locks were free, and every baseline
+container, image/tag, volume and network was preserved. The daemon and published viewer's
+identity, image, boot time, mounts and healthy state were unchanged.
+
+No model call, real payment or deployment occurred. This extends the earlier source-copy
+qualification to the stated Dockerfile/Compose path and durable-volume lifecycle. It does
+not retest a fresh vendor download, BuildKit, `compose.ui`/host HTTP, an authenticated
+hosted browser journey, IPM, LIVE inference or devnet. Historical receipts remain unchanged.
+
 ## IPM installation option
 
 **Current package: `0.1.0-beta.4`, 47 class resources and seven native Python packages.**
@@ -714,7 +751,7 @@ The earlier additions were packaged as `0.1.0-beta.2`. [Native source load, pack
 
 The previous source declared `0.1.0-beta.3`, adding explicit native source restoration/rebinding, Gemini3.6 support and the dedicated demo no-repair guard. [The beta.3 delta passed native source load, package export and archive installation](docs/validation/IPM-beta3-native-20261105.json) on an isolated, initialized VPS test copy: 47 classes, seven imports, 34 installed files matching the candidate and ten changed Operation method bodies checked against source. Provider keys were blank, networking was disabled and no inference or blockchain call occurred. The pinned RFC8785 wheel was supplied offline. This is not a new vendor bootstrap or a native public-registry fetch. The older beta.1/beta.2 and r6 evidence remains unchanged. [The public beta.3 registry archive was subsequently fetched on the VPS host and installed natively offline](docs/validation/IPM-beta3-public-artifact-20261105.json): all 292 distributed source files matched commit953d96d. The isolated lab stayed without network or keys; this is distinct from a native IPM network fetch.
 
-The current source declares `0.1.0-beta.4`, updating the optional fixed-scenario profile to the reviewed Gemini3.5Flash-Lite model and new-call estimates. [Native source load, export and archive installation passed](docs/validation/IPM-beta4-native-20261105.json) in the initialized isolated VPS copy:47classes,7imports,34installed assets and15Runtime/dependent method bodies matched, with keys blank/networknone and defaultOFF. [The exact public beta.4 archive was then installed natively offline](docs/validation/IPM-beta4-public-artifact-20261105.json):296distributed files equal Git9b2ee09, with all class sources/module and34declared assets matching the qualified candidate. This is a host download followed by native offline IPM load, not a native network fetch or fresh bootstrap; the older beta.1/beta.2/beta.3 and r6 artifacts remain historical evidence. Installation still starts no Production and enables neither LIVE nor retrieval.
+The current source declares `0.1.0-beta.4`, updating the optional fixed-scenario profile to the reviewed Gemini3.5Flash-Lite model and new-call estimates. [Native source load, export and archive installation passed](docs/validation/IPM-beta4-native-20261105.json) in the initialized isolated VPS copy:47classes,7imports,34installed assets and15Runtime/dependent method bodies matched, with keys blank/networknone and defaultOFF. [The exact public beta.4 archive was then installed natively offline](docs/validation/IPM-beta4-public-artifact-20261105.json):296distributed files equal Git9b2ee09, with all class sources/module and 34declared assets matching the qualified candidate. This is a host download followed by native offline IPM load, not a native network fetch or fresh bootstrap; the older beta.1/beta.2/beta.3 and r6 artifacts remain historical evidence. Installation still starts no Production and enables neither LIVE nor retrieval.
 
 The fixed-scenario demo can supplement `GetStorePolicy` with passages from an AI Hub knowledge base. Local FastEmbed produces 384-dimensional embeddings; `%AI.RAG.VectorStore.IRIS` stores the vectors and `%AI.RAG.KnowledgeBase` performs retrieval. Each policy hash gets a separate table. Every returned passage must match the exact active policy text and its hash. The full allowed actions, forbidden actions and limits are still returned. Retrieval does not change approval or payment policy.
 
