@@ -20,12 +20,12 @@ application policy constrains the proposal and a person authorizes the refund.
 
 **Execution boundary:** only duplicate refunds are executable in v1; unsupported financial
 actions go to a person. A matching seal does not establish that the decision is correct.
-**Installation boundary:** the historical 14 November cold offline source install compiled and
-initialized 52 classes, but its additional private fixture failed with a decoding exception.
-A [new public one-case check](#cold-recorded-case-check) subsequently passed in a fresh
-stock154U container: 33 checks, no model call or payment. It avoids implicit IRIS-object
-truth tests and waits for committed SQL state. The first exception's exact cause remains
-unproven; the full repository workflow smoke remains unqualified in a cold instance.
+**Installation evidence:** on 15 November, [all five public native test commands](#full-recorded-native-suite)
+passed after a fresh offline source-copy install on stock154U, including the full workflow,
+concurrent ledger tests and recorded recipient checks. The authenticated HTTP test also
+passed inside the disposable container. This run qualifies the tests on that clean copy;
+the standard Dockerfile/Compose installer and host HTTP route were not qualified by this run. Earlier
+failed attempts and the [33-check one-case run](#cold-recorded-case-check) retain their original scopes.
 [Dated evidence and exact scopes](#source-package-and-demonstration-versions) · [Full judge path](#judge-path).
 
 <details>
@@ -119,11 +119,14 @@ These identities describe different artifacts; a documentation update does not r
 | Open Exchange listing | `0.1.2` | [Package page](https://openexchange.intersystems.com/package/Proof-Before-Pay), distinct from the IPM prerelease below; no new release is created by this documentation update. |
 | Offline source install, 14 November | `677092f`, cached original stock154U | [Offline source-install receipt](docs/validation/clean-source-677092f-154U-20261114.json): 52 classes compiled, initializer and health passed in an empty disposable instance. Its additional recorded-case smoke stopped with a decoding exception; this historical receipt remains unchanged. |
 | Recorded-case addendum, 14 November | `60a859f` product file bytes, delivered in the original `677092f` archive; cached stock154U | [Later scoped receipt](docs/validation/clean-recorded-60a859f-154U-20261114.json): 31 controls and 33 checks passed for one recorded, non-money `pix-0006` case reaching `awaiting_human`. The private harness used explicit object-presence checks, paired SQL/object reads and exactly one conditional object reload; 11 fresh native queries confirmed the final state. |
+| Full public native suite, 15 November | `f689429`, fresh offline source copy on cached stock154U | [Full results and scope](docs/validation/full-public-native-f689429-154U-20261115.json): all five unchanged public native commands passed, including 35 native unit methods, 48 workflow checks and the concurrency/recipient gates. A separate in-container authenticated HTTP run passed 34 checks. No model call or real payment; the disposable container's removal was independently confirmed. This does not qualify the Dockerfile/Compose installer or deploy new code to the hosted viewer. |
 | IPM package | `0.1.0-beta.4`, distributed source `9b2ee09` | [Exact public archive and offline native installation](docs/validation/IPM-beta4-public-artifact-20261105.json), in an initialized isolated build154 lab; this IPM qualification is not a cold install of the current source tree; see the separate 14 November source-install receipt. |
 | Optional native Java PEX | `941e929` qualification | [Native calls and JAR](docs/validation/pex-export-inspection-20261108.json); [later standalone algorithm CI](docs/validation/pex-public-ci-20261109.json) has a separate scope. |
 | Current media | `media-v5.0.0` | [171-second tour, exact MP4 hashes and review limits](docs/video/README.md). Earlier videos remain historical. |
 
 The earlier addendum qualifies one offline case in a private harness. The [new public one-case smoke](docs/validation/cold-onecase-public-986a6d5-20261114.json) passed separately after a fresh stock154U install with 52 classes compiled. Its module and stdin script are pinned to candidate `986a6d5`; the 128 product files stayed identical to the cached `677092f` archive and base `b3f6f5f`. This qualifies neither the full `production_smoke.py` workflow, literal Compose/IPM installation, authenticated HTTP, LIVE inference nor payment approval/execution. The old SQL/object mismatch remains a measured historical observation; this new SQL-only wait opened the object after readiness, and one explicit reload changed no values. The first private fixture exception and earlier SSH interruption still have no established root cause. Original receipts and intervening failed attempts are preserved.
+
+The later [15 November qualification](#full-recorded-native-suite) separately covers the five full native commands and in-container HTTP on a clean source copy. It leaves the earlier one-case receipt unchanged.
 
 ## Audited v7 result, 1 November 2026
 
@@ -386,8 +389,43 @@ The private controller used these exact script bytes, prefixed a session sentine
 applied a 90-second timeout. The disposable container was independently confirmed removed;
 the published viewer's container identity, boot time and health stayed unchanged, and its
 public login returned HTTP 200 before and after (no authenticated journey was rechecked).
-The full `scripts/test_workflow.py` / `production_smoke.py` sequence remains a separate,
-unqualified cold-install path; this smaller check does not replace it.
+This smaller check does not replace the full `scripts/test_workflow.py` /
+`production_smoke.py` sequence, which passed separately in the following qualification.
+
+## Full recorded native suite
+
+On **15 November 2026 (Paraguay)**, source `f689429` passed all five documented native
+commands in order on a new stock154U container, after offline source-copy installation,
+52-class compilation, initialization and health checks. No private case or SQL helper ran
+before the public commands. [Complete results, source hashes and limits](docs/validation/full-public-native-f689429-154U-20261115.json).
+
+| Public command | Observed result |
+|---|---|
+| `python3 scripts/test_iris.py` | 12 bridge checks passed. |
+| `python3 scripts/test_ledger.py` | 39 checks; 12 execution sessions, at most three concurrent; one effect and identical receipts. |
+| `python3 scripts/test_workflow.py` | 35 native unit methods, 48 workflow checks across ten fixtures, and three safe adversarial cases. |
+| `python3 scripts/test_pairguard.py` | Three recorded routes; two concurrent Stage sessions with one winner; opposite-target refusal and a valid new-pair control. |
+| `python3 scripts/test_recipient.py` | Eight projection scenarios with rollback verified, then three recorded recipient flows: one bound synthetic effect for the known destination, zero for the absent/mismatched destinations. |
+
+The unchanged host runners used a private Docker transport shim that forced each session
+to the exact disposable container. The container was created directly with a unique
+Compose project and discovery labels; it was not created by the public Compose installer.
+All 341 source files matched before boot and after the tests. No product or public-test
+changes were needed. The additional literal `tests/http_workflow.py` run passed **34
+authenticated checks** against loopback inside that container using an ephemeral test
+reviewer; this is separate from the documented `compose.ui` host route.
+
+The lab had no network, published ports, mounts or provider credentials. The default
+auto mode resolved to recorded replay. Tests exercised synthetic approvals, refusals,
+ledger effects and tamper checks; they made no model call or real payment. Final health
+and OOM checks passed. Independent observation confirmed container removal, free shared
+locks and the hosted viewer's unchanged container ID, image, boot time and healthy state.
+
+The standard Dockerfile/Compose install was **not qualified** in this run: the existing
+private engine has no outbound route or default bridge for the Dockerfile's dependency
+download. Its network settings were preserved. The source copy used the pinned dependency
+wheel offline and the exact public initializer. IPM, LIVE inference, devnet, the hosted
+authenticated journey and the durable-volume lifecycle were not rerun.
 
 ## IPM installation option
 
